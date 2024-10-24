@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import supabase from '../../utils/supabase/client';
+import { useRouter } from 'next/navigation';
 
 const MyPage = () => {
   const [nickname, setNickname] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -16,7 +17,6 @@ const MyPage = () => {
 
         if (sessionError || !sessionData.session) {
           setError('로그인 정보가 없습니다.');
-          setLoading(false);
           return;
         }
 
@@ -32,17 +32,32 @@ const MyPage = () => {
         }
       } catch (err) {
         setError('데이터를 불러오는 중 오류가 발생했습니다.');
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchProfile();
   }, []);
 
-  if (loading) {
-    return <div>로딩 중...</div>;
-  }
+  const onHandleLogout = async () => {
+    try {
+      // 로그아웃 API 호출
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST'
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        alert('로그아웃 실패: ' + data.error);
+      } else {
+        alert('로그아웃 성공!');
+        router.push('/login');
+      }
+    } catch (error) {
+      console.error('로그아웃 중 오류 발생:', error);
+      alert('로그아웃 중 문제가 발생했습니다.');
+    }
+  };
 
   if (error) {
     return <div>{error}</div>;
@@ -52,6 +67,7 @@ const MyPage = () => {
     <div>
       <h1>mypage</h1>
       <h3>nick: {nickname}</h3>
+      <button onClick={onHandleLogout}>로그아웃</button>
     </div>
   );
 };
