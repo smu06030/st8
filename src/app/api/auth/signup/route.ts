@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     }
 
     // users 테이블에 추가 정보 저장
-    const { error: insertError } = await supabase.from('users').insert([{ email, nickname }]);
+    const { error: insertError } = await supabase.from('profile').insert([{ email, nickname }]);
 
     if (insertError) {
       return NextResponse.json({ error: insertError.message }, { status: 500 });
