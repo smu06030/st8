@@ -4,7 +4,7 @@ import React from 'react';
 import StampItem from '@/components/stamp/StampItem';
 import { useQuery } from '@tanstack/react-query';
 import browserClient from '@/utils/supabase/client';
-const userId = '61ee6ebf-ec4f-4f81-9115-be57f6d3a97e'; //임시 로그인유저
+const userId = '05a65b78-a87c-49b4-b8e1-e5b80e263e43'; //임시 로그인유저
 
 //로그인유저의 스템프 항목 전부 가져오기
 const fetchStampList = async () => {

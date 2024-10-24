@@ -33,14 +33,14 @@ const MyLocation = () => {
           region_2depth_name: addressData.region_2depth_name,
           region_3depth_name: addressData.region_3depth_name
         }); //주소넣어주기
-        console.log('data', data);
+        // console.log('data', data);
       }
     } catch (error) {
       setError('주소를 가져오는 중 오류가 발생했습니다.');
     }
   };
 
-  console.log('address', address);
+  // console.log('address', address);
 
   //가져오기 실패했을때 상황에 따른 에러메세지(추후 분리)
   const showErrorMsg = (error: GeolocationPositionError) => {

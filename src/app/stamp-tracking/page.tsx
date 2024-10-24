@@ -1,9 +1,11 @@
 import MyLocation from '@/components/stamp/MyLocation';
+// import StampTrack from '@/components/stamp/StampTrack';
 import React from 'react';
 
 const StampTracking = () => {
   return (
     <div>
+      {/* <StampTrack */}
       <MyLocation />
     </div>
   );
