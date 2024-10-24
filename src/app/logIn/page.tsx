@@ -2,10 +2,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+import useUserStore from '../../store/authStore';
+
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const setUser = useUserStore((state) => state.setUser);
 
   const onHandleLogin = async () => {
     try {
@@ -21,23 +25,38 @@ const LoginPage = () => {
 
       const data = await response.json();
 
-      if (response.status === 302) {
-        // 회원가입으로 리다이렉트
-        alert('사용자를 찾을 수 없습니다. 회원가입 페이지로 이동합니다.');
-        router.push('/signup');
-      } else if (response.status === 401) {
-        alert('로그인 실패: 잘못된 이메일 또는 비밀번호입니다.');
-      } else if (response.status === 200) {
-        alert('로그인 성공!');
-        router.push('/mypage');
+      if (data.error) {
+        setError(data.error);
       } else {
-        alert(`오류 발생: ${data.error}`);
+        // 로그인 성공 시 사용자 정보를 Zustand에 저장
+        setUser({
+          email: data.email,
+          nickname: data.nickname
+        });
+        router.push('/mypage'); // 로그인 후 마이페이지로 이동
       }
     } catch (err) {
-      console.error('<<<<<<<<<<<<<<<<', err);
-      alert('로그인 중 오류가 발생했습니다.');
+      setError('로그인 중 오류가 발생했습니다.');
     }
   };
+
+  //       if (response.status === 302) {
+  //         // 회원가입으로 리다이렉트
+  //         alert('사용자를 찾을 수 없습니다. 회원가입 페이지로 이동합니다.');
+  //         router.push('/signup');
+  //       } else if (response.status === 401) {
+  //         alert('로그인 실패: 잘못된 이메일 또는 비밀번호입니다.');
+  //       } else if (response.status === 200) {
+  //         alert('로그인 성공!');
+  //         router.push('/mypage');
+  //       } else {
+  //         alert(`오류 발생: ${data.error}`);
+  //       }
+  //     } catch (err) {
+  //       console.error('<<<<<<<<<<<<<<<<', err);
+  //       alert('로그인 중 오류가 발생했습니다.');
+  //     }
+  //   };
 
   return (
     <div>
