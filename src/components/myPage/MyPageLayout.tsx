@@ -9,9 +9,9 @@ const MyPageLayout = () => {
   }
 
   return (
-    <div>
-      <h1>마이페이지</h1>
-      <h3>닉네임: {nickname ? nickname : 'guest'}</h3>
+    <div className="flex flex-col items-center justify-center">
+      <h1 className="font-bold">마이페이지</h1>
+      <h3> {nickname ? nickname : 'guest'}님</h3>
       <button onClick={onHandleLogout}>로그아웃</button>
     </div>
   );
