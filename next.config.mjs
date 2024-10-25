@@ -1,4 +1,12 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
-
-export default nextConfig;
+// next.config.mjs
+export default {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'tong.visitkorea.or.kr',
+        pathname: '/cms/resource/**'
+      }
+    ]
+  }
+};
