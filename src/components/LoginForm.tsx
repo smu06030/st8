@@ -2,14 +2,12 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import useUserStore from '../store/authStore';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
-  const setUser = useUserStore((state) => state.setUser);
+  const router = useRouter();
 
   const onHandleLogin = async () => {
     try {
@@ -26,12 +24,10 @@ const LoginForm = () => {
       if (data.error) {
         setError(data.error);
       } else {
-        // Zustand에 저장
-        setUser({
-          email: data.email,
-          nickname: data.nickname
-        });
+        // 로그인 성공 시 페이지 이동
         router.push('/mypage');
+
+        // 입력 필드 초기화
         setEmail('');
         setPassword('');
       }
@@ -67,6 +63,7 @@ const LoginForm = () => {
           로그인
         </button>
       </div>
+      {error && <p className="mt-4 text-red-500">{error}</p>}
     </div>
   );
 };
