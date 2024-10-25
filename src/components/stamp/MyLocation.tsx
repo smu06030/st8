@@ -13,23 +13,23 @@ const MyLocation = () => {
     //주소가져오는함수
     try {
       //https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}
-      //주소 데이터를 요청  //https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=127.1498&y=35.82194
-      const res = await fetch(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=127.1498&y=35.82194`, {
+      //주소 데이터를 요청
+      const res = await fetch(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}`, {
         headers: {
           Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`
         }
       });
       const data = await res.json();
-
+      console.log('data', data);
       if (data) {
-        const addressData = data.documents[0].road_address; //도로명
+        const addressData = data.documents[0].address; //지번
         setAddress({
           address_name: addressData.address_name,
-          main_building_no: addressData.building_name,
+          // main_building_no: addressData.building_name,
           region_1depth_name: addressData.region_1depth_name,
           region_2depth_name: addressData.region_2depth_name,
-          region_3depth_name: addressData.region_3depth_name,
-          road_name: addressData.road_name
+          region_3depth_name: addressData.region_3depth_name
+          // road_name: addressData.road_name
         });
       }
     } catch (error) {
