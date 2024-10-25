@@ -6,6 +6,7 @@ import { MAP_COLOR } from '@/constants/mapColor';
 import { useCallback, useState } from 'react';
 import { PathType } from '@/types/kakaomap/CoordRegionCode.type';
 import ReSetttingMapBounds from '@/components/kakaomap/ReSetttingMapBounds';
+import ScrollButtonSwiper from '@/components/kakaomap/ScrollButtonSwiper';
 
 const KakaoMapPage = () => {
   const [location, setLocation] = useState({
@@ -58,6 +59,7 @@ const KakaoMapPage = () => {
           />
         );
       })}
+      <ScrollButtonSwiper />
       <ReSetttingMapBounds paths={selectedPath} />
     </Map>
   );

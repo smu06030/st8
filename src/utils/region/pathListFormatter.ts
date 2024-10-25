@@ -1,5 +1,5 @@
 import { CoordinatesType } from '@/types/kakaomap/CoordRegionCode.type';
-import coordRegionCode from '../../../coordRegionCode.json';
+import coordRegionCode from '../../../coordregioncode.json';
 
 // 행정구역 PathList 가져오기
 export const pathListFormatter = () => {
