@@ -16,6 +16,9 @@ const config: Config = {
         main: '1D1D1D',
         defaultcolor: '#E8E8E8'
       }
+    },
+    screens: {
+      lg: '1024px' // 데스크탑 추후 수정가능
     }
   },
   plugins: []
