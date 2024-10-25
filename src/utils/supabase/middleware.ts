@@ -28,25 +28,23 @@ export const updateSession = async (request: NextRequest) => {
       }
     );
 
-    // 여기 부분은 리다이렉트
-
-    // const { data } = await supabase.auth.getUser();
+    const { data } = await supabase.auth.getUser();
 
     // 로그인 한 상태라면 메인페이지로 리다이렉트
-    // if (
-    //   data?.user &&
-    //   (request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/signup'))
-    // ) {
-    //   return NextResponse.redirect(new URL('/', request.url));
-    // }
+    if (
+      data?.user &&
+      (request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/signup'))
+    ) {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
 
-    // // 로그인을 하지 않았는데 접근한다면 로그인 페이지로 리다이렉트
-    // if (
-    //   !data?.user &&
-    //   (request.nextUrl.pathname.startsWith('/mypage') || request.nextUrl.pathname.startsWith('/update-password'))
-    // ) {
-    //   return NextResponse.redirect(new URL('/login', request.url));
-    // }
+    // 로그인을 하지 않았는데 접근한다면 로그인 페이지로 리다이렉트
+    if (
+      !data?.user &&
+      (request.nextUrl.pathname.startsWith('/mypage') || request.nextUrl.pathname.startsWith('/update-password'))
+    ) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
 
     return response;
   } catch (e) {

@@ -5,7 +5,7 @@ import StampActive from './StampActive';
 import { AddressPropsType } from '@/types/stamp/AddressPropsType';
 
 const MyLocation = () => {
-  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null); //위치상태
+  // const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null); //위치상태
   const [error, setError] = useState<string | null>(null); //에러상태
   const [address, setAddress] = useState<AddressPropsType | null>(null); //현재주소
 
@@ -66,11 +66,11 @@ const MyLocation = () => {
         //사용자의 현재 위치를 요청
         async (position) => {
           const { latitude, longitude } = position.coords;
-          setLocation({ lat: latitude, lng: longitude });
+          // setLocation({ lat: latitude, lng: longitude });
           await getAddress(latitude, longitude); //위도경도 인자로 넘기기
         },
         (err) => {
-          showErrorMsg(error);
+          showErrorMsg(err.message);
         },
         {
           enableHighAccuracy: true, // 정확도 우선 모드
@@ -101,9 +101,10 @@ const MyLocation = () => {
 export default MyLocation;
 
 /**
+ * 추후지울예정
 Geolocation API는 CSR에서만 작동할 수 있다.
 Geolocation API는 비동기적으로 동작한다.
 처음리랜더링됬을때 작동하게하고, 항상 최신 위치정보를 수집하게한다.
 1분이내로 카운트 ㄱㄱ
-
+깃허브안올라가게 .env.local (주의!!!)
  */
