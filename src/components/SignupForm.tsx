@@ -37,30 +37,38 @@ const SignupForm = () => {
   };
 
   return (
-    <div>
-      <h1>회원가입</h1>
+    <div className="flex flex-col items-center justify-center">
+      <h1 className="font-bold">회원가입</h1>
+      <p>이메일</p>
       <input
         type="email"
         placeholder="이메일을 입력해주세요"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
+        className="border-defaultcolor h-auto w-[326px] border p-3"
       />
+      <p>비밀번호</p>
       <input
         type="password"
         placeholder="비밀번호를 입력해주세요"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
+        className="border-defaultcolor h-auto w-[326px] border p-3"
       />
+      <p>닉네임</p>
       <input
         type="text"
         placeholder="닉네임을 입력해주세요"
         value={nickname}
         onChange={(e) => setNickname(e.target.value)}
         required
+        className="border-defaultcolor h-auto w-[326px] border p-3"
       />
-      <button onClick={onHandleSignup}>회원가입하기</button>
+      <button onClick={onHandleSignup} className="bg-defaultcolor h-auto w-[326px] p-3 font-bold text-gray-500">
+        회원가입하기
+      </button>
     </div>
   );
 };
