@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import browserClient from '@/utils/supabase/client';
-const userId = '05a65b78-a87c-49b4-b8e1-e5b80e263e43'; //임시 로그인유저
+import { fetchUser } from '@/utils/fetchUser';
+import { fetchStamp } from '@/server/fetchStampList';
 
 interface StampDetailPropsType {
   id: string;
@@ -14,24 +14,24 @@ interface StampDetailPropsType {
 const StampItemDetail = () => {
   const params = useParams();
   const [stampData, setStampData] = useState<StampDetailPropsType | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
 
-  //로그인유저의 스템프 항목 전부 가져오기
-  const fetchStampList = async () => {
-    const { data, error } = await browserClient.from('stamp').select('*').eq('user_id', userId).eq('id', params.id);
-    if (error) {
-      console.error('가져오기 오류:', error.message);
-    } else {
-      setStampData(data[0]);
-    }
-    // return data;
-  };
   useEffect(() => {
-    fetchStampList();
-  }, [params.id]);
+    const checkUser = async () => {
+      const user = await fetchUser();
+      if (!user) return;
+      else setUserId(user);
+    };
+    checkUser();
+  }, []);
 
-  if (!stampData) {
-    return <div>로딩 중...</div>;
-  }
+  useEffect(() => {
+    if (userId) {
+      fetchStamp(userId, params.id as string, setStampData);
+    }
+  }, [params.id, userId]);
+
+  if (!stampData) return <div>로딩 중...</div>;
 
   return (
     <div>
@@ -45,6 +45,5 @@ const StampItemDetail = () => {
 export default StampItemDetail;
 
 /**
- supabase에서 스템프 테이블에서 
- 아이디, 지역으로 조인해서 상세 불러오기
+ as 타입 : 타입단언(특정타입임을 명시적으로 알려줌->확신하기애매할때)
  */

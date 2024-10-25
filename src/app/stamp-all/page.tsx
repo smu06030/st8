@@ -1,12 +1,9 @@
 import React from 'react';
 import StampList from '@/components/stamp/StampList';
-import StampRecentList from '@/components/stamp/StampRecentList';
 
 const StampAll = () => {
   return (
     <div className="p-[24px]">
-      <h3>최근에 얻은 스탬프</h3>
-      <StampRecentList />
       <h3>전체 스탬프</h3>
       <StampList />
     </div>
