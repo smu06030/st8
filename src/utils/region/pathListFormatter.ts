@@ -1,5 +1,5 @@
-import { CoordinatesType } from "@/types/CoordRegionCode.type";
-import coordRegionCode from "../../../coordRegionCode.json";
+import { CoordinatesType } from '@/types/kakaomap/CoordRegionCode.type';
+import coordRegionCode from '../../../coordRegionCode.json';
 
 // 행정구역 PathList 가져오기
 export const pathListFormatter = () => {
@@ -11,17 +11,17 @@ export const pathListFormatter = () => {
     const { coordinates, type } = geometry;
 
     const pathList =
-      type === "Polygon"
+      type === 'Polygon'
         ? getPolygonPathList(coordinates)
-        : type === "MultiPolygon"
-        ? getMultiPolygonPathList(coordinates)
-        : [];
+        : type === 'MultiPolygon'
+          ? getMultiPolygonPathList(coordinates)
+          : [];
 
     return {
       name: CTP_KOR_NM,
       path: pathList,
       isHover: false,
-      key: Math.random(),
+      key: Math.random()
     };
   });
 
@@ -30,9 +30,7 @@ export const pathListFormatter = () => {
 
 // Polygon pathList 포멧 (3차원 배열)
 const getPolygonPathList = (coordinates: CoordinatesType) => {
-  return coordinates.map((areaList) =>
-    areaList.map(([lng, lat]) => ({ lng: Number(lng), lat: Number(lat) }))
-  );
+  return coordinates.map((areaList) => areaList.map(([lng, lat]) => ({ lng: Number(lng), lat: Number(lat) })));
 };
 
 // MultiPolygon pathList 포멧 (4차원 배열)
