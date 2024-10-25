@@ -2,13 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import StampActive from './StampActive';
-
-interface AddressPropsType {
-  address_name: string;
-  region_1depth_name: string;
-  region_2depth_name: string;
-  region_3depth_name: string;
-}
+import { AddressPropsType } from '@/types/stamp/AddressPropsType';
 
 const MyLocation = () => {
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null); //위치상태
@@ -18,45 +12,50 @@ const MyLocation = () => {
   const getAddress = async (lat: number, lng: number) => {
     //주소가져오는함수
     try {
-      //주소 데이터를 요청
-      const res = await fetch(`https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${lng}&y=${lat}`, {
+      //https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}
+      //주소 데이터를 요청  //https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=127.1498&y=35.82194
+      const res = await fetch(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=127.1498&y=35.82194`, {
         headers: {
           Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`
         }
       });
       const data = await res.json();
+
       if (data) {
-        const addressData = data.documents[0];
+        const addressData = data.documents[0].road_address; //도로명
         setAddress({
           address_name: addressData.address_name,
+          main_building_no: addressData.building_name,
           region_1depth_name: addressData.region_1depth_name,
           region_2depth_name: addressData.region_2depth_name,
-          region_3depth_name: addressData.region_3depth_name
-        }); //주소넣어주기
-        // console.log('data', data);
+          region_3depth_name: addressData.region_3depth_name,
+          road_name: addressData.road_name
+        });
       }
     } catch (error) {
       setError('주소를 가져오는 중 오류가 발생했습니다.');
     }
   };
 
-  // console.log('address', address);
-
   //가져오기 실패했을때 상황에 따른 에러메세지(추후 분리)
-  const showErrorMsg = (error: GeolocationPositionError) => {
-    switch (error.code) {
-      case error.PERMISSION_DENIED:
-        setError('Geolocation API의 사용 요청을 거부했습니다.');
-        break;
-      case error.POSITION_UNAVAILABLE:
-        setError('위치 정보를 사용할 수 없습니다.');
-        break;
-      case error.TIMEOUT:
-        setError('위치 정보를 가져오기 위한 요청이 허용 시간을 초과했을습니다.');
-        break;
-      case error.UNKNOWN_ERROR:
-        setError('알 수 없는 오류가 발생했습니다. 관리자에게 문의하세요.');
-        break;
+  const showErrorMsg = (error: GeolocationPositionError | null | string) => {
+    if (error instanceof GeolocationPositionError) {
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          setError('Geolocation API의 사용 요청을 거부했습니다.');
+          break;
+        case error.POSITION_UNAVAILABLE:
+          setError('위치 정보를 사용할 수 없습니다.');
+          break;
+        case error.TIMEOUT:
+          setError('위치 정보를 가져오기 위한 요청이 허용 시간을 초과했을습니다.');
+          break;
+        default:
+          setError('알 수 없는 오류가 발생했습니다. 관리자에게 문의하세요.');
+          break;
+      }
+    } else if (typeof error === 'string') {
+      console.error('Error:', error);
     }
   };
 
@@ -71,10 +70,10 @@ const MyLocation = () => {
           await getAddress(latitude, longitude); //위도경도 인자로 넘기기
         },
         (err) => {
-          showErrorMsg(err.error);
+          showErrorMsg(error);
         },
         {
-          enableHighAccuracy: true, // 정확도 우선 모드 (이걸안넣으면 버정한정거장 정도 차이있는거같음)
+          enableHighAccuracy: true, // 정확도 우선 모드
           timeout: 60000, // 1분 이내에 응답 없으면 에러 발생
           maximumAge: 0 // 항상 최신 위치 정보 수집
         }
