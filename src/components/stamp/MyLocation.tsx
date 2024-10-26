@@ -40,7 +40,6 @@ const MyLocation = () => {
     }, // 주소를 인자로 넘김
     enabled: !!userId
   });
-  // console.log('stampList', stampList);
 
   useEffect(() => {
     if (stampList && stampList.length > 0) {
@@ -108,19 +107,25 @@ const MyLocation = () => {
       {address ? (
         <>
           <p>현재 내 위치 : {address.address_name}</p>
-          <StampActive address={address} stampList={stampList} setVisit={setVisit} />
+
+          <StampActive address={address} stampList={stampList} setVisit={setVisit} visit={visit} />
         </>
       ) : (
         <p>{error ? `Error: ${error}` : '위치를 가져오고있습니다...'}</p>
       )}
-      {visit ? (
+      {visit && (
         <Link href={'/stamp-all'}>
-          <button className="w-full rounded-[16px] bg-[#292929] py-[20px] text-[20px] text-[#fff]">
+          <p className={`py-[20px] text-center ${visit && 'animate-fadeUpText'}`}>
+            테스트 텍스트입니당~~~~~
+            <br />
+            테스트 텍스트입니당~~~~~
+          </p>
+          <button
+            className={`w-full rounded-[16px] bg-[#292929] py-[20px] text-[20px] text-[#fff] ${visit && 'animate-fadeUpBtn'}`}
+          >
             스탬프 확인하러 가기
           </button>
         </Link>
-      ) : (
-        ''
       )}
     </>
   );

@@ -43,7 +43,7 @@ const deleteStampList = async ({ address, userId }: { address: string; userId: s
   return data;
 };
 
-const StampActive = ({ address, stampList, setVisit }: StampActivePropsType) => {
+const StampActive = ({ address, stampList, setVisit, visit }: StampActivePropsType) => {
   const queryClient = useQueryClient();
   //   const router = useRouter();
 
@@ -100,11 +100,12 @@ const StampActive = ({ address, stampList, setVisit }: StampActivePropsType) => 
   const REGIONimageUrl = STAMPIMG_REGION_NAME[address.region_1depth_name];
 
   return (
-    <div>
+    <div className={`transition-transform duration-500 ${visit ? 'scale-75' : 'scale-100'}`}>
       {stampList && stampList?.length > 0 ? (
         stampList?.map((stamp) => {
           if (stamp.region === address.region_1depth_name) {
             return (
+              //${visit && 'scale-80' : 'scale-100'}
               <Image
                 key={stamp.id}
                 className="opacity-100"
