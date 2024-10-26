@@ -2,11 +2,52 @@
 
 import { useEffect, useState } from 'react';
 import StampActive from './StampActive';
-import { AddressPropsType } from '@/types/stamp/AddressPropsType';
+import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { fetchUser } from '@/utils/fetchUser'; //로그인유저
+import { fetchStampList } from '@/apis/fetchStampList'; //로그인유저의 스템프 항목 가져오기
+import Link from 'next/link';
+
 const MyLocation = () => {
+  // const queryClient = useQueryClient();
+  const [userId, setUserId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null); //에러상태
   const [address, setAddress] = useState<AddressPropsType | null>(null); //현재주소
+  const [visit, setVisit] = useState<Boolean>(false); //방문상태
+
+  //로그인유저아이디 패치불러오기
+  useEffect(() => {
+    const checkUser = async () => {
+      const user = await fetchUser();
+      if (!user) return;
+      else setUserId(user);
+    };
+    checkUser();
+  }, []);
+
+  //useQuery
+  const {
+    data: stampList,
+    isLoading,
+    error: stampListError
+  } = useQuery({
+    queryKey: ['nowStamp', address?.address_name], //고유키값
+    queryFn: async () => {
+      if (userId) {
+        return await fetchStampList(address?.address_name!);
+      } else return null;
+    }, // 주소를 인자로 넘김
+    enabled: !!userId
+  });
+  // console.log('stampList', stampList);
+
+  useEffect(() => {
+    if (stampList && stampList.length > 0) {
+      setVisit(stampList[0].visited);
+    }
+  }, [stampList]);
+  console.log('visited', visit);
 
   const getAddress = async (lat: number, lng: number) => {
     try {
@@ -34,28 +75,6 @@ const MyLocation = () => {
     }
   };
 
-  // // //가져오기 실패했을때 상황에 따른 에러메세지(추후 분리)
-  // const showErrorMsg = (error: GeolocationPositionError | null | string) => {
-  //   if (error instanceof GeolocationPositionError) {
-  //     switch (error.code) {
-  //       case error.PERMISSION_DENIED:
-  //         setError('Geolocation API의 사용 요청을 거부했습니다.');
-  //         break;
-  //       case error.POSITION_UNAVAILABLE:
-  //         setError('위치 정보를 사용할 수 없습니다.');
-  //         break;
-  //       case error.TIMEOUT:
-  //         setError('위치 정보를 가져오기 위한 요청이 허용 시간을 초과했을습니다.');
-  //         break;
-  //       default:
-  //         setError('알 수 없는 오류가 발생했습니다. 관리자에게 문의하세요.');
-  //         break;
-  //     }
-  //   } else if (typeof error === 'string') {
-  //     console.error('Error:', error);
-  //   }
-  // };
-
   useEffect(() => {
     if ('geolocation' in navigator) {
       //현 브라우저가 Geolocation API를 지원하는지 확인
@@ -80,16 +99,28 @@ const MyLocation = () => {
     }
   }, []);
 
+  if (isLoading) return <div>Loading...</div>;
+  if (stampListError) return <div>Failed to load</div>;
+
   return (
     <>
       <h1>내 위치</h1>
       {address ? (
         <>
           <p>현재 내 위치 : {address.address_name}</p>
-          <StampActive address={address} />
+          <StampActive address={address} stampList={stampList} setVisit={setVisit} />
         </>
       ) : (
         <p>{error ? `Error: ${error}` : '위치를 가져오고있습니다...'}</p>
+      )}
+      {visit ? (
+        <Link href={'/stamp-all'}>
+          <button className="w-full rounded-[16px] bg-[#292929] py-[20px] text-[20px] text-[#fff]">
+            스탬프 확인하러 가기
+          </button>
+        </Link>
+      ) : (
+        ''
       )}
     </>
   );
@@ -98,6 +129,14 @@ const MyLocation = () => {
 export default MyLocation;
 
 /**
+ * 스탬프 확인하러가기 버튼
+ -> 도장 활성화 됬을때 나타나기
+ -> 로그인유저의 전체항목 가져와(로그인유저패치함수,fetchStampList)
+ -> 
+
+
+
+
  * 추후지울예정
 Geolocation API는 CSR에서만 작동할 수 있다.
 Geolocation API는 비동기적으로 동작한다.

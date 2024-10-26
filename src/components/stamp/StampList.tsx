@@ -5,7 +5,7 @@ import StampItem from '@/components/stamp/StampItem';
 import { useQuery } from '@tanstack/react-query';
 import browserClient from '@/utils/supabase/client';
 import { fetchUser } from '@/utils/fetchUser';
-import { fetchStampActive } from '@/server/fetchStampList';
+import { fetchStampActive } from '@/apis/fetchStampList';
 
 const StampList = () => {
   const [userId, setUserId] = useState<string | null>(null);

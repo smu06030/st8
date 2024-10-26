@@ -7,11 +7,12 @@ import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { fetchUser } from '@/utils/fetchUser';
 
 import { STAMPIMG_REGION_NAME } from '@/components/stamp/StampImg'; //이미지
-import { fetchStampList } from '@/server/fetchStampList'; //로그인유저의 스템프 항목 가져오기
-import { AddressPropsType } from '@/types/stamp/AddressPropsType';
+import { fetchStampList } from '@/apis/fetchStampList'; //로그인유저의 스템프 항목 가져오기
+import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 
 interface StampActivePropsType {
   address: AddressPropsType;
+  // stampList:
 }
 
 //뮤테이션 함수 만들기(수파베이스 값 추가)
@@ -42,7 +43,7 @@ const deleteStampList = async ({ address, userId }: { address: string; userId: s
   return data;
 };
 
-const StampActive = ({ address }: StampActivePropsType) => {
+const StampActive = ({ address, stampList, setVisit }: StampActivePropsType) => {
   const queryClient = useQueryClient();
   //   const router = useRouter();
 
@@ -76,6 +77,7 @@ const StampActive = ({ address }: StampActivePropsType) => {
   const onClickVisitedAdd = (address: string, regionName: string) => {
     if (userId) {
       StampAddMutation.mutate({ address, regionName, userId });
+      setVisit(true);
       alert('스탬프가 찍혔습니다.');
     } else {
       console.error('유저아이디가 없습니다.');
@@ -86,6 +88,7 @@ const StampActive = ({ address }: StampActivePropsType) => {
   const onClickVisitedCencle = (address: string) => {
     if (userId) {
       StampDeleteMutation.mutate({ address, userId });
+      setVisit(false);
       alert('스탬프가 취소되었습니다.');
     } else {
       console.error('유저아이디가 없습니다.');
@@ -93,17 +96,6 @@ const StampActive = ({ address }: StampActivePropsType) => {
     }
   };
 
-  //useQuery
-  const {
-    data: stampList,
-    isLoading,
-    error
-  } = useQuery({
-    queryKey: ['nowStamp', address.address_name], //고유키값
-    queryFn: () => fetchStampList(address.address_name) // 주소를 인자로 넘김
-  });
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Failed to load</div>;
   console.log('address', address);
   const REGIONimageUrl = STAMPIMG_REGION_NAME[address.region_1depth_name];
 

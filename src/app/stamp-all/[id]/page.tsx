@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { fetchUser } from '@/utils/fetchUser';
-import { fetchStamp } from '@/server/fetchStampList';
+import { fetchStamp } from '@/apis/fetchStampList';
 
 interface StampDetailPropsType {
   id: string;
