@@ -7,12 +7,14 @@ import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { fetchUser } from '@/utils/fetchUser';
 
 import { STAMPIMG_REGION_NAME } from '@/components/stamp/StampImg'; //이미지
-import { fetchStampList } from '@/apis/fetchStampList'; //로그인유저의 스템프 항목 가져오기
+// import { fetchStampList } from '@/apis/fetchStampList'; //로그인유저의 스템프 항목 가져오기
 import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 
 interface StampActivePropsType {
   address: AddressPropsType;
-  // stampList:
+  // setVisit: Dispatch<SetStateAction<Boolean>>;
+  visit: Boolean;
+  stampList: any[] | null | undefined; //TODO: any 추후수정
 }
 
 //뮤테이션 함수 만들기(수파베이스 값 추가)
