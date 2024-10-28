@@ -9,13 +9,18 @@ import { fetchUser } from '@/utils/fetchUser'; //로그인유저
 import { fetchStampList } from '@/apis/fetchStampList'; //로그인유저의 스템프 항목 가져오기
 import Link from 'next/link';
 
+interface LocationType {
+  lat: number;
+  lng: number;
+}
+
 const MyLocation = () => {
   // const queryClient = useQueryClient();
   const [userId, setUserId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null); //에러상태
-  const [address, setAddress] = useState<AddressPropsType | null>(null); //현재주소
-  const [visit, setVisit] = useState<Boolean>(false); //방문상태
-  const [location, setLocation] = useState({});
+  const [address, setAddress] = useState<AddressPropsType>(); //현재주소
+  const [visit, setVisit] = useState<boolean>(false); //방문상태
+  const [location, setLocation] = useState<LocationType>({ lat: 0, lng: 0 });
 
   //로그인유저아이디 패치불러오기
   //TODO: 체크유저없어도 실행댐.. 이유가 fetchStampList안에 패치유저 한번더함 수정필요
@@ -36,9 +41,9 @@ const MyLocation = () => {
   } = useQuery({
     queryKey: ['nowStamp', address?.address_name], //고유키값
     queryFn: async () => {
-      // if (userId) {
-      return await fetchStampList(address?.address_name!);
-      // } else return null;
+      if (address && address.address_name) {
+        return await fetchStampList(address.address_name!);
+      } else return null;
     }, // 주소를 인자로 넘김
     enabled: !!userId
   });

@@ -12,8 +12,8 @@ import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 
 interface StampActivePropsType {
   address: AddressPropsType;
-  setVisit: Dispatch<SetStateAction<Boolean>>;
-  visit: Boolean;
+  setVisit: Dispatch<SetStateAction<boolean>>;
+  visit: boolean;
   location: { lat: number; lng: number };
   stampList: any[] | null | undefined; //TODO: any 추후수정
 }

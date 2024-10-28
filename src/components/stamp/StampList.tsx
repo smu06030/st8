@@ -7,7 +7,7 @@ import { fetchUser } from '@/utils/fetchUser';
 import { fetchStampActive } from '@/apis/fetchStampList';
 import { StampData } from '@/types/stamp';
 
-const StampList = () => {
+const StampList: React.FC = (): React.JSX.Element => {
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const StampList = () => {
   });
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>로드실패</div>;
-  if (!stampList) return console.log('데이터가 없습니다.');
+  if (!stampList) return <div>데이터가 없습니다.</div>;
   console.log('stampList', stampList);
 
   const groupRegion = [...new Set(stampList?.map((item) => item.region))];
