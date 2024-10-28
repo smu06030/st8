@@ -4,9 +4,12 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import browserClient from '@/utils/supabase/client';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
+import CategoryModal from './CategoryModal';
+import AddPhotoBtn from './AddPhotoBtn';
 
 const fetchAlbum = async () => {
   const { data, error } = await browserClient.from('album').select('*');
+
   if (error) {
     console.error('가져오기 오류4:', error.message);
   }
@@ -25,8 +28,16 @@ const addAlbumList = async (imgSrc: string) => {
 
 const AlbumList = () => {
   const queryClient = useQueryClient();
-  const [imgSrc, setImgSrc] = useState<string>('/images/default-image.png');
+  const [isRigionModal, SetIsRigionModal] = useState(false); //모달상태
+  const [imgSrc, setImgSrc] = useState<string>('/images/default-image.png'); //이미지url
+  const [activeTab, setActiveTab] = useState('allTab'); //탭상태
 
+  const openCategory = () => SetIsRigionModal(true);
+  const closeCategory = () => SetIsRigionModal(false);
+
+  const onClickTab = (tab: string) => {
+    setActiveTab(tab);
+  };
   //useMutation(추가)
   const AlbumAddMutation = useMutation({
     mutationFn: addAlbumList,
@@ -34,24 +45,6 @@ const AlbumList = () => {
       queryClient.invalidateQueries({ queryKey: ['photo'] });
     }
   });
-
-  const OnChangePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 옵셔널 체이닝
-    // e.target.files가 있으면 우항 실행
-    // 없으면 undefined
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    // 로딩이 완료되면 실행할 콜백 함수 등록
-    fileReader.onload = (e) => {
-      if (typeof e.target?.result === 'string') {
-        setImgSrc(e.target.result);
-        AlbumAddMutation.mutate(e.target.result);
-        alert('앨범이 추가되었습니다.');
-      }
-    };
-  };
 
   //useQuery
   const {
@@ -66,29 +59,72 @@ const AlbumList = () => {
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading data</div>;
 
+  const filterRigionTitle = [...new Set(albumListData?.map((item) => item.region))];
+  const filterRigionPhoto = filterRigionTitle.map(
+    (title) => albumListData?.filter((item) => item.region === title) || []
+  );
+
   return (
     <div>
       <h2 className="m-[24px] border-b border-black pb-[10px] text-[24px] font-bold">나의 추억들</h2>
+
       <ul className="mx-[24px] flex gap-[10px]">
-        <li className="cursor-pointer">전체보기</li>
-        <li className="cursor-pointer">지역별</li>
-      </ul>
-      <ul className="mt-4 grid grid-cols-3 gap-[5px]">
-        <li>
-          <input id="fileInput" className="hidden" type="file" accept="image/*" onChange={OnChangePhoto} />
-          <label
-            htmlFor="fileInput"
-            className="flex h-[200px] cursor-pointer items-center justify-center bg-[#D9D9D9] text-[50px] text-white hover:bg-[red]"
-          >
-            +
-          </label>
+        <li
+          className={`albumTab cursor-pointer ${activeTab === 'allTab' ? 'active' : ''}`}
+          onClick={() => onClickTab('allTab')}
+        >
+          전체보기
         </li>
-        {albumListData?.map((item, index) => (
-          <li key={item.id} className="h-[200px] overflow-hidden border border-black">
-            <Image src={item.photoImg} alt="" width={200} height={150} priority className="h-full" />
-          </li>
-        ))}
+        <li
+          className={`albumTab cursor-pointer ${activeTab === 'rigionTab' ? 'active' : ''}`}
+          onClick={() => onClickTab('rigionTab')}
+        >
+          지역별
+        </li>
+        <button onClick={openCategory} className="cursor-pointer bg-[#e5e7eb] px-[15px] py-[10px] hover:bg-[#e1e1e1]">
+          모달확인용버튼
+        </button>
       </ul>
+      {/* 전체보기 */}
+      {activeTab === 'allTab' && (
+        <ul className="mt-4 grid grid-cols-3 gap-[5px]">
+          <AddPhotoBtn setImgSrc={setImgSrc} AlbumAddMutation={AlbumAddMutation} />
+          {albumListData?.map((item, index) => (
+            <li key={item.id} className="h-[200px] overflow-hidden border border-black">
+              <Image src={item.photoImg} alt="" width={200} height={150} priority className="h-full" />
+            </li>
+          ))}
+        </ul>
+      )}
+      {/* 지역별 */}
+      {activeTab === 'rigionTab' && (
+        <section className="m-[24px] flex flex-col">
+          <div className="flex flex-col gap-[50px]">
+            {/* TODO 불러오기 */}
+            {filterRigionTitle.map((item, index) => (
+              <div key={item}>
+                <div className="flex items-center border-b border-black">
+                  <h2 className="pb-[10px] text-[24px] font-bold">{item}</h2>
+                  <span>{filterRigionPhoto[index]?.length}</span>
+                </div>
+                {/* TODO 불러오기 */}
+                <ul className="mt-4 grid grid-cols-3 gap-[5px]">
+                  {/* TODO 불러오기 */}
+                  <AddPhotoBtn setImgSrc={setImgSrc} AlbumAddMutation={AlbumAddMutation} />
+                  {/* TODO 슬라이드형식? && 지역별 필터링*/}
+                  {filterRigionPhoto[index]?.map((item, index) => (
+                    <li key={item.id} className="h-[200px] overflow-hidden border border-black">
+                      <Image src={item.photoImg} alt="" width={200} height={150} priority className="h-full" />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+      {/* 팝업 */}
+      {isRigionModal && <CategoryModal closeCategory={closeCategory} />}
     </div>
   );
 };
