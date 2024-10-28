@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
 import browserClient from '@/utils/supabase/client';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
@@ -12,7 +12,7 @@ import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 
 interface StampActivePropsType {
   address: AddressPropsType;
-  // setVisit: Dispatch<SetStateAction<Boolean>>;
+  setVisit: Dispatch<SetStateAction<Boolean>>;
   visit: Boolean;
   stampList: any[] | null | undefined; //TODO: any 추후수정
 }

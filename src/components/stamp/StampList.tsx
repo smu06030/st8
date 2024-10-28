@@ -5,6 +5,7 @@ import StampItem from '@/components/stamp/StampItem';
 import { useQuery } from '@tanstack/react-query';
 import { fetchUser } from '@/utils/fetchUser';
 import { fetchStampActive } from '@/apis/fetchStampList';
+import { StampData } from '@/types/stamp';
 
 const StampList = () => {
   const [userId, setUserId] = useState<string | null>(null);
@@ -28,19 +29,18 @@ const StampList = () => {
       if (userId) {
         return await fetchStampActive(userId);
       } else {
-        return null;
+        return [];
       }
     },
     enabled: !!userId // userId가 있을 때만 쿼리 실행
   });
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Failed to load</div>;
-  // console.log('stampList', stampList);
+  if (error) return <div>로드실패</div>;
+  if (!stampList) return console.log('데이터가 없습니다.');
+  console.log('stampList', stampList);
 
-  // const regionFolder = stampList?.filter((region)=> region. )
   const groupRegion = [...new Set(stampList?.map((item) => item.region))];
 
-  // console.log('regionFolder', groupRegion);
   return (
     <ul className="grid grid-cols-2 gap-4">
       {groupRegion?.map((list) => <StampItem key={list} list={list} stampList={stampList} />)}

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import StampActive from './StampActive';
 import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { fetchUser } from '@/utils/fetchUser'; //로그인유저
 import { fetchStampList } from '@/apis/fetchStampList'; //로그인유저의 스템프 항목 가져오기
 import Link from 'next/link';
@@ -17,6 +17,7 @@ const MyLocation = () => {
   const [visit, setVisit] = useState<Boolean>(false); //방문상태
 
   //로그인유저아이디 패치불러오기
+  //TODO: 체크유저없어도 실행댐.. 이유가 fetchStampList안에 패치유저 한번더함 수정필요
   useEffect(() => {
     const checkUser = async () => {
       const user = await fetchUser();
@@ -34,9 +35,9 @@ const MyLocation = () => {
   } = useQuery({
     queryKey: ['nowStamp', address?.address_name], //고유키값
     queryFn: async () => {
-      if (userId) {
-        return await fetchStampList(address?.address_name!);
-      } else return null;
+      // if (userId) {
+      return await fetchStampList(address?.address_name!);
+      // } else return null;
     }, // 주소를 인자로 넘김
     enabled: !!userId
   });
@@ -127,6 +128,13 @@ const MyLocation = () => {
           </button>
         </Link>
       )}
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(event) => {
+          const file = event.target.files?.[0];
+        }}
+      />
     </>
   );
 };

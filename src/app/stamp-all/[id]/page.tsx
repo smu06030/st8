@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { fetchUser } from '@/utils/fetchUser';
 import { fetchStampActive } from '@/apis/fetchStampList';
@@ -8,13 +9,14 @@ import { fetchStampActive } from '@/apis/fetchStampList';
 interface StampDetailPropsType {
   id: string;
   region: string;
-  created_at: string;
+  created_at?: string;
+  address: string;
 }
 
 const StampItemDetail = () => {
   const params = useParams();
-  const region = decodeURIComponent(params.id);
-  const [stampData, setStampData] = useState<StampDetailPropsType | null>(null);
+  const region = decodeURIComponent((params.id as string[]).toString());
+  const [stampData, setStampData] = useState<StampDetailPropsType[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
 
   // console.log('userId', userId);
@@ -26,15 +28,15 @@ const StampItemDetail = () => {
     };
     checkUser();
   }, []);
-  console.log('params', params);
+  // console.log('params', params);
   useEffect(() => {
     if (userId) {
       const fetchData = async () => {
         try {
           const res = await fetchStampActive(userId);
           const decodedParams = region;
-          const res2 = res?.filter((item) => item.region === decodedParams);
-          setStampData(res2);
+          const stampFilterList = res?.filter((item) => item.region === decodedParams) || [];
+          setStampData(stampFilterList);
         } catch (error) {
           console.error(error);
         }
@@ -43,34 +45,44 @@ const StampItemDetail = () => {
     }
   }, [params.id, userId]);
   console.log('stampData', stampData);
-  if (!stampData) return <div>로딩 중...</div>;
 
   // 가장 오래된 날짜 구하기
-  const oldestDate =
-    //list.created_at 이게 없다고 나옴 -> 이유는 스트링이라 비교불가 TypeError: list.created_at.reduce is not a function
-    stampData.reduce((oldest, current) => {
-      const oldestDate = new Date(oldest.created_at); //가장오래된날짜 담을거
-      const currentDate = new Date(current.created_at); //비교대상날짜
-      return currentDate < oldestDate ? current : oldest;
-    });
+  const oldestDate = stampData.reduce((oldest, current) => {
+    const oldestDate = oldest.created_at ? new Date(oldest.created_at) : new Date();
+    const currentDate = current.created_at ? new Date(current.created_at) : new Date();
+    return currentDate < oldestDate ? current : oldest;
+  }, stampData[0]);
 
-  console.log('oldestDate', oldestDate);
-
+  if (!stampData) return <div>로딩 중...</div>;
+  // console.log('oldestDate', oldestDate);
+  //TODO :이미지명이랑 키값 동일하게하기
   return (
-    <div>
-      <h2>지역</h2>
-      <p>{region}</p>
-      <h2>갯수</h2>
-      <p>{stampData.length}</p>
-      <h2>처음찍은 일시</h2>
-      <p>{new Date(oldestDate.created_at).toLocaleDateString()}</p>
-      <h2>장소</h2>
-      {stampData.map((list) => (
-        <div key={list.id}>
-          <div>{list.address}</div>
-          <div>{new Date(list.created_at).toLocaleDateString()}</div>
-        </div>
-      ))}
+    <div className="flex flex-col gap-[20px] p-[24px]">
+      <Image src={`/images/${region}.png`} alt={region} width={300} height={300} />
+      <li className="flex items-center justify-between">
+        <h2 className="text-[20px] font-bold">지역</h2>
+        <p>{region}</p>
+      </li>
+      <li className="flex items-center justify-between">
+        <h2 className="text-[20px] font-bold">갯수</h2>
+        <p>{stampData.length}</p>
+      </li>
+      <li className="flex items-center justify-between">
+        <h2 className="text-[20px] font-bold">처음찍은 일시</h2>
+        <p>{oldestDate?.created_at ? new Date(oldestDate.created_at).toLocaleDateString() : 'N/A'}</p>
+      </li>
+      <li className="flex flex-col">
+        <h2 className="text-[20px] font-bold">장소</h2>
+        <ul>
+          {/* TODO :날짜순서 수정하기 */}
+          {stampData.map((list) => (
+            <li key={list.id} className="flex items-center justify-between">
+              <p>{list.address}</p>
+              <span>{list.created_at ? new Date(list.created_at).toLocaleDateString() : 'N/A'}</span>
+            </li>
+          ))}
+        </ul>
+      </li>
     </div>
   );
 };
