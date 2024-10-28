@@ -1,4 +1,4 @@
-import MyPageLayout from '@/components/mypage/MyPageLayout';
+import MyPageLayout from '@/components/mypage/TempMyPageLayout';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
