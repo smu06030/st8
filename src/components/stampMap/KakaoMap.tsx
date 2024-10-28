@@ -7,6 +7,8 @@ import { useCallback, useState } from 'react';
 import { PathType } from '@/types/kakaomap/CoordRegionCode.type';
 import ReSetttingMapBounds from '@/components/stampMap/ReSetttingMapBounds';
 import ScrollButtonSwiper from '@/components/stampMap/ScrollButtonSwiper';
+import KakaoMapMarker from './KakaoMapMarker';
+import useStamp from '@/hooks/useStamp';
 
 const KakaoMap = () => {
   const [location, setLocation] = useState({
@@ -18,8 +20,11 @@ const KakaoMap = () => {
   const [selectedPath, setSelectedPath] = useState<PathType>([]);
   // 선택된 슬라이드 index
   const [activeIndex, setActiveIndex] = useState(0);
-  // 폴리곤 list
+  // 폴리곤 리스트
   const { geoList, setGeoList } = useGeoData();
+  // 스탬프 리스트
+  const { stampList } = useStamp();
+  console.log(stampList, geoList);
 
   // 폴리곤 hover 업데이트
   const updateHoverState = useCallback(
@@ -29,7 +34,7 @@ const KakaoMap = () => {
     [setGeoList]
   );
 
-  const handlePolygonPath = (path: PathType, index: number) => {
+  const updatePolygonPath = (path: PathType, index: number) => {
     setActiveIndex(index + 1); // 클릭한 폴리곤 index 저장
     setSelectedPath(path); // 클릭한 폴리곤의 path를 상태에 저장
   };
@@ -60,7 +65,7 @@ const KakaoMap = () => {
                 fillOpacity={0.2} // 채우기 불투명도
                 onMouseover={() => updateHoverState(key, true)}
                 onMouseout={() => updateHoverState(key, false)}
-                onClick={() => handlePolygonPath(path, index)}
+                onClick={() => updatePolygonPath(path, index)}
               />
             );
           })
@@ -76,6 +81,8 @@ const KakaoMap = () => {
             fillOpacity={0.1}
           />
         )}
+
+        {stampList?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} />)}
 
         <ReSetttingMapBounds paths={selectedPath} />
       </Map>

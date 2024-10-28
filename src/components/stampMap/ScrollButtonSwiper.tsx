@@ -46,7 +46,7 @@ const ScrollButtonSwiper = ({ activeIndex, setActiveIndex, setSelectedPath }: Sc
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         slidesPerView={5}
-        spaceBetween={30}
+        // spaceBetween={30}
         centeredSlides={true}
         grabCursor={true}
         pagination={{
