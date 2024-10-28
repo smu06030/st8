@@ -15,10 +15,32 @@ const config: Config = {
         secondary: '23C9FF',
         main: '1D1D1D',
         defaultcolor: '#E8E8E8'
+      },
+      fontFamily: {
+        thin: ['Pretendard-Thin', 'sans-serif'],
+        extraLight: ['Pretendard-ExtraLight', 'sans-serif'],
+        light: ['Pretendard-Light', 'sans-serif'],
+        regular: ['Pretendard-Regular', 'sans-serif'],
+        medium: ['Pretendard-Medium', 'sans-serif'],
+        semiBold: ['Pretendard-SemiBold', 'sans-serif'],
+        bold: ['Pretendard-Bold', 'sans-serif'],
+        extraBold: ['Pretendard-ExtraBold', 'sans-serif'],
+        black: ['Pretendard-Black', 'sans-serif']
       }
     },
     screens: {
       lg: '1024px' // 데스크탑 추후 수정가능
+    },
+    animation: {
+      fadeUpText: 'fadeUp .8s ease-in-out',
+      fadeUpBtn: 'fadeUp 1.2s ease-in-out'
+    },
+
+    keyframes: {
+      fadeUp: {
+        from: { opacity: '0', transform: 'translateY(100%)' },
+        to: { opacity: '1', transform: 'translateY(0)' }
+      }
     }
   },
   plugins: []

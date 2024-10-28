@@ -1,23 +1,29 @@
 import React from 'react';
 import Link from 'next/link';
-
+import Image from 'next/image';
 interface StampCardPropsType {
-  stamp: {
+  list: string;
+  stampList: {
     id: string;
-    userid: string;
+    user_id: string;
     region: string;
     visited: boolean;
-    date: string;
-  };
+    created_at: string;
+    stampimg: string;
+  }[];
 }
 
-const StampItem = ({ stamp }: StampCardPropsType) => {
-  // console.log('stamp', stamp);
+const StampItem = ({ list, stampList }: StampCardPropsType) => {
+  const stampImg = [...new Set(stampList.filter((item) => item.region === list).map((item) => item.stampimg))];
+  const stampImgSt = stampImg.join(', ');
+  const stampLength = stampList.filter((item) => item.region === list).length;
+
   return (
     <li className="flex flex-col items-center justify-center bg-[#ccc] p-3">
-      <Link href={`/stamp-all/${stamp.id}`}>
-        <div>{stamp.region}</div>
-        <div>{stamp.date}</div>
+      <Link href={`/stamp-all/${list}`}>
+        <Image src={stampImgSt} alt={list} width={300} height={300} />
+        <div className="font-black">{list}</div>
+        <span>{stampLength}개</span>
       </Link>
     </li>
   );
