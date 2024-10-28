@@ -15,6 +15,17 @@ const config: Config = {
         secondary: '23C9FF',
         main: '1D1D1D',
         defaultcolor: '#E8E8E8'
+      },
+      fontFamily: {
+        thin: ['Pretendard-Thin', 'sans-serif'],
+        extraLight: ['Pretendard-ExtraLight', 'sans-serif'],
+        light: ['Pretendard-Light', 'sans-serif'],
+        regular: ['Pretendard-Regular', 'sans-serif'],
+        medium: ['Pretendard-Medium', 'sans-serif'],
+        semiBold: ['Pretendard-SemiBold', 'sans-serif'],
+        bold: ['Pretendard-Bold', 'sans-serif'],
+        extraBold: ['Pretendard-ExtraBold', 'sans-serif'],
+        black: ['Pretendard-Black', 'sans-serif']
       }
     },
     screens: {
