@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .swiper {
+    @apply m-4 w-[600px] bg-transparent;
+  }
+
+  .swiper-slide {
+    @apply flex w-[120px] items-center justify-center p-2.5 text-center text-[#6f6f6f];
+  }
+
+  .swiper-slide-active {
+    @apply cursor-pointer font-bold text-black;
+  }
+}
+.swiper-pagination {
+  --swiper-pagination-bottom: 0;
+}
+
+.swiper-pagination-bullet {
+  --swiper-pagination-color: #1f2937;
+}
