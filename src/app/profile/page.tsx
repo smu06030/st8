@@ -1,4 +1,4 @@
-import Profile from '@/components/mypage/ProfileInfo';
+import Profile from '@/components/mypage/TempProfileInfo';
 import { Metadata } from 'next';
 import React from 'react';
 
