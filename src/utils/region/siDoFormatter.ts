@@ -2,9 +2,7 @@ import { GeoData } from '@/types/kakaomap/CoordRegionCode.type';
 
 // 시도 이름 포멧
 export const siDoFormatter = (geoList: GeoData[]) => {
-  return geoList.map((geo) => {
-    ({ ...geo, name: formattedName(geo) });
-  });
+  return geoList.map((geo) => ({ ...geo, name: formattedName(geo) }));
 };
 
 export const formattedName = (geo: GeoData) => {
