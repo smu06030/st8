@@ -14,6 +14,7 @@ interface StampActivePropsType {
   address: AddressPropsType;
   setVisit: Dispatch<SetStateAction<Boolean>>;
   visit: Boolean;
+  location: { lat: number; lng: number };
   stampList: any[] | null | undefined; //TODO: any 추후수정
 }
 
@@ -21,18 +22,22 @@ interface StampActivePropsType {
 const addStampList = async ({
   regionName,
   address,
-  userId
+  userId,
+  location
 }: {
   address: string;
   regionName: string;
   userId: string;
+  location: { lat: number; lng: number };
 }) => {
   const { data, error } = await browserClient.from('stamp').insert({
     user_id: userId,
     region: regionName,
     address: address,
     stampimg: STAMPIMG_REGION_NAME[regionName],
-    visited: true
+    visited: true,
+    lat: location.lat,
+    lng: location.lng
   });
   if (error) console.log('error', error);
   return data;
@@ -45,9 +50,8 @@ const deleteStampList = async ({ address, userId }: { address: string; userId: s
   return data;
 };
 
-const StampActive = ({ address, stampList, setVisit, visit }: StampActivePropsType) => {
+const StampActive = ({ address, stampList, setVisit, visit, location }: StampActivePropsType) => {
   const queryClient = useQueryClient();
-  //   const router = useRouter();
 
   const [userId, setUserId] = useState<string | null>(null);
 
@@ -78,7 +82,7 @@ const StampActive = ({ address, stampList, setVisit, visit }: StampActivePropsTy
   //mutate 추가이벤트(방문안한 상태에서 누르면)
   const onClickVisitedAdd = (address: string, regionName: string) => {
     if (userId) {
-      StampAddMutation.mutate({ address, regionName, userId });
+      StampAddMutation.mutate({ address, regionName, userId, location });
       setVisit(true);
       alert('스탬프가 찍혔습니다.');
     } else {

@@ -15,6 +15,7 @@ const MyLocation = () => {
   const [error, setError] = useState<string | null>(null); //에러상태
   const [address, setAddress] = useState<AddressPropsType | null>(null); //현재주소
   const [visit, setVisit] = useState<Boolean>(false); //방문상태
+  const [location, setLocation] = useState({});
 
   //로그인유저아이디 패치불러오기
   //TODO: 체크유저없어도 실행댐.. 이유가 fetchStampList안에 패치유저 한번더함 수정필요
@@ -82,7 +83,7 @@ const MyLocation = () => {
         //사용자의 현재 위치를 요청
         async (position) => {
           const { latitude, longitude } = position.coords;
-          // setLocation({ lat: latitude, lng: longitude });
+          setLocation({ lat: latitude, lng: longitude });
           await getAddress(latitude, longitude); //위도경도 인자로 넘기기
         },
         (err) => {
@@ -101,7 +102,7 @@ const MyLocation = () => {
 
   if (isLoading) return <div>Loading...</div>;
   if (stampListError) return <div>Failed to load</div>;
-
+  console.log('location', location);
   return (
     <>
       <h1>내 위치</h1>
@@ -109,7 +110,7 @@ const MyLocation = () => {
         <>
           <p>현재 내 위치 : {address.address_name}</p>
 
-          <StampActive address={address} stampList={stampList} setVisit={setVisit} visit={visit} />
+          <StampActive address={address} stampList={stampList} setVisit={setVisit} visit={visit} location={location} />
         </>
       ) : (
         <p>{error ? `Error: ${error}` : '위치를 가져오고있습니다...'}</p>

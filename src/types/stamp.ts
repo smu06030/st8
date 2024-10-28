@@ -5,4 +5,5 @@ export interface StampData {
   visited: boolean;
   created_at: string;
   stampimg: string;
+  location: { lat: number; lng: number };
 }
