@@ -22,7 +22,7 @@ const StampItem = ({ list, stampList }: StampCardPropsType) => {
     <li className="flex flex-col items-center justify-center bg-[#ccc] p-3">
       <Link href={`/stamp-all/${list}`}>
         <Image src={stampImgSt} alt={list} width={300} height={300} />
-        <div>{list}</div>
+        <div className="font-black">{list}</div>
         <span>{stampLength}개</span>
       </Link>
     </li>
