@@ -19,6 +19,17 @@ const config: Config = {
     },
     screens: {
       lg: '1024px' // 데스크탑 추후 수정가능
+    },
+    animation: {
+      fadeUpText: 'fadeUp .8s ease-in-out',
+      fadeUpBtn: 'fadeUp 1.2s ease-in-out'
+    },
+
+    keyframes: {
+      fadeUp: {
+        from: { opacity: '0', transform: 'translateY(100%)' },
+        to: { opacity: '1', transform: 'translateY(0)' }
+      }
     }
   },
   plugins: []

@@ -2,17 +2,61 @@
 
 import { useEffect, useState } from 'react';
 import StampActive from './StampActive';
-import { AddressPropsType } from '@/types/stamp/AddressPropsType';
+import { AddressPropsType } from '@/types/stamp/AddressProps.types';
+import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
+import { useQuery } from '@tanstack/react-query';
+import { fetchUser } from '@/utils/fetchUser'; //로그인유저
+import { fetchStampList } from '@/apis/fetchStampList'; //로그인유저의 스템프 항목 가져오기
+import Link from 'next/link';
+
+interface LocationType {
+  lat: number;
+  lng: number;
+}
 
 const MyLocation = () => {
-  // const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null); //위치상태
+  // const queryClient = useQueryClient();
+  const [userId, setUserId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null); //에러상태
-  const [address, setAddress] = useState<AddressPropsType | null>(null); //현재주소
+  const [address, setAddress] = useState<AddressPropsType>(); //현재주소
+  const [visit, setVisit] = useState<boolean>(false); //방문상태
+  const [location, setLocation] = useState<LocationType>({ lat: 0, lng: 0 });
+
+  //로그인유저아이디 패치불러오기
+  //TODO: 체크유저없어도 실행댐.. 이유가 fetchStampList안에 패치유저 한번더함 수정필요
+  useEffect(() => {
+    const checkUser = async () => {
+      const user = await fetchUser();
+      if (!user) return;
+      else setUserId(user);
+    };
+    checkUser();
+  }, []);
+
+  //useQuery
+  const {
+    data: stampList,
+    isLoading,
+    error: stampListError
+  } = useQuery({
+    queryKey: ['nowStamp', address?.address_name], //고유키값
+    queryFn: async () => {
+      if (address && address.address_name) {
+        return await fetchStampList(address.address_name!);
+      } else return null;
+    }, // 주소를 인자로 넘김
+    enabled: !!userId
+  });
+
+  useEffect(() => {
+    if (stampList && stampList.length > 0) {
+      setVisit(stampList[0].visited);
+    }
+  }, [stampList]);
+  console.log('visited', visit);
 
   const getAddress = async (lat: number, lng: number) => {
-    //주소가져오는함수
     try {
-      //https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}
       //주소 데이터를 요청
       const res = await fetch(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}`, {
         headers: {
@@ -37,28 +81,6 @@ const MyLocation = () => {
     }
   };
 
-  //가져오기 실패했을때 상황에 따른 에러메세지(추후 분리)
-  const showErrorMsg = (error: GeolocationPositionError | null | string) => {
-    if (error instanceof GeolocationPositionError) {
-      switch (error.code) {
-        case error.PERMISSION_DENIED:
-          setError('Geolocation API의 사용 요청을 거부했습니다.');
-          break;
-        case error.POSITION_UNAVAILABLE:
-          setError('위치 정보를 사용할 수 없습니다.');
-          break;
-        case error.TIMEOUT:
-          setError('위치 정보를 가져오기 위한 요청이 허용 시간을 초과했을습니다.');
-          break;
-        default:
-          setError('알 수 없는 오류가 발생했습니다. 관리자에게 문의하세요.');
-          break;
-      }
-    } else if (typeof error === 'string') {
-      console.error('Error:', error);
-    }
-  };
-
   useEffect(() => {
     if ('geolocation' in navigator) {
       //현 브라우저가 Geolocation API를 지원하는지 확인
@@ -66,11 +88,11 @@ const MyLocation = () => {
         //사용자의 현재 위치를 요청
         async (position) => {
           const { latitude, longitude } = position.coords;
-          // setLocation({ lat: latitude, lng: longitude });
+          setLocation({ lat: latitude, lng: longitude });
           await getAddress(latitude, longitude); //위도경도 인자로 넘기기
         },
         (err) => {
-          showErrorMsg(err.message);
+          showErrorMsg(err.message, setError);
         },
         {
           enableHighAccuracy: true, // 정확도 우선 모드
@@ -83,17 +105,42 @@ const MyLocation = () => {
     }
   }, []);
 
+  if (isLoading) return <div>Loading...</div>;
+  if (stampListError) return <div>Failed to load</div>;
+  console.log('location', location);
   return (
     <>
       <h1>내 위치</h1>
       {address ? (
         <>
           <p>현재 내 위치 : {address.address_name}</p>
-          <StampActive address={address} />
+
+          <StampActive address={address} stampList={stampList} setVisit={setVisit} visit={visit} location={location} />
         </>
       ) : (
         <p>{error ? `Error: ${error}` : '위치를 가져오고있습니다...'}</p>
       )}
+      {visit && (
+        <Link href={'/stamp-all'}>
+          <p className={`py-[20px] text-center ${visit && 'animate-fadeUpText'}`}>
+            테스트 텍스트입니당~~~~~
+            <br />
+            테스트 텍스트입니당~~~~~
+          </p>
+          <button
+            className={`w-full rounded-[16px] bg-[#292929] py-[20px] text-[20px] text-[#fff] ${visit && 'animate-fadeUpBtn'}`}
+          >
+            스탬프 확인하러 가기
+          </button>
+        </Link>
+      )}
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(event) => {
+          const file = event.target.files?.[0];
+        }}
+      />
     </>
   );
 };
@@ -101,6 +148,14 @@ const MyLocation = () => {
 export default MyLocation;
 
 /**
+ * 스탬프 확인하러가기 버튼
+ -> 도장 활성화 됬을때 나타나기
+ -> 로그인유저의 전체항목 가져와(로그인유저패치함수,fetchStampList)
+ -> 
+
+
+
+
  * 추후지울예정
 Geolocation API는 CSR에서만 작동할 수 있다.
 Geolocation API는 비동기적으로 동작한다.
