@@ -1,12 +1,9 @@
 import React from 'react';
 import StampList from '@/components/stamp/StampList';
-import StampRecentList from '@/components/stamp/StampRecentList';
 
 const StampAll = () => {
   return (
     <div className="p-[24px]">
-      <h3>최근에 얻은 스탬프</h3>
-      <StampRecentList />
       <h3>전체 스탬프</h3>
       <StampList />
     </div>
@@ -24,12 +21,9 @@ export default StampAll;
  더미데이터 만들기(완료)
  -
 
- step2 (get)
- 최근 얻은 스탬프 날짜기반 뿌리기 (임의 1달)(완료)
-
- step3 (post)
-스템프별 카테고리 생성하기 
+ step2 (post)
+스템프별 카테고리 생성하기 (완료)
 스탬프 찍는 모션 레퍼찾기
-내 위치 api 연결하기 - 주스텐드로 전역관리하기
+내 위치 api 연결하기(완료)
 
  */
