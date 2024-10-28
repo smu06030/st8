@@ -9,14 +9,22 @@ const MyPageLayout = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <h1 className="font-bold">마이페이지</h1>
-      <h3> {nickname ? nickname : 'guest'}님</h3>
-      <button onClick={onHandleLogout}>로그아웃</button>
+    <div className="flex flex-col items-start justify-center p-10">
+      <div className="flex items-start space-x-4">
+        <h1 className="text-xl font-bold">{nickname ? nickname : 'guest'}님</h1>
+        <h6 className="text-defaultcolor cursor-pointer">수정하기</h6>
+      </div>
+
+      <div className="mt-2 flex items-start space-x-4">
+        <p>최근 여행지</p>
+        <p>과거의 오늘</p>
+      </div>
+
+      <button onClick={onHandleLogout} className="mt-4">
+        로그아웃
+      </button>
     </div>
   );
 };
 
 export default MyPageLayout;
-
-//마이페이지에 들어갈 다양한 레이아웃 추가 예정
