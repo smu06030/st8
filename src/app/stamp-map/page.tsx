@@ -8,7 +8,7 @@ import { PathType } from '@/types/kakaomap/CoordRegionCode.type';
 import ReSetttingMapBounds from '@/components/kakaomap/ReSetttingMapBounds';
 import ScrollButtonSwiper from '@/components/kakaomap/ScrollButtonSwiper';
 
-const KakaoMapPage = () => {
+const StampMapPage = () => {
   const [location, setLocation] = useState({
     center: { lat: 35.90701, lng: 127.570667 },
     isPanto: true
@@ -81,4 +81,4 @@ const KakaoMapPage = () => {
     </>
   );
 };
-export default KakaoMapPage;
+export default StampMapPage;
