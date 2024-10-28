@@ -22,23 +22,36 @@ const fetchPlaces = async (): Promise<Record<string, Place[]>> => {
 
   const contentIds = supabaseData.map((item) => item.contentid);
 
-  const allPlaces: Place[] = await Promise.all(
+  const allPlaces: (Place | null)[] = await Promise.all(
     contentIds.map(async (contentid) => {
-      const response = await fetch(
-        `https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${contentid}&contentTypeId=12&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=50&pageNo=1&serviceKey=${OPEN_KEY}`
-      );
-      const json = await response.json();
+      try {
+        const response = await fetch(
+          `https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${contentid}&contentTypeId=12&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=50&pageNo=1&serviceKey=${OPEN_KEY}`
+        );
 
-      const placeData = supabaseData.find((item) => item.contentid === contentid);
-      return {
-        firstimage: json.response.body.items.item[0]?.firstimage ?? null,
-        city: placeData?.city ?? null,
-        supabaseText: placeData?.text ?? null
-      };
+        if (!response.ok) {
+          console.error(`API 요청 실패: ${response.status} ${response.statusText}`);
+          return null;
+        }
+
+        const json = await response.json();
+        const placeData = supabaseData.find((item) => item.contentid === contentid);
+
+        return {
+          firstimage: json.response.body.items.item[0]?.firstimage ?? null,
+          city: placeData?.city ?? null,
+          supabaseText: placeData?.text ?? null
+        };
+      } catch (error) {
+        console.error('JSON 파싱 또는 API 요청 중 오류 발생:', error);
+        return null;
+      }
     })
   );
 
-  const groupedByCity: Record<string, Place[]> = allPlaces.reduce<Record<string, Place[]>>((acc, place) => {
+  const validPlaces: Place[] = allPlaces.filter((place): place is Place => place !== null);
+
+  const groupedByCity: Record<string, Place[]> = validPlaces.reduce<Record<string, Place[]>>((acc, place) => {
     const city = place.city || '기타';
     if (!acc[city]) acc[city] = [];
     acc[city].push(place);
@@ -67,7 +80,6 @@ const RecommendedPlaces = async () => {
                   key={index}
                   className="relative min-w-[300px] max-w-xs flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 shadow-md"
                 >
-                  {/* 북마크 버튼 왼쪽 상단 */}
                   <button className="absolute left-2 top-2 z-10 rounded-full bg-white p-2 shadow-md">
                     <FaBookmark size={16} className="text-gray-600" />
                   </button>
@@ -80,8 +92,7 @@ const RecommendedPlaces = async () => {
                       objectFit="cover"
                       className="rounded-t-lg"
                     />
-                    {/* 텍스트 오버레이 오른쪽 하단 */}
-                    <div className="absolute bottom-2 right-2 rounded bg-opacity-60 p-2 text-white">
+                    <div className="absolute bottom-2 right-2 rounded bg-black bg-opacity-60 p-2 text-white">
                       <h3 className="text-sm font-semibold">{place.supabaseText}</h3>
                     </div>
                   </div>
