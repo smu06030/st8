@@ -134,13 +134,6 @@ const MyLocation = () => {
           </button>
         </Link>
       )}
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(event) => {
-          const file = event.target.files?.[0];
-        }}
-      />
     </>
   );
 };
