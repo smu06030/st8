@@ -49,7 +49,7 @@ const LoginForm = () => {
             type="email"
             placeholder="이메일을 입력해주세요"
             {...register('email', { required: '이메일을 입력해주세요' })}
-            className="border-defaultcolor h-auto w-[326px] border p-3"
+            className="h-auto w-[326px] border border-defaultcolor p-3"
           />
           {errors.email && <p className="mt-1 text-red-500">{errors.email.message}</p>}
         </div>
@@ -60,11 +60,11 @@ const LoginForm = () => {
             type="password"
             placeholder="비밀번호를 입력해주세요"
             {...register('password', { required: '비밀번호를 입력해주세요' })}
-            className="border-defaultcolor h-auto w-[326px] border p-3"
+            className="h-auto w-[326px] border border-defaultcolor p-3"
           />
         </div>
 
-        <button type="submit" className="bg-defaultcolor h-auto w-[326px] p-3 font-bold text-gray-500">
+        <button type="submit" className="h-auto w-[326px] bg-defaultcolor p-3 font-bold text-gray-500">
           로그인
         </button>
       </form>
