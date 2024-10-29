@@ -11,6 +11,7 @@ import KakaoMapMarker from './KakaoMapMarker';
 import useStamp from '@/hooks/useStamp';
 import Loading from '@/app/stamp-map/loading';
 import { StampType } from '@/types/stampMap/Stamp.types';
+import KakaoMapOverlay from './KakaoMapOverlay';
 
 const KakaoMap = () => {
   const [location, setLocation] = useState({
@@ -101,7 +102,7 @@ const KakaoMap = () => {
         )}
 
         {filteredStamps?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} />)}
-
+        <KakaoMapOverlay stampList={stampList}/>
         <ReSetttingMapBounds paths={selectedPath} />
       </Map>
       <ScrollButtonSwiper
