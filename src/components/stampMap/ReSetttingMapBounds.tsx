@@ -1,6 +1,6 @@
 'use client';
 
-import { PathType } from '@/types/kakaomap/CoordRegionCode.type';
+import { PathType } from '@/types/stampMap/CoordRegionCode.types';
 import { useEffect, useMemo } from 'react';
 import { useMap } from 'react-kakao-maps-sdk';
 

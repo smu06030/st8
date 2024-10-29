@@ -18,7 +18,7 @@ const LoginForm = () => {
 
   const onHandleLogin = async (data: LoginFormInputs) => {
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch('/api/auth/auth-login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
