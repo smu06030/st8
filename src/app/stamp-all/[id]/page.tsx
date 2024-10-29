@@ -90,5 +90,6 @@ const StampItemDetail = () => {
 export default StampItemDetail;
 
 /**
+ ! : null이 아님을 보증
  as 타입 : 타입단언(특정타입임을 명시적으로 알려줌->확신하기애매할때)
  */

@@ -28,7 +28,7 @@ export const fetchStampList = async (address: string) => {
 //   }
 // };
 
-//로그인유저의 스템프 항목 전부 + 스탬프 활성화된 데이터만
+// 로그인유저의 스템프 항목 전부 + 스탬프 활성화된 데이터만
 export const fetchStampActive = async (userId: string) => {
   const { data, error } = await browserClient.from('stamp').select('*').eq('user_id', userId).eq('visited', true);
   if (error) {
