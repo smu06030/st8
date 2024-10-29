@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
-import useProfile from './ProfileManager';
 import StampNum from './StampNum';
+import useProfile from './ProfileManager';
 
 const MyPageLayout = () => {
   const { nickname } = useProfile(); // 프로필 정보와 로그아웃 기능 가져오기
