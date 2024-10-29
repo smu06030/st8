@@ -1,5 +1,5 @@
+import MyPageLayout from '@/components/mypage/MyPageLayout';
 import { Metadata } from 'next';
-import MyPageLayout from '../../components/myPage/MyPageLayout';
 
 export const metadata: Metadata = {
   title: '마이 페이지',
@@ -7,7 +7,11 @@ export const metadata: Metadata = {
 };
 
 const MyPage = () => {
-  return <MyPageLayout />;
+  return (
+    <div>
+      <MyPageLayout />
+    </div>
+  );
 };
 
 export default MyPage;
