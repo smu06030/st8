@@ -7,12 +7,17 @@ import { useStore } from 'zustand';
 export const MapStoreContext = createContext<MapStore | undefined>(undefined);
 
 export type MapProviderPropsType = React.PropsWithChildren<MapPropsType>;
+
 // provider 생성
-export const MapProvider = ({ children, ...props }: MapProviderPropsType) => {
+export const MapProvider = ({
+  children
+}: Readonly<{
+  children: React.ReactNode;
+}>) => {
   const storeRef = useRef<MapStore>();
 
   if (!storeRef.current) {
-    storeRef.current = createMapStore(props);
+    storeRef.current = createMapStore();
   }
 
   return <MapStoreContext.Provider value={storeRef.current}>{children}</MapStoreContext.Provider>;

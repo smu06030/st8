@@ -1,62 +1,19 @@
 'use client';
 
 import { Map, Polygon } from 'react-kakao-maps-sdk';
-import useGeoData from '@/hooks/useGeoData';
 import { MAP_COLOR } from '@/constants/mapColor';
-import { useCallback, useEffect, useState } from 'react';
-import { PathType } from '@/types/stampMap/CoordRegionCode.types';
+import { useState } from 'react';
 import ReSetttingMapBounds from '@/components/stampMap/ReSetttingMapBounds';
 import ScrollButtonSwiper from '@/components/stampMap/ScrollButtonSwiper';
 import KakaoMapMarker from './KakaoMapMarker';
 import useStamp from '@/hooks/useStamp';
-import Loading from '@/app/stamp-map/loading';
-import { StampType } from '@/types/stampMap/Stamp.types';
 import KakaoMapOverlay from './KakaoMapOverlay';
+import useKakaoMap from '@/hooks/useKakaoMap';
 
 const KakaoMap = () => {
-  const [location, setLocation] = useState({
-    center: { lat: 35.90701, lng: 127.570667 },
-    isPanto: true
-  });
-
-  // 선택된 경로 상태 추가
-  const [selectedPath, setSelectedPath] = useState<PathType>([]);
-  // 선택된 슬라이드 index
-  const [activeIndex, setActiveIndex] = useState(0);
-  // 스탬프 리스트 지역 필터링을 위한 상태
-  const [filteredStamps, setFilteredStamps] = useState<StampType[] | undefined>([]);
-  // 폴리곤 리스트
-  const { geoList, siDoName, setGeoList } = useGeoData();
-  // 스탬프 리스트
-  const { stampList, isPending } = useStamp();
-
-  useEffect(() => {
-    if (stampList) {
-      setFilteredStamps(stampList);
-    }
-  }, [stampList]);
-
-  // 폴리곤 hover 업데이트
-  const updateHoverState = useCallback(
-    (key: number, isHover: boolean) => {
-      setGeoList((prevGeoList) => prevGeoList.map((area) => (area.key === key ? { ...area, isHover } : area)));
-    },
-    [setGeoList]
-  );
-
-  const updatePolygonPath = (path: PathType, index: number) => {
-    setActiveIndex(index + 1); // 클릭한 폴리곤 index 저장
-    setSelectedPath(path); // 클릭한 폴리곤의 path를 상태에 저장
-
-    const selectedArea = siDoName[index].name;
-    const filtered = stampList?.filter((stamp) => stamp.region === selectedArea);
-
-    setFilteredStamps(filtered); // 스탬프 리스트 지역 필터링
-  };
-
-  if (isPending) {
-    return <Loading />;
-  }
+  const { stampList } = useStamp();
+  const { geoList, location, activeIndex, selectedPath, filteredStamps, updateHoverState, updatePolygonPath } =
+    useKakaoMap();
 
   return (
     <>
@@ -102,16 +59,10 @@ const KakaoMap = () => {
         )}
 
         {filteredStamps?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} />)}
-        <KakaoMapOverlay stampList={stampList}/>
+        <KakaoMapOverlay stampList={stampList} />
         <ReSetttingMapBounds paths={selectedPath} />
       </Map>
-      <ScrollButtonSwiper
-        activeIndex={activeIndex}
-        stampList={stampList}
-        setActiveIndex={setActiveIndex}
-        setSelectedPath={setSelectedPath}
-        setFilteredStamps={setFilteredStamps}
-      />
+      <ScrollButtonSwiper />
     </>
   );
 };
