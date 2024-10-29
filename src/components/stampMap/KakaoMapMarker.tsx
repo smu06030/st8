@@ -1,19 +1,8 @@
+import { StampType } from '@/types/stampMap/Stamp.types';
 import React from 'react';
 import { MapMarker, useMap } from 'react-kakao-maps-sdk';
 
-interface KakaoMapMarkerPropsType {
-  address: string;
-  createed_at: string;
-  id: number;
-  lat: number;
-  lng: number;
-  region: string;
-  stampimg: string;
-  user_id: string;
-  visited: boolean;
-}
-
-const KakaoMapMarker = ({ stamp }: { stamp: KakaoMapMarkerPropsType }) => {
+const KakaoMapMarker = ({ stamp }: { stamp: StampType }) => {
   const map = useMap();
 
   return (

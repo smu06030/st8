@@ -3,12 +3,14 @@
 import { Map, Polygon } from 'react-kakao-maps-sdk';
 import useGeoData from '@/hooks/useGeoData';
 import { MAP_COLOR } from '@/constants/mapColor';
-import { useCallback, useState } from 'react';
-import { PathType } from '@/types/kakaomap/CoordRegionCode.type';
+import { useCallback, useEffect, useState } from 'react';
+import { PathType } from '@/types/stampMap/CoordRegionCode.types';
 import ReSetttingMapBounds from '@/components/stampMap/ReSetttingMapBounds';
 import ScrollButtonSwiper from '@/components/stampMap/ScrollButtonSwiper';
 import KakaoMapMarker from './KakaoMapMarker';
 import useStamp from '@/hooks/useStamp';
+import Loading from '@/app/stamp-map/loading';
+import { StampType } from '@/types/stampMap/Stamp.types';
 
 const KakaoMap = () => {
   const [location, setLocation] = useState({
@@ -20,11 +22,18 @@ const KakaoMap = () => {
   const [selectedPath, setSelectedPath] = useState<PathType>([]);
   // 선택된 슬라이드 index
   const [activeIndex, setActiveIndex] = useState(0);
+  // 스탬프 리스트 지역 필터링을 위한 상태
+  const [filteredStamps, setFilteredStamps] = useState<StampType[] | undefined>([]);
   // 폴리곤 리스트
-  const { geoList, setGeoList } = useGeoData();
+  const { geoList, siDoName, setGeoList } = useGeoData();
   // 스탬프 리스트
-  const { stampList } = useStamp();
-  console.log(stampList, geoList);
+  const { stampList, isPending } = useStamp();
+
+  useEffect(() => {
+    if (stampList) {
+      setFilteredStamps(stampList);
+    }
+  }, [stampList]);
 
   // 폴리곤 hover 업데이트
   const updateHoverState = useCallback(
@@ -37,7 +46,16 @@ const KakaoMap = () => {
   const updatePolygonPath = (path: PathType, index: number) => {
     setActiveIndex(index + 1); // 클릭한 폴리곤 index 저장
     setSelectedPath(path); // 클릭한 폴리곤의 path를 상태에 저장
+
+    const selectedArea = siDoName[index].name;
+    const filtered = stampList?.filter((stamp) => stamp.region === selectedArea);
+
+    setFilteredStamps(filtered); // 스탬프 리스트 지역 필터링
   };
+
+  if (isPending) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -82,11 +100,17 @@ const KakaoMap = () => {
           />
         )}
 
-        {stampList?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} />)}
+        {filteredStamps?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} />)}
 
         <ReSetttingMapBounds paths={selectedPath} />
       </Map>
-      <ScrollButtonSwiper activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelectedPath={setSelectedPath} />
+      <ScrollButtonSwiper
+        activeIndex={activeIndex}
+        stampList={stampList}
+        setActiveIndex={setActiveIndex}
+        setSelectedPath={setSelectedPath}
+        setFilteredStamps={setFilteredStamps}
+      />
     </>
   );
 };

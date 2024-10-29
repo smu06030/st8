@@ -8,15 +8,24 @@ import '@/styles/swiper.css';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import useGeoData from '@/hooks/useGeoData';
-import { PathType } from '@/types/kakaomap/CoordRegionCode.type';
+import { PathType } from '@/types/stampMap/CoordRegionCode.types';
+import { StampType } from '@/types/stampMap/Stamp.types';
 
 interface ScrollButtonSwiperPropsType {
   activeIndex: number;
+  stampList: StampType[] | undefined;
   setActiveIndex: (activeIndex: number) => void;
   setSelectedPath: (path: PathType) => void;
+  setFilteredStamps: (stampList: StampType[] | undefined) => void;
 }
 
-const ScrollButtonSwiper = ({ activeIndex, setActiveIndex, setSelectedPath }: ScrollButtonSwiperPropsType) => {
+const ScrollButtonSwiper = ({
+  activeIndex,
+  stampList,
+  setActiveIndex,
+  setSelectedPath,
+  setFilteredStamps
+}: ScrollButtonSwiperPropsType) => {
   const { siDoName } = useGeoData();
   const swiperRef = useRef<any>(null); // Swiper 인스턴스 참조
 
@@ -28,17 +37,13 @@ const ScrollButtonSwiper = ({ activeIndex, setActiveIndex, setSelectedPath }: Sc
 
   const onSlideChangeHandler = (swiper: SwiperProps) => {
     const activeIndex = swiper.activeIndex;
-
     setActiveIndex(activeIndex);
+    setSelectedPath(activeIndex === 0 ? siDoName.flatMap((sido) => sido.path) : siDoName[activeIndex - 1].path);
 
-    if (activeIndex === 0) {
-      // 전체 선택 시 모든 path 병합 후 설정
-      const allPaths = siDoName.flatMap((sido) => sido.path);
-      setSelectedPath(allPaths);
-    } else {
-      // 특정 시/도 선택 시 해당 path 설정
-      setSelectedPath(siDoName[activeIndex - 1].path);
-    }
+    const filtered =
+      activeIndex === 0 ? stampList : stampList?.filter((stamp) => stamp.region === siDoName[activeIndex - 1].name);
+
+    setFilteredStamps(filtered);
   };
 
   return (

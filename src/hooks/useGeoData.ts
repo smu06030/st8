@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { pathListFormatter } from '@/utils/region/pathListFormatter';
-import { GeoData } from '@/types/kakaomap/CoordRegionCode.type';
-import { siDoFormatter } from '@/utils/region/siDoFormatter';
+import { GeoData } from '@/types/stampMap/CoordRegionCode.types';
+import { geoListSiDoFormatter } from '@/utils/region/siDoFormatter';
 
 const useGeoData = () => {
   const [geoList, setGeoList] = useState<GeoData[]>([]);
@@ -9,7 +9,7 @@ const useGeoData = () => {
   // geoList 메모이제이션
   const memoizedGeoList = useMemo(() => geoList, [geoList]);
   // geoList 이름 필터링
-  const siDoName = useMemo(() => siDoFormatter(geoList), [geoList]);
+  const siDoName = useMemo(() => geoListSiDoFormatter(geoList), [geoList]);
 
   useEffect(() => {
     const data = pathListFormatter();
