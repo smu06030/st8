@@ -1,4 +1,5 @@
 import KakaoMap from '@/components/stampMap/KakaoMap';
+import { MapProvider } from '@/providers/mapStoreProvider';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -7,6 +8,10 @@ export const metadata: Metadata = {
 };
 
 const StampMapPage = () => {
-  return <KakaoMap />;
+  return (
+    <MapProvider>
+      <KakaoMap />
+    </MapProvider>
+  );
 };
 export default StampMapPage;
