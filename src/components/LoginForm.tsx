@@ -51,7 +51,6 @@ const LoginForm = () => {
             {...register('email', { required: '이메일을 입력해주세요' })}
             className="h-auto w-[326px] border border-defaultcolor p-3"
           />
-          {errors.email && <p className="mt-1 text-red-500">{errors.email.message}</p>}
         </div>
 
         <div>
