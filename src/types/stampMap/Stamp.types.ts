@@ -1,6 +1,6 @@
 export type StampType = {
   address: string;
-  createed_at: string;
+  created_at: string;
   id: number;
   lat: number;
   lng: number;
