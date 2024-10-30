@@ -76,7 +76,7 @@ const Profile = () => {
   return (
     <div className="flex flex-col items-start space-y-2 p-6">
       <div className="flex items-center space-x-2">
-        <h1 className="text-xl font-bold">{nickname ? nickname : 'guest'}님</h1>
+        <h1 className="font-bold text-xl">{nickname ? nickname : 'guest'}님</h1>
         <span className="text-l font-normal">의 내 정보입니다.</span>
       </div>
       <p className="mt-2">이름</p>
@@ -86,9 +86,9 @@ const Profile = () => {
         value={nickname || ''}
         onChange={(e) => setNickname(e.target.value)}
         required
-        className="border-defaultcolor h-auto w-[326px] border p-3"
+        className="h-auto w-[326px] border border-defaultcolor p-3"
       />
-      <button onClick={onHandleUpdate} className="bg-defaultcolor h-auto w-[326px] p-3 font-bold text-gray-500">
+      <button onClick={onHandleUpdate} className="h-auto w-[326px] bg-defaultcolor p-3 font-bold text-gray-500">
         수정완료
       </button>
       <button onClick={onHandleLogout} className="text-gray-500">
