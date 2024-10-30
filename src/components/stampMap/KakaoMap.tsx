@@ -2,16 +2,13 @@
 
 import { Map, Polygon } from 'react-kakao-maps-sdk';
 import { MAP_COLOR } from '@/constants/mapColor';
-import { useState } from 'react';
 import ReSetttingMapBounds from '@/components/stampMap/ReSetttingMapBounds';
 import ScrollButtonSwiper from '@/components/stampMap/ScrollButtonSwiper';
 import KakaoMapMarker from './KakaoMapMarker';
-import useStamp from '@/hooks/useStamp';
 import KakaoMapOverlay from './KakaoMapOverlay';
 import useKakaoMap from '@/hooks/useKakaoMap';
 
 const KakaoMap = () => {
-  const { stampList } = useStamp();
   const { geoList, location, activeIndex, selectedPath, filteredStamps, updateHoverState, updatePolygonPath } =
     useKakaoMap();
 
@@ -59,7 +56,7 @@ const KakaoMap = () => {
         )}
 
         {filteredStamps?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} />)}
-        <KakaoMapOverlay stampList={stampList} />
+        <KakaoMapOverlay />
         <ReSetttingMapBounds paths={selectedPath} />
       </Map>
       <ScrollButtonSwiper />
