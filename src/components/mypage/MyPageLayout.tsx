@@ -9,7 +9,7 @@ const MyPageLayout = () => {
   return (
     <div className="flex flex-col items-start justify-center p-6">
       <div className="flex items-start space-x-4">
-        <h1 className="text-xl font-bold"> {nickname ? nickname : 'guest'}님</h1>
+        <h1 className="font-bold text-xl"> {nickname ? nickname : 'guest'}님</h1>
         <Link href="/profile">
           <h6 className="cursor-pointer text-gray-500">수정하기</h6>
         </Link>
