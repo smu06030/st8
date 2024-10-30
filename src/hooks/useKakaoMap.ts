@@ -18,8 +18,8 @@ const useKakaoMap = () => {
       setFilteredStamps(stampList);
     }
   }, [stampList]);
-  // 폴리곤 hover 업데이트
 
+  // 폴리곤 hover 업데이트
   const updateHoverState = useCallback(
     (key: number, isHover: boolean) => {
       setGeoList((prevGeoList) => prevGeoList.map((area) => (area.key === key ? { ...area, isHover } : area)));
