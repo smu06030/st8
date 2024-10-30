@@ -46,7 +46,7 @@ const SignupForm = () => {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className="border-defaultcolor h-auto w-[326px] border p-3"
+        className="h-auto w-[326px] border border-defaultcolor p-3"
       />
       <p>비밀번호</p>
       <input
@@ -55,7 +55,7 @@ const SignupForm = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
-        className="border-defaultcolor h-auto w-[326px] border p-3"
+        className="h-auto w-[326px] border border-defaultcolor p-3"
       />
       <p>닉네임</p>
       <input
@@ -64,9 +64,9 @@ const SignupForm = () => {
         value={nickname}
         onChange={(e) => setNickname(e.target.value)}
         required
-        className="border-defaultcolor h-auto w-[326px] border p-3"
+        className="h-auto w-[326px] border border-defaultcolor p-3"
       />
-      <button onClick={onHandleSignup} className="bg-defaultcolor h-auto w-[326px] p-3 font-bold text-gray-500">
+      <button onClick={onHandleSignup} className="h-auto w-[326px] bg-defaultcolor p-3 font-bold text-gray-500">
         회원가입하기
       </button>
     </div>
