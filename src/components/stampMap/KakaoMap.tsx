@@ -7,8 +7,10 @@ import ScrollButtonSwiper from '@/components/stampMap/ScrollButtonSwiper';
 import KakaoMapMarker from './KakaoMapMarker';
 import KakaoMapOverlay from './KakaoMapOverlay';
 import useKakaoMap from '@/hooks/useKakaoMap';
+import { useState } from 'react';
 
 const KakaoMap = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const { geoList, location, activeIndex, selectedPath, filteredStamps, updateHoverState, updatePolygonPath } =
     useKakaoMap();
 
@@ -55,8 +57,8 @@ const KakaoMap = () => {
           />
         )}
 
-        {filteredStamps?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} />)}
-        <KakaoMapOverlay />
+        {filteredStamps?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} setIsOpen={setIsOpen} />)}
+        {isOpen && <KakaoMapOverlay setIsOpen={setIsOpen} />}
         <ReSetttingMapBounds paths={selectedPath} />
       </Map>
       <ScrollButtonSwiper />

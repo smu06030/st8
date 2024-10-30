@@ -1,24 +1,32 @@
 import { useMapStore } from '@/providers/mapStoreProvider';
 import { CustomOverlayMap } from 'react-kakao-maps-sdk';
+import MarketPin from '../../../public/images/marker-pin-01.svg';
 
-const KakaoMapOverlay = () => {
+interface KakaoMapOverlayPropsType {
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const KakaoMapOverlay = ({ setIsOpen }: KakaoMapOverlayPropsType) => {
   const stamp = useMapStore((state) => state.stampInfo);
   // const date = new Date(stamp.created_at).toISOString().replace('T', ' ').substring(0, 19).replace(/-/g, '/');
   return (
     <CustomOverlayMap position={{ lat: stamp.lat, lng: stamp.lng }} yAnchor={1.12} zIndex={10}>
-      <div className="shadow-overlayShadow flex h-[300px] w-[250px] flex-col items-baseline justify-between rounded-md bg-white pt-3">
+      <div className="shadow-overlayShadow flex h-[300px] w-[250px] cursor-pointer flex-col items-baseline justify-between rounded-md bg-white pt-3">
+        <div className="flex w-full flex-row items-center justify-end pl-4 pr-3 text-xs">
+          <div className="inline-flex h-7 w-7 items-center justify-center bg-white p-1">
+            <div
+              className="relative flex h-5 w-5 flex-col items-start justify-start"
+              onClick={() => setIsOpen(false)}
+              title="닫기"
+            >
+              <MarketPin />
+            </div>
+          </div>
+        </div>
         <div className="mb-4 flex w-full items-center justify-center px-4 text-lg">
           <span className="flex h-[100px] w-[100px]">
             <img src={stamp.stampimg} alt={stamp.region} />
           </span>
-          {/* <button className="" onClick={() => setIsOpen(false)} title="닫기"> */}
-          {/* <Close /> */}
-          {/* </button> */}
-          {/* <div className="inline-flex h-7 w-7 items-center justify-center bg-white p-1">
-            <div className="relative flex h-5 w-5 flex-col items-start justify-start">
-              <img className="h-[11.90px] w-[11.90px]" src="https://via.placeholder.com/12x12" />
-            </div>
-          </div> */}
         </div>
         <div className="flex w-full flex-row items-center justify-between px-4 text-xs">
           <div>
