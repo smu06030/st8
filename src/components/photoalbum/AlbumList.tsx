@@ -1,65 +1,56 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import browserClient from '@/utils/supabase/client';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
-import CategoryModal from './CategoryModal';
 import AddPhotoBtn from './AddPhotoBtn';
-
-const fetchAlbum = async () => {
-  const { data, error } = await browserClient.from('album').select('*');
-
-  if (error) {
-    console.error('가져오기 오류4:', error.message);
-  }
-  console.log('data', data);
-  return data;
-};
-
-//뮤테이션 함수 만들기(수파베이스 값 추가)
-const addAlbumList = async (imgSrc: string) => {
-  const { data, error } = await browserClient.from('album').insert({
-    photoImg: imgSrc
-  });
-  if (error) console.log('error', error);
-  return data;
-};
-
+import { fetchAlbum } from '@/apis/fetchAlbumList';
+import { addAlbumList } from '@/apis/fetchAlbumList';
+// '/images/default-image.png'
 const AlbumList = () => {
   const queryClient = useQueryClient();
-  const [isRigionModal, SetIsRigionModal] = useState(false); //모달상태
-  const [imgSrc, setImgSrc] = useState<string>('/images/default-image.png'); //이미지url
+  const [imgSrc, setImgSrc] = useState([]); //이미지url  []
   const [activeTab, setActiveTab] = useState('allTab'); //탭상태
+  const [tabState, setTabState] = useState('');
 
-  const openCategory = () => SetIsRigionModal(true);
-  const closeCategory = () => SetIsRigionModal(false);
+  useEffect(() => {
+    console.log(`${activeTab}로 변경`);
+    // setTabState()
+  }, [activeTab]);
 
+  //탭엑션
   const onClickTab = (tab: string) => {
     setActiveTab(tab);
   };
+
   //useMutation(추가)
   const AlbumAddMutation = useMutation({
     mutationFn: addAlbumList,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['photo'] });
+    },
+    onError: (error) => {
+      console.error('MutationError:', error);
     }
   });
 
-  //useQuery
+  //useQuery : 앨범전체테이블 = albumListData
   const {
     data: albumListData,
-    isLoading,
+    isPending,
     isError
   } = useQuery({
-    queryKey: ['photo'], //고유키값
-    queryFn: fetchAlbum // 주소를 인자로 넘김
+    queryKey: ['photo'],
+    queryFn: fetchAlbum
   });
-  console.log('albumListData', albumListData);
-  if (isLoading) return <div>Loading...</div>;
+  //   console.log('albumListData', albumListData);
+  if (isPending) return <div>Loading...</div>;
   if (isError) return <div>Error loading data</div>;
 
-  const filterRigionTitle = [...new Set(albumListData?.map((item) => item.region))];
+  //유저가 등록한 지역이름들(중복_지역이름제거)
+  const filterRigionTitle = albumListData ? [...new Set(albumListData?.map((item) => item.region))] : [];
+  //유저가 등록한 지역의 포토들
   const filterRigionPhoto = filterRigionTitle.map(
     (title) => albumListData?.filter((item) => item.region === title) || []
   );
@@ -68,6 +59,7 @@ const AlbumList = () => {
     <div>
       <h2 className="m-[24px] border-b border-black pb-[10px] text-[24px] font-bold">나의 추억들</h2>
 
+      {/* 전체보기-지역별 탭버튼 */}
       <ul className="mx-[24px] flex gap-[10px]">
         <li
           className={`albumTab cursor-pointer ${activeTab === 'allTab' ? 'active' : ''}`}
@@ -81,17 +73,21 @@ const AlbumList = () => {
         >
           지역별
         </li>
-        <button onClick={openCategory} className="cursor-pointer bg-[#e5e7eb] px-[15px] py-[10px] hover:bg-[#e1e1e1]">
-          모달확인용버튼
-        </button>
       </ul>
       {/* 전체보기 */}
       {activeTab === 'allTab' && (
         <ul className="mt-4 grid grid-cols-3 gap-[5px]">
-          <AddPhotoBtn setImgSrc={setImgSrc} AlbumAddMutation={AlbumAddMutation} />
+          <AddPhotoBtn
+            imgSrc={imgSrc}
+            setImgSrc={setImgSrc}
+            AlbumAddMutation={AlbumAddMutation}
+            activeTab={activeTab}
+          />
           {albumListData?.map((item, index) => (
             <li key={item.id} className="h-[200px] overflow-hidden border border-black">
-              <Image src={item.photoImg} alt="" width={200} height={150} priority className="h-full" />
+              {item.photoImg && (
+                <Image src={item.photoImg} alt="" width={200} height={150} priority className="h-full" />
+              )}
             </li>
           ))}
         </ul>
@@ -100,7 +96,6 @@ const AlbumList = () => {
       {activeTab === 'rigionTab' && (
         <section className="m-[24px] flex flex-col">
           <div className="flex flex-col gap-[50px]">
-            {/* TODO 불러오기 */}
             {filterRigionTitle.map((item, index) => (
               <div key={item}>
                 <div className="flex items-center border-b border-black">
@@ -110,11 +105,19 @@ const AlbumList = () => {
                 {/* TODO 불러오기 */}
                 <ul className="mt-4 grid grid-cols-3 gap-[5px]">
                   {/* TODO 불러오기 */}
-                  <AddPhotoBtn setImgSrc={setImgSrc} AlbumAddMutation={AlbumAddMutation} />
+                  <AddPhotoBtn
+                    imgSrc={imgSrc}
+                    setImgSrc={setImgSrc}
+                    AlbumAddMutation={AlbumAddMutation}
+                    activeTab={activeTab}
+                    item={item}
+                  />
                   {/* TODO 슬라이드형식? && 지역별 필터링*/}
-                  {filterRigionPhoto[index]?.map((item, index) => (
+                  {filterRigionPhoto[index]?.map((item) => (
                     <li key={item.id} className="h-[200px] overflow-hidden border border-black">
-                      <Image src={item.photoImg} alt="" width={200} height={150} priority className="h-full" />
+                      {item.photoImg && (
+                        <Image src={item.photoImg} alt="" width={200} height={150} priority className="h-full" />
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -123,8 +126,6 @@ const AlbumList = () => {
           </div>
         </section>
       )}
-      {/* 팝업 */}
-      {isRigionModal && <CategoryModal closeCategory={closeCategory} />}
     </div>
   );
 };
