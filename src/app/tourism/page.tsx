@@ -26,9 +26,31 @@ const RecommendedPlaces = async () => {
               {places.map((place, index) => (
                 <PlaceCard
                   key={index}
+<<<<<<< HEAD
                   imageUrl={place.firstimage ? place.firstimage : '/placeholder.png'}
                   description={place.supabaseText || '여행지 정보 없음'}
                 />
+=======
+                  className="shadow-md relative min-w-[300px] max-w-xs flex-shrink-0 overflow-hidden rounded-lg bg-gray-200"
+                >
+                  <button className="shadow-md absolute left-2 top-2 z-10 rounded-full bg-white p-2">
+                    <FaBookmark size={16} className="text-gray-600" />
+                  </button>
+
+                  <div className="relative h-48 w-full">
+                    <Image
+                      src={place.firstimage ? place.firstimage : '/placeholder.png'}
+                      alt={place.supabaseText || '이미지 설명 없음'}
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-t-lg"
+                    />
+                    <div className="absolute bottom-2 right-2 rounded bg-black bg-opacity-60 p-2 text-white">
+                      <h3 className="text-sm font-semibold">{place.supabaseText}</h3>
+                    </div>
+                  </div>
+                </div>
+>>>>>>> 1f289ffa9c6b133bc1838c3b0e3ee91ab8e6e297
               ))}
             </div>
           </div>
