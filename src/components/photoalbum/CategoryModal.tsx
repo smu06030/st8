@@ -25,7 +25,7 @@ const CategoryModal = ({ onHandleUpload, setRegionCate }: CategoryNodalType) => 
               ))}
             </ul>
           </div>
-          <button onClick={() => onHandleUpload([])} className="bg-[#666666] px-[103px] py-[22px] text-white">
+          <button onClick={() => onHandleUpload()} className="bg-[#666666] px-[103px] py-[22px] text-white">
             업로드
           </button>
           <label className="flex items-center">
