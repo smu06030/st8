@@ -17,5 +17,4 @@ const useAuthStatus = () => {
 };
 
 export default useAuthStatus;
-
 //로그인 여부 확인 훅

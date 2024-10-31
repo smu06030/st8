@@ -21,7 +21,7 @@ const LoginForm = () => {
 
   const onHandleLogin = async (data: LoginFormInputs) => {
     try {
-      const result = await login(data.email, data.password); // Server Action 호출
+      const result = await login(data.email, data.password);
       if (result) {
         router.push('/mypage');
       }
