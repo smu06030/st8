@@ -3,6 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useSocialLogin } from '@/hooks/useSocialLogin';
+import { login } from '@/utils/supabase/auth';
 
 interface LoginFormInputs {
   email: string;
@@ -10,7 +11,7 @@ interface LoginFormInputs {
 }
 
 const LoginForm = () => {
-  const { loginWithProvider } = useSocialLogin(); //hook사용
+  const { loginWithProvider } = useSocialLogin(); // 소셜 로그인 훅
   const {
     register,
     handleSubmit,
@@ -20,21 +21,12 @@ const LoginForm = () => {
 
   const onHandleLogin = async (data: LoginFormInputs) => {
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-
-      const result = await response.json();
-
-      if (result.error) {
-        alert(result.error);
-      } else {
+      const result = await login(data.email, data.password); // Server Action 호출
+      if (result) {
         router.push('/mypage');
       }
-    } catch (err) {
-      alert('로그인 중 오류가 발생했습니다.');
+    } catch (error) {
+      alert('로그인 중 오류가 발생했습니다: ');
     }
   };
 
