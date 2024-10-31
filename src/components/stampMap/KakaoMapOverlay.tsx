@@ -11,7 +11,7 @@ const KakaoMapOverlay = ({ setIsOpen }: KakaoMapOverlayPropsType) => {
   // const date = new Date(stamp.created_at).toISOString().replace('T', ' ').substring(0, 19).replace(/-/g, '/');
   return (
     <CustomOverlayMap position={{ lat: stamp.lat, lng: stamp.lng }} yAnchor={1.12} zIndex={10}>
-      <div className="shadow-overlayShadow flex h-[300px] w-[250px] cursor-pointer flex-col items-baseline justify-between rounded-md bg-white pt-3">
+      <div className="flex h-[300px] w-[250px] cursor-pointer flex-col items-baseline justify-between rounded-md bg-white pt-3 shadow-overlayShadow">
         <div className="flex w-full flex-row items-center justify-end pl-4 pr-3 text-xs">
           <div className="inline-flex h-7 w-7 items-center justify-center bg-white p-1">
             <div
@@ -44,7 +44,7 @@ const KakaoMapOverlay = ({ setIsOpen }: KakaoMapOverlayPropsType) => {
             e.stopPropagation();
             // navigate(`/detail/${stamp.contentId}`);
           }}
-          className="mt-4 h-[48px] w-full rounded-b-md bg-primary text-white hover:bg-[#ffd447]"
+          className="mt-4 h-[48px] w-full rounded-b-md bg-primary-400 text-white hover:bg-[#ffd447]"
         >
           앨범보기
         </button>

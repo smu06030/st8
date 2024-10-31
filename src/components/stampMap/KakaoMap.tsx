@@ -5,14 +5,14 @@ import { MAP_COLOR } from '@/constants/mapColor';
 import ReSetttingMapBounds from '@/components/stampMap/ReSetttingMapBounds';
 import ScrollButtonSwiper from '@/components/stampMap/ScrollButtonSwiper';
 import KakaoMapMarker from './KakaoMapMarker';
-import KakaoMapOverlay from './KakaoMapOverlay';
 import useKakaoMap from '@/hooks/useKakaoMap';
-import { useState } from 'react';
+import StampModal from '../common/Modal/StampModal';
+import useModal from '@/hooks/useModal';
 
 const KakaoMap = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const { geoList, location, activeIndex, selectedPath, filteredStamps, updateHoverState, updatePolygonPath } =
     useKakaoMap();
+  const { isOpen, openModal, Modal } = useModal();
 
   return (
     <>
@@ -57,10 +57,10 @@ const KakaoMap = () => {
           />
         )}
 
-        {filteredStamps?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} setIsOpen={setIsOpen} />)}
-        {isOpen && <KakaoMapOverlay setIsOpen={setIsOpen} />}
-        <ReSetttingMapBounds paths={selectedPath} />
+        {filteredStamps?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} openModal={openModal} />)}
+        <ReSetttingMapBounds paths={selectedPath} activeIndex={activeIndex} />
       </Map>
+      <StampModal isOpen={isOpen} Modal={Modal} />
       <ScrollButtonSwiper />
     </>
   );

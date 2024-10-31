@@ -14,4 +14,5 @@ const StampMapPage = () => {
     </MapProvider>
   );
 };
+
 export default StampMapPage;
