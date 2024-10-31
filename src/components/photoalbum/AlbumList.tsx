@@ -1,16 +1,25 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import AddPhotoBtn from './AddPhotoBtn';
-import { fetchAlbum } from '@/apis/fetchAlbumList';
-import { addAlbumList } from '@/apis/fetchAlbumList';
+import { fetchAlbum, addAlbumList, deleteAlbumList } from '@/apis/fetchAlbumList';
+import ImgModal from './ImgModal';
 
 const AlbumList = () => {
   const queryClient = useQueryClient();
-  const [imgSrc, setImgSrc] = useState<string[]>([]); //이미지url  []
+  const [imgSrc, setImgSrc] = useState<string[]>([]); //이미지url
   const [activeTab, setActiveTab] = useState('allTab'); //탭상태
+  const [imgModal, setImgModal] = useState(false);
+  const [selectedImgUrl, setSelectedImgUrl] = useState('');
+  const [edit, setEdit] = useState(false);
+  const [deleteId, setDeleteId] = useState<number[]>([]);
+
+  const onClickImgModal = (url: string) => {
+    setSelectedImgUrl(url);
+    setImgModal(true);
+  };
 
   //탭엑션
   const onClickTab = (tab: string) => {
@@ -28,6 +37,38 @@ const AlbumList = () => {
       console.error('MutationError:', error);
     }
   });
+
+  //useMutation(삭제)
+  const deleteAlbumListmutation = useMutation({
+    mutationFn: deleteAlbumList,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['photo'] });
+    },
+    onError: (error) => {
+      console.error('삭제 중 오류 발생:', error);
+    }
+  });
+
+  const handleCheckboxChange = (id: number) => {
+    setDeleteId((prev) => {
+      if (prev.includes(id)) {
+        //선택한아이디들에 아이디가 포함되어있으면
+        return prev.filter((item) => item !== id); //아이디중복제거
+      } else {
+        return [...prev, id];
+      }
+    });
+  };
+
+  const onHandleDelete = async () => {
+    if (deleteId.length === 0) {
+      alert('선택된 앨범이 없습니다.');
+      return;
+    } else if (window.confirm('앨범에서 삭제하시겠습니까?')) {
+      await deleteAlbumListmutation.mutate(deleteId);
+      alert('삭제되었습니다.');
+    }
+  };
 
   //useQuery : 앨범전체테이블 = albumListData
   const {
@@ -50,7 +91,6 @@ const AlbumList = () => {
     (title) => albumListData?.filter((item) => item.region === title) || []
   );
 
-  console.log('albumListData', albumListData);
   return (
     <div>
       <h2 className="m-[24px] border-b border-black pb-[10px] font-bold text-[24px]">나의 추억들</h2>
@@ -69,6 +109,14 @@ const AlbumList = () => {
         >
           지역별
         </li>
+        <button className={`text-${edit ? 'red-500' : 'black'}`} onClick={() => setEdit((prev) => !prev)}>
+          편집
+        </button>
+        {edit && (
+          <button className={`text-${edit ? 'red-500' : 'black'}`} onClick={onHandleDelete}>
+            삭제
+          </button>
+        )}
       </ul>
       {/* 전체보기 */}
       {activeTab === 'allTab' ? (
@@ -83,7 +131,25 @@ const AlbumList = () => {
           {albumListData?.map((item, index) => (
             <li key={item.id} className="h-[200px] overflow-hidden border border-black">
               {item.photoImg && (
-                <Image src={item.photoImg} alt="" width={200} height={150} priority className="h-full" />
+                <div>
+                  <Image
+                    onClick={() => onClickImgModal(item.photoImg)}
+                    src={item.photoImg}
+                    alt=""
+                    width={200}
+                    height={150}
+                    priority
+                    className="h-full"
+                  />
+                  {edit && (
+                    <input
+                      type="checkbox"
+                      className="mr-2"
+                      checked={deleteId.includes(item.id)} //배열에 들은 아이디가 있어? 트루펄스
+                      onChange={() => handleCheckboxChange(item.id)}
+                    />
+                  )}
+                </div>
               )}
             </li>
           ))}
@@ -108,7 +174,26 @@ const AlbumList = () => {
                   {filterRigionPhoto[index]?.map((item) => (
                     <li key={item.id} className="h-[200px] overflow-hidden border border-black">
                       {item.photoImg && (
-                        <Image src={item.photoImg} alt="" width={200} height={150} priority className="h-full" />
+                        <div>
+                          <Image
+                            onClick={() => onClickImgModal(item.photoImg)}
+                            src={item.photoImg}
+                            alt=""
+                            width={200}
+                            height={150}
+                            priority
+                            className="h-full"
+                          />
+                          {edit && (
+                            <input
+                              type="checkbox"
+                              className="mr-2"
+                              checked={deleteId.includes(item.id)} //배열에 들은 아이디가 있어?
+                              onChange={() => handleCheckboxChange(item.id)}
+                            />
+                          )}
+                          {/* {imgModal && <ImgModal setImgModal={setImgModal} imgUrl={item.photoImg} />} */}
+                        </div>
                       )}
                     </li>
                   ))}
@@ -118,6 +203,7 @@ const AlbumList = () => {
           </div>
         </section>
       )}
+      {imgModal && <ImgModal setImgModal={setImgModal} selectedImgUrl={selectedImgUrl} />}
     </div>
   );
 };
