@@ -2,40 +2,19 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/utils/supabase/client';
+import useUserNickname from '@/hooks/useUserNickname';
+import supabase from '@/utils/supabase/client';
+import LogoutButton from '../auth/LogoutButton';
 
 const Profile = () => {
-  const supabase = createClient();
-  const [nickname, setNickname] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const { nickname, error: nicknameError } = useUserNickname(); // 닉네임 가져오기 훅 사용
+  const [newNickname, setNewNickname] = useState<string | null>(nickname || ''); // 수정할 닉네임 상태
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-
-        if (sessionError || !sessionData.session) {
-          router.push('/login');
-          return;
-        }
-
-        const userId = sessionData.session.user.id;
-        const { data, error } = await supabase.from('profile').select('nickname').eq('id', userId).single();
-
-        if (error) {
-          setError('프로필 정보를 불러오지 못했습니다.');
-        } else {
-          setNickname(data.nickname);
-        }
-      } catch (fetchError) {
-        console.error('프로필 데이터를 불러오는 중 오류가 발생했습니다:', fetchError);
-        setError('프로필 데이터를 불러오는 중 오류가 발생했습니다.');
-      }
-    };
-
-    fetchProfile();
-  }, [router, supabase]);
+    if (nicknameError) setError(nicknameError); // 훅에서 받은 에러 처리
+  }, [nicknameError]);
 
   const onHandleUpdate = async () => {
     try {
@@ -43,7 +22,11 @@ const Profile = () => {
       if (!sessionData?.session) return;
 
       const userId = sessionData.session.user.id;
-      const { error } = await supabase.from('profile').update({ nickname }).eq('id', userId);
+
+      // newNickname이 비어 있으면 기존 nickname 사용
+      const nicknameToSave = newNickname?.trim() || nickname;
+
+      const { error } = await supabase.from('profile').update({ nickname: nicknameToSave }).eq('id', userId);
 
       if (error) {
         setError('닉네임 업데이트 중 오류가 발생했습니다.');
@@ -56,44 +39,32 @@ const Profile = () => {
     }
   };
 
-  const onHandleLogout = async () => {
-    try {
-      const response = await fetch('/api/auth/logout', {
-        method: 'POST'
-      });
-
-      const data = await response.json();
-
-      if (data.error) {
-      } else {
-        router.push('/login');
-      }
-    } catch (logoutError) {
-      console.error('로그아웃 중 문제가 발생했습니다:', logoutError);
-    }
-  };
-
   return (
     <div className="flex flex-col items-start space-y-2 p-6">
       <div className="flex items-center space-x-2">
+<<<<<<< HEAD
         <h1 className="font-bold text-xl">{nickname ? nickname : 'guest'}님</h1>
+=======
+        <h1 className="font-bold text-xl">{nickname || 'guest'}님</h1>
+>>>>>>> 1f289ffa9c6b133bc1838c3b0e3ee91ab8e6e297
         <span className="text-l font-normal">의 내 정보입니다.</span>
       </div>
+
       <p className="mt-2">이름</p>
       <input
         type="text"
         placeholder="수정 닉네임을 입력해 주세요."
-        value={nickname || ''}
-        onChange={(e) => setNickname(e.target.value)}
+        value={newNickname || ''}
+        onChange={(e) => setNewNickname(e.target.value)}
         required
         className="h-auto w-[326px] border border-defaultcolor p-3"
       />
       <button onClick={onHandleUpdate} className="h-auto w-[326px] bg-defaultcolor p-3 font-bold text-gray-500">
         수정완료
       </button>
-      <button onClick={onHandleLogout} className="text-gray-500">
-        로그아웃
-      </button>
+      <div className="mt-4">
+        <LogoutButton />
+      </div>
     </div>
   );
 };
