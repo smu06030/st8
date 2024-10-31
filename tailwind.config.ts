@@ -11,9 +11,9 @@ const config: Config = {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
-        primary: 'FFC914',
-        secondary: '23C9FF',
-        main: '1D1D1D',
+        primary: '#FFC914',
+        secondary: '#23C9FF',
+        main: '#1D1D1D',
         defaultcolor: '#E8E8E8'
       },
       fontFamily: {
@@ -27,6 +27,9 @@ const config: Config = {
         extraBold: ['Pretendard-ExtraBold', 'sans-serif'],
         black: ['Pretendard-Black', 'sans-serif']
       }
+    },
+    boxShadow: {
+      overlayShadow: '0 2px 8px rgba(0, 0, 0, 0.25)'
     },
     screens: {
       lg: '1024px' // 데스크탑 추후 수정가능
