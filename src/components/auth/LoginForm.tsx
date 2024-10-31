@@ -32,8 +32,8 @@ const LoginForm = () => {
 
   return (
     <div className="min-h-screen flex-col items-center justify-center bg-[#DDF3FC]">
-      <h1 className="mb-4 text-center font-bold">로그인</h1>
       <form onSubmit={handleSubmit(onHandleLogin)} className="flex flex-col items-center space-y-4">
+        <h1 className="mb-4 text-center font-bold">로그인</h1>
         <input
           {...register('email', { required: '이메일을 입력해주세요' })}
           placeholder="이메일"
