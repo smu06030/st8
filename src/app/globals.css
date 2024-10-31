@@ -18,6 +18,7 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: 'Pretendard-Regular', sans-serif;
+  line-height: normal;
 }
 
 @layer utilities {
@@ -86,8 +87,16 @@ body {
 }
 
 .albumTab {
-  @apply text-black;
+  @apply text-[#9C9C9C];
 }
 .albumTab.active {
-  @apply text-[red];
+  @apply font-black text-[#004157];
+}
+.add-photo-btn::before {
+  content: '사진 추가하기';
+  position: absolute;
+  bottom: -26px;
+  right: 0;
+  font-size: 14px;
+  color: #4f4f4f;
 }
