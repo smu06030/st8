@@ -29,12 +29,7 @@ const CategoryModal = ({ onHandleUpload, setRegionCate }: CategoryNodalType) => 
             업로드
           </button>
           <label className="flex items-center">
-            <input
-              type="checkbox"
-              //   checked={isRegionNotSet}
-              //   onChange={handleCheckboxChange}
-              className="mr-2"
-            />
+            <input type="checkbox" className="mr-2" />
             지역을 설정안할래요
           </label>
         </div>

@@ -5,14 +5,22 @@ import Image from 'next/image';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import AddPhotoBtn from './AddPhotoBtn';
 import { fetchAlbum, addAlbumList, deleteAlbumList } from '@/apis/fetchAlbumList';
+import ImgModal from './ImgModal';
 
 const AlbumList = () => {
   const queryClient = useQueryClient();
   const [imgSrc, setImgSrc] = useState<string[]>([]); //이미지url
   const [activeTab, setActiveTab] = useState('allTab'); //탭상태
+  const [imgModal, setImgModal] = useState(false);
+  const [selectedImgUrl, setSelectedImgUrl] = useState('');
   const [edit, setEdit] = useState(false);
   const [deleteId, setDeleteId] = useState<number[]>([]);
-  // console.log('deleteId', deleteId);
+
+  const onClickImgModal = (url: string) => {
+    setSelectedImgUrl(url);
+    setImgModal(true);
+  };
+
   //탭엑션
   const onClickTab = (tab: string) => {
     setActiveTab(tab);
@@ -83,7 +91,6 @@ const AlbumList = () => {
     (title) => albumListData?.filter((item) => item.region === title) || []
   );
 
-  // console.log('albumListData', albumListData);
   return (
     <div>
       <h2 className="m-[24px] border-b border-black pb-[10px] font-bold text-[24px]">나의 추억들</h2>
@@ -125,7 +132,15 @@ const AlbumList = () => {
             <li key={item.id} className="h-[200px] overflow-hidden border border-black">
               {item.photoImg && (
                 <div>
-                  <Image src={item.photoImg} alt="" width={200} height={150} priority className="h-full" />
+                  <Image
+                    onClick={() => onClickImgModal(item.photoImg)}
+                    src={item.photoImg}
+                    alt=""
+                    width={200}
+                    height={150}
+                    priority
+                    className="h-full"
+                  />
                   {edit && (
                     <input
                       type="checkbox"
@@ -160,7 +175,15 @@ const AlbumList = () => {
                     <li key={item.id} className="h-[200px] overflow-hidden border border-black">
                       {item.photoImg && (
                         <div>
-                          <Image src={item.photoImg} alt="" width={200} height={150} priority className="h-full" />
+                          <Image
+                            onClick={() => onClickImgModal(item.photoImg)}
+                            src={item.photoImg}
+                            alt=""
+                            width={200}
+                            height={150}
+                            priority
+                            className="h-full"
+                          />
                           {edit && (
                             <input
                               type="checkbox"
@@ -169,6 +192,7 @@ const AlbumList = () => {
                               onChange={() => handleCheckboxChange(item.id)}
                             />
                           )}
+                          {/* {imgModal && <ImgModal setImgModal={setImgModal} imgUrl={item.photoImg} />} */}
                         </div>
                       )}
                     </li>
@@ -179,6 +203,7 @@ const AlbumList = () => {
           </div>
         </section>
       )}
+      {imgModal && <ImgModal setImgModal={setImgModal} selectedImgUrl={selectedImgUrl} />}
     </div>
   );
 };
