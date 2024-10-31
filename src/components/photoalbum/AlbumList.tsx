@@ -3,13 +3,20 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
+
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchAlbum, addAlbumList, deleteAlbumList } from '@/apis/fetchAlbumList';
 import ImgModal from '@/components/photoalbum/ImgModal';
 import AddPhotoBtn from '@/components/photoalbum/AddPhotoBtn';
+import Toptitle from '@/components/photoalbum/TopTitle';
+import { useAlbumList, useAlbumAddMutation, useAlbumDeleteMutation } from '@/hooks/useAlbumList';
 
 const AlbumList = () => {
   const queryClient = useQueryClient();
+  const { data: albumListData, isPending, isError } = useAlbumList();
+  const AlbumAddMutation = useAlbumAddMutation();
+  const AlbumDeletemutation = useAlbumDeleteMutation();
+
   const [imgSrc, setImgSrc] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState('allTab');
   const [imgModal, setImgModal] = useState(false);
@@ -36,26 +43,26 @@ const AlbumList = () => {
   };
 
   //useMutation(추가)
-  const AlbumAddMutation = useMutation({
-    mutationFn: addAlbumList,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['photo'] });
-    },
-    onError: (error) => {
-      console.error('MutationError:', error);
-    }
-  });
+  // const AlbumAddMutation = useMutation({
+  //   mutationFn: addAlbumList,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ['photo'] });
+  //   },
+  //   onError: (error) => {
+  //     console.error('MutationError:', error);
+  //   }
+  // });
 
   //useMutation(삭제)
-  const deleteAlbumListmutation = useMutation({
-    mutationFn: deleteAlbumList,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['photo'] });
-    },
-    onError: (error) => {
-      console.error('삭제 중 오류 발생:', error);
-    }
-  });
+  // const AlbumDeletemutation = useMutation({
+  //   mutationFn: deleteAlbumList,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ['photo'] });
+  //   },
+  //   onError: (error) => {
+  //     console.error('삭제 중 오류 발생:', error);
+  //   }
+  // });
 
   //체크이벤트로 아이디값 배열로 담기
   const handleCheckboxChange = (id: number) => {
@@ -75,20 +82,20 @@ const AlbumList = () => {
       alert('선택된 앨범이 없습니다.');
       return;
     } else if (window.confirm('앨범에서 삭제하시겠습니까?')) {
-      await deleteAlbumListmutation.mutate(deleteId);
+      await AlbumDeletemutation.mutate(deleteId);
       alert('삭제되었습니다.');
     }
   };
 
-  //useQuery (앨범전체테이블 = albumListData)
-  const {
-    data: albumListData,
-    isPending,
-    isError
-  } = useQuery({
-    queryKey: ['photo'],
-    queryFn: fetchAlbum
-  });
+  // //useQuery (앨범전체테이블 = albumListData)
+  // const {
+  //   data: albumListData,
+  //   isPending,
+  //   isError
+  // } = useQuery({
+  //   queryKey: ['photo'],
+  //   queryFn: fetchAlbum
+  // });
 
   if (isPending) return <div>Loading...</div>;
   if (isError) return <div>Error loading data</div>;
@@ -102,11 +109,9 @@ const AlbumList = () => {
 
   return (
     <div>
-      <h2 className="mx-[24px] mt-[38px] border-b border-[#9C9C9C] py-[14px] font-black text-[24px] text-[#004157]">
+      {/* <h2 className="mx-[24px] mt-[38px] border-b border-[#9C9C9C] py-[14px] font-black text-[24px] text-[#004157]">
         나의 추억들
       </h2>
-
-      {/* 전체보기-지역별 탭버튼 */}
       <ul className="mx-[24px] flex justify-between">
         <div className="flex">
           <li
@@ -135,7 +140,14 @@ const AlbumList = () => {
             </button>
           )}
         </div>
-      </ul>
+      </ul> */}
+      <Toptitle
+        activeTab={activeTab}
+        edit={edit}
+        onClickTab={onClickTab}
+        setEdit={setEdit}
+        onHandleDelete={onHandleDelete}
+      />
       {/* 전체보기 */}
       {activeTab === 'allTab' ? (
         <ul className="mt-[16px] grid grid-cols-3 gap-[6px]">
@@ -182,6 +194,7 @@ const AlbumList = () => {
               <div key={item}>
                 <div className="flex items-center border-b border-[#9C9C9C]">
                   <h2 className="py-[14px] font-bold text-[24px]">{item}</h2>
+                  <span>{filterRigionPhoto[index]?.length}장</span>
                 </div>
                 <ul className="mt-[16px] grid grid-cols-3 gap-[6px]">
                   <AddPhotoBtn
@@ -191,10 +204,7 @@ const AlbumList = () => {
                     activeTab={activeTab}
                     item={item}
                   />
-                  {/* <Link href={`${NAV_BASE_URL}/setting`}>
-                  <li></li>
-                  </Link> */}
-
+                  {/* 지역별 사진묶음 */}
                   {filterRigionPhoto[index]?.map((item) => (
                     <li
                       key={item.id}
@@ -224,7 +234,6 @@ const AlbumList = () => {
                     </li>
                   ))}
                 </ul>
-                <span>{filterRigionPhoto[index]?.length}장</span>
               </div>
             ))}
           </div>
@@ -236,7 +245,3 @@ const AlbumList = () => {
 };
 
 export default AlbumList;
-
-{
-  /* <Link href={`${NAV_BASE_URL}/setting`}></Link> */
-}

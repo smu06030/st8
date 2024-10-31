@@ -100,3 +100,29 @@ body {
   font-size: 14px;
   color: #4f4f4f;
 }
+
+.modal-swiper .swiper-slide {
+  transition: opacity 0.3s;
+  color: #b5b5b5;
+}
+.modal-swiper .swiper-slide-prev,
+.modal-swiper .swiper-slide-next {
+  font-size: 14px;
+  color: #b5b5b5;
+}
+
+.modal-swiper .swiper-slide-active {
+  color: #004157;
+  font-size: 18px;
+  font-weight: 600;
+}
+.modal-swiper .swiper-wrapper {
+}
+.modal-slide {
+  /* max-height: 50px; */
+  height: 20% !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
