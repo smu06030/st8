@@ -34,7 +34,6 @@ const AlbumList = () => {
   const deleteAlbumListmutation = useMutation({
     mutationFn: deleteAlbumList,
     onSuccess: () => {
-      console.log('성공함?1');
       queryClient.invalidateQueries({ queryKey: ['photo'] });
     },
     onError: (error) => {
@@ -54,9 +53,12 @@ const AlbumList = () => {
   };
 
   const onHandleDelete = async () => {
-    if (window.confirm('앨범에서 삭제하시겠습니까?')) {
+    if (deleteId.length === 0) {
+      alert('선택된 앨범이 없습니다.');
+      return;
+    } else if (window.confirm('앨범에서 삭제하시겠습니까?')) {
       await deleteAlbumListmutation.mutate(deleteId);
-      alert('삭제댐!!!');
+      alert('삭제되었습니다.');
     }
   };
 
