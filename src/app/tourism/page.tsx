@@ -67,7 +67,7 @@ const RecommendedPlaces = async () => {
   return (
     <div className="min-h-screen bg-gray-50 p-4">
       <header className="mb-6 rounded-md bg-blue-500 p-4 text-white">
-        <h1 className="text-xl font-bold">추천 국내 여행지</h1>
+        <h1 className="font-bold text-xl">추천 국내 여행지</h1>
       </header>
 
       <main>
@@ -78,9 +78,9 @@ const RecommendedPlaces = async () => {
               {places.map((place, index) => (
                 <div
                   key={index}
-                  className="relative min-w-[300px] max-w-xs flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 shadow-md"
+                  className="shadow-md relative min-w-[300px] max-w-xs flex-shrink-0 overflow-hidden rounded-lg bg-gray-200"
                 >
-                  <button className="absolute left-2 top-2 z-10 rounded-full bg-white p-2 shadow-md">
+                  <button className="shadow-md absolute left-2 top-2 z-10 rounded-full bg-white p-2">
                     <FaBookmark size={16} className="text-gray-600" />
                   </button>
 

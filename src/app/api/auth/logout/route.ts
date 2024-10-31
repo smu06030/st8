@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
-import supabase from '@/utils/supabase/client';
+import { createClient } from '@/utils/supabase/server';
 
 export async function POST() {
+  const supabase = createClient();
+
   try {
     // Supabase에서 로그아웃 처리
     const { error } = await supabase.auth.signOut();
