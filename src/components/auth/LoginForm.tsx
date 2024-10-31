@@ -31,8 +31,8 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <h1 className="font-bold">로그인</h1>
+    <div className="min-h-screen flex-col items-center justify-center bg-[#DDF3FC]">
+      <h1 className="mb-4 text-center font-bold">로그인</h1>
       <form onSubmit={handleSubmit(onHandleLogin)} className="flex flex-col items-center space-y-4">
         <input
           {...register('email', { required: '이메일을 입력해주세요' })}
@@ -48,12 +48,15 @@ const LoginForm = () => {
           로그인
         </button>
 
-        <button onClick={() => loginWithProvider('kakao')} className="mt-4 h-auto w-[326px] bg-yellow-500 p-3">
-          카카오로 로그인
-        </button>
-        <button onClick={() => loginWithProvider('google')} className="mt-4 h-auto w-[326px] bg-blue-500 p-3">
-          구글로 로그인
-        </button>
+        <div className="flex justify-center space-x-4">
+          <button onClick={() => loginWithProvider('google')} className="shadow-md rounded-full bg-white p-3">
+            <img src="/images/google-icon.png" alt="Google Login" className="h-10 w-10" />
+          </button>
+
+          <button onClick={() => loginWithProvider('kakao')} className="shadow-md rounded-full bg-[#FEE500] p-3">
+            <img src="/images/kakao-icon.png" alt="Kakao Login" className="h-10 w-10 p-1" />
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -39,8 +39,8 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <h1 className="font-bold">회원가입</h1>
+    <div className="min-h-screen flex-col items-center justify-center bg-[#DDF3FC]">
+      <h1 className="mb-4 text-center font-bold">회원가입</h1>
       <form onSubmit={handleSubmit(onHandleSignup)} className="flex flex-col items-center space-y-4">
         <input
           {...register('email', { required: '이메일을 입력해주세요' })}
