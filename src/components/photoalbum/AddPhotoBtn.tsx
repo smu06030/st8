@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, Dispatch, SetStateAction, ChangeEvent } from 'react';
+import { useState, Dispatch, SetStateAction, ChangeEvent } from 'react';
 import CategoryModal from '@/components/photoalbum/CategoryModal';
 
 interface AddAlbumParamsType {
@@ -42,8 +42,8 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
     });
   };
 
-  const onHandleUpload = (imgArr: string[]) => {
-    const imgs = imgArr ? imgArr : imgSrc;
+  const onHandleUpload = (imgArr: string | string[]) => {
+    const imgs = Array.isArray(imgArr) ? imgArr : imgSrc;
     if (imgs.length > 0) {
       imgs.forEach((src) => {
         AlbumAddMutation.mutate({ imgs: src, regionCate });
