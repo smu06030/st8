@@ -11,8 +11,13 @@ export const fetchAlbum = async () => {
   return data;
 };
 
+interface AddAlbumListParams {
+  imgs: string[];
+  regionCate: string;
+}
+
 //뮤테이션 함수 : 수파베이스에 값 추가(이미지url,지역이름)
-export const addAlbumList = async ({ imgs, regionCate }) => {
+export const addAlbumList = async ({ imgs, regionCate }: AddAlbumListParams) => {
   const { data, error } = await browserClient.from('album').insert({
     photoImg: imgs,
     region: regionCate

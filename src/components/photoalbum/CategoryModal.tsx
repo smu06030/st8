@@ -1,8 +1,11 @@
 'use client';
+import { Dispatch, SetStateAction } from 'react';
+interface CategoryNodalType {
+  setRegionCate: Dispatch<React.SetStateAction<string>>;
+  onHandleUpload: (imgArr: string[]) => void;
+}
 
-import React, { useState } from 'react';
-
-const CategoryModal = ({ onHandleUpload, setRegionCate }) => {
+const CategoryModal = ({ onHandleUpload, setRegionCate }: CategoryNodalType) => {
   const cate = ['서울', '경기', '전남', '제주'];
   //   const [selectedRegion, setSelectedRegion] = useState(regionCate);
 
@@ -22,7 +25,7 @@ const CategoryModal = ({ onHandleUpload, setRegionCate }) => {
               ))}
             </ul>
           </div>
-          <button onClick={() => onHandleUpload()} className="bg-[#666666] px-[103px] py-[22px] text-white">
+          <button onClick={() => onHandleUpload([])} className="bg-[#666666] px-[103px] py-[22px] text-white">
             업로드
           </button>
           <label className="flex items-center">
