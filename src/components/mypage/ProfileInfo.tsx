@@ -22,7 +22,11 @@ const Profile = () => {
       if (!sessionData?.session) return;
 
       const userId = sessionData.session.user.id;
-      const { error } = await supabase.from('profile').update({ nickname: newNickname }).eq('id', userId);
+
+      // newNickname이 비어 있으면 기존 nickname 사용
+      const nicknameToSave = newNickname?.trim() || nickname;
+
+      const { error } = await supabase.from('profile').update({ nickname: nicknameToSave }).eq('id', userId);
 
       if (error) {
         setError('닉네임 업데이트 중 오류가 발생했습니다.');
