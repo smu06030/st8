@@ -84,3 +84,10 @@ body {
 .font-pretendard {
   font-family: 'Pretendard-Regular', sans-serif;
 }
+
+.albumTab {
+  @apply text-black;
+}
+.albumTab.active {
+  @apply text-[red];
+}
