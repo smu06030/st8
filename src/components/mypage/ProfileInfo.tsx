@@ -42,11 +42,7 @@ const Profile = () => {
   return (
     <div className="flex flex-col items-start space-y-2 p-6">
       <div className="flex items-center space-x-2">
-<<<<<<< HEAD
-        <h1 className="font-bold text-xl">{nickname ? nickname : 'guest'}님</h1>
-=======
         <h1 className="font-bold text-xl">{nickname || 'guest'}님</h1>
->>>>>>> 1f289ffa9c6b133bc1838c3b0e3ee91ab8e6e297
         <span className="text-l font-normal">의 내 정보입니다.</span>
       </div>
 

@@ -1,13 +1,8 @@
 'use client';
 import Link from 'next/link';
-<<<<<<< HEAD
-import StampNum from './StampNum';
-import useProfile from './ProfileManager';
-=======
 
 import StampNum from './StampNum';
 import useUserNickname from '@/hooks/useUserNickname';
->>>>>>> 1f289ffa9c6b133bc1838c3b0e3ee91ab8e6e297
 
 const MyPageLayout = () => {
   const { nickname, error } = useUserNickname();
