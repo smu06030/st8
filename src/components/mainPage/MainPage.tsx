@@ -5,9 +5,9 @@ const MainPage = () => {
   return (
     <main className="p-6">
       <section className="my-6">
-        <div className="font-semiBold mb-5 text-xl text-[#848484]">지도</div>
+        <div className="mb-5 font-semiBold text-xl text-[#848484]">지도</div>
         <div>
-          <Image src={map} width="50%" height="100%" />
+          <Image src={map} width={100} height={100} alt="지도" priority />
         </div>
       </section>
       <section className="my-6">
