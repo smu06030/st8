@@ -32,14 +32,12 @@ const Toptitle = ({ activeTab, edit, onClickTab, setEdit }: AlbumTopParamsType) 
           </li>
         </div>
         <div>
-          {activeTab === 'allTab' && (
-            <button
-              className={`text-${edit ? 'red-500' : 'black'} px-[12px] py-[18px]`}
-              onClick={() => setEdit((prev) => !prev)}
-            >
-              편집
-            </button>
-          )}
+          <button
+            className={`text-${edit ? 'red-500' : 'black'} px-[12px] py-[18px]`}
+            onClick={() => setEdit((prev) => !prev)}
+          >
+            편집
+          </button>
         </div>
       </ul>
     </div>

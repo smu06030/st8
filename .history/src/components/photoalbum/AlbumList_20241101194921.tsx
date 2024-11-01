@@ -7,21 +7,19 @@ import Link from 'next/link';
 import ImgModal from '@/components/photoalbum/ImgModal';
 import AddPhotoBtn from '@/components/photoalbum/AddPhotoBtn';
 import Toptitle from '@/components/photoalbum/TopTitle';
-import AlbumImgEdit from '@/components/photoalbum/AlbumImgEdit';
-
 import { useAlbumList, useAlbumAddMutation, useAlbumDeleteMutation } from '@/hooks/useAlbumList';
-import useAlbumDelete from '@/hooks/useAlbumDelete';
 import useImgModal from '@/hooks/useImgModal';
 
 const AlbumList = () => {
   const { data: albumListData, isPending, isError } = useAlbumList();
   const AlbumAddMutation = useAlbumAddMutation();
-
+  const AlbumDeletemutation = useAlbumDeleteMutation();
   const { selectedImgUrl, imgModal, onClickImgModal, setImgModal, activeImgId, setActiveImgId } = useImgModal();
-  const { edit, setEdit, deleteId, setDeleteId, handleCheckboxChange, onHandleDelete } = useAlbumDelete();
 
   const [imgSrc, setImgSrc] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState('allTab');
+  const [edit, setEdit] = useState(false);
+  const [deleteId, setDeleteId] = useState<number[]>([]);
 
   //편집안할땐 체크 다 풀기
   useEffect(() => {
@@ -31,6 +29,29 @@ const AlbumList = () => {
   //탭 액션
   const onClickTab = (tab: string) => {
     setActiveTab(tab);
+  };
+
+  //체크이벤트로 아이디값 배열로 담기
+  const handleCheckboxChange = (id: number) => {
+    setDeleteId((prev) => {
+      if (prev.includes(id)) {
+        //선택한아이디들에 아이디가 포함되어있으면
+        return prev.filter((item) => item !== id); //아이디중복제거
+      } else {
+        return [...prev, id];
+      }
+    });
+  };
+
+  //선택한이미지 삭제이벤트(유효성검사)
+  const onHandleDelete = async () => {
+    if (deleteId.length === 0) {
+      alert('선택된 앨범이 없습니다.');
+      return;
+    } else if (window.confirm('앨범에서 삭제하시겠습니까?')) {
+      await AlbumDeletemutation.mutate(deleteId);
+      alert('삭제되었습니다.');
+    }
   };
 
   if (isPending) return <div>Loading...</div>;
@@ -44,7 +65,7 @@ const AlbumList = () => {
   );
   //이미지팝업에 전달할 앨범전체이미지
   const regionPhoto = albumListData;
-
+  console.log('filterRigionPhoto', filterRigionPhoto);
   return (
     <div>
       <Toptitle
@@ -67,7 +88,7 @@ const AlbumList = () => {
           {albumListData?.map((item) => (
             <li
               key={item.id}
-              className={`${edit && deleteId.includes(item.id) && 'border-2 border-[#D22730]'} relative aspect-square overflow-hidden border`}
+              className={`${edit && deleteId.includes(item.id) && 'border-red-500'} relative aspect-square overflow-hidden border`}
             >
               {item.photoImg && (
                 <>
@@ -117,9 +138,7 @@ const AlbumList = () => {
                       }}
                     ></li>
                   </Link>
-                  <span className="absolute bottom-[-26px] right-0 pr-[20%] text-[14px] text-[#4F4F4F]">
-                    {filterRigionPhoto[index]?.length}장
-                  </span>
+                  <span className="absolute bottom-[-26px] right-0 pr-[20%]">{filterRigionPhoto[index]?.length}장</span>
                 </ul>
               </div>
             ))}
@@ -135,7 +154,6 @@ const AlbumList = () => {
           setActiveImgId={setActiveImgId}
         />
       )}
-      {edit && <AlbumImgEdit deleteId={deleteId} onHandleDelete={onHandleDelete} />}
     </div>
   );
 };

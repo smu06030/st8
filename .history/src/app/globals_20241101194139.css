@@ -90,7 +90,7 @@ body {
   @apply text-[#9C9C9C];
 }
 .albumTab.active {
-  @apply font-semiBold text-[#004157];
+  @apply font-black text-[#004157];
 }
 .add-photo-btn::before {
   content: '사진 추가하기';
@@ -116,8 +116,10 @@ body {
   font-size: 18px;
   font-weight: 600;
 }
-
+.modal-swiper .swiper-wrapper {
+}
 .modal-slide {
+  /* max-height: 50px; */
   height: 20% !important;
   display: flex !important;
   flex-direction: column;

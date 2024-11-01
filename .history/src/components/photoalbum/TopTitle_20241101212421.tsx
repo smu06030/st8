@@ -1,14 +1,6 @@
-import { Dispatch } from 'react';
+import React from 'react';
 
-interface AlbumTopParamsType {
-  activeTab: string;
-  edit: boolean;
-  onClickTab: (tab: string) => void;
-  setEdit: Dispatch<React.SetStateAction<boolean>>;
-  onHandleDelete: () => Promise<void>;
-}
-
-const Toptitle = ({ activeTab, edit, onClickTab, setEdit }: AlbumTopParamsType) => {
+const Toptitle = ({ activeTab, edit, onClickTab, setEdit, onHandleDelete }) => {
   return (
     <div>
       <h2 className="mx-[24px] mt-[38px] border-b border-[#9C9C9C] py-[14px] font-semiBold text-[24px] text-[#004157]">
@@ -32,14 +24,17 @@ const Toptitle = ({ activeTab, edit, onClickTab, setEdit }: AlbumTopParamsType) 
           </li>
         </div>
         <div>
-          {activeTab === 'allTab' && (
-            <button
-              className={`text-${edit ? 'red-500' : 'black'} px-[12px] py-[18px]`}
-              onClick={() => setEdit((prev) => !prev)}
-            >
-              편집
+          <button
+            className={`text-${edit ? 'red-500' : 'black'} px-[12px] py-[18px]`}
+            onClick={() => setEdit((prev) => !prev)}
+          >
+            편집
+          </button>
+          {/* {edit && (
+            <button className={`text-${edit ? 'red-500' : 'black'} px-[12px] py-[18px]`} onClick={onHandleDelete}>
+              삭제
             </button>
-          )}
+          )} */}
         </div>
       </ul>
     </div>

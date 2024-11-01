@@ -53,7 +53,7 @@ const RegionDetail = () => {
                   <input
                     type="checkbox"
                     className="absolute right-[10px] top-[10px] h-6 w-6 appearance-none rounded-full border border-gray-300 text-red-500 checked:border-red-500 checked:bg-[red]"
-                    checked={deleteId.includes(item.id)}
+                    checked={deleteId.includes(item.id)} //배열에 들은 아이디가 있어?
                     onChange={() => handleCheckboxChange(item.id)}
                   />
                 )}

@@ -24,14 +24,16 @@ const RegionDetail = () => {
       <h2 className="mx-[24px] mt-[38px] border-b border-[#9C9C9C] py-[14px] font-semiBold text-[24px] text-[#004157]">
         {regionTitle}
       </h2>
-      <ul className="mx-[24px] flex justify-end">
-        <button
-          className={`text-${edit ? 'red-500' : 'black'} px-[12px] py-[18px]`}
-          onClick={() => setEdit((prev) => !prev)}
-        >
-          편집
-        </button>
-      </ul>
+      {edit && (
+        <ul className="mx-[24px] flex justify-between">
+          <button
+            className={`text-${edit ? 'red-500' : 'black'} px-[12px] py-[18px]`}
+            onClick={() => setEdit((prev) => !prev)}
+          >
+            편집
+          </button>
+        </ul>
+      )}
       <ul className="mt-[16px] grid grid-cols-3 gap-[6px]">
         {regionPhoto?.map((item) => (
           <li
@@ -53,7 +55,7 @@ const RegionDetail = () => {
                   <input
                     type="checkbox"
                     className="absolute right-[10px] top-[10px] h-6 w-6 appearance-none rounded-full border border-gray-300 text-red-500 checked:border-red-500 checked:bg-[red]"
-                    checked={deleteId.includes(item.id)}
+                    checked={deleteId.includes(item.id)} //배열에 들은 아이디가 있어?
                     onChange={() => handleCheckboxChange(item.id)}
                   />
                 )}

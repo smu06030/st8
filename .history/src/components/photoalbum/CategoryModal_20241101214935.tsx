@@ -3,7 +3,7 @@
 import { useState, Dispatch, SetStateAction } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Mousewheel } from 'swiper/modules';
-
+// import SwiperCore from 'swiper';
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 import 'swiper/css/mousewheel';
