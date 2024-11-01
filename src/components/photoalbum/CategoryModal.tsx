@@ -1,5 +1,6 @@
 'use client';
-import { Dispatch, SetStateAction } from 'react';
+
+import { useState, Dispatch, SetStateAction } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Mousewheel } from 'swiper';
 // import SwiperCore from 'swiper';
@@ -17,27 +18,42 @@ const CategoryModal = ({ onHandleUpload, setRegionCate }: CategoryNodalType) => 
     '서울',
     '경기',
     '인천',
-    '강원특별자치도',
+    '강원',
     '부산',
     '대구',
     '울산',
-    '세종특별자치시',
+    '세종',
     '충북',
     '충남',
     '대전',
-    '전북특별자치도',
+    '전북',
     '전남',
     '광주',
     '경북',
     '경남',
     '제주'
   ];
+  const [isNotsetSelect, setIsNotsetSelect] = useState(false);
   //   const [selectedRegion, setSelectedRegion] = useState(regionCate);
   const handleSlideChange = (swiper) => {
     const activeIndex = swiper.activeIndex; //활성화된인덱스번호
     const activeRegion = cate[activeIndex]; //선택한 지역이름
     setRegionCate(activeRegion); //선택한 지역이름 저장
   };
+
+  const handleNotSet = () => {
+    setIsNotsetSelect(true);
+    setRegionCate('미설정 지역');
+    if (isNotsetSelect) {
+      //슬라이드 엑티브 제거
+    }
+  };
+
+  // const handleOutsideClick = (e) => {
+  //   if (e.target === e.currentTarget) {
+  //     //닫기
+  //   }
+  // };
 
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-[#363636] bg-opacity-50">
@@ -53,7 +69,6 @@ const CategoryModal = ({ onHandleUpload, setRegionCate }: CategoryNodalType) => 
               <Swiper
                 // loop={true}
                 direction="vertical"
-                // spaceBetween={20}
                 slidesPerView={5}
                 centeredSlides={true}
                 mousewheel={true}
@@ -62,7 +77,6 @@ const CategoryModal = ({ onHandleUpload, setRegionCate }: CategoryNodalType) => 
                 {cate.map((region, index) => (
                   <SwiperSlide key={index} className="modal-slide">
                     <span>{region}</span>
-                    {/* <label>{region}</label> */}
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -77,8 +91,9 @@ const CategoryModal = ({ onHandleUpload, setRegionCate }: CategoryNodalType) => 
             업로드
           </button>
           <label className="mt-[18px] flex items-center justify-center underline">
-            <input type="checkbox" className="" />
-            지역을 설정하지 않을래요
+            <span onClick={handleNotSet} className={`${isNotsetSelect ? 'font-bold' : ''} cursor-pointer"`}>
+              지역을 설정하지 않을래요
+            </span>
           </label>
         </div>
       </div>

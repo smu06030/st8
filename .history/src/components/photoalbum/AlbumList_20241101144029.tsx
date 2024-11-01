@@ -33,6 +33,28 @@ const AlbumList = () => {
     setActiveTab(tab);
   };
 
+  //useMutation(추가)
+  // const AlbumAddMutation = useMutation({
+  //   mutationFn: addAlbumList,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ['photo'] });
+  //   },
+  //   onError: (error) => {
+  //     console.error('MutationError:', error);
+  //   }
+  // });
+
+  //useMutation(삭제)
+  // const AlbumDeletemutation = useMutation({
+  //   mutationFn: deleteAlbumList,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ['photo'] });
+  //   },
+  //   onError: (error) => {
+  //     console.error('삭제 중 오류 발생:', error);
+  //   }
+  // });
+
   //체크이벤트로 아이디값 배열로 담기
   const handleCheckboxChange = (id: number) => {
     setDeleteId((prev) => {

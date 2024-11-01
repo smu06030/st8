@@ -92,14 +92,6 @@ body {
 .albumTab.active {
   @apply font-black text-[#004157];
 }
-.add-photo-btn::before {
-  content: '사진 추가하기';
-  position: absolute;
-  bottom: -26px;
-  right: 0;
-  font-size: 14px;
-  color: #4f4f4f;
-}
 
 .modal-swiper .swiper-slide {
   transition: opacity 0.3s;

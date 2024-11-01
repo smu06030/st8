@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+// import { useMutation, useQueryClient } from '@tanstack/react-query';
+// import { fetchAlbum, addAlbumList, deleteAlbumList } from '@/apis/fetchAlbumList';
 import ImgModal from '@/components/photoalbum/ImgModal';
 import AddPhotoBtn from '@/components/photoalbum/AddPhotoBtn';
 import Toptitle from '@/components/photoalbum/TopTitle';
@@ -11,12 +13,15 @@ import { useAlbumList, useAlbumAddMutation, useAlbumDeleteMutation } from '@/hoo
 import useImgModal from '@/hooks/useImgModal';
 
 const AlbumList = () => {
+  // const queryClient = useQueryClient();
   const { data: albumListData, isPending, isError } = useAlbumList();
   const AlbumAddMutation = useAlbumAddMutation();
   const AlbumDeletemutation = useAlbumDeleteMutation();
 
   const [imgSrc, setImgSrc] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState('allTab');
+  // const [imgModal, setImgModal] = useState(false);
+  // const [selectedImgUrl, setSelectedImgUrl] = useState('');
   const [edit, setEdit] = useState(false);
   const [deleteId, setDeleteId] = useState<number[]>([]);
   const { selectedImgUrl, imgModal, onClickImgModal, setImgModal } = useImgModal();
@@ -28,10 +33,38 @@ const AlbumList = () => {
     }
   }, [edit]);
 
+  //이미지 클릭시 이미지 모달이벤트
+  // const onClickImgModal = (url: string) => {
+  //   setSelectedImgUrl(url);
+  //   setImgModal(true);
+  // };
+
   //탭 액션
   const onClickTab = (tab: string) => {
     setActiveTab(tab);
   };
+
+  //useMutation(추가)
+  // const AlbumAddMutation = useMutation({
+  //   mutationFn: addAlbumList,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ['photo'] });
+  //   },
+  //   onError: (error) => {
+  //     console.error('MutationError:', error);
+  //   }
+  // });
+
+  //useMutation(삭제)
+  // const AlbumDeletemutation = useMutation({
+  //   mutationFn: deleteAlbumList,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ['photo'] });
+  //   },
+  //   onError: (error) => {
+  //     console.error('삭제 중 오류 발생:', error);
+  //   }
+  // });
 
   //체크이벤트로 아이디값 배열로 담기
   const handleCheckboxChange = (id: number) => {

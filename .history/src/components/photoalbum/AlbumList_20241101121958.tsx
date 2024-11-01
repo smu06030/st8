@@ -4,22 +4,25 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { fetchAlbum, addAlbumList, deleteAlbumList } from '@/apis/fetchAlbumList';
 import ImgModal from '@/components/photoalbum/ImgModal';
 import AddPhotoBtn from '@/components/photoalbum/AddPhotoBtn';
 import Toptitle from '@/components/photoalbum/TopTitle';
 import { useAlbumList, useAlbumAddMutation, useAlbumDeleteMutation } from '@/hooks/useAlbumList';
-import useImgModal from '@/hooks/useImgModal';
 
 const AlbumList = () => {
+  // const queryClient = useQueryClient();
   const { data: albumListData, isPending, isError } = useAlbumList();
   const AlbumAddMutation = useAlbumAddMutation();
   const AlbumDeletemutation = useAlbumDeleteMutation();
 
   const [imgSrc, setImgSrc] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState('allTab');
+  const [imgModal, setImgModal] = useState(false);
+  const [selectedImgUrl, setSelectedImgUrl] = useState('');
   const [edit, setEdit] = useState(false);
   const [deleteId, setDeleteId] = useState<number[]>([]);
-  const { selectedImgUrl, imgModal, onClickImgModal, setImgModal } = useImgModal();
 
   //편집안할땐 체크 다 풀기
   useEffect(() => {
@@ -28,10 +31,38 @@ const AlbumList = () => {
     }
   }, [edit]);
 
+  //이미지 클릭시 이미지 모달이벤트
+  const onClickImgModal = (url: string) => {
+    setSelectedImgUrl(url);
+    setImgModal(true);
+  };
+
   //탭 액션
   const onClickTab = (tab: string) => {
     setActiveTab(tab);
   };
+
+  //useMutation(추가)
+  // const AlbumAddMutation = useMutation({
+  //   mutationFn: addAlbumList,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ['photo'] });
+  //   },
+  //   onError: (error) => {
+  //     console.error('MutationError:', error);
+  //   }
+  // });
+
+  //useMutation(삭제)
+  // const AlbumDeletemutation = useMutation({
+  //   mutationFn: deleteAlbumList,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ['photo'] });
+  //   },
+  //   onError: (error) => {
+  //     console.error('삭제 중 오류 발생:', error);
+  //   }
+  // });
 
   //체크이벤트로 아이디값 배열로 담기
   const handleCheckboxChange = (id: number) => {
@@ -56,6 +87,16 @@ const AlbumList = () => {
     }
   };
 
+  // //useQuery (앨범전체테이블 = albumListData)
+  // const {
+  //   data: albumListData,
+  //   isPending,
+  //   isError
+  // } = useQuery({
+  //   queryKey: ['photo'],
+  //   queryFn: fetchAlbum
+  // });
+
   if (isPending) return <div>Loading...</div>;
   if (isError) return <div>Error loading data</div>;
 
@@ -68,6 +109,38 @@ const AlbumList = () => {
 
   return (
     <div>
+      {/* <h2 className="mx-[24px] mt-[38px] border-b border-[#9C9C9C] py-[14px] font-black text-[24px] text-[#004157]">
+        나의 추억들
+      </h2>
+      <ul className="mx-[24px] flex justify-between">
+        <div className="flex">
+          <li
+            className={`albumTab cursor-pointer px-[12px] py-[18px] ${activeTab === 'allTab' ? 'active' : ''}`}
+            onClick={() => onClickTab('allTab')}
+          >
+            전체보기
+          </li>
+          <li
+            className={`albumTab cursor-pointer px-[12px] py-[18px] ${activeTab === 'rigionTab' ? 'active' : ''}`}
+            onClick={() => onClickTab('rigionTab')}
+          >
+            지역별
+          </li>
+        </div>
+        <div>
+          <button
+            className={`text-${edit ? 'red-500' : 'black'} px-[12px] py-[18px]`}
+            onClick={() => setEdit((prev) => !prev)}
+          >
+            편집
+          </button>
+          {edit && (
+            <button className={`text-${edit ? 'red-500' : 'black'} px-[12px] py-[18px]`} onClick={onHandleDelete}>
+              삭제
+            </button>
+          )}
+        </div>
+      </ul> */}
       <Toptitle
         activeTab={activeTab}
         edit={edit}
