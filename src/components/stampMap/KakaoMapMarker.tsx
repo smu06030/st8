@@ -5,10 +5,10 @@ import { MapMarker, useMap } from 'react-kakao-maps-sdk';
 
 interface KakaoMapMarkerPropsType {
   stamp: StampType;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  openModal: () => void;
 }
 
-const KakaoMapMarker = ({ stamp, setIsOpen }: KakaoMapMarkerPropsType) => {
+const KakaoMapMarker = ({ stamp, openModal }: KakaoMapMarkerPropsType) => {
   const map = useMap();
   const setStampInfo = useMapStore((state) => state.setStampInfo);
 
@@ -18,9 +18,8 @@ const KakaoMapMarker = ({ stamp, setIsOpen }: KakaoMapMarkerPropsType) => {
       position={{ lat: stamp.lat, lng: stamp.lng }}
       onClick={(marker) => {
         map.panTo(marker.getPosition());
-        setIsOpen((prev) => !prev);
         setStampInfo(stamp);
-        // markerClickHandler(camp)
+        openModal();
       }}
       image={{
         src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form'; // react-hook-form 타입 가져오기
-import UserIcon from './Icons/UserIcon';
 
 interface InputFieldProps {
   label: string;

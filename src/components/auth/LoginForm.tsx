@@ -7,8 +7,7 @@ import { login } from '@/utils/supabase/auth';
 import Button from '../common/Buttons/Button';
 import LinkButton from '../common/Buttons/LinkButton';
 import InputField from '../common/InputField';
-import UserIcon from '../common/Icons/UserIcon';
-import LockIcon from '../common/Icons/LockIcon';
+import Icon from '../common/Icons/Icon';
 
 interface LoginFormInputs {
   email: string;
@@ -44,14 +43,14 @@ const LoginForm = () => {
       alert('로그인 중 오류가 발생했습니다: ');
     }
   };
-
+  //<LockIcon color="#23C9FF" />
   return (
     <div className="min-h-screen flex-col justify-between bg-[#E5F9FF]">
       <h1 className="mb-4 text-center font-bold">로그인</h1>
       <form onSubmit={handleSubmit(onHandleLogin)} className="flex flex-col items-center space-y-[24px]">
         <InputField label="이메일" placeholder="이메일을 입력해주세요." register={register('email')} />
         <InputField
-          icon={<LockIcon color="#23C9FF" />} // 비밀번호 아이콘 추가
+          icon={<Icon name="LockIcon" color="#23C9FF" />} // 비밀번호 아이콘 추가
           label="비밀번호"
           placeholder="비밀번호를 입력해주세요."
           type="password"
