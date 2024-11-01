@@ -28,23 +28,31 @@ const RegionDetail = ({ params }: { params: { region: string } }) => {
         {regionTitle}
       </h2>
       <ul className="mt-[16px] grid grid-cols-3 gap-[6px]">
-        {regionPhoto?.map((item) => (
-          <li
-            key={item.id}
-            //   className={`${deleteId.includes(item.id) && 'border-red-500'} relative aspect-square overflow-hidden border`}
-          >
-            {item.photoImg && (
-              <>
-                <Image
-                  onClick={() => onClickImgModal(item.photoImg)}
-                  src={item.photoImg}
-                  alt=""
-                  width={200}
-                  height={200}
-                  priority
-                  className="h-full w-full object-cover"
-                />
-                {/* {edit && (
+        <Swiper
+          spaceBetween={30}
+          pagination={{
+            clickable: true
+          }}
+          modules={[Pagination]}
+          className="mySwiper"
+        >
+          {regionPhoto?.map((item) => (
+            <li
+              key={item.id}
+              //   className={`${deleteId.includes(item.id) && 'border-red-500'} relative aspect-square overflow-hidden border`}
+            >
+              {item.photoImg && (
+                <>
+                  <Image
+                    onClick={() => onClickImgModal(item.photoImg)}
+                    src={item.photoImg}
+                    alt=""
+                    width={200}
+                    height={200}
+                    priority
+                    className="h-full w-full object-cover"
+                  />
+                  {/* {edit && (
                             <input
                               type="checkbox"
                               className="absolute right-[10px] top-[10px] h-6 w-6 appearance-none rounded-full border border-gray-300 text-red-500 checked:border-red-500 checked:bg-[red]"
@@ -52,10 +60,11 @@ const RegionDetail = ({ params }: { params: { region: string } }) => {
                               onChange={() => handleCheckboxChange(item.id)}
                             />
                           )} */}
-              </>
-            )}
-          </li>
-        ))}
+                </>
+              )}
+            </li>
+          ))}
+        </Swiper>
       </ul>
       {imgModal && <ImgModal setImgModal={setImgModal} selectedImgUrl={selectedImgUrl} />}
     </div>

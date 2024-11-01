@@ -7,12 +7,6 @@ import ImgModal from '@/components/photoalbum/ImgModal';
 import { useAlbumList } from '@/hooks/useAlbumList';
 import useImgModal from '@/hooks/useImgModal';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/swiper-bundle.css';
-import 'swiper/css/mousewheel';
-
 const RegionDetail = ({ params }: { params: { region: string } }) => {
   console.log('params', decodeURIComponent(params.region));
   const { region } = useParams<{ region: string }>();
