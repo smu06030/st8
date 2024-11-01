@@ -45,7 +45,7 @@ const StampNum = () => {
           지금까지 모은 <br />
           <span className="font-bold">스탬프</span>
         </span>
-        <span className="text-2xl font-bold">{stampCount !== null ? `${stampCount}개` : '로딩 중...'}</span>
+        <span className="font-bold text-2xl">{stampCount !== null ? `${stampCount}개` : '로딩 중...'}</span>
       </div>
     </Link>
   );
