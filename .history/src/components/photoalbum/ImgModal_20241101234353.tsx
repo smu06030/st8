@@ -12,23 +12,21 @@ interface photoInfoType {
   id: number;
   photoImg: string;
   region: string;
-  user_id: string;
+  user_id: number;
 }
 interface ImageModalType {
   selectedImgUrl: string;
   setImgModal: Dispatch<SetStateAction<boolean>>;
   regionPhoto: photoInfoType[] | null;
-  activeImgId: number | string;
-  // setActiveImgId: Dispatch<SetStateAction<number>>;
+  activeImgId: string;
+  setActiveImgId: Dispatch<SetStateAction<string>>;
 }
-const ImgModal = ({ setImgModal, selectedImgUrl, regionPhoto, activeImgId }: ImageModalType) => {
+const ImgModal = ({ setImgModal, selectedImgUrl, regionPhoto, activeImgId, setActiveImgId }: ImageModalType) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  console.log('regionPhoto', regionPhoto);
   useEffect(() => {
-    if (regionPhoto) {
-      const index = regionPhoto.findIndex((photo: photoInfoType) => photo.id === activeImgId);
-      setCurrentIndex(index);
-    }
+    const index = regionPhoto.findIndex((photo: photoInfoType) => photo.id === activeImgId);
+    setCurrentIndex(index);
   }, [activeImgId, regionPhoto]);
 
   return (
