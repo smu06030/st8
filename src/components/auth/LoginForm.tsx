@@ -74,6 +74,13 @@ const LoginForm = () => {
           </button>
 
           <button
+            onClick={() => loginWithProvider('google')}
+            className="shadow-md h-[50px] w-[50px] rounded-full bg-white p-3"
+          >
+            <img src="/images/google-icon.png" alt="Google Login" />
+          </button>
+
+          <button
             onClick={() => loginWithProvider('kakao')}
             className="shadow-md h-[50px] w-[50px] rounded-full bg-[#FEE500] px-3"
           >
