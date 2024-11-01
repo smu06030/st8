@@ -76,7 +76,7 @@ const config: Config = {
       fadeUpText: 'fadeUp .8s ease-in-out',
       fadeUpBtn: 'fadeUp 1.2s ease-in-out',
       slideDownModal: 'slideDown .4s linear',
-      spin: 'spin 1s linear infinite'
+      bounceLoading: 'bounceLoading 1s ease-in-out infinite'
     },
 
     keyframes: {
@@ -92,8 +92,9 @@ const config: Config = {
           transform: 'translateY(0)'
         }
       },
-      spin: {
-        to: { transform: 'rotate(360deg)' }
+      bounceLoading: {
+        '0%, 100%': { transform: 'translateY(0)' },
+        '50%': { transform: 'translateY(-20px)' }
       }
     }
   }
