@@ -8,6 +8,7 @@ import { useAlbumList } from '@/hooks/useAlbumList';
 import useImgModal from '@/hooks/useImgModal';
 
 const RegionDetail = ({ params }: { params: { region: string } }) => {
+  //   console.log('params', decodeURIComponent(params.region));
   const { region } = useParams<{ region: string }>();
   const regionTitle = decodeURIComponent(region);
   const { data: albumListData } = useAlbumList(); //TODO: 서버로할거면 서버액션으로 패치만들기

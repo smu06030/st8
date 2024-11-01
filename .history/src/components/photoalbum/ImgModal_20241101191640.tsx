@@ -32,7 +32,8 @@ const ImgModal = ({ setImgModal, selectedImgUrl, regionPhoto, activeImgId, setAc
             clickable: true
           }}
           modules={[Pagination]}
-          initialSlide={currentIndex}
+          // onSlideChange={handleSlideChange}
+          initialSlide={currentIndex} // 초기 슬라이드 설정
           className="mySwiper h-full"
         >
           {regionPhoto.map(

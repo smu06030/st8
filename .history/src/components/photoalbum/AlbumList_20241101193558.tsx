@@ -132,7 +132,7 @@ const AlbumList = () => {
                   />
                   <Link href={`/photo-album/${item}`}>
                     <li
-                      className="h-full w-full bg-cover bg-center"
+                      className="bg-cover bg-center"
                       style={{
                         backgroundImage: `url(${filterRigionPhoto[index]?.[0]?.photoImg})`
                       }}

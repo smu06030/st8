@@ -131,12 +131,8 @@ const AlbumList = () => {
                     item={item}
                   />
                   <Link href={`/photo-album/${item}`}>
-                    <li
-                      className="h-full w-full bg-cover bg-center"
-                      style={{
-                        backgroundImage: `url(${filterRigionPhoto[index]?.[0]?.photoImg})`
-                      }}
-                    ></li>
+                    {/* TODO : 지역별 가장 최근 이미지 넣기 */}
+                    <li className="h-[100px] w-[100px] bg-[#ccc]"></li>
                   </Link>
                 </ul>
                 <span>{filterRigionPhoto[index]?.length}장</span>
