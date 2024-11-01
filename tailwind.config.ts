@@ -61,7 +61,8 @@ const config: Config = {
       }
     },
     backgroundImage: {
-      buttonGradient: 'linear-gradient(to bottom, rgba(255,255,255,0.0) 0%, rgba(255,255,255,0.8) 20%, white 100%)'
+      scrollButtonGradient:
+        'linear-gradient(to bottom, rgba(255,255,255,0.0) 0%, rgba(255,255,255,0.8) 20%, white 100%)'
     },
     boxShadow: {
       overlayShadow: '0 -1px 12px rgba(68, 68, 68, 0.15)'
@@ -72,7 +73,8 @@ const config: Config = {
     animation: {
       fadeUpText: 'fadeUp .8s ease-in-out',
       fadeUpBtn: 'fadeUp 1.2s ease-in-out',
-      slideDownModal: 'slideDown .4s linear'
+      slideDownModal: 'slideDown .4s linear',
+      spin: 'spin 1s linear infinite'
     },
 
     keyframes: {
@@ -87,6 +89,9 @@ const config: Config = {
         to: {
           transform: 'translateY(0)'
         }
+      },
+      spin: {
+        to: { transform: 'rotate(360deg)' }
       }
     }
   }
