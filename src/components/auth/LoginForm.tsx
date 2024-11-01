@@ -7,6 +7,8 @@ import { login } from '@/utils/supabase/auth';
 import Button from '../common/Buttons/Button';
 import LinkButton from '../common/Buttons/LinkButton';
 import InputField from '../common/InputField';
+import UserIcon from '../common/Icons/UserIcon';
+import LockIcon from '../common/Icons/LockIcon';
 
 interface LoginFormInputs {
   email: string;
@@ -49,6 +51,7 @@ const LoginForm = () => {
       <form onSubmit={handleSubmit(onHandleLogin)} className="flex flex-col items-center space-y-[24px]">
         <InputField label="이메일" placeholder="이메일을 입력해주세요." register={register('email')} />
         <InputField
+          icon={<LockIcon color="#23C9FF" />} // 비밀번호 아이콘 추가
           label="비밀번호"
           placeholder="비밀번호를 입력해주세요."
           type="password"
@@ -63,6 +66,13 @@ const LoginForm = () => {
         />
 
         <div className="flex justify-center space-x-[16px]">
+          <button
+            onClick={() => loginWithProvider('google')}
+            className="shadow-md h-[50px] w-[50px] rounded-full bg-white p-3"
+          >
+            <img src="/images/google-icon.png" alt="Google Login" />
+          </button>
+
           <button
             onClick={() => loginWithProvider('google')}
             className="shadow-md h-[50px] w-[50px] rounded-full bg-white p-3"
