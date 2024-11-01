@@ -12,7 +12,7 @@ import useModal from '@/hooks/useModal';
 const KakaoMap = () => {
   const { geoList, location, activeIndex, selectedPath, filteredStamps, updateHoverState, updatePolygonPath } =
     useKakaoMap();
-  const { isOpen, openModal, Modal } = useModal();
+  const { openModal, Modal } = useModal();
 
   return (
     <>
@@ -60,7 +60,7 @@ const KakaoMap = () => {
         {filteredStamps?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} openModal={openModal} />)}
         <ReSetttingMapBounds paths={selectedPath} activeIndex={activeIndex} />
       </Map>
-      <StampModal isOpen={isOpen} Modal={Modal} />
+      <StampModal Modal={Modal} />
       <ScrollButtonSwiper />
     </>
   );

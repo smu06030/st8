@@ -6,11 +6,10 @@ import CompassIcon from '../Icons/CompassIcon';
 import Link from 'next/link';
 
 interface StampModalPropsType {
-  isOpen: boolean;
   Modal: ({ children }: { children: React.ReactNode }) => ReactPortal | null;
 }
 
-const StampModal = ({ isOpen, Modal }: StampModalPropsType) => {
+const StampModal = ({ Modal }: StampModalPropsType) => {
   const stamp = useMapStore((state) => state.stampInfo);
 
   const date = new Date(stamp.created_at);
