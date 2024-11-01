@@ -62,7 +62,8 @@ const config: Config = {
     },
     backgroundImage: {
       scrollButtonGradient:
-        'linear-gradient(to bottom, rgba(255,255,255,0.0) 0%, rgba(255,255,255,0.8) 20%, white 100%)'
+        'linear-gradient(to bottom, rgba(255,255,255,0.0) 0%, rgba(255,255,255,0.8) 20%, white 100%)',
+      backgroundGradient: 'linear-gradient(to bottom, white, #ddf3fc)'
     },
     boxShadow: {
       overlayShadow: '0 -1px 12px rgba(68, 68, 68, 0.15)'
