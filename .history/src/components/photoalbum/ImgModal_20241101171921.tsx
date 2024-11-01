@@ -16,15 +16,8 @@ interface ImageModalType {
   setActiveImgId: Dispatch<SetStateAction<string>>;
 }
 const ImgModal = ({ setImgModal, selectedImgUrl, regionPhoto, activeImgId, setActiveImgId }: ImageModalType) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  // console.log('regionPhoto', regionPhoto);
-  // console.log('currentIndex', currentIndex);
-
-  useEffect(() => {
-    const index = regionPhoto.findIndex((photo: any) => photo.id === activeImgId); //TODO :any수정하기
-    setCurrentIndex(index);
-  }, [activeImgId, regionPhoto]);
-
+  // console.log('selectedImgUrl', selectedImgUrl);
+  // console.log('setActiveImgId', setActiveImgId);
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-[#363636] bg-opacity-50">
       <div className="relative h-[90vh] w-full bg-[#D9D9D9]">
@@ -34,20 +27,14 @@ const ImgModal = ({ setImgModal, selectedImgUrl, regionPhoto, activeImgId, setAc
             clickable: true
           }}
           modules={[Pagination]}
-          // onSlideChange={handleSlideChange}
-          initialSlide={currentIndex} // 초기 슬라이드 설정
-          className="mySwiper h-full"
+          // initialSlide={} // 초기 슬라이드 설정
+          className="mySwiper"
         >
-          {regionPhoto.map(
-            (
-              photo: any,
-              index: string //TODO :any수정하기
-            ) => (
-              <SwiperSlide key={index}>
-                <Image src={photo.photoImg} alt={`Image ${index + 1}`} layout="fill" objectFit="cover" />
-              </SwiperSlide>
-            )
-          )}
+          {regionPhoto.map((photo, index) => (
+            <SwiperSlide key={index}>
+              <Image src={photo.photoImg} alt={`Image ${index + 1}`} width={200} height={200} />
+            </SwiperSlide>
+          ))}
         </Swiper>
         <button className="absolute right-[10px] top-[-30px] text-white" onClick={() => setImgModal(false)}>
           X

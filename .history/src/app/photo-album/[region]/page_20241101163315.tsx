@@ -8,14 +8,15 @@ import { useAlbumList } from '@/hooks/useAlbumList';
 import useImgModal from '@/hooks/useImgModal';
 
 const RegionDetail = ({ params }: { params: { region: string } }) => {
-  //   console.log('params', decodeURIComponent(params.region));
+  console.log('params', decodeURIComponent(params.region));
   const { region } = useParams<{ region: string }>();
   const regionTitle = decodeURIComponent(region);
   const { data: albumListData } = useAlbumList(); //TODO: 서버로할거면 서버액션으로 패치만들기
-  const { selectedImgUrl, imgModal, onClickImgModal, setImgModal, activeImgId, setActiveImgId } = useImgModal();
+  const { selectedImgUrl, imgModal, onClickImgModal, setImgModal } = useImgModal();
 
+  //   console.log('region', regionTitle);
   const regionPhoto = albumListData?.filter((item) => item.region === regionTitle) || [];
-
+  console.log('regionPhoto', regionPhoto);
   return (
     <div>
       <h2 className="mx-[24px] mt-[38px] border-b border-[#9C9C9C] py-[14px] font-black text-[24px] text-[#004157]">
@@ -30,7 +31,7 @@ const RegionDetail = ({ params }: { params: { region: string } }) => {
             {item.photoImg && (
               <>
                 <Image
-                  onClick={() => onClickImgModal(item.photoImg, item.id)}
+                  onClick={() => onClickImgModal(item.photoImg)}
                   src={item.photoImg}
                   alt=""
                   width={200}
@@ -51,15 +52,7 @@ const RegionDetail = ({ params }: { params: { region: string } }) => {
           </li>
         ))}
       </ul>
-      {imgModal && (
-        <ImgModal
-          setImgModal={setImgModal}
-          selectedImgUrl={selectedImgUrl}
-          regionPhoto={regionPhoto}
-          activeImgId={activeImgId}
-          setActiveImgId={setActiveImgId}
-        />
-      )}
+      {imgModal && <ImgModal setImgModal={setImgModal} selectedImgUrl={selectedImgUrl} regionPhoto={regionPhoto} />}
     </div>
   );
 };

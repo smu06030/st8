@@ -2,12 +2,12 @@
 
 import { useState, Dispatch, SetStateAction } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Mousewheel } from 'swiper/modules';
+import SwiperCore, { Mousewheel } from 'swiper';
 // import SwiperCore from 'swiper';
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 import 'swiper/css/mousewheel';
-
+SwiperCore.use([Mousewheel]);
 interface CategoryNodalType {
   setRegionCate: Dispatch<React.SetStateAction<string>>;
   onHandleUpload: (imgArr: string | string[]) => void;
@@ -49,6 +49,12 @@ const CategoryModal = ({ onHandleUpload, setRegionCate }: CategoryNodalType) => 
       //슬라이드 엑티브 제거
     }
   };
+
+  // const handleOutsideClick = (e) => {
+  //   if (e.target === e.currentTarget) {
+  //     //닫기
+  //   }
+  // };
 
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-[#363636] bg-opacity-50">

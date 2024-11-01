@@ -17,11 +17,11 @@ interface ImageModalType {
 }
 const ImgModal = ({ setImgModal, selectedImgUrl, regionPhoto, activeImgId, setActiveImgId }: ImageModalType) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  // console.log('regionPhoto', regionPhoto);
-  // console.log('currentIndex', currentIndex);
+  console.log('regionPhoto', regionPhoto);
+  console.log('currentIndex', currentIndex);
 
   useEffect(() => {
-    const index = regionPhoto.findIndex((photo: any) => photo.id === activeImgId); //TODO :any수정하기
+    const index = regionPhoto.findIndex((photo: any) => photo.id === activeImgId);
     setCurrentIndex(index);
   }, [activeImgId, regionPhoto]);
 

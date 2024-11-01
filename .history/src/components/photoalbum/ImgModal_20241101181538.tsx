@@ -17,11 +17,11 @@ interface ImageModalType {
 }
 const ImgModal = ({ setImgModal, selectedImgUrl, regionPhoto, activeImgId, setActiveImgId }: ImageModalType) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  // console.log('regionPhoto', regionPhoto);
-  // console.log('currentIndex', currentIndex);
+  console.log('regionPhoto', regionPhoto);
+  console.log('currentIndex', currentIndex);
 
   useEffect(() => {
-    const index = regionPhoto.findIndex((photo: any) => photo.id === activeImgId); //TODO :any수정하기
+    const index = regionPhoto.findIndex((photo) => photo.id === activeImgId);
     setCurrentIndex(index);
   }, [activeImgId, regionPhoto]);
 
@@ -38,16 +38,11 @@ const ImgModal = ({ setImgModal, selectedImgUrl, regionPhoto, activeImgId, setAc
           initialSlide={currentIndex} // 초기 슬라이드 설정
           className="mySwiper h-full"
         >
-          {regionPhoto.map(
-            (
-              photo: any,
-              index: string //TODO :any수정하기
-            ) => (
-              <SwiperSlide key={index}>
-                <Image src={photo.photoImg} alt={`Image ${index + 1}`} layout="fill" objectFit="cover" />
-              </SwiperSlide>
-            )
-          )}
+          {regionPhoto.map((photo: string, index: string) => (
+            <SwiperSlide key={index}>
+              <Image src={photo.photoImg} alt={`Image ${index + 1}`} layout="fill" objectFit="cover" />
+            </SwiperSlide>
+          ))}
         </Swiper>
         <button className="absolute right-[10px] top-[-30px] text-white" onClick={() => setImgModal(false)}>
           X

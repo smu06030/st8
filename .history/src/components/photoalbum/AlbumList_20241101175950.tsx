@@ -14,7 +14,7 @@ const AlbumList = () => {
   const { data: albumListData, isPending, isError } = useAlbumList();
   const AlbumAddMutation = useAlbumAddMutation();
   const AlbumDeletemutation = useAlbumDeleteMutation();
-  const { selectedImgUrl, imgModal, onClickImgModal, setImgModal, activeImgId, setActiveImgId } = useImgModal();
+  const { selectedImgUrl, imgModal, onClickImgModal, setImgModal } = useImgModal();
 
   const [imgSrc, setImgSrc] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState('allTab');
@@ -23,7 +23,9 @@ const AlbumList = () => {
 
   //편집안할땐 체크 다 풀기
   useEffect(() => {
-    if (!edit) setDeleteId([]);
+    if (!edit) {
+      setDeleteId([]);
+    }
   }, [edit]);
 
   //탭 액션
@@ -63,8 +65,6 @@ const AlbumList = () => {
   const filterRigionPhoto = filterRigionTitle.map(
     (title) => albumListData?.filter((item) => item.region === title) || []
   );
-  //이미지팝업에 전달할 앨범전체이미지
-  const regionPhoto = albumListData;
 
   return (
     <div>
@@ -93,7 +93,7 @@ const AlbumList = () => {
               {item.photoImg && (
                 <>
                   <Image
-                    onClick={() => onClickImgModal(item.photoImg, item.id)}
+                    onClick={() => onClickImgModal(item.photoImg)}
                     src={item.photoImg}
                     alt=""
                     width={200}
@@ -134,6 +134,36 @@ const AlbumList = () => {
                     {/* TODO : 지역별 가장 최근 이미지 넣기 */}
                     <li className="h-[100px] w-[100px] bg-[#ccc]"></li>
                   </Link>
+
+                  {/* 지역별 사진묶음 */}
+                  {/* {filterRigionPhoto[index]?.map((item) => (
+                    <li
+                      key={item.id}
+                      className={`${deleteId.includes(item.id) && 'border-red-500'} relative aspect-square overflow-hidden border`}
+                    >
+                      {item.photoImg && (
+                        <>
+                          <Image
+                            onClick={() => onClickImgModal(item.photoImg)}
+                            src={item.photoImg}
+                            alt=""
+                            width={200}
+                            height={200}
+                            priority
+                            className="h-full w-full object-cover"
+                          />
+                          {edit && (
+                            <input
+                              type="checkbox"
+                              className="absolute right-[10px] top-[10px] h-6 w-6 appearance-none rounded-full border border-gray-300 text-red-500 checked:border-red-500 checked:bg-[red]"
+                              checked={deleteId.includes(item.id)} //배열에 들은 아이디가 있어?
+                              onChange={() => handleCheckboxChange(item.id)}
+                            />
+                          )}
+                        </>
+                      )}
+                    </li>
+                  ))} */}
                 </ul>
                 <span>{filterRigionPhoto[index]?.length}장</span>
               </div>
@@ -141,15 +171,7 @@ const AlbumList = () => {
           </div>
         </section>
       )}
-      {imgModal && (
-        <ImgModal
-          setImgModal={setImgModal}
-          selectedImgUrl={selectedImgUrl}
-          regionPhoto={regionPhoto}
-          activeImgId={activeImgId}
-          setActiveImgId={setActiveImgId}
-        />
-      )}
+      {imgModal && <ImgModal setImgModal={setImgModal} selectedImgUrl={selectedImgUrl} />}
     </div>
   );
 };

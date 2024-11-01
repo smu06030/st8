@@ -23,7 +23,9 @@ const AlbumList = () => {
 
   //편집안할땐 체크 다 풀기
   useEffect(() => {
-    if (!edit) setDeleteId([]);
+    if (!edit) {
+      setDeleteId([]);
+    }
   }, [edit]);
 
   //탭 액션

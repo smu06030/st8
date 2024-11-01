@@ -10,7 +10,7 @@ export const useImgModal = () => {
     setImgModal(true);
     setActiveImgId(id);
   };
-  //   console.log('setActiveImgId', setActiveImgId);
+  console.log('setActiveImgId', setActiveImgId);
   return {
     //밖에서
     selectedImgUrl,
