@@ -28,9 +28,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-regular ${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`bg-backgroundGradient font-regular ${geistSans.variable} ${geistMono.variable} antialiased`}>
         <KakaoMapLoader />
-        <RQProviders>{children}</RQProviders>
+        <RQProviders>
+          {children}
+          <div id="overlays"></div> {/* 모달창 */}
+        </RQProviders>
       </body>
     </html>
   );
