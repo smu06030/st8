@@ -1,10 +1,8 @@
 import Image from 'next/image';
 import mainMap from '../../../public/images/mainMap.png';
-import ArrowIcon from '@/components/common/Icons/ArrowIcon';
 import Link from 'next/link';
-import BookMarkIcon from '../common/Icons/BookMarkIcon';
-import MainBackgroundIcon from '../common/Icons/MainBackgroundIcon';
-import MainStampIcon from '../common/Icons/MainStampIcon';
+import MainBackground from '../common/Icons/MainBackground';
+import Icon from '../common/Icons/Icon';
 
 const MainPage = () => {
   return (
@@ -28,9 +26,7 @@ const MainPage = () => {
           <Link href={'/stamp-all'}>
             <div className="flex items-center justify-start gap-1">
               <p className="font-semiBold text-2xl leading-[31.20px] text-gray-900">스탬프</p>
-              <div className="flex h-7 w-7 items-center justify-center p-1">
-                <ArrowIcon />
-              </div>
+              <Icon name="ArrowIcon" />
             </div>
           </Link>
           <p className="text-sm leading-tight text-gray-600">지금까지 모은 스탬프들을 확인 할 수 있어요.</p>
@@ -47,9 +43,7 @@ const MainPage = () => {
           <Link href={'/stamp-all'}>
             <div className="flex items-center justify-start gap-1">
               <p className="font-semiBold text-2xl leading-[31.20px] text-gray-900">모아가 추천하는 여행지</p>
-              <div className="flex h-7 w-7 items-center justify-center p-1">
-                <ArrowIcon />
-              </div>
+              <Icon name="ArrowIcon" />
             </div>
           </Link>
           <p className="text-sm leading-tight text-gray-600">모아가 엄선 한 국내 여행지를 모았어요.</p>
@@ -59,23 +53,19 @@ const MainPage = () => {
           <div className="absolute left-[36px] top-[302px] h-[30px] w-[204px] text-2xl font-semibold leading-[31.20px] text-white">
             아름다운 부산의 야경
           </div>
-          <div className="absolute left-[247px] top-[20px] h-16 w-16">
-            {/* <img
-              className="absolute left-[18.29px] top-[9.14px] h-[45.71px] w-[27.43px]"
-              src="https://via.placeholder.com/27x46"
-            /> */}
-            <BookMarkIcon />
+          <div className="absolute left-[247px] top-[20px]">
+            <Icon name="BookMarkIcon" size={64} />
           </div>
         </div>
       </section>
       <div className="relative -bottom-6 -left-6">
-        <MainBackgroundIcon />
+        <MainBackground />
       </div>
       <Link
         href={'/stamp-tracking'}
         className="shadow-mainStampShadow fixed bottom-[46px] right-6 cursor-pointer rounded-full"
       >
-        <MainStampIcon />
+        <Icon name="StampIcon" size={86} color="#23C9FF" bgColor="white" rx="43" />
       </Link>
     </main>
   );

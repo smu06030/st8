@@ -1,9 +1,8 @@
 import { useMapStore } from '@/providers/mapStoreProvider';
 import Image from 'next/image';
 import React, { ReactPortal } from 'react';
-import TimeIcon from '../Icons/TimeIcon';
-import CompassIcon from '../Icons/CompassIcon';
 import Link from 'next/link';
+import Icon from '../Icons/Icon';
 
 interface StampModalPropsType {
   Modal: ({ children }: { children: React.ReactNode }) => ReactPortal | null;
@@ -29,13 +28,13 @@ const StampModal = ({ Modal }: StampModalPropsType) => {
         <div>
           <div className="mb-[14px] flex items-center justify-start gap-2">
             <span>
-              <TimeIcon />
+              <Icon name="TimeIcon" size={32} color="white" bgColor="#00688A" rx="16" />
             </span>
             <p className="h-6 w-[186px] truncate leading-normal text-gray-700">{formattedDate}</p>
           </div>
           <div className="flex items-center justify-start gap-2">
             <span>
-              <CompassIcon />
+              <Icon name="ComPassIcon" size={32} color="white" bgColor="#00688A" rx="16" />
             </span>
             <p className="h-6 w-[186px] truncate leading-normal text-gray-700">{stamp.address}</p>
           </div>

@@ -7,7 +7,7 @@ import '@/styles/swiper.css';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import useKakaoMap from '@/hooks/useKakaoMap';
-import PolygonIcon from '../common/Icons/PolygonIcon';
+import Icon from '../common/Icons/Icon';
 
 const ScrollButtonSwiper = () => {
   const { activeIndex, siDoName, onSlideChangeHandler } = useKakaoMap();
@@ -22,22 +22,13 @@ const ScrollButtonSwiper = () => {
   return (
     <div className="swiperWrapper">
       <div className="flex items-center justify-center">
-        <PolygonIcon />
+        <Icon name="PolygonIcon" size={16} color="#008EBD" />
       </div>
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         slidesPerView={5}
         centeredSlides={true}
         grabCursor={true}
-        // pagination={{
-        //   clickable: true,
-        //   dynamicBullets: true
-        // }}
-        // breakpoints={{
-        //   1024: {
-        //     slidesPerView: 5
-        //   }
-        // }}
         navigation={true}
         onSlideChange={onSlideChangeHandler}
         modules={[Navigation, Pagination]}

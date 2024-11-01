@@ -1,4 +1,4 @@
-const MainBackgroundIcon = () => {
+const MainBackground = () => {
   return (
     <svg width="317" height="373" viewBox="0 0 317 373" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g opacity="0.2">
@@ -12,4 +12,4 @@ const MainBackgroundIcon = () => {
   );
 };
 
-export default MainBackgroundIcon;
+export default MainBackground;
