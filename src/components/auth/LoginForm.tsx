@@ -18,6 +18,7 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
     watch
   } = useForm<LoginFormInputs>();
@@ -36,6 +37,7 @@ const LoginForm = () => {
       if (result) {
         router.push('/mypage');
       }
+      reset();
     } catch (error) {
       alert('로그인 중 오류가 발생했습니다: ');
     }
