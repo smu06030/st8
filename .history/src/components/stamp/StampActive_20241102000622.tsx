@@ -105,9 +105,7 @@ const StampActive = ({ address, stampList, setVisit, visit, location }: StampAct
   const REGIONimageUrl = STAMPIMG_REGION_NAME[address.region_1depth_name];
 
   return (
-    <div
-      className={`flex ${!visit ? 'h-[100vh]' : 'h-[30%]'} items-center justify-center transition-transform duration-500 ${visit ? 'scale-75' : 'scale-100'}`}
-    >
+    <div className={`transition-transform duration-500 ${visit ? 'scale-75' : 'scale-100'}`}>
       {stampList && stampList?.length > 0 ? (
         stampList?.map((stamp) => {
           if (stamp.region === address.region_1depth_name) {

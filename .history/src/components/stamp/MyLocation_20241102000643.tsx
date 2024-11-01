@@ -5,8 +5,8 @@ import StampActive from './StampActive';
 import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
 import { useQuery } from '@tanstack/react-query';
-import { fetchUser } from '@/utils/fetchUser';
-import { fetchStampList } from '@/apis/fetchStampList';
+import { fetchUser } from '@/utils/fetchUser'; //로그인유저
+import { fetchStampList } from '@/apis/fetchStampList'; //로그인유저의 스템프 항목 가져오기
 import Link from 'next/link';
 
 interface LocationType {
@@ -109,7 +109,8 @@ const MyLocation = () => {
   if (stampListError) return <div>Failed to load</div>;
   // console.log('location', location);
   return (
-    <div className="flex h-[100vh] flex-col px-[24px] py-[36px]">
+    <>
+      <h1>내 위치</h1>
       {address ? (
         <>
           {/* <p>현재 내 위치 : {address.address_name}</p> */}
@@ -119,27 +120,20 @@ const MyLocation = () => {
         <p>{error ? `Error: ${error}` : '위치를 가져오고있습니다...'}</p>
       )}
       {visit && (
-        <div className="flex flex-1 flex-col justify-between">
-          <div className="flex flex-col gap-[8px]">
-            <label>스탬프 별명 설정하기</label>
-            <span className="rounded-[12px] border border-[#B5B5B5] px-[42px] py-[20px]">
-              <input
-                type="text"
-                placeholder="간단한 장소나 이름을 적어주세요."
-                className="w-full bg-transparent text-[14px]"
-              />
-            </span>
-          </div>
-          <Link href={'/stamp-all'}>
-            <button
-              className={`bg-secondary-500 w-full rounded-[12px] py-[21px] font-semiBold text-[20px] text-[#004157] ${visit && 'animate-fadeUpBtn'}`}
-            >
-              스탬프 확인하러 가기
-            </button>
-          </Link>
-        </div>
+        <Link href={'/stamp-all'}>
+          <p className={`py-[20px] text-center ${visit && 'animate-fadeUpText'}`}>
+            테스트 텍스트입니당~~~~~
+            <br />
+            테스트 텍스트입니당~~~~~
+          </p>
+          <button
+            className={`w-full rounded-[16px] bg-[#292929] py-[20px] text-[20px] text-[#fff] ${visit && 'animate-fadeUpBtn'}`}
+          >
+            스탬프 확인하러 가기
+          </button>
+        </Link>
       )}
-    </div>
+    </>
   );
 };
 

@@ -109,7 +109,7 @@ const MyLocation = () => {
   if (stampListError) return <div>Failed to load</div>;
   // console.log('location', location);
   return (
-    <div className="flex h-[100vh] flex-col px-[24px] py-[36px]">
+    <div className="flex h-[100vh] flex-col p-[24px]">
       {address ? (
         <>
           {/* <p>현재 내 위치 : {address.address_name}</p> */}

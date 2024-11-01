@@ -5,8 +5,8 @@ import StampActive from './StampActive';
 import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
 import { useQuery } from '@tanstack/react-query';
-import { fetchUser } from '@/utils/fetchUser';
-import { fetchStampList } from '@/apis/fetchStampList';
+import { fetchUser } from '@/utils/fetchUser'; //로그인유저
+import { fetchStampList } from '@/apis/fetchStampList'; //로그인유저의 스템프 항목 가져오기
 import Link from 'next/link';
 
 interface LocationType {
@@ -109,7 +109,7 @@ const MyLocation = () => {
   if (stampListError) return <div>Failed to load</div>;
   // console.log('location', location);
   return (
-    <div className="flex h-[100vh] flex-col px-[24px] py-[36px]">
+    <div className="flex h-[100vh] flex-col p-[24px]">
       {address ? (
         <>
           {/* <p>현재 내 위치 : {address.address_name}</p> */}

@@ -68,7 +68,7 @@ const RegionDetail = () => {
           selectedImgUrl={selectedImgUrl}
           regionPhoto={regionPhoto}
           activeImgId={activeImgId}
-          //   setActiveImgId={setActiveImgId}
+          setActiveImgId={setActiveImgId}
         />
       )}
       {edit && <AlbumImgEdit deleteId={deleteId} onHandleDelete={onHandleDelete} />}
