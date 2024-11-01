@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form'; // react-hook-form 타입 가져오기
+import UserIcon from './Icons/UserIcon';
 
 interface InputFieldProps {
   label: string;
   placeholder: string;
   type?: string;
+  icon?: React.ReactNode; // 아이콘을 받을 수 있도록 prop 추가
   register?: UseFormRegisterReturn; // register 타입을 prop으로 추가
 }
 
-const InputField: React.FC<InputFieldProps> = ({ label, placeholder, type = 'text', register }) => {
+const InputField: React.FC<InputFieldProps> = ({ label, placeholder, type = 'text', icon, register }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
@@ -30,6 +32,7 @@ const InputField: React.FC<InputFieldProps> = ({ label, placeholder, type = 'tex
       <div
         className={`flex h-[60px] w-[327px] items-center rounded-[12px] border bg-transparent px-[16px] py-[10px] text-[14px] ${inputBorderColor} transition-colors duration-300 ease-in-out`}
       >
+        {icon && <div className="mr-2 text-gray-500">{icon}</div>}
         <input
           type={type}
           placeholder={placeholder}
