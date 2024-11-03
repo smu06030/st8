@@ -67,14 +67,16 @@ const StampItemDetail = () => {
   //TODO :이미지명이랑 키값 동일하게하기
   return (
     <div className="flex h-[100%] flex-col bg-no-repeat">
-      <div className="relative block h-[145px] w-full bg-[#fff] shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)]">
+      <div className="relative mb-[82px] block h-[145px] w-full bg-[#fff] shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)]">
         <span className="absolute left-1/2 top-[16px] block h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full bg-white shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)]"></span>
         <div className="absolute h-full w-full bg-[#fff]"></div>
-        <span className="absolute left-1/2 top-[16px] block h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full bg-white">
-          <Image src={`/images/${region}.png`} alt={region} width={300} height={300} />
+        <span className="absolute left-1/2 top-[16px] block h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full bg-white p-[6px]">
+          <div className="h-full w-full rounded-full bg-[#081425]">
+            <Image src={`/images/${region}.png`} alt={region} width={300} height={300} />
+          </div>
         </span>
       </div>
-      <div className="mx-[24px] mt-[31px] rounded-[24px] bg-white px-[28px] pb-[34px] pt-[82px]">
+      <div className="mx-[24px] mt-[31px] rounded-[24px] bg-white px-[28px] py-[34px]">
         <h2 className="mb-[24px] font-semiBold text-[20px]">{region} 스탬프</h2>
         <ul className="flex flex-col gap-[14px]">
           <li className="flex items-center justify-start gap-[8px]">
