@@ -38,6 +38,7 @@ const StampList: React.FC = (): React.JSX.Element => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>로드실패</div>;
   if (!stampList) return <div>데이터가 없습니다.</div>;
+  // console.log('stampList', stampList);
 
   //이거 전역으러빼기
   const defaultRegionItem = [
@@ -60,7 +61,7 @@ const StampList: React.FC = (): React.JSX.Element => {
     '경남'
   ];
   const groupTrueRegion = [...new Set(stampList?.map((item) => item.region))]; //갖고있는스탬프 지역이름
-  const stampInActive = defaultRegionItem.filter((item) => !groupTrueRegion.includes(item)); //비활성화 지역
+  const stampInActive = defaultRegionItem.filter((item) => !groupTrueRegion.includes(item));
 
   console.log('stampInActive', stampInActive);
   console.log('groupTrueRegion', groupTrueRegion);

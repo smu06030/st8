@@ -21,7 +21,7 @@ const StampItem = ({ list, stampList }: StampCardPropsType) => {
 
   return (
     <>
-      <li className="flex flex-col items-center justify-center rounded-[24px] bg-[#ccbd92] p-3">
+      <li className="flex flex-col items-center justify-center rounded-[24px] bg-[#9d8a8a] p-3">
         <Link href={`/stamp-all/${list}`} className="flex flex-col items-center">
           <Image src={stampImgSt} alt={list} width={300} height={300} />
           <div className="font-black">{list}</div> {/* TODO: 지우기 */}
