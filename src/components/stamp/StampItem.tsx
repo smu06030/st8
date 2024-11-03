@@ -22,7 +22,7 @@ const StampItem = ({ list, stampList }: StampCardPropsType) => {
   const stampImg = [...new Set(stampList.filter((item) => item.region === list).map((item) => item.stampimg))];
   const stampImgSt = stampImg.join(', ');
   const stampLength = stampList.filter((item) => item.region === list).length;
-  //이미지를 디폴트 해당지역으로 바꾸면댈듯???
+  //이미지를 디폴트 해당지역으로 바꾸면댈듯????
   return (
     <li className="flex flex-col items-center justify-center rounded-[24px] bg-[#ccc] p-3">
       <Link href={`/stamp-all/${list}`} className="flex flex-col items-center">
