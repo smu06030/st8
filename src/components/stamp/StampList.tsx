@@ -5,8 +5,6 @@ import StampItem from '@/components/stamp/StampItem';
 import { useQuery } from '@tanstack/react-query';
 import { fetchUser } from '@/utils/fetchUser';
 import { fetchStampActive } from '@/apis/fetchStampList';
-import { StampData } from '@/types/stamp';
-import StampDefaltItem from './StampDefaltItem';
 
 const StampList: React.FC = (): React.JSX.Element => {
   const [userId, setUserId] = useState<string | null>(null);
