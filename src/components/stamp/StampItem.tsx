@@ -35,4 +35,4 @@ const StampItem = ({ list, stampList }: StampCardPropsType) => {
 };
 
 export default StampItem;
-// {"/images/default-img.png"}
+// {"/images/default-img.png"}}
