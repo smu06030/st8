@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '../../../../utils/supabase/server';
+import { createClient } from '@/utils/supabase/server';
 
 export async function POST(req: Request) {
   const supabase = createClient();
@@ -7,7 +7,6 @@ export async function POST(req: Request) {
   try {
     const { email, password } = await req.json();
 
-    // 필수 정보가 있는지 확인
     if (!email || !password) {
       return NextResponse.json({ error: '이메일과 비밀번호를 입력해주세요.' });
     }
@@ -23,15 +22,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: authError.message });
     }
 
-    // 인증 성공 후, users 테이블에서 사용자 확인
+    // 인증 성공 후, profile 테이블에서 사용자 확인
     const { data: userData, error: userError } = await supabase.from('profile').select('*').eq('id', authData.user.id);
 
-    if (userError || !userData) {
-      // users 테이블에 사용자가 없다면 회원가입으로 리다이렉트
+    if (userError || !userData.length) {
       return NextResponse.json({ message: '사용자를 찾을 수 없습니다. 회원가입 페이지로 이동합니다.' });
     }
 
-    // users 테이블에 사용자가 있으면 로그인 성공
+    // 인증 성공 시 유저 데이터 반환
     return NextResponse.json({ message: '로그인에 성공했습니다.', user: authData.user });
   } catch (err) {
     console.error('로그인 중 오류:', err);
