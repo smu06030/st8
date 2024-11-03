@@ -19,6 +19,7 @@ body {
   background: var(--background);
   font-family: 'Pretendard-Regular', sans-serif;
   line-height: normal;
+  min-height: 100vh;
 }
 
 @layer utilities {
