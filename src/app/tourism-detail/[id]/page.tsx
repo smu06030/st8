@@ -53,16 +53,10 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
   });
 
   // bookmark
-  const onBookmarkClick = async () => {
-    try {
-      const userId = 'supabase.id들어가야하지않을까..';
-      if (data) {
-        await handleBookmarkClick(userId, id, data.text);
-        alert('북마크가 추가되었습니다!');
-      }
-    } catch (error) {
-      console.error('북마크 추가 실패:', error);
-      alert('북마크를 추가하는데 문제가 발생했습니다. 다시 시도해주세요.');
+  const onBookmarkClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    if (data) {
+      handleBookmarkClick(id, data.text, data.overview);
     }
   };
 
