@@ -104,7 +104,7 @@ const MyLocation = () => {
   };
   useEffect(() => {
     if (aliasLocation) {
-      alert('장소가 등록되었습니다.');
+      onClickAliasAdd(aliasLocation);
     }
   }, [aliasLocation]);
 

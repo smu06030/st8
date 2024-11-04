@@ -12,28 +12,53 @@ import AlbumImgEdit from '@/components/photoalbum/AlbumImgEdit';
 import { useAlbumList, useAlbumAddMutation, useAlbumDeleteMutation } from '@/hooks/useAlbumList';
 import useAlbumDelete from '@/hooks/useAlbumDelete';
 import useImgModal from '@/hooks/useImgModal';
+import Loading from '@/app/stamp-map/loading';
 
 const AlbumList = () => {
   const { data: albumListData, isPending, isError } = useAlbumList();
   const AlbumAddMutation = useAlbumAddMutation();
 
-  const { selectedImgUrl, imgModal, onClickImgModal, setImgModal, activeImgId, setActiveImgId } = useImgModal();
+  const {
+    selectedImgUrl,
+    imgModal,
+    onClickImgModal,
+    setImgModal,
+    activeImgId,
+    setActiveImgId,
+    currentIndex,
+    setCurrentIndex
+  } = useImgModal();
   const { edit, setEdit, deleteId, setDeleteId, handleCheckboxChange, onHandleDelete } = useAlbumDelete();
 
   const [imgSrc, setImgSrc] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState('allTab');
 
+  //이미지팝업에 전달할 앨범전체이미지
+  const regionPhoto = albumListData;
+
+  useEffect(() => {
+    if (regionPhoto) {
+      const index = regionPhoto.findIndex((photo) => photo.id === activeImgId); //클릭한 이미지의 인덱스
+      setCurrentIndex(index);
+    }
+  }, [activeImgId, regionPhoto, setCurrentIndex]);
+
   //편집안할땐 체크 다 풀기
   useEffect(() => {
     if (!edit) setDeleteId([]);
-  }, [edit]);
+  }, [edit, setDeleteId]);
 
   //탭 액션
   const onClickTab = (tab: string) => {
     setActiveTab(tab);
   };
 
-  if (isPending) return <div>Loading...</div>;
+  if (isPending)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   if (isError) return <div>Error loading data</div>;
 
   //유저가 등록한 지역이름들(중복_지역이름제거)
@@ -42,8 +67,6 @@ const AlbumList = () => {
   const filterRigionPhoto = filterRigionTitle.map(
     (title) => albumListData?.filter((item) => item.region === title) || []
   );
-  //이미지팝업에 전달할 앨범전체이미지
-  const regionPhoto = albumListData;
 
   return (
     <div>
@@ -64,15 +87,16 @@ const AlbumList = () => {
             activeTab={activeTab}
             item=""
           />
-          {albumListData?.map((item) => (
+          {albumListData?.map((item, index) => (
             <li
+              onClick={() => onClickImgModal(item.photoImg, item.id, index)}
               key={item.id}
               className={`${edit && deleteId.includes(item.id) && 'border-2 border-[#D22730]'} relative aspect-square overflow-hidden border`}
             >
               {item.photoImg && (
                 <>
                   <Image
-                    onClick={() => onClickImgModal(item.photoImg, item.id)}
+                    // onClick={() => onClickImgModal(item.photoImg, item.id)}
                     src={item.photoImg}
                     alt=""
                     width={200}
@@ -132,6 +156,8 @@ const AlbumList = () => {
           selectedImgUrl={selectedImgUrl}
           regionPhoto={regionPhoto}
           activeImgId={activeImgId}
+          setCurrentIndex={setCurrentIndex}
+          currentIndex={currentIndex}
           // setActiveImgId={setActiveImgId}
         />
       )}
