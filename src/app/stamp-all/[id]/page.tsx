@@ -82,16 +82,26 @@ const StampItemDetail = () => {
           <li className="flex items-center justify-start gap-[8px]">
             <Icon name="TimeIcon" size={28} color="white" bgColor="#00688A" rx="16" />
             {/* TODO: 날짜표시 수정*/}
-            <p>{oldestDate?.created_at ? new Date(oldestDate.created_at).toLocaleDateString() : 'N/A'}</p>
-            <span>{oldestDate?.created_at ? new Date(oldestDate.created_at).getHours() : 'N/A'}시</span>
+            <p className="text-[#4F4F4F]">
+              {oldestDate?.created_at
+                ? new Date(oldestDate.created_at).toLocaleDateString('ko-KR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })
+                : 'N/A'}
+            </p>
+            <span className="text-[#4F4F4F]">
+              {oldestDate?.created_at ? new Date(oldestDate.created_at).getHours() : 'N/A'}시
+            </span>
           </li>
           <li className="flex items-center justify-start gap-[8px]">
             <Icon name="ComPassIcon" size={28} color="white" bgColor="#00688A" rx="16" />
-            <p>{stampData[0] ? stampData[0].address : ''}</p>
+            <p className="ellipsis-multiline text-[#4F4F4F]">{stampData[0] ? stampData[0].address : ''}</p>
           </li>
           <li className="flex items-center justify-start gap-[8px]">
             <Icon name="StampIcon" size={28} color="white" bgColor="#00688A" rx="16" />
-            <p>{stampData.length}개</p>
+            <p className="text-[#4F4F4F]">{stampData.length}개</p>
           </li>
         </ul>
       </div>
@@ -104,7 +114,6 @@ const StampItemDetail = () => {
           </button>
         </div>
         {isOpen && (
-          // ${isOpen ? 'animate-dropdownList' : 'animate-dropUpList'}
           <ul className="animate-dropdownList flex flex-col gap-[12px] transition-all duration-300">
             {stampData.map((list) => (
               <li
@@ -114,13 +123,23 @@ const StampItemDetail = () => {
                 <ul className="flex flex-col gap-[14px]">
                   <li className="flex items-center gap-[8px]">
                     <Icon name="TimeIcon" size={28} color="white" bgColor="#00688A" rx="16" />
-                    <span>{list.address}</span>
+                    <span className="ellipsis-multiline text-[#4F4F4F]">{list.address}</span>
                     {/* TODO: 주소->장소이름으로 대체 - 클릭시 지도로 이동 (?)*/}
                   </li>
                   <li className="flex items-center gap-[8px]">
                     <Icon name="ComPassIcon" size={28} color="white" bgColor="#00688A" rx="16" />
-                    <span>{list.created_at ? new Date(list.created_at).toLocaleDateString() : 'N/A'}</span>
-                    <span>{list.created_at ? new Date(list.created_at).getHours() : 'N/A'}시</span>
+                    <span className="text-[#4F4F4F]">
+                      {list.created_at
+                        ? new Date(list.created_at).toLocaleDateString('ko-KR', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                          })
+                        : 'N/A'}
+                    </span>
+                    <span className="text-[#4F4F4F]">
+                      {list.created_at ? new Date(list.created_at).getHours() : 'N/A'}시
+                    </span>
                   </li>
                 </ul>
               </li>

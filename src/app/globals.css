@@ -125,3 +125,11 @@ body {
   align-items: center;
   justify-content: center;
 }
+.ellipsis-multiline {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 원하는 줄 수로 변경 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 85%;
+}
