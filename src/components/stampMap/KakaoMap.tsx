@@ -25,8 +25,9 @@ const KakaoMap = () => {
       >
         {activeIndex === 0 ? (
           geoList.map((item, index) => {
-            const { key, path, isHover } = item;
-            const color = MAP_COLOR[index];
+            const { key, path, isHover, name } = item;
+            console.log(name);
+            const color = MAP_COLOR[name];
 
             return (
               <Polygon

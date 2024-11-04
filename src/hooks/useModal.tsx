@@ -20,20 +20,22 @@ const useModal = () => {
     document.body.style.overflowY = 'auto';
   }, []);
 
-  const Modal = ({ children }: { children: React.ReactNode }) => {
-    if (!isOpen || !portalElement) return null;
-
-    return createPortal(
-      <div
-        onClick={closeModal}
-        style={{ zIndex: 999, backgroundColor: 'rgba(53, 53, 53, 0.6)' }}
-        className="fixed inset-0"
-      >
-        {children}
-      </div>,
-      portalElement
-    );
-  };
+  const Modal = useCallback(
+    ({ children }: { children: React.ReactNode }) => {
+      if (!isOpen || !portalElement) return null;
+      return createPortal(
+        <div
+          onClick={closeModal}
+          style={{ zIndex: 999, backgroundColor: 'rgba(53, 53, 53, 0.6)' }}
+          className="fixed inset-0"
+        >
+          {children}
+        </div>,
+        portalElement
+      );
+    },
+    [isOpen, portalElement, closeModal]
+  );
 
   return {
     isOpen,
