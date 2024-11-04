@@ -4,10 +4,13 @@ import { useEffect, useState } from 'react';
 import StampActive from './StampActive';
 import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
-import { useQuery } from '@tanstack/react-query';
+import browserClient from '@/utils/supabase/client';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchUser } from '@/utils/fetchUser';
 import { fetchStampList } from '@/apis/fetchStampList';
 import Link from 'next/link';
+import Icon from '@/components/common/Icons/Icon';
+import Loading from '@/app/stamp-map/loading';
 
 interface LocationType {
   lat: number;
@@ -15,15 +18,16 @@ interface LocationType {
 }
 
 const MyLocation = () => {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const [userId, setUserId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null); //에러상태
   const [address, setAddress] = useState<AddressPropsType>(); //현재주소
   const [visit, setVisit] = useState<boolean>(false); //방문상태
   const [location, setLocation] = useState<LocationType>({ lat: 0, lng: 0 });
+  const [parentFocused, setParentFocused] = useState(false);
+  const [aliasLocation, setAliasLocation] = useState<string | null>(null); //장소별칭
 
   //로그인유저아이디 패치불러오기
-  //TODO: 체크유저없어도 실행댐.. 이유가 fetchStampList안에 패치유저 한번더함 수정필요
   useEffect(() => {
     const checkUser = async () => {
       const user = await fetchUser();
@@ -33,7 +37,23 @@ const MyLocation = () => {
     checkUser();
   }, []);
 
+  // //별칭입력확인여부
+  // const onCheckAlias = () => {
+  //   if (!aliasLocation) {
+  //     alert('장소에 대한 정보를 적어주세요!');
+  //     return false;
+  //   }
+  //   return false;
+  // };
+  // //별칭입력안했을때 링크이동막기..?
+  // const handleLinkClick = (e) => {
+  //   if (!onCheckAlias()) {
+  //     e.preventDefault();
+  //   }
+  // };
+
   //useQuery
+
   const {
     data: stampList,
     isLoading,
@@ -48,12 +68,45 @@ const MyLocation = () => {
     enabled: !!userId
   });
 
+  // console.log('stampList', stampList);
   useEffect(() => {
     if (stampList && stampList.length > 0) {
       setVisit(stampList[0].visited);
     }
   }, [stampList]);
   // console.log('visited', visit);
+  // console.log('address', address);
+  const addAliasLocation = async (alias: string) => {
+    const { data, error } = await browserClient
+      .from('stamp')
+      .update({ aliasLocation: alias })
+      .eq('user_id', userId)
+      .eq('address', address?.address_name);
+    if (error) console.log('error', error);
+    return data;
+  };
+
+  const AliasAddMutation = useMutation({
+    mutationFn: addAliasLocation,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['nowStamp'] });
+    }
+  });
+
+  const onClickAliasAdd = (alias: string) => {
+    if (userId) {
+      AliasAddMutation.mutate(alias);
+      // console.log('별명찍힘', alias);
+    } else {
+      console.error('유저아이디가 없습니다.');
+      return;
+    }
+  };
+  useEffect(() => {
+    if (aliasLocation) {
+      alert('장소가 등록되었습니다.');
+    }
+  }, [aliasLocation]);
 
   const getAddress = async (lat: number, lng: number) => {
     try {
@@ -64,16 +117,13 @@ const MyLocation = () => {
         }
       });
       const data = await res.json();
-      // console.log('data', data);
       if (data) {
-        const addressData = data.documents[0].address; //지번
+        const addressData = data.documents[0].address;
         setAddress({
           address_name: addressData.address_name,
-          // main_building_no: addressData.building_name,
           region_1depth_name: addressData.region_1depth_name,
           region_2depth_name: addressData.region_2depth_name,
           region_3depth_name: addressData.region_3depth_name
-          // road_name: addressData.road_name
         });
       }
     } catch (error) {
@@ -105,33 +155,68 @@ const MyLocation = () => {
     }
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (stampListError) return <div>Failed to load</div>;
+  if (isLoading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  if (stampListError)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+
   return (
     <div className="flex h-[100vh] flex-col px-[24px] py-[36px]">
       {address ? (
         <>
           {/* <p>현재 내 위치 : {address.address_name}</p> */}
-          <StampActive address={address} stampList={stampList} setVisit={setVisit} visit={visit} location={location} />
+          <StampActive
+            address={address}
+            stampList={stampList}
+            setVisit={setVisit}
+            visit={visit}
+            location={location}
+            aliasLocation={aliasLocation}
+          />
         </>
       ) : (
-        <p>{error ? `Error: ${error}` : '위치를 가져오고있습니다...'}</p>
+        <div>{error ? `Error: ${error}` : <Loading />}</div>
       )}
       {visit && (
-        <div className="flex flex-1 flex-col justify-between">
+        <div className="mt-[36px] flex flex-1 flex-col justify-between">
           <div className="flex flex-col gap-[8px]">
-            <label>스탬프 별명 설정하기</label>
-            <span className="rounded-[12px] border border-[#B5B5B5] px-[42px] py-[20px]">
+            <label className="px-[6px] py-[8px]">스탬프 별명 설정하기</label>
+            <span
+              className="flex gap-[6px] rounded-[12px] border border-[#B5B5B5] px-[16px] py-[16px] focus-within:border-[#00688A]"
+              onFocus={() => setParentFocused(true)}
+              onBlur={() => setParentFocused(false)}
+            >
+              <Icon
+                name="LocationIcon"
+                size={28}
+                color={`${parentFocused ? '#00688A' : '#9C9C9C'}`}
+                bgColor="transparent"
+              />
+              {/* TODO: 등록된거라면 별칭 보여주기 */}
               <input
                 type="text"
                 placeholder="간단한 장소나 이름을 적어주세요."
-                className="w-full bg-transparent text-[14px]"
+                className="w-full bg-transparent text-[14px] outline-none group-focus-within:text-[#00688A]"
+                onChange={(e) => setAliasLocation(e.target.value)}
               />
             </span>
           </div>
           <Link href={'/stamp-all'}>
             <button
-              className={`bg-secondary-500 w-full rounded-[12px] py-[21px] font-semiBold text-[20px] text-[#004157] ${visit && 'animate-fadeUpBtn'}`}
+              onClick={() => {
+                if (aliasLocation !== null) {
+                  onClickAliasAdd(aliasLocation);
+                }
+              }}
+              className={`w-full rounded-[12px] bg-secondary-500 py-[21px] font-semiBold text-[20px] text-[#004157] ${visit && 'animate-fadeUpBtn'}`}
             >
               스탬프 확인하러 가기
             </button>

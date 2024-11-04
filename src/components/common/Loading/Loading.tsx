@@ -1,4 +1,4 @@
-const LoadingSpin = () => (
+const LoadingBounce = () => (
   <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-backgroundGradient">
     <svg
       width="139"
@@ -33,4 +33,4 @@ const LoadingSpin = () => (
   </div>
 );
 
-export default LoadingSpin;
+export default LoadingBounce;
