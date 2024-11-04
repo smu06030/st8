@@ -19,6 +19,7 @@ body {
   background: var(--background);
   font-family: 'Pretendard-Regular', sans-serif;
   line-height: normal;
+  min-height: 100vh;
 }
 
 @layer utilities {
@@ -123,4 +124,12 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.ellipsis-multiline {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 원하는 줄 수로 변경 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 85%;
 }

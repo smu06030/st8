@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`bg-backgroundGradient h-[100vh] bg-no-repeat font-regular ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`bg-backgroundGradient bg-no-repeat font-regular ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <KakaoMapLoader />
         <RQProviders>

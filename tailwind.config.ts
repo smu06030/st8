@@ -75,6 +75,7 @@ const config: Config = {
     animation: {
       fadeUpText: 'fadeUp .8s ease-in-out',
       fadeUpBtn: 'fadeUp 1.2s ease-in-out',
+      dropdownList: 'slideDropdown .5s ease-in-out',
       slideDownModal: 'slideDown .4s linear',
       bounceLoading: 'bounceLoading 1s ease-in-out infinite'
     },
@@ -83,6 +84,16 @@ const config: Config = {
       fadeUp: {
         from: { opacity: '0', transform: 'translateY(100%)' },
         to: { opacity: '1', transform: 'translateY(0)' }
+      },
+      slideDropdown: {
+        from: {
+          opacity: '0',
+          transform: 'translateY(-20px)'
+        },
+        to: {
+          opacity: '1',
+          transform: 'translateY(0)'
+        }
       },
       slideDown: {
         from: {

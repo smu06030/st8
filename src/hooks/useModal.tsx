@@ -11,8 +11,14 @@ const useModal = () => {
     }
   }, [isOpen]);
 
-  const openModal = useCallback(() => setIsOpen(true), []);
-  const closeModal = useCallback(() => setIsOpen(false), []);
+  const openModal = useCallback(() => {
+    setIsOpen(true);
+    document.body.style.overflowY = 'hidden';
+  }, []);
+  const closeModal = useCallback(() => {
+    setIsOpen(false);
+    document.body.style.overflowY = 'auto';
+  }, []);
 
   const Modal = ({ children }: { children: React.ReactNode }) => {
     if (!isOpen || !portalElement) return null;
