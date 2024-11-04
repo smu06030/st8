@@ -7,19 +7,28 @@ import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 import 'swiper/css/mousewheel';
 
+interface photoInfoType {
+  created_at: string;
+  id: number;
+  photoImg: string;
+  region: string;
+  user_id: string;
+}
 interface ImageModalType {
   selectedImgUrl: string;
   setImgModal: Dispatch<SetStateAction<boolean>>;
-  regionPhoto: any;
-  activeImgId: string;
-  setActiveImgId: Dispatch<SetStateAction<string>>;
+  regionPhoto: photoInfoType[] | null;
+  activeImgId: number | string;
+  // setActiveImgId: Dispatch<SetStateAction<number>>;
 }
-const ImgModal = ({ setImgModal, selectedImgUrl, regionPhoto, activeImgId, setActiveImgId }: ImageModalType) => {
+const ImgModal = ({ setImgModal, selectedImgUrl, regionPhoto, activeImgId }: ImageModalType) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const index = regionPhoto.findIndex((photo: any) => photo.id === activeImgId); //TODO :any수정하기
-    setCurrentIndex(index);
+    if (regionPhoto) {
+      const index = regionPhoto.findIndex((photo: photoInfoType) => photo.id === activeImgId);
+      setCurrentIndex(index);
+    }
   }, [activeImgId, regionPhoto]);
 
   return (
@@ -34,16 +43,12 @@ const ImgModal = ({ setImgModal, selectedImgUrl, regionPhoto, activeImgId, setAc
           initialSlide={currentIndex}
           className="mySwiper h-full"
         >
-          {regionPhoto.map(
-            (
-              photo: any,
-              index: string //TODO :any수정하기
-            ) => (
+          {regionPhoto &&
+            regionPhoto.map((photo: photoInfoType, index: number) => (
               <SwiperSlide key={index}>
                 <Image src={photo.photoImg} alt={`Image ${index + 1}`} layout="fill" objectFit="cover" />
               </SwiperSlide>
-            )
-          )}
+            ))}
         </Swiper>
         <button className="absolute right-[10px] top-[-30px] text-white" onClick={() => setImgModal(false)}>
           X
