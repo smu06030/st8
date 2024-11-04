@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Icon from '../common/Icons/Icon';
 import { handleBookmarkClick } from './bookMark';
@@ -13,10 +13,11 @@ interface PlaceCardProps {
 }
 
 const PlaceCard: React.FC<PlaceCardProps> = ({ imageUrl, description, userId, contentid, title }) => {
-  // const navigate = useNavigate();
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   const onBookmarkClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
+    setIsBookmarked(!isBookmarked);
     handleBookmarkClick(contentid, title, description);
   };
 
@@ -28,24 +29,25 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ imageUrl, description, userId, co
 
   return (
     <div
-      className="shadow-md relative min-w-[300px] max-w-xs flex-shrink-0 cursor-pointer overflow-hidden rounded-lg bg-gray-200"
-      // onClick={onCardClick}
+      className="relative h-[374px] w-[327px] cursor-pointer overflow-hidden rounded-[24px]"
+      style={{ backgroundColor: 'rgba(28, 28, 28, 0.7)' }}
     >
-      <button onClick={onBookmarkClick} className="shadow-md absolute left-2 top-2 z-10 rounded-full bg-white p-2">
-        <Icon name="BookMarkIcon" />
-      </button>
-
-      <div className="relative h-48 w-full">
+      <div className="absolute inset-0">
         <Image
           src={imageUrl}
           alt={description || '이미지 설명 없음'}
           layout="fill"
           objectFit="cover"
-          className="rounded-t-lg"
+          className="rounded-[24px]"
         />
-        <div className="absolute bottom-2 right-2 rounded bg-black bg-opacity-60 p-2 text-white">
-          <h3 className="text-sm font-semibold">{title}</h3>
-        </div>
+      </div>
+      <button onClick={onBookmarkClick} className="absolute right-4 top-4 z-20">
+        <Icon name="BookMarkIcon" width={64} height={64} style={{ color: isBookmarked ? '#FFD700' : '#808080' }} />
+      </button>
+      <div className="absolute bottom-[36px] left-[42px] h-[30px] w-[204px] text-left text-white">
+        <h3 className="font-semibold" style={{ fontFamily: 'Pretendard', fontSize: '24px', fontWeight: '600' }}>
+          {description}
+        </h3>
       </div>
     </div>
   );
