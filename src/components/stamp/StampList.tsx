@@ -5,6 +5,7 @@ import StampItem from '@/components/stamp/StampItem';
 import { useQuery } from '@tanstack/react-query';
 import { fetchUser } from '@/utils/fetchUser';
 import { fetchStampActive } from '@/apis/fetchStampList';
+import Image from 'next/image';
 
 const StampList: React.FC = (): React.JSX.Element => {
   const [userId, setUserId] = useState<string | null>(null);
@@ -37,7 +38,6 @@ const StampList: React.FC = (): React.JSX.Element => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>로드실패</div>;
   if (!stampList) return <div>데이터가 없습니다.</div>;
-  // console.log('stampList', stampList);
 
   //이거 전역으러빼기
   const defaultRegionItem = [
@@ -59,10 +59,21 @@ const StampList: React.FC = (): React.JSX.Element => {
     '전남',
     '경남'
   ];
+  const groupTrueRegion = [...new Set(stampList?.map((item) => item.region))]; //갖고있는스탬프 지역이름
+  const stampInActive = defaultRegionItem.filter((item) => !groupTrueRegion.includes(item)); //비활성화 지역
 
+  console.log('stampInActive', stampInActive);
+  console.log('groupTrueRegion', groupTrueRegion);
   return (
     <ul className="grid grid-cols-2 gap-[15px] py-[42px]">
-      {defaultRegionItem?.map((list) => <StampItem key={list} list={list} stampList={stampList} />)}
+      {groupTrueRegion?.map((list) => <StampItem key={list} list={list} stampList={stampList} />)}
+      {stampInActive &&
+        stampInActive.map((stamp) => (
+          <li key={stamp} className="flex flex-col items-center justify-center rounded-[24px] bg-[#ccc] p-3">
+            <Image src={`/images/${stamp}.png`} alt={stamp} width={300} height={300} className="opacity-50" />
+            <div className="font-black">{stamp}</div> {/* TODO: 지우기 */}
+          </li>
+        ))}
     </ul>
   );
 };

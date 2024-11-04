@@ -24,13 +24,15 @@ const StampItem = ({ list, stampList }: StampCardPropsType) => {
   const stampLength = stampList.filter((item) => item.region === list).length;
   //이미지를 디폴트 해당지역으로 바꾸면댈듯????
   return (
-    <li className="flex flex-col items-center justify-center rounded-[24px] bg-[#ccc] p-3">
-      <Link href={`/stamp-all/${list}`} className="flex flex-col items-center">
-        <Image src={stampImgSt ? stampImgSt : '/images/goole-icon.png'} alt={list} width={300} height={300} />
-        <div className="font-black">{list}</div> {/* TODO: 지우기 */}
-        <span>{stampLength}개</span>
-      </Link>
-    </li>
+    <>
+      <li className="flex flex-col items-center justify-center rounded-[24px] bg-[#ccbd92] p-3">
+        <Link href={`/stamp-all/${list}`} className="flex flex-col items-center">
+          <Image src={stampImgSt} alt={list} width={300} height={300} />
+          <div className="font-black">{list}</div> {/* TODO: 지우기 */}
+          <span>{stampLength}개</span>
+        </Link>
+      </li>
+    </>
   );
 };
 
