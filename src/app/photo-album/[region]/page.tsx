@@ -14,7 +14,16 @@ const RegionDetail = () => {
   const { region } = useParams<{ region: string }>();
   const regionTitle = decodeURIComponent(region);
   const { data: albumListData } = useAlbumList(); //TODO: 서버로할거면 서버액션으로 패치만들기
-  const { selectedImgUrl, imgModal, onClickImgModal, setImgModal, activeImgId, setActiveImgId } = useImgModal();
+  const {
+    selectedImgUrl,
+    imgModal,
+    onClickImgModal,
+    setImgModal,
+    activeImgId,
+    setActiveImgId,
+    currentIndex,
+    setCurrentIndex
+  } = useImgModal();
   const { edit, setEdit, deleteId, onHandleDelete, handleCheckboxChange } = useAlbumDelete();
 
   const regionPhoto = albumListData?.filter((item) => item.region === regionTitle) || [];
@@ -33,15 +42,16 @@ const RegionDetail = () => {
         </button>
       </ul>
       <ul className="mt-[16px] grid grid-cols-3 gap-[6px]">
-        {regionPhoto?.map((item) => (
+        {regionPhoto?.map((item, index) => (
           <li
+            onClick={() => onClickImgModal(item.photoImg, item.id, index)}
             key={item.id}
             className={`${deleteId.includes(item.id) && 'border-red-500'} relative aspect-square overflow-hidden border`}
           >
             {item.photoImg && (
               <>
                 <Image
-                  onClick={() => onClickImgModal(item.photoImg, item.id)}
+                  // onClick={() => onClickImgModal(item.photoImg, item.id)}
                   src={item.photoImg}
                   alt=""
                   width={200}
@@ -68,6 +78,8 @@ const RegionDetail = () => {
           selectedImgUrl={selectedImgUrl}
           regionPhoto={regionPhoto}
           activeImgId={activeImgId}
+          setCurrentIndex={setCurrentIndex}
+          currentIndex={currentIndex}
           //   setActiveImgId={setActiveImgId}
         />
       )}
