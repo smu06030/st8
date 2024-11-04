@@ -1,7 +1,7 @@
-import LoadingSpin from '@/components/common/Loading/Loading';
+import LoadingBounce from '@/components/common/Loading/Loading';
 
 const Loading = () => {
-  return <LoadingSpin />;
+  return <LoadingBounce />;
 };
 
 export default Loading;

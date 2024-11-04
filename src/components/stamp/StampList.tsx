@@ -62,8 +62,8 @@ const StampList: React.FC = (): React.JSX.Element => {
   const groupTrueRegion = [...new Set(stampList?.map((item) => item.region))]; //갖고있는스탬프 지역이름
   const stampInActive = defaultRegionItem.filter((item) => !groupTrueRegion.includes(item)); //비활성화 지역
 
-  console.log('stampInActive', stampInActive);
-  console.log('groupTrueRegion', groupTrueRegion);
+  // console.log('stampInActive', stampInActive);
+  // console.log('groupTrueRegion', groupTrueRegion);
   return (
     <ul className="grid grid-cols-2 gap-[15px] py-[42px]">
       {groupTrueRegion?.map((list) => <StampItem key={list} list={list} stampList={stampList} />)}

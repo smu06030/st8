@@ -21,7 +21,7 @@ const StampMapPage = async () => {
   });
 
   const { data } = await createClient().auth.getUser();
-
+  console.log(data?.user?.id);
   if (data?.user) {
     await queryClient.prefetchQuery({
       queryKey: QUERY_KEY.STAMPLIST(data.user.id),
