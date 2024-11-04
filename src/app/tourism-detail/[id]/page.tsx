@@ -16,7 +16,7 @@ interface PlaceDetailProps {
 }
 
 const fetchPlaceDetail = async (id: string) => {
-  const { data, error } = await browserClient.from('tourlist').select('text').eq('contentid', id).single();
+  const { data, error } = await browserClient.from('tourlist').select('title, text').eq('contentid', id).single();
   if (error) throw new Error(error.message);
   const OPEN_KEY = process.env.NEXT_PUBLIC_TOUR_API_KEY;
   const response = await fetch(
@@ -33,6 +33,7 @@ const fetchPlaceDetail = async (id: string) => {
 
   return {
     text: data?.text || '제목을 불러올 수 없습니다',
+    title: data?.title || '내용을 불러올 수 없습니다',
     firstImage: item?.firstimage || '/placeholder.png',
     overview: item?.overview || '상세 설명을 불러올 수 없습니다',
     mapX: item?.mapx || null,
@@ -57,7 +58,7 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
   const onBookmarkClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     if (data) {
-      handleBookmarkClick(id, data.text, data.overview);
+      handleBookmarkClick(id, data.title, data.text);
     }
   };
 

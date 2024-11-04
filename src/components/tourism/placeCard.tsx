@@ -42,7 +42,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ imageUrl, description, userId, co
         onClick={onBookmarkClick}
         className={`absolute right-4 top-4 z-20 ${isBookmarked ? 'text-yellow-500' : 'text-gray-500'}`}
       >
-        <Icon name="BookMarkIcon" width={64} height={64} />
+        <Icon name="BookMarkIcon" size={64} color={isBookmarked ? '#FFD700' : '#808080'} />
       </button>
       <div className="absolute bottom-[36px] left-[42px] h-[30px] w-[204px] text-left text-white">
         <h3 className="text-xl font-semibold">{description}</h3>
