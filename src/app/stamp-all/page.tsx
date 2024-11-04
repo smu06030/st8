@@ -3,8 +3,12 @@ import StampList from '@/components/stamp/StampList';
 
 const StampAll = () => {
   return (
-    <div className="p-[24px]">
-      <h3>전체 스탬프</h3>
+    <div className="px-[24px] py-[34px]">
+      <h3 className="font-semiBold text-[32px] leading-[41.6px] text-[#008EBD]">
+        모아와 함께
+        <br />
+        모아온 스탬프에요.
+      </h3>
       <StampList />
     </div>
   );

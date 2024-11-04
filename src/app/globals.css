@@ -18,6 +18,8 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: 'Pretendard-Regular', sans-serif;
+  line-height: normal;
+  min-height: 100vh;
 }
 
 @layer utilities {
@@ -86,8 +88,40 @@ body {
 }
 
 .albumTab {
-  @apply text-black;
+  @apply text-[#9C9C9C];
 }
 .albumTab.active {
-  @apply text-[red];
+  @apply font-semiBold text-[#004157];
+}
+.add-photo-btn::before {
+  content: '사진 추가하기';
+  position: absolute;
+  bottom: -26px;
+  right: 0;
+  font-size: 14px;
+  color: #4f4f4f;
+}
+
+.modal-swiper .swiper-slide {
+  transition: opacity 0.3s;
+  color: #b5b5b5;
+}
+.modal-swiper .swiper-slide-prev,
+.modal-swiper .swiper-slide-next {
+  font-size: 14px;
+  color: #b5b5b5;
+}
+
+.modal-swiper .swiper-slide-active {
+  color: #004157;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.modal-slide {
+  height: 20% !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

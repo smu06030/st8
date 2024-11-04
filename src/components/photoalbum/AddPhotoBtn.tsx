@@ -59,7 +59,7 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
   //인풋과 라벨 연결값은 유니크한값으로 지역이름의 변수로 변경 -> 각 지역별로 이미지는 들어가지만 전체보기에서 파일자체가 열리지않음
   //->기존 고정변수명+유니크한값으로 변수명을 수정함
   return (
-    <li>
+    <li className={`${activeTab === 'rigionTab' ? 'add-photo-btn' : ''} relative`}>
       <input
         id={`fileInput-${item}`}
         className="hidden"
@@ -70,7 +70,7 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
       />
       <label
         htmlFor={`fileInput-${item}`}
-        className="flex h-[200px] cursor-pointer items-center justify-center bg-[#D9D9D9] text-[50px] text-white hover:bg-[red]"
+        className="flex aspect-square cursor-pointer items-center justify-center bg-[#004157] text-[50px] text-white hover:bg-[#1b4755]"
       >
         +
       </label>

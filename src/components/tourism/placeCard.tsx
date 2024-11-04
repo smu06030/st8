@@ -1,19 +1,35 @@
-'use client';
-
 import React from 'react';
 import Image from 'next/image';
-import { FaBookmark } from 'react-icons/fa';
+import Icon from '../common/Icons/Icon';
+import { handleBookmarkClick } from './bookMark';
 
 interface PlaceCardProps {
   imageUrl: string;
   description: string;
+  userId?: string;
+  contentid: string;
+  title: string;
 }
 
-const PlaceCard: React.FC<PlaceCardProps> = ({ imageUrl, description }) => {
+const PlaceCard: React.FC<PlaceCardProps> = ({ imageUrl, description, userId, contentid, title }) => {
+  const onBookmarkClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    handleBookmarkClick(contentid, title, description);
+  };
+
+  // const onCardClick = () => {
+  //   if (typeof window !== 'undefined' && contentId) {
+  //     window.location.href = `/tourism-detail/${contentId}`;
+  //   }
+  // };
+
   return (
-    <div className="shadow-md relative min-w-[300px] max-w-xs flex-shrink-0 overflow-hidden rounded-lg bg-gray-200">
-      <button className="shadow-md absolute left-2 top-2 z-10 rounded-full bg-white p-2">
-        <FaBookmark size={16} className="text-gray-600" />
+    <div
+      className="shadow-md relative min-w-[300px] max-w-xs flex-shrink-0 cursor-pointer overflow-hidden rounded-lg bg-gray-200"
+      // onClick={onCardClick}
+    >
+      <button onClick={onBookmarkClick} className="shadow-md absolute left-2 top-2 z-10 rounded-full bg-white p-2">
+        <Icon name="BookMarkIcon" />
       </button>
 
       <div className="relative h-48 w-full">
