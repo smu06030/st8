@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import RQProviders from '@/providers/RQRovider';
 import KakaoMapLoader from '@/components/stampMap/KakaoMapLoader';
+import Nav from '@/components/common/nav/Nav';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -36,6 +37,7 @@ export default function RootLayout({
           {children}
           <div id="overlays"></div> {/* 모달창 */}
         </RQProviders>
+        <Nav />
       </body>
     </html>
   );
