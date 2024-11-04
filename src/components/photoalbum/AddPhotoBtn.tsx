@@ -2,6 +2,7 @@
 
 import { useState, Dispatch, SetStateAction, ChangeEvent } from 'react';
 import CategoryModal from '@/components/photoalbum/CategoryModal';
+import Icon from '@/components/common/Icons/Icon';
 
 interface AddAlbumParamsType {
   setImgSrc: Dispatch<React.SetStateAction<string[]>>;
@@ -72,7 +73,7 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
         htmlFor={`fileInput-${item}`}
         className="flex aspect-square cursor-pointer items-center justify-center bg-[#004157] text-[50px] text-white hover:bg-[#1b4755]"
       >
-        +
+        <Icon name="PlusIcon" size={47} color="white" bgColor="transparent" />
       </label>
 
       {/* 팝업 */}
