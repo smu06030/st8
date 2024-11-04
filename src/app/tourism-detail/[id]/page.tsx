@@ -25,7 +25,7 @@ const fetchPlaceDetail = async (id: string) => {
   const item = apiData.response?.body?.items?.item?.[0] || {};
 
   const introResponse = await fetch(
-    `https://apis.data.go.kr/B551011/KorService1/detailIntro1?MobileOS=ETC&MobileApp=\uBAA8\uC544&_type=json&contentId=${id}&contentTypeId=12&serviceKey=${OPEN_KEY}`
+    `https://apis.data.go.kr/B551011/KorService1/detailIntro1?MobileOS=ETC&MobileApp=모아&_type=json&contentId=${id}&contentTypeId=12&serviceKey=${OPEN_KEY}`
   );
   const introData = await introResponse.json();
   const introItem = introData.response?.body?.items?.item?.[0] || {};
@@ -54,10 +54,15 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
 
   // 유저 ID와 데이터 정보를 전달하기 위한 핸들러
   const onBookmarkClick = async () => {
-    const userId = '사용자_아이디_여기'; // 실제 유저 ID를 받아와야 함
-    if (data) {
-      await handleBookmarkClick(userId, id, data.text, data.overview);
-      alert('북마크가 추가되었습니다!');
+    try {
+      const userId = '사용자_아이디_여기'; // 실제 유저 ID를 받아와야 함
+      if (data) {
+        await handleBookmarkClick(userId, id, data.text);
+        alert('북마크가 추가되었습니다!');
+      }
+    } catch (error) {
+      console.error('북마크 추가 실패:', error);
+      alert('북마크를 추가하는데 문제가 발생했습니다. 다시 시도해주세요.');
     }
   };
 

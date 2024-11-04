@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Icon from '../common/Icons/Icon';
 import { handleBookmarkClick } from './bookMark';
+// import { useNavigate } from 'react-router-dom';
 
 interface PlaceCardProps {
   imageUrl: string;
@@ -12,14 +13,16 @@ interface PlaceCardProps {
 }
 
 const PlaceCard: React.FC<PlaceCardProps> = ({ imageUrl, description, userId, contentid, title }) => {
+  // const navigate = useNavigate();
+
   const onBookmarkClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     handleBookmarkClick(contentid, title, description);
   };
 
   // const onCardClick = () => {
-  //   if (typeof window !== 'undefined' && contentId) {
-  //     window.location.href = `/tourism-detail/${contentId}`;
+  //   if (contentid) {
+  //     navigate(`/tourism-detail/${contentid}`);
   //   }
   // };
 
@@ -41,7 +44,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ imageUrl, description, userId, co
           className="rounded-t-lg"
         />
         <div className="absolute bottom-2 right-2 rounded bg-black bg-opacity-60 p-2 text-white">
-          <h3 className="text-sm font-semibold">{description}</h3>
+          <h3 className="text-sm font-semibold">{title}</h3>
         </div>
       </div>
     </div>

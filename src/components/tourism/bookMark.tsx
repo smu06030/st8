@@ -1,5 +1,6 @@
 import browserClient from '@/utils/supabase/client';
 
+// 유저 ID를 가져오는 함수
 async function getUserIdFromProfile() {
   try {
     const {
@@ -19,6 +20,7 @@ async function getUserIdFromProfile() {
   }
 }
 
+// 북마크를 추가하는 함수
 async function addBookmark({
   user_id,
   contentId,
@@ -53,6 +55,7 @@ async function addBookmark({
   }
 }
 
+// 북마크를 삭제하는 함수
 async function removeBookmark(user_id: string, contentId: string) {
   try {
     const { error } = await browserClient.from('bookmark').delete().eq('user_id', user_id).eq('contentid', contentId);
@@ -70,6 +73,7 @@ async function removeBookmark(user_id: string, contentId: string) {
   }
 }
 
+// 북마크 존재 여부 확인 함수
 async function isBookmarkExists(user_id: string, contentId: string) {
   try {
     const { data, error } = await browserClient
@@ -91,6 +95,7 @@ async function isBookmarkExists(user_id: string, contentId: string) {
   }
 }
 
+// 북마크 클릭 처리 함수
 const handleBookmarkClick = async (contentId: string, title: string, text: string) => {
   const user_id = await getUserIdFromProfile();
   if (!user_id) {
