@@ -7,6 +7,7 @@ import browserClient from '../../../utils/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/queries/query.keys';
 import { handleBookmarkClick } from '../../../components/tourism/bookMark';
+import LoadingBounce from '@/components/common/Loading/Loading';
 
 interface PlaceDetailProps {
   params: {
@@ -61,7 +62,7 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
   };
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <LoadingBounce />;
   }
 
   if (error) {

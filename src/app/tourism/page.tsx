@@ -3,6 +3,7 @@
 import { QUERY_KEY } from '@/queries/query.keys';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import LoadingBounce from '../../components/common/Loading/Loading';
 import { fetchPlaces, Place } from '../../serverActions/fetchPlacesAction';
 import PlaceCard from '../../components/tourism/placeCard';
 
@@ -17,7 +18,7 @@ const RecommendedPlaces = () => {
   });
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return <LoadingBounce />;
   }
 
   return (
