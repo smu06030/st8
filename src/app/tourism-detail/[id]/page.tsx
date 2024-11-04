@@ -6,7 +6,7 @@ import { FaBookmark } from 'react-icons/fa';
 import browserClient from '../../../utils/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/queries/query.keys';
-import { handleBookmarkClick } from '../../../components/tourism/bookMark'; // 북마크 핸들러 임포트
+import { handleBookmarkClick } from '../../../components/tourism/bookMark';
 
 interface PlaceDetailProps {
   params: {
@@ -17,7 +17,7 @@ interface PlaceDetailProps {
 const fetchPlaceDetail = async (id: string) => {
   const { data, error } = await browserClient.from('tourlist').select('text').eq('contentid', id).single();
   if (error) throw new Error(error.message);
-  const OPEN_KEY = process.env.NEXT_PUBLIC_TOUR_API_TEST_KEY;
+  const OPEN_KEY = process.env.NEXT_PUBLIC_TOUR_API_KEY;
   const response = await fetch(
     `https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${id}&contentTypeId=12&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=50&pageNo=1&serviceKey=${OPEN_KEY}`
   );
@@ -52,10 +52,10 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
     enabled: !!id
   });
 
-  // 유저 ID와 데이터 정보를 전달하기 위한 핸들러
+  // bookmark
   const onBookmarkClick = async () => {
     try {
-      const userId = '사용자_아이디_여기'; // 실제 유저 ID를 받아와야 함
+      const userId = 'supabase.id들어가야하지않을까..';
       if (data) {
         await handleBookmarkClick(userId, id, data.text);
         alert('북마크가 추가되었습니다!');
