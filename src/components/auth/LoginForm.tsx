@@ -16,7 +16,6 @@ interface LoginFormInputs {
 }
 
 const LoginForm = () => {
-  const [showPassword, setShowPassword] = useState(false); // 비밀번호 보기 토글 상태
   const { loginWithProvider } = useSocialLogin(); // 소셜 로그인 훅
   const {
     register,
@@ -25,6 +24,7 @@ const LoginForm = () => {
     formState: { errors },
     watch
   } = useForm<LoginFormInputs>();
+  const [showPassword, setShowPassword] = useState(false); // 비밀번호 보기 토글 상태
   const router = useRouter();
 
   // 입력 필드 값 감지
@@ -56,12 +56,12 @@ const LoginForm = () => {
           placeholder="이메일을 입력해주세요."
           register={register('email')}
           error={!!errors.email}
-          // errorMessage={errors.password ? '등록되지 않은 비밀번호입니다.' : undefined}
+          // errorMessage={errors.email ? '등록되지 않은 이메일입니다.' : undefined}
           errorMessage="등록되지 않은 이메일입니다."
         />
         <InputField
           icon={<Icon name="LockIcon" />}
-          error={!!errors.email}
+          error={!!errors.password}
           // errorMessage={errors.password ? '등록되지 않은 비밀번호입니다.' : undefined}
           errorMessage="등록되지 않은 비밀번호입니다."
           label="비밀번호"

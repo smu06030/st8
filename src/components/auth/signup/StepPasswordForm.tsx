@@ -49,10 +49,10 @@ const PasswordStep: React.FC<PasswordStepProps> = ({ onNext }) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
-  // const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
+  const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
 
   return (
-    <div className="flex min-h-screen flex-col items-center space-y-6 px-6 py-8">
+    <div className="fixed flex min-h-screen flex-col items-center space-y-6 px-6 py-8">
       <span className="text-secondary-700 mb-6 w-full max-w-[327px] text-left font-bold text-[32px]">
         모아에게 <br /> 비밀번호를 알려주세요.
       </span>
@@ -75,7 +75,7 @@ const PasswordStep: React.FC<PasswordStepProps> = ({ onNext }) => {
         })}
         rightIcon={
           <button type="button" onClick={togglePasswordVisibility}>
-            {showPassword ? <Icon name="EyeIcon" color="#A1A1A1" /> : <Icon name="Eye2Icon" color="#A1A1A1" />}
+            {showPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
           </button>
         }
       />
@@ -85,14 +85,14 @@ const PasswordStep: React.FC<PasswordStepProps> = ({ onNext }) => {
         error={!!errors.password}
         label="비밀번호 확인"
         placeholder="비밀번호를 다시 입력해주세요."
-        type="password"
+        type={showConfirmPassword ? 'text' : 'password'}
         register={register('confirmPassword', {
           required: '비밀번호 확인을 입력해주세요.',
           validate: (value) => value === password || '비밀번호가 일치하지 않습니다.'
         })}
         rightIcon={
-          <button type="button" onClick={togglePasswordVisibility}>
-            {showPassword ? <Icon name="EyeIcon" color="#A1A1A1" /> : <Icon name="Eye2Icon" color="#A1A1A1" />}
+          <button type="button" onClick={toggleConfirmPasswordVisibility}>
+            {showConfirmPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
           </button>
         }
       />

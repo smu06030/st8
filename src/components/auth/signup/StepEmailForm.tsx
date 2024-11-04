@@ -35,7 +35,7 @@ const EmailStep: React.FC<EmailStepProps> = ({ onNext }) => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center space-y-6 px-6 py-8">
+    <div className="fixed flex min-h-screen flex-col items-center space-y-6 px-6 py-8">
       <span className="text-secondary-700 mb-6 w-full max-w-[327px] text-left font-bold text-[32px]">
         모아에게 <br /> 이메일을 알려주세요.
       </span>

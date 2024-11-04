@@ -10,6 +10,8 @@ interface InputFieldProps {
   register?: UseFormRegisterReturn; // register 타입을 prop으로 추가
   error?: boolean; // 에러 상태 추가
   errorMessage?: string; // 에러 메시지 추가
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // 추가된 부분
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -20,7 +22,9 @@ const InputField: React.FC<InputFieldProps> = ({
   rightIcon,
   register,
   error = false,
-  errorMessage
+  errorMessage,
+  value, // 추가된 부분
+  onChange // 추가된 부분
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
@@ -28,6 +32,7 @@ const InputField: React.FC<InputFieldProps> = ({
   const handleFocus = () => setIsFocused(true);
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setIsFocused(false);
+    console.log('>>>>>>>>>>>>>>>>>>');
     setIsFilled(!!e.target.value); // 입력값이 있는 경우 isFilled를 true로 설정
   };
 
@@ -65,6 +70,8 @@ const InputField: React.FC<InputFieldProps> = ({
           onFocus={handleFocus}
           onBlur={handleBlur}
           {...register}
+          value={value} // 추가된 부분
+          onChange={onChange} // 추가된 부분
         />
         {rightIcon && (
           <div className="ml-2 cursor-pointer" style={{ color: iconColor }}>

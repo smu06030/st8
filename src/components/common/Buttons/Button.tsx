@@ -13,10 +13,8 @@ const Button: React.FC<ButtonProps> = ({ label, onClick, variant = 'gray', disab
 
   const variantStyles = {
     gray: 'bg-gray-100 text-gray-300 cursor-not-allowed',
-    blue: 'text-[#004157] bg-secondary',
-    yellow: 'text-[#473700] bg-primary'
-    // blue: 'text-secondary-900 hover:bg-secondary-200 active:bg-secondary',
-    // yellow: 'text-primary-800 hover:bg-primary-100 active:bg-primary'
+    blue: 'text-secondary-900 bg-secondary-500',
+    yellow: 'text-primary-900 bg-primary-400'
   };
 
   return (

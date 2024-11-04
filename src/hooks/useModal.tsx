@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 const useModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
-
+  console.log('>>>>>>>>>>>');
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setPortalElement(document.getElementById('overlays'));
@@ -14,9 +14,8 @@ const useModal = () => {
   const openModal = useCallback(() => setIsOpen(true), []);
   const closeModal = useCallback(() => setIsOpen(false), []);
 
-  const Modal = ({ children }: { children: React.ReactNode }) => {
+  const Modal = useCallback(({ children }: { children: React.ReactNode }) => {
     if (!isOpen || !portalElement) return null;
-
     return createPortal(
       <div
         onClick={closeModal}
@@ -27,7 +26,7 @@ const useModal = () => {
       </div>,
       portalElement
     );
-  };
+  }, []);
 
   return {
     isOpen,
