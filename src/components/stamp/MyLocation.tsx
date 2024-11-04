@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchUser } from '@/utils/fetchUser';
 import { fetchStampList } from '@/apis/fetchStampList';
 import Link from 'next/link';
+import Icon from '@/components/common/Icons/Icon';
 
 interface LocationType {
   lat: number;
@@ -15,7 +16,6 @@ interface LocationType {
 }
 
 const MyLocation = () => {
-  // const queryClient = useQueryClient();
   const [userId, setUserId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null); //에러상태
   const [address, setAddress] = useState<AddressPropsType>(); //현재주소
@@ -64,16 +64,13 @@ const MyLocation = () => {
         }
       });
       const data = await res.json();
-      // console.log('data', data);
       if (data) {
-        const addressData = data.documents[0].address; //지번
+        const addressData = data.documents[0].address;
         setAddress({
           address_name: addressData.address_name,
-          // main_building_no: addressData.building_name,
           region_1depth_name: addressData.region_1depth_name,
           region_2depth_name: addressData.region_2depth_name,
           region_3depth_name: addressData.region_3depth_name
-          // road_name: addressData.road_name
         });
       }
     } catch (error) {
@@ -118,20 +115,21 @@ const MyLocation = () => {
         <p>{error ? `Error: ${error}` : '위치를 가져오고있습니다...'}</p>
       )}
       {visit && (
-        <div className="flex flex-1 flex-col justify-between">
+        <div className="mt-[36px] flex flex-1 flex-col justify-between">
           <div className="flex flex-col gap-[8px]">
-            <label>스탬프 별명 설정하기</label>
-            <span className="rounded-[12px] border border-[#B5B5B5] px-[42px] py-[20px]">
+            <label className="px-[6px] py-[8px]">스탬프 별명 설정하기</label>
+            <span className="flex rounded-[12px] border border-[#B5B5B5] px-[16px] py-[16px]">
+              <Icon name="LocationIcon" size={28} color="#9C9C9C" bgColor="transparent" />
               <input
                 type="text"
                 placeholder="간단한 장소나 이름을 적어주세요."
-                className="w-full bg-transparent text-[14px]"
+                className="w-full bg-transparent text-[14px] outline-none"
               />
             </span>
           </div>
           <Link href={'/stamp-all'}>
             <button
-              className={`bg-secondary-500 w-full rounded-[12px] py-[21px] font-semiBold text-[20px] text-[#004157] ${visit && 'animate-fadeUpBtn'}`}
+              className={`w-full rounded-[12px] bg-secondary-500 py-[21px] font-semiBold text-[20px] text-[#004157] ${visit && 'animate-fadeUpBtn'}`}
             >
               스탬프 확인하러 가기
             </button>
