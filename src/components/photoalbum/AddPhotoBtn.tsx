@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, Dispatch, SetStateAction, ChangeEvent } from 'react';
+import { useState, Dispatch, SetStateAction, ChangeEvent, useEffect } from 'react';
 import CategoryModal from '@/components/photoalbum/CategoryModal';
 import Icon from '@/components/common/Icons/Icon';
 
@@ -16,9 +16,18 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
   const [isRigionModal, setIsRigionModal] = useState(false);
   const [regionCate, setRegionCate] = useState(item);
 
+  const [currentRegion, setCurrentRegion] = useState(''); //지칭한값이 내가 준 지역이 맞는지 확인용
+
+  useEffect(() => {
+    if (imgSrc && activeTab === 'rigionTab' && currentRegion === item) {
+      onHandleUpload(imgSrc);
+    }
+  }, [imgSrc, currentRegion]);
   // 파일 업로드 시 액션
   const OnChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
+    console.log('e.target.id', e.target.id);
+    setCurrentRegion(e.target.id.split('-')[1]);
     if (!files) return;
 
     Array.from(files).forEach((file) => {
@@ -28,14 +37,10 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
       fileReader.onload = (e) => {
         if (typeof e.target?.result === 'string' && e.target.result) {
           if (activeTab === 'allTab') {
-            setImgSrc((prev) => [...prev, e.target!.result as string]); //상태저장 + 순회하면서 저장하니가 값 쌓이게
+            setImgSrc((prev) => [...prev, e.target!.result as string]);
             setIsRigionModal(true);
           } else if (activeTab === 'rigionTab') {
-            setImgSrc((prev) => {
-              const imgArr: string[] = [...prev, e.target?.result as string];
-              onHandleUpload(imgArr); // 배치업데이트(값이 언제 들어올지 보장 안되어서 직접 값을 전달)
-              return imgArr;
-            });
+            setImgSrc((prev) => [...prev, e.target!.result as string]);
             setRegionCate(item);
           }
         }
@@ -50,6 +55,7 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
         AlbumAddMutation.mutate({ imgs: src, regionCate });
       });
       alert('앨범이 추가되었습니다.');
+      setCurrentRegion('');
       setImgSrc([]);
       if (activeTab === 'allTab') {
         setIsRigionModal(false);
