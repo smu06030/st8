@@ -16,6 +16,7 @@ interface StampActivePropsType {
   visit: boolean;
   location: { lat: number; lng: number };
   stampList: any[] | null | undefined; //TODO: any 추후수정
+  aliasLocation: string | null;
 }
 
 //뮤테이션 함수 만들기(수파베이스 값 추가)
@@ -23,12 +24,14 @@ const addStampList = async ({
   regionName,
   address,
   userId,
-  location
+  location,
+  aliasLocation
 }: {
   address: string;
   regionName: string;
   userId: string;
   location: { lat: number; lng: number };
+  aliasLocation: string | null;
 }) => {
   const { data, error } = await browserClient.from('stamp').insert({
     user_id: userId,
@@ -37,7 +40,8 @@ const addStampList = async ({
     stampimg: STAMPIMG_REGION_NAME[regionName],
     visited: true,
     lat: location.lat,
-    lng: location.lng
+    lng: location.lng,
+    aliasLocation: aliasLocation
   });
   if (error) console.log('error', error);
   return data;
@@ -50,9 +54,8 @@ const deleteStampList = async ({ address, userId }: { address: string; userId: s
   return data;
 };
 
-const StampActive = ({ address, stampList, setVisit, visit, location }: StampActivePropsType) => {
+const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocation }: StampActivePropsType) => {
   const queryClient = useQueryClient();
-
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -82,7 +85,7 @@ const StampActive = ({ address, stampList, setVisit, visit, location }: StampAct
   //mutate 추가이벤트(방문안한 상태에서 누르면)
   const onClickVisitedAdd = (address: string, regionName: string) => {
     if (userId) {
-      StampAddMutation.mutate({ address, regionName, userId, location });
+      StampAddMutation.mutate({ address, regionName, userId, location, aliasLocation });
       setVisit(true);
       alert('스탬프가 찍혔습니다.');
     } else {
@@ -140,3 +143,5 @@ const StampActive = ({ address, stampList, setVisit, visit, location }: StampAct
 };
 
 export default StampActive;
+
+//온클릭 추가함수를 하나 더 만들어야할듯 인풋전용으로 스탬프 확인하러가기에 이벤트걸기

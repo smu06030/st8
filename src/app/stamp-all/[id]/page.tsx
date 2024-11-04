@@ -14,6 +14,7 @@ interface StampDetailPropsType {
   region: string;
   created_at?: string;
   address: string;
+  aliasLocation: string | null;
 }
 
 const StampItemDetail = () => {
@@ -48,7 +49,7 @@ const StampItemDetail = () => {
       fetchData();
     }
   }, [params.id, userId]);
-  console.log('stampData', stampData);
+  // console.log('stampData', stampData);
 
   // 가장 오래된 날짜 구하기
   const oldestDate = stampData.reduce((oldest, current) => {
@@ -64,6 +65,7 @@ const StampItemDetail = () => {
       </div>
     );
 
+  // console.log('stampData', stampData);
   //TODO :이미지명이랑 키값 동일하게하기
   return (
     <div className="flex h-[100%] flex-col bg-no-repeat">
@@ -123,7 +125,9 @@ const StampItemDetail = () => {
                 <ul className="flex flex-col gap-[14px]">
                   <li className="flex items-center gap-[8px]">
                     <Icon name="TimeIcon" size={28} color="white" bgColor="#00688A" rx="16" />
-                    <span className="ellipsis-multiline text-[#4F4F4F]">{list.address}</span>
+                    <span className="ellipsis-multiline text-[#4F4F4F]">
+                      {list.aliasLocation !== null ? list.aliasLocation : list.address}
+                    </span>
                     {/* TODO: 주소->장소이름으로 대체 - 클릭시 지도로 이동 (?)*/}
                   </li>
                   <li className="flex items-center gap-[8px]">
