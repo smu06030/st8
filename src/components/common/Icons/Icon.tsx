@@ -1,7 +1,7 @@
-import { icons } from '@/constants/icons';
+import { ICONS } from '@/constants/icons';
 
 interface IconProprType {
-  name: keyof typeof icons;
+  name: keyof typeof ICONS;
   size?: number;
   color?: string;
   bgColor?: string;
@@ -9,7 +9,7 @@ interface IconProprType {
 }
 
 const Icon = ({ name, size = 28, color = 'black', bgColor, rx }: IconProprType) => {
-  const icon = icons[name];
+  const icon = ICONS[name];
 
   // 사이즈 동적 조절
   const scale = size >= 28 ? size / 28 : 1;
