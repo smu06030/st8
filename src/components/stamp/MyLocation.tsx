@@ -1,16 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import StampActive from './StampActive';
-import { AddressPropsType } from '@/types/stamp/AddressProps.types';
-import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
-import browserClient from '@/utils/supabase/client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import Link from 'next/link';
+import Loading from '@/app/stamp-map/loading';
+import Icon from '@/components/common/Icons/Icon';
+import browserClient from '@/utils/supabase/client';
 import { fetchUser } from '@/utils/fetchUser';
 import { fetchStampList } from '@/apis/fetchStampList';
-import Link from 'next/link';
-import Icon from '@/components/common/Icons/Icon';
-import Loading from '@/app/stamp-map/loading';
+import { AddressPropsType } from '@/types/stamp/AddressProps.types';
+import StampActive from '@/components/stamp/StampActive';
+import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
 
 interface LocationType {
   lat: number;
@@ -37,45 +37,26 @@ const MyLocation = () => {
     checkUser();
   }, []);
 
-  // //별칭입력확인여부
-  // const onCheckAlias = () => {
-  //   if (!aliasLocation) {
-  //     alert('장소에 대한 정보를 적어주세요!');
-  //     return false;
-  //   }
-  //   return false;
-  // };
-  // //별칭입력안했을때 링크이동막기..?
-  // const handleLinkClick = (e) => {
-  //   if (!onCheckAlias()) {
-  //     e.preventDefault();
-  //   }
-  // };
-
-  //useQuery
-
   const {
     data: stampList,
     isLoading,
     error: stampListError
   } = useQuery({
-    queryKey: ['nowStamp', address?.address_name], //고유키값
+    queryKey: ['nowStamp', address?.address_name],
     queryFn: async () => {
       if (address && address.address_name) {
         return await fetchStampList(address.address_name!);
       } else return null;
-    }, // 주소를 인자로 넘김
+    },
     enabled: !!userId
   });
 
-  // console.log('stampList', stampList);
   useEffect(() => {
     if (stampList && stampList.length > 0) {
       setVisit(stampList[0].visited);
     }
   }, [stampList]);
-  // console.log('visited', visit);
-  // console.log('address', address);
+
   const addAliasLocation = async (alias: string) => {
     const { data, error } = await browserClient
       .from('stamp')
@@ -96,12 +77,12 @@ const MyLocation = () => {
   const onClickAliasAdd = (alias: string) => {
     if (userId) {
       AliasAddMutation.mutate(alias);
-      // console.log('별명찍힘', alias);
     } else {
       console.error('유저아이디가 없습니다.');
       return;
     }
   };
+
   useEffect(() => {
     if (aliasLocation) {
       onClickAliasAdd(aliasLocation);
@@ -110,7 +91,6 @@ const MyLocation = () => {
 
   const getAddress = async (lat: number, lng: number) => {
     try {
-      //주소 데이터를 요청
       const res = await fetch(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}`, {
         headers: {
           Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`
@@ -133,13 +113,11 @@ const MyLocation = () => {
 
   useEffect(() => {
     if ('geolocation' in navigator) {
-      //현 브라우저가 Geolocation API를 지원하는지 확인
       navigator.geolocation.getCurrentPosition(
-        //사용자의 현재 위치를 요청
         async (position) => {
           const { latitude, longitude } = position.coords;
           setLocation({ lat: latitude, lng: longitude });
-          await getAddress(latitude, longitude); //위도경도 인자로 넘기기
+          await getAddress(latitude, longitude);
         },
         (err) => {
           showErrorMsg(err.message, setError);

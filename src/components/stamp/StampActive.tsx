@@ -87,7 +87,7 @@ const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocat
     if (userId) {
       StampAddMutation.mutate({ address, regionName, userId, location, aliasLocation });
       setVisit(true);
-      alert('스탬프가 찍혔습니다.');
+      // alert('스탬프가 찍혔습니다.');
     } else {
       console.error('유저아이디가 없습니다.');
       return;
