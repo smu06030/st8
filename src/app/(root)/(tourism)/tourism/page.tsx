@@ -3,9 +3,8 @@
 import { QUERY_KEY } from '@/queries/query.keys';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { fetchPlaces, Place } from '../../serverActions/fetchPlacesAction';
-import PlaceCard from '../../components/tourism/placeCard';
-import { Metadata } from 'next';
+import { fetchPlaces, Place } from '@/serverActions/fetchPlacesAction';
+import PlaceCard from '@/components/tourism/placeCard';
 
 interface RecommendedPlacesProps {
   groupedPlaces: Record<string, Place[]>;

@@ -12,7 +12,7 @@ import AlbumImgEdit from '@/components/photoalbum/AlbumImgEdit';
 import { useAlbumList, useAlbumAddMutation, useAlbumDeleteMutation } from '@/hooks/useAlbumList';
 import useAlbumDelete from '@/hooks/useAlbumDelete';
 import useImgModal from '@/hooks/useImgModal';
-import Loading from '@/app/stamp-map/loading';
+import Loading from '@/app/(root)/(stamp)/loading';
 
 const AlbumList = () => {
   const { data: albumListData, isPending, isError } = useAlbumList();

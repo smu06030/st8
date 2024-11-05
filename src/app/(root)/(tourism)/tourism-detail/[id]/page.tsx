@@ -3,10 +3,10 @@
 import React from 'react';
 import Image from 'next/image';
 import { FaBookmark } from 'react-icons/fa';
-import browserClient from '../../../utils/supabase/client';
+import browserClient from '@/utils/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/queries/query.keys';
-import { handleBookmarkClick } from '../../../components/tourism/bookMark';
+import { handleBookmarkClick } from '@/components/tourism/bookMark';
 
 interface PlaceDetailProps {
   params: {
