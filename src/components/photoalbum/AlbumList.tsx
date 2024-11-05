@@ -12,11 +12,15 @@ import AlbumImgEdit from '@/components/photoalbum/AlbumImgEdit';
 import { useAlbumList, useAlbumAddMutation, useAlbumDeleteMutation } from '@/hooks/useAlbumList';
 import useAlbumDelete from '@/hooks/useAlbumDelete';
 import useImgModal from '@/hooks/useImgModal';
-import Loading from '@/app/stamp-map/loading';
+import Loading from '@/app/(root)/(stamp)/loading';
+import useUser from '@/hooks/useUser';
 
 const AlbumList = () => {
-  const { data: albumListData, isPending, isError } = useAlbumList();
+  const userId = useUser();
+  const { data: albumListData, isPending, isError } = useAlbumList(userId);
   const AlbumAddMutation = useAlbumAddMutation();
+
+  // console.log('albumListData', albumListData);
 
   const {
     selectedImgUrl,
@@ -79,7 +83,7 @@ const AlbumList = () => {
       />
       {/* 전체보기 */}
       {activeTab === 'allTab' ? (
-        <ul className="mt-[16px] grid grid-cols-3 gap-[6px]">
+        <ul className="mt-[32px] grid grid-cols-3 gap-[6px]">
           <AddPhotoBtn
             imgSrc={imgSrc}
             setImgSrc={setImgSrc}
@@ -89,14 +93,17 @@ const AlbumList = () => {
           />
           {albumListData?.map((item, index) => (
             <li
-              onClick={() => onClickImgModal(item.photoImg, item.id, index)}
+              onClick={() => {
+                if (!edit) {
+                  onClickImgModal(item.photoImg, item.id, index);
+                }
+              }}
               key={item.id}
               className={`${edit && deleteId.includes(item.id) && 'border-2 border-[#D22730]'} relative aspect-square overflow-hidden border`}
             >
               {item.photoImg && (
                 <>
                   <Image
-                    // onClick={() => onClickImgModal(item.photoImg, item.id)}
                     src={item.photoImg}
                     alt=""
                     width={200}
@@ -108,7 +115,7 @@ const AlbumList = () => {
                     <input
                       type="checkbox"
                       className="absolute right-[10px] top-[10px] h-6 w-6 appearance-none rounded-full border border-gray-300 text-red-500 checked:border-red-500 checked:bg-[red]"
-                      checked={deleteId.includes(item.id)} //배열에 들은 아이디가 있어? 트루펄스
+                      checked={deleteId.includes(item.id)}
                       onChange={() => handleCheckboxChange(item.id)}
                     />
                   )}
