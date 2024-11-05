@@ -54,7 +54,7 @@ const Nav = () => {
         if (activePage === '/tourism') {
           color = '#00688A';
         }
-        return React.cloneElement(<Icon name="AlbumIcon" size={28} color={color} bgColor="transparent" />);
+        return React.cloneElement(<Icon name="MapIcon" size={28} color={color} bgColor="transparent" />);
       })()
     },
     {
@@ -71,7 +71,7 @@ const Nav = () => {
   ];
 
   return (
-    <div className="border-top fixed bottom-0 left-0 z-10 w-full border-t border-[#B5B5B5] bg-white">
+    <div className="border-top fixed bottom-0 left-0 z-[100] box-border w-full border-t border-[#B5B5B5] bg-white">
       <ul className="grid grid-cols-5">
         {navCategory.map((navItem) => (
           <li
@@ -81,10 +81,10 @@ const Nav = () => {
           >
             <Link
               href={navItem.link}
-              className={`flex flex-col items-center ${activePage === navItem.link ? 'text-[#00688A]' : 'text-gray-300'}`}
+              className={`flex flex-col items-center gap-[2px] ${activePage === navItem.link ? 'text-[#00688A]' : 'text-gray-300'}`}
             >
               {navItem.icon}
-              <span className="mt-[2px] font-semiBold text-[12px]">{navItem.page}</span>
+              <span className="font-semiBold text-[12px]">{navItem.page}</span>
             </Link>
           </li>
         ))}
