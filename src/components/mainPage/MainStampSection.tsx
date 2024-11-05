@@ -1,7 +1,19 @@
 import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
+import { createClient } from '@/utils/supabase/server';
+import { fetchStampActive } from '@/serverActions/fetchStampActions';
+import Image from 'next/image';
 
-const MainStampSection = () => {
+const MainStampSection = async () => {
+  // 커스텀 훅을 사용 안하고 스탬프 정보 가져오기
+  const serverClient = createClient();
+  const { data } = await serverClient.auth.getUser();
+
+  let stampList = null;
+  if (data?.user) {
+    stampList = await fetchStampActive(data.user.id);
+  }
+
   return (
     <section className="mt-8">
       <div className="flex flex-col items-start justify-start gap-1.5">
@@ -14,10 +26,17 @@ const MainStampSection = () => {
         <p className="text-sm leading-tight text-gray-600">지금까지 모은 스탬프들을 확인 할 수 있어요.</p>
       </div>
       <div className="mt-4 grid grid-cols-2 gap-[15px]">
-        <div className="h-40 w-full rounded-3xl bg-[#071325]"></div>
-        <div className="h-40 w-full rounded-3xl bg-[#071325]"></div>
-        <div className="h-40 w-full rounded-3xl bg-[#071325]"></div>
-        <div className="h-40 w-full rounded-3xl bg-[#071325]"></div>
+        {stampList && stampList.length > 0 ? (
+          stampList
+            .filter((_, index) => index < 4)
+            .map((stamp) => (
+              <div key={stamp.id} className="flex h-40 w-full items-center justify-center rounded-3xl bg-[#071325]">
+                <Image src={stamp.stampimg} width={146} height={146} priority alt={stamp.region} />
+              </div>
+            ))
+        ) : (
+          <p className="text-sm text-gray-500">스탬프가 없습니다.</p>
+        )}
       </div>
     </section>
   );

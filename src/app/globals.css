@@ -87,6 +87,14 @@ body {
   font-family: 'Pretendard-Regular', sans-serif;
 }
 
+.topheader-padding {
+  @apply pb-[88px];
+}
+
+.bottom-padding {
+  @apply pb-16;
+}
+
 .albumTab {
   @apply text-[#9C9C9C];
 }
@@ -132,4 +140,14 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   width: 85%;
+}
+.modal-box {
+  width: calc(100% - 48px);
+  border-radius: 24px;
+  padding: 38px 34px;
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

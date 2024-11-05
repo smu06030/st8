@@ -17,4 +17,4 @@ const useAuthStatus = () => {
 };
 
 export default useAuthStatus;
-//로그인 여부 확인 훅
+//로그인 여부 확인 훅, getuser로 가져오도록(수정)

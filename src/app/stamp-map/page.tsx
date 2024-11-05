@@ -1,3 +1,4 @@
+import Header from '@/components/common/header/Header';
 import KakaoMap from '@/components/stampMap/KakaoMap';
 import { MapProvider } from '@/providers/mapStoreProvider';
 import { QUERY_KEY } from '@/queries/query.keys';
@@ -7,8 +8,8 @@ import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: '스탬프 맵 페이지',
-  description: '스탬프 맵 페이지 입니다.'
+  title: '홈',
+  description: '홈에 있는 스탬프 맵 페이지 입니다.'
 };
 
 const StampMapPage = async () => {
@@ -21,7 +22,7 @@ const StampMapPage = async () => {
   });
 
   const { data } = await createClient().auth.getUser();
-  console.log(data?.user?.id);
+
   if (data?.user) {
     await queryClient.prefetchQuery({
       queryKey: QUERY_KEY.STAMPLIST(data.user.id),

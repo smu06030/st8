@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { fetchPlaces, Place } from '../../serverActions/fetchPlacesAction';
 import PlaceCard from '../../components/tourism/placeCard';
+import { Metadata } from 'next';
 
 interface RecommendedPlacesProps {
   groupedPlaces: Record<string, Place[]>;

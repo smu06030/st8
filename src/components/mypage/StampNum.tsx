@@ -40,12 +40,14 @@ const StampNum = () => {
 
   return (
     <Link href="/stamp-all">
-      <div className="mb-4 flex cursor-pointer items-center justify-between rounded-2xl bg-gray-300 p-6">
-        <span>
+      <div className="mb-4 flex h-[120px] cursor-pointer items-center justify-between rounded-2xl bg-gray-800 p-6">
+        <span className="text-white">
           지금까지 모은 <br />
-          <span className="font-bold">스탬프</span>
+          <span className="font-bold text-white">스탬프</span>
         </span>
-        <span className="font-bold text-2xl">{stampCount !== null ? `${stampCount}개` : '로딩 중...'}</span>
+        <span className="text-wh font-bold text-2xl text-white">
+          {stampCount !== null ? `${stampCount}개` : '로딩 중...'}
+        </span>
       </div>
     </Link>
   );
