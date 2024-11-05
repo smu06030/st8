@@ -36,7 +36,6 @@ const CategoryModal = ({ onHandleUpload, setRegionCate }: CategoryNodalType) => 
   const [isNotsetSelect, setIsNotsetSelect] = useState(false);
 
   const handleSlideChange = (swiper: any) => {
-    //TODO :any수정하기
     const activeIndex = swiper.activeIndex; //활성화된인덱스번호
     const activeRegion = cate[activeIndex]; //선택한 지역이름
     setRegionCate(activeRegion); //선택한 지역이름 저장
@@ -52,7 +51,7 @@ const CategoryModal = ({ onHandleUpload, setRegionCate }: CategoryNodalType) => 
 
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-[#363636] bg-opacity-50">
-      <div className="relative flex h-[60vh] w-[90%] flex-col rounded-[24px] bg-white px-[32px] py-[36px]">
+      <div className="relative flex h-[65vh] w-[90%] flex-col rounded-[24px] bg-white px-[32px] py-[36px]">
         <h2 className="font-semiBold text-[20px] leading-[26px]">
           이 사진에 어떤 장소의
           <br />
@@ -60,7 +59,7 @@ const CategoryModal = ({ onHandleUpload, setRegionCate }: CategoryNodalType) => 
         </h2>
         <div className="flex h-[69%] flex-col items-center">
           <div className="modal-swiper flex h-full w-full flex-1 flex-col justify-center">
-            <div className="items-col flex flex-col py-[31px]">
+            <div className="items-col flex flex-col overflow-hidden py-[31px]">
               <Swiper
                 // loop={true}
                 direction="vertical"

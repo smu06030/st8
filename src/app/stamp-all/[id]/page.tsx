@@ -116,7 +116,7 @@ const StampItemDetail = () => {
           </button>
         </div>
         {isOpen && (
-          <ul className="animate-dropdownList flex flex-col gap-[12px] transition-all duration-300">
+          <ul className="flex animate-dropdownList flex-col gap-[12px] transition-all duration-300">
             {stampData.map((list) => (
               <li
                 key={list.id}

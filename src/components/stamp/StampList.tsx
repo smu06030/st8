@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchUser } from '@/utils/fetchUser';
 import { fetchStampActive } from '@/apis/fetchStampList';
 import Image from 'next/image';
+import { DEFAULT_REGION_ITEM } from '@/constants/regions';
 
 const StampList: React.FC = (): React.JSX.Element => {
   const [userId, setUserId] = useState<string | null>(null);
@@ -39,33 +40,13 @@ const StampList: React.FC = (): React.JSX.Element => {
   if (error) return <div>로드실패</div>;
   if (!stampList) return <div>데이터가 없습니다.</div>;
 
-  //이거 전역으러빼기
-  const defaultRegionItem = [
-    '서울',
-    '경기',
-    '광주',
-    '대전',
-    '인천',
-    '전북특별자치도',
-    '강원특별자치도',
-    '부산',
-    '대구',
-    '울산',
-    '세종특별자치시',
-    '충북',
-    '충남',
-    '제주특별자치시',
-    '경북',
-    '전남',
-    '경남'
-  ];
   const groupTrueRegion = [...new Set(stampList?.map((item) => item.region))]; //갖고있는스탬프 지역이름
-  const stampInActive = defaultRegionItem.filter((item) => !groupTrueRegion.includes(item)); //비활성화 지역
+  const stampInActive = DEFAULT_REGION_ITEM.filter((item) => !groupTrueRegion.includes(item)); //비활성화 지역
 
   // console.log('stampInActive', stampInActive);
   // console.log('groupTrueRegion', groupTrueRegion);
   return (
-    <ul className="grid grid-cols-2 gap-[15px] py-[42px]">
+    <ul className="bottom-padding grid grid-cols-2 gap-[15px] py-[42px]">
       {groupTrueRegion?.map((list) => <StampItem key={list} list={list} stampList={stampList} />)}
       {stampInActive &&
         stampInActive.map((stamp) => (
