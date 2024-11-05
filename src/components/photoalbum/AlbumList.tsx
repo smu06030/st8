@@ -18,6 +18,8 @@ const AlbumList = () => {
   const { data: albumListData, isPending, isError } = useAlbumList();
   const AlbumAddMutation = useAlbumAddMutation();
 
+  // console.log('albumListData', albumListData);
+
   const {
     selectedImgUrl,
     imgModal,
@@ -79,7 +81,7 @@ const AlbumList = () => {
       />
       {/* 전체보기 */}
       {activeTab === 'allTab' ? (
-        <ul className="mt-[16px] grid grid-cols-3 gap-[6px]">
+        <ul className="mt-[32px] grid grid-cols-3 gap-[6px]">
           <AddPhotoBtn
             imgSrc={imgSrc}
             setImgSrc={setImgSrc}

@@ -50,7 +50,7 @@ const RegionDetail = () => {
           편집
         </button>
       </ul>
-      <ul className="mt-[16px] grid grid-cols-3 gap-[6px]">
+      <ul className="mt-[32px] grid grid-cols-3 gap-[6px]">
         {regionPhoto?.map((item, index) => (
           <li
             onClick={() => {
