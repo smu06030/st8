@@ -11,13 +11,13 @@ const useModal = () => {
     }
   }, [isOpen]);
 
+  // 페이지 경로 변경 시 모달 닫기 및 스크롤 복구
+
   const openModal = useCallback(() => {
     setIsOpen(true);
-    document.body.style.overflowY = 'hidden';
   }, []);
   const closeModal = useCallback(() => {
     setIsOpen(false);
-    document.body.style.overflowY = 'auto';
   }, []);
 
   const Modal = useCallback(
