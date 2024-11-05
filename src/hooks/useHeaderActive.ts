@@ -6,65 +6,43 @@ import { useState, useEffect } from 'react';
 const useHeaderActive = () => {
   const params = useParams();
   const router = useRouter();
-  const [activePage, setActivePage] = useState('/');
   const [pageTitle, setPageTitle] = useState('');
 
   useEffect(() => {
     const currentPath = window.location.pathname;
-    setActivePage(currentPath);
 
-    switch (currentPath) {
-      case '/':
-        setPageTitle('홈');
-        break;
-
-      case '/stamp-map':
-        setPageTitle('지도');
-        break;
-
-      case '/photo-album':
-        setPageTitle('앨범');
-        break;
-      case '/stamp-all':
-        setPageTitle('스탬프');
-        break;
-      case '/stamp-tracking':
-        setPageTitle('스탬프 찍기');
-        break;
-      case '/tourism':
-        setPageTitle('추천 여행지');
-        break;
-      case '/mypage':
-        setPageTitle('마이페이지');
-        break;
-      case '/login':
-        setPageTitle('로그인');
-        break;
-      case '/signup':
-        setPageTitle('회원가입');
-        break;
-      case '/forgot-password':
-        setPageTitle('비밀번호 찾기');
-        break;
-
-      default:
-        setPageTitle('');
+    // 동적 페이지도 헤더가 보이도록
+    if (currentPath.startsWith('/stamp-all')) {
+      setPageTitle('스탬프 페이지');
+    } else if (currentPath.startsWith('/photo-album')) {
+      setPageTitle('앨범 페이지');
+    } else if (currentPath.startsWith('/tourism')) {
+      setPageTitle('추천 여행지');
+    } else if (currentPath.startsWith('/mypage')) {
+      setPageTitle('마이페이지');
+    } else if (currentPath.startsWith('/login')) {
+      setPageTitle('로그인');
+    } else if (currentPath.startsWith('/signup')) {
+      setPageTitle('회원가입');
+    } else if (currentPath.startsWith('/forgot-password')) {
+      setPageTitle('비밀번호 찾기');
+    } else if (currentPath === '/') {
+      setPageTitle('홈');
+    } else if (currentPath.startsWith('/stamp-map')) {
+      setPageTitle('지도');
+    } else if (currentPath.startsWith('/stamp-tracking')) {
+      setPageTitle('스탬프 찍기');
+    } else {
+      setPageTitle(''); // 정의되지 않은 페이지는 빈 제목
     }
   }, [params]);
-
-  const handleClick = (link: string) => {
-    setActivePage(link);
-  };
 
   const goBack = () => {
     router.back();
   };
 
   return {
-    activePage,
     pageTitle,
-    setActivePage,
-    handleClick,
     goBack
   };
 };
