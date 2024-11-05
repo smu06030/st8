@@ -67,7 +67,8 @@ const config: Config = {
     },
     boxShadow: {
       overlayShadow: '0 -1px 12px rgba(68, 68, 68, 0.15)',
-      mainStampShadow: '0 0 8px rgba(241, 217, 5, 0.15)'
+      mainStampShadow: '0 0 8px rgba(241, 217, 5, 0.15)',
+      headerShadow: '0px 2px 12px 0px rgba(0, 0, 0, 0.10)'
     },
     screens: {
       lg: '1024px' // 데스크탑 추후 수정가능

@@ -42,7 +42,6 @@ export const login = async (email: string, password: string) => {
       return {
         success: false,
         type: 'password'
-        // message: '등록되지 않은 비밀번호입니다.'
       };
     } else {
       return {
@@ -53,7 +52,6 @@ export const login = async (email: string, password: string) => {
     return {
       success: false,
       type: 'email'
-      // message: '등록되지 않은 이메일입니다.'
     };
   }
 };

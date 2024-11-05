@@ -1,16 +1,26 @@
 import React from 'react';
 import StampList from '@/components/stamp/StampList';
+import { Metadata } from 'next';
+import Header from '@/components/common/header/Header';
+
+export const metadata: Metadata = {
+  title: '스탬프',
+  description: '스탬프 페이지 입니다.'
+};
 
 const StampAll = () => {
   return (
-    <div className="px-[24px] py-[34px]">
-      <h3 className="font-semiBold text-[32px] leading-[41.6px] text-[#008EBD]">
-        모아와 함께
-        <br />
-        모아온 스탬프에요.
-      </h3>
-      <StampList />
-    </div>
+    <>
+      <Header title={String(metadata.title)} />
+      <div className="px-[24px] py-[34px]">
+        <h3 className="font-semiBold text-[32px] leading-[41.6px] text-[#008EBD]">
+          모아와 함께
+          <br />
+          모아온 스탬프에요.
+        </h3>
+        <StampList />
+      </div>
+    </>
   );
 };
 

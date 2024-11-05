@@ -58,10 +58,11 @@ const LoginForm = () => {
 
   return (
     <div className="m-[32px] min-h-screen flex-col justify-between">
-      <h1 className="mb-4 text-center font-bold">로그인</h1>
       <form onSubmit={handleSubmit(onHandleLogin)} className="flex flex-col items-center justify-center space-y-[24px]">
         <InputField
           icon={<Icon name="MailIcon" color="#A1A1A1" />}
+          // iconName="LockIcon"
+          // color={isFocused ? '#A1A1A1' : '#333333'}
           label="이메일"
           placeholder="이메일을 입력해주세요."
           register={register('email')}

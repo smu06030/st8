@@ -44,6 +44,13 @@ const InputField: React.FC<InputFieldProps> = ({ label, placeholder, type = 'tex
           </div>
         )}
 
+        {/* {iconName && (
+          <div className="mr-2">
+            <Icon name={iconName} color={iconColor} />
+          </div>
+        )} */}
+        {/* icon이라는 props대신 iconName이라는 props를 받게 바뀌고 icon && 이아니라 iconName && 있을때 */}
+
         <input
           type={type}
           placeholder={placeholder}

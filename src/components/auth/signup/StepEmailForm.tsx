@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import InputField from '@/components/common/InputField';
 import Button from '@/components/common/Buttons/Button';
@@ -13,6 +13,7 @@ interface EmailFormInputs {
 }
 
 const EmailStep: React.FC<EmailStepProps> = ({ onNext }) => {
+  const [emailError, setEmailError] = useState<string | null>(null);
   const {
     register,
     watch,
