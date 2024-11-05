@@ -11,6 +11,8 @@ import { fetchStampList } from '@/apis/fetchStampList';
 import Link from 'next/link';
 import Icon from '@/components/common/Icons/Icon';
 import Loading from '@/app/stamp-map/loading';
+import useModal from '@/hooks/useModal';
+import AliasCheckModal from '../common/Modal/AliasCheckModal';
 
 interface LocationType {
   lat: number;
@@ -26,6 +28,7 @@ const MyLocation = () => {
   const [location, setLocation] = useState<LocationType>({ lat: 0, lng: 0 });
   const [parentFocused, setParentFocused] = useState(false);
   const [aliasLocation, setAliasLocation] = useState<string | null>(null); //장소별칭
+  const { openModal, Modal, isOpen } = useModal();
 
   //로그인유저아이디 패치불러오기
   useEffect(() => {
@@ -209,18 +212,19 @@ const MyLocation = () => {
               />
             </span>
           </div>
-          <Link href={'/stamp-all'}>
-            <button
-              onClick={() => {
-                if (aliasLocation !== null) {
-                  onClickAliasAdd(aliasLocation);
-                }
-              }}
-              className={`w-full rounded-[12px] bg-secondary-500 py-[21px] font-semiBold text-[20px] text-[#004157] ${visit && 'animate-fadeUpBtn'}`}
-            >
-              스탬프 확인하러 가기
-            </button>
-          </Link>
+          {/* <Link href={'/stamp-all'}> */}
+          <button
+            onClick={() => {
+              if (aliasLocation !== null) {
+                openModal();
+              }
+            }}
+            className={`w-full rounded-[12px] bg-secondary-500 py-[21px] font-semiBold text-[20px] text-[#004157] ${visit && 'animate-fadeUpBtn'}`}
+          >
+            스탬프 확인하러 가기
+          </button>
+          {/* </Link> */}
+          {isOpen && <AliasCheckModal Modal={Modal} />}
         </div>
       )}
     </div>
