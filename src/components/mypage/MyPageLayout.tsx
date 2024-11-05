@@ -8,7 +8,7 @@ import PhotoNum from './PhotoNum';
 
 const MyPageLayout = () => {
   return (
-    <div className="items-left flex min-h-screen flex-col bg-white p-6">
+    <div className="items-left flex min-h-[100vh] flex-col bg-white px-6">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-4">
           <ReNickname />
@@ -23,7 +23,7 @@ const MyPageLayout = () => {
         <h6 className="mb-[18px] mt-[38px] font-bold text-[20px]">내 정보</h6>
         <StampNum />
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-primary-400 relative flex h-[156px] flex-col justify-center rounded-2xl p-6 text-black">
+          <div className="relative flex h-[156px] flex-col justify-center rounded-2xl bg-primary-400 p-6 text-black">
             <Link href="/stamp-map" className="flex h-full w-full flex-col">
               <p className="text-[12px] font-semibold">지도로 보는 나의 여정</p>
               <p className="mt-1 text-[12px]">

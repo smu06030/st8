@@ -46,7 +46,7 @@ const StampList: React.FC = (): React.JSX.Element => {
   // console.log('stampInActive', stampInActive);
   // console.log('groupTrueRegion', groupTrueRegion);
   return (
-    <ul className="bottom-padding grid grid-cols-2 gap-[15px] py-[42px]">
+    <ul className="grid grid-cols-2 gap-[15px] py-[42px]">
       {groupTrueRegion?.map((list) => <StampItem key={list} list={list} stampList={stampList} />)}
       {stampInActive &&
         stampInActive.map((stamp) => (
