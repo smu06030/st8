@@ -87,6 +87,10 @@ body {
   font-family: 'Pretendard-Regular', sans-serif;
 }
 
+.topheader-padding {
+  @apply pb-[88px];
+}
+
 .bottom-padding {
   @apply pb-16;
 }
