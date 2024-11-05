@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import '@/styles/swiper.css';
@@ -29,9 +29,8 @@ const ScrollButtonSwiper = () => {
         slidesPerView={5}
         centeredSlides={true}
         grabCursor={true}
-        navigation={true}
         onSlideChange={onSlideChangeHandler}
-        modules={[Navigation, Pagination]}
+        modules={[Pagination]}
         className="swiper"
       >
         <SwiperSlide>

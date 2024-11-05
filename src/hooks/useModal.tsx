@@ -11,29 +11,31 @@ const useModal = () => {
     }
   }, [isOpen]);
 
+  // 페이지 경로 변경 시 모달 닫기 및 스크롤 복구
+
   const openModal = useCallback(() => {
     setIsOpen(true);
-    document.body.style.overflowY = 'hidden';
   }, []);
   const closeModal = useCallback(() => {
     setIsOpen(false);
-    document.body.style.overflowY = 'auto';
   }, []);
 
-  const Modal = ({ children }: { children: React.ReactNode }) => {
-    if (!isOpen || !portalElement) return null;
-
-    return createPortal(
-      <div
-        onClick={closeModal}
-        style={{ zIndex: 999, backgroundColor: 'rgba(53, 53, 53, 0.6)' }}
-        className="fixed inset-0"
-      >
-        {children}
-      </div>,
-      portalElement
-    );
-  };
+  const Modal = useCallback(
+    ({ children }: { children: React.ReactNode }) => {
+      if (!isOpen || !portalElement) return null;
+      return createPortal(
+        <div
+          onClick={closeModal}
+          style={{ zIndex: 999, backgroundColor: 'rgba(53, 53, 53, 0.6)' }}
+          className="fixed inset-0"
+        >
+          {children}
+        </div>,
+        portalElement
+      );
+    },
+    [isOpen, portalElement, closeModal]
+  );
 
   return {
     isOpen,
