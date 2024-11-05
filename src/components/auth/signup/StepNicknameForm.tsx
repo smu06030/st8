@@ -40,7 +40,7 @@ const NicknameStep: React.FC<NicknameStepProps> = ({ onNext }) => {
         모아에게 <br /> 이름을 알려주세요.
       </span>
       <InputField
-        icon={<Icon name="UserIcon" color="#A1A1A1" />}
+        icon={<Icon name="UserIcon" />}
         label="이름"
         placeholder="이름을 입력해주세요."
         register={register('nickname', { required: '이름을 입력해주세요' })}

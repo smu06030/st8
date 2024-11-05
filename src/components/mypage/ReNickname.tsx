@@ -1,19 +1,19 @@
-import { useController, useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Button from '../common/Buttons/Button';
-import InputField from '../common/InputField';
 import Icon from '../common/Icons/Icon';
-import { useEffect, useState } from 'react';
 import useModal from '@/hooks/useModal';
 import supabase from '@/utils/supabase/client';
 
 const ReNickname = () => {
   const { openModal, Modal, closeModal } = useModal();
-  const { control, handleSubmit } = useForm();
-  const [nickname, setNickname] = useState<string | null>(null); // 현재 닉네임 상태
+  // const { handleSubmit } = useForm();
+  const [nickname, setNickname] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [parentFocused, setParentFocused] = useState(false);
+  const [tempNickname, setTempNickname] = useState<string | null>(nickname);
 
   useEffect(() => {
-    // 닉네임을 처음 가져오기
     const fetchNickname = async () => {
       const { data: sessionData } = await supabase.auth.getSession();
       if (sessionData?.session) {
@@ -24,17 +24,12 @@ const ReNickname = () => {
           setError('닉네임을 가져오는 중 오류가 발생했습니다.');
         } else {
           setNickname(data.nickname);
+          setTempNickname(data.nickname); // 닉네임을 초기 tempNickname으로 설정
         }
       }
     };
     fetchNickname();
   }, []);
-
-  const { field } = useController({
-    name: 'nickname',
-    control,
-    defaultValue: nickname || ''
-  });
 
   const handleNameChange = async () => {
     try {
@@ -42,7 +37,7 @@ const ReNickname = () => {
       if (!sessionData?.session) return;
 
       const userId = sessionData.session.user.id;
-      const nicknameToSave = field.value.trim();
+      const nicknameToSave = tempNickname?.trim() || nickname;
 
       const { error } = await supabase.from('profile').update({ nickname: nicknameToSave }).eq('id', userId);
 
@@ -50,7 +45,7 @@ const ReNickname = () => {
         setError('닉네임 업데이트 중 오류가 발생했습니다.');
       } else {
         setNickname(nicknameToSave); // 닉네임 상태 즉시 업데이트
-        closeModal(); // 모달 닫기
+        closeModal();
       }
     } catch (updateError) {
       console.error('닉네임 업데이트 중 오류가 발생했습니다:', updateError);
@@ -60,7 +55,7 @@ const ReNickname = () => {
 
   return (
     <div className="flex items-center justify-between">
-      <h1 className="font-bold text-[24px]">{nickname ? nickname : 'guest'}님</h1>
+      <h1 className="font-bold text-[24px]">{nickname}님</h1>
       <div>
         <button onClick={openModal} className="ml-3 text-[14px] text-gray-500">
           수정하기
@@ -72,20 +67,27 @@ const ReNickname = () => {
           <div className="mx-4 w-full max-w-md rounded-[12px] bg-white p-[32px]" onClick={(e) => e.stopPropagation()}>
             <h3 className="mb-4 text-[14px] font-semibold">이름을 변경하시겠습니까?</h3>
             <div className="mt-4 w-full whitespace-nowrap">
-              <InputField
-                icon={<Icon name="UserIcon" />}
-                label="변경할 이름을 입력해주세요"
-                placeholder=""
-                type="text"
-                {...field} // useController로 받아온 필드를 펼쳐서 사용
-              />
+              <span
+                className="flex gap-[6px] rounded-[12px] border border-[#B5B5B5] px-[16px] py-[16px] focus-within:border-[#00688A]"
+                onFocus={() => setParentFocused(true)}
+                onBlur={() => setParentFocused(false)}
+              >
+                <Icon name="UserIcon" color={`${parentFocused ? '#00688A' : '#9C9C9C'}`} />
+                <input
+                  type="text"
+                  placeholder="변경할 이름을 입력해주세요"
+                  className="w-full bg-transparent text-[14px] outline-none group-focus-within:text-[#00688A]"
+                  value={tempNickname || ''}
+                  onChange={(e) => setTempNickname(e.target.value)} // tempNickname에만 반영
+                />
+              </span>
             </div>
             <div className="mt-4 flex w-full">
               <Button
                 label="변경하기"
-                variant={field.value ? 'blue' : 'gray'}
+                variant={tempNickname ? 'blue' : 'gray'}
                 onClick={handleNameChange}
-                disabled={!field.value}
+                disabled={!tempNickname}
               />
             </div>
           </div>
