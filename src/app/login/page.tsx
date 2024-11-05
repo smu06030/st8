@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 const LoginPage = () => {
   return (
     <div>
-      <Header title={String(metadata.title)} />
       <LoginForm />
     </div>
   );

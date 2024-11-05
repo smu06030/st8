@@ -10,17 +10,14 @@ export const metadata: Metadata = {
 
 const StampAll = () => {
   return (
-    <>
-      <Header title={String(metadata.title)} />
-      <div className="px-[24px] py-[34px]">
-        <h3 className="font-semiBold text-[32px] leading-[41.6px] text-[#008EBD]">
-          모아와 함께
-          <br />
-          모아온 스탬프에요.
-        </h3>
-        <StampList />
-      </div>
-    </>
+    <div className="px-[24px] py-[34px]">
+      <h3 className="font-semiBold text-[32px] leading-[41.6px] text-[#008EBD]">
+        모아와 함께
+        <br />
+        모아온 스탬프에요.
+      </h3>
+      <StampList />
+    </div>
   );
 };
 

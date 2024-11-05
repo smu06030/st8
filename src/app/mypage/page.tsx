@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 const MyPage = () => {
   return (
     <div>
-      <Header title={String(metadata.title)} />
       <MyPageLayout />
     </div>
   );

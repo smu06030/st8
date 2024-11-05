@@ -32,7 +32,6 @@ const StampMapPage = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Header title={String(metadata.title)} />
       <MapProvider>
         <KakaoMap />
       </MapProvider>

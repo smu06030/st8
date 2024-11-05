@@ -4,6 +4,7 @@ import './globals.css';
 import RQProviders from '@/providers/RQRovider';
 import KakaoMapLoader from '@/components/stampMap/KakaoMapLoader';
 import Nav from '@/components/common/nav/Nav';
+import Header from '@/components/common/header/Header';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -30,8 +31,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`bg-backgroundGradient bg-no-repeat font-regular ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`bg-backgroundGradient bg-no-repeat font-regular ${geistSans.variable} ${geistMono.variable} topheader-padding antialiased`}
       >
+        <Header />
         <KakaoMapLoader />
         <RQProviders>
           {children}
