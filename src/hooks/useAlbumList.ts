@@ -2,10 +2,17 @@ import { fetchAlbum, addAlbumList, deleteAlbumList } from '@/apis/fetchAlbumList
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 //useQuery - 앨범전체데이터
-export const useAlbumList = () => {
+export const useAlbumList = (userId: string) => {
   return useQuery({
     queryKey: ['photo'],
-    queryFn: fetchAlbum
+    queryFn: async () => {
+      if (userId) {
+        return await fetchAlbum(userId);
+      } else {
+        return null;
+      }
+    },
+    enabled: !!userId
   });
 };
 
