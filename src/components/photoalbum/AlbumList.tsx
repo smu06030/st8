@@ -89,14 +89,17 @@ const AlbumList = () => {
           />
           {albumListData?.map((item, index) => (
             <li
-              onClick={() => onClickImgModal(item.photoImg, item.id, index)}
+              onClick={() => {
+                if (!edit) {
+                  onClickImgModal(item.photoImg, item.id, index);
+                }
+              }}
               key={item.id}
               className={`${edit && deleteId.includes(item.id) && 'border-2 border-[#D22730]'} relative aspect-square overflow-hidden border`}
             >
               {item.photoImg && (
                 <>
                   <Image
-                    // onClick={() => onClickImgModal(item.photoImg, item.id)}
                     src={item.photoImg}
                     alt=""
                     width={200}
@@ -108,7 +111,7 @@ const AlbumList = () => {
                     <input
                       type="checkbox"
                       className="absolute right-[10px] top-[10px] h-6 w-6 appearance-none rounded-full border border-gray-300 text-red-500 checked:border-red-500 checked:bg-[red]"
-                      checked={deleteId.includes(item.id)} //배열에 들은 아이디가 있어? 트루펄스
+                      checked={deleteId.includes(item.id)}
                       onChange={() => handleCheckboxChange(item.id)}
                     />
                   )}

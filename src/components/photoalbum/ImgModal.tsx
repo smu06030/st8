@@ -36,7 +36,7 @@ const ImgModal = ({
 
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-[#363636] bg-opacity-50">
-      <div className="relative h-[90vh] w-full bg-[#D9D9D9]">
+      <div className="relative h-[100vh] w-full bg-[#D9D9D9]">
         <Swiper
           spaceBetween={0}
           pagination={{

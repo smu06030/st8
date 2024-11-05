@@ -53,7 +53,11 @@ const RegionDetail = () => {
       <ul className="mt-[16px] grid grid-cols-3 gap-[6px]">
         {regionPhoto?.map((item, index) => (
           <li
-            onClick={() => onClickImgModal(item.photoImg, item.id, index)}
+            onClick={() => {
+              if (!edit) {
+                onClickImgModal(item.photoImg, item.id, index);
+              }
+            }}
             key={item.id}
             className={`${deleteId.includes(item.id) && 'border-red-500'} relative aspect-square overflow-hidden border`}
           >

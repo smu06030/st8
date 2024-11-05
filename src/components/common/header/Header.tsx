@@ -1,4 +1,5 @@
 'use client';
+
 import React from 'react';
 import Icon from '@/components/common/Icons/Icon';
 import useHeaderActive from '@/hooks/useHeaderActive';
@@ -22,7 +23,7 @@ const Header = () => {
   if (!pageTitle) return null;
 
   return (
-    <header className="fixed top-0 z-[100] h-[56px] w-full bg-white shadow-headerShadow">
+    <header className="shadow-headerShadow fixed top-0 z-[100] h-[56px] w-full bg-white">
       <div className="flex items-center justify-between p-[12px]">
         <button onClick={goBack} className="text-gray-900">
           <Icon name="BackIcon" />
@@ -41,3 +42,4 @@ const Header = () => {
 };
 
 export default Header;
+// onClick={() => setEdit((prev) => !prev)}
