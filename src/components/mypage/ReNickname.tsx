@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import Button from '../common/Buttons/Button';
-import Icon from '../common/Icons/Icon';
+import InputField from '@/components/common/InputField';
 import useModal from '@/hooks/useModal';
 import supabase from '@/utils/supabase/client';
 
 const ReNickname = () => {
   const { openModal, Modal, closeModal } = useModal();
-  // const { handleSubmit } = useForm();
   const [nickname, setNickname] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [parentFocused, setParentFocused] = useState(false);
   const [tempNickname, setTempNickname] = useState<string | null>(nickname);
+  const [inputStatus, setInputStatus] = useState<'default' | 'active' | 'done'>('default');
 
   useEffect(() => {
     const fetchNickname = async () => {
@@ -44,7 +42,8 @@ const ReNickname = () => {
       if (error) {
         setError('닉네임 업데이트 중 오류가 발생했습니다.');
       } else {
-        setNickname(nicknameToSave); // 닉네임 상태 즉시 업데이트
+        setNickname(nicknameToSave);
+        setInputStatus('done'); // 업데이트 성공 시 상태를 done으로 설정
         closeModal();
       }
     } catch (updateError) {
@@ -55,32 +54,30 @@ const ReNickname = () => {
 
   return (
     <div className="flex items-center justify-between">
-      <h1 className="font-bold text-[24px]">{nickname}님</h1>
+      <h1 className="mr-[8px] mt-[34px] text-2xl font-semibold">{nickname}님</h1>
       <div>
-        <button onClick={openModal} className="ml-3 text-[14px] text-gray-500">
+        <button onClick={openModal} className="mt-[34px] text-sm text-gray-500">
           수정하기
         </button>
       </div>
 
       <Modal>
         <div className="fixed inset-0 m-[18px] flex items-center justify-center">
-          <div className="mx-4 w-full max-w-md rounded-[12px] bg-white p-[32px]" onClick={(e) => e.stopPropagation()}>
-            <h3 className="mb-4 text-[14px] font-semibold">이름을 변경하시겠습니까?</h3>
+          <div className="w-[327px] max-w-md rounded-3xl bg-white p-[32px]" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-xl font-semibold">이름을 변경하시겠습니까?</h3>
             <div className="mt-4 w-full whitespace-nowrap">
-              <span
-                className="flex gap-[6px] rounded-[12px] border border-[#B5B5B5] px-[16px] py-[16px] focus-within:border-[#00688A]"
-                onFocus={() => setParentFocused(true)}
-                onBlur={() => setParentFocused(false)}
-              >
-                <Icon name="UserIcon" color={`${parentFocused ? '#00688A' : '#9C9C9C'}`} />
-                <input
-                  type="text"
-                  placeholder="변경할 이름을 입력해주세요"
-                  className="w-full bg-transparent text-[14px] outline-none group-focus-within:text-[#00688A]"
-                  value={tempNickname || ''}
-                  onChange={(e) => setTempNickname(e.target.value)} // tempNickname에만 반영
-                />
-              </span>
+              <InputField
+                iconName="UserIcon"
+                text="변경할 이름을 입력해주세요"
+                placeholder="변경할 이름을 입력해주세요"
+                value={tempNickname || ''}
+                onChange={(e) => {
+                  setTempNickname(e.target.value);
+                  setInputStatus('active');
+                }}
+                onBlur={() => setInputStatus(tempNickname ? 'done' : 'default')} // 입력 완료 시 상태 변경
+                status={inputStatus}
+              />
             </div>
             <div className="mt-4 flex w-full">
               <Button

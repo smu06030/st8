@@ -23,7 +23,7 @@ const Header = () => {
   if (!pageTitle) return null;
 
   return (
-    <header className="shadow-headerShadow fixed top-0 z-[100] h-[56px] w-full bg-white">
+    <header className="fixed top-0 z-[100] h-[56px] w-full bg-white shadow-headerShadow">
       <div className="flex items-center justify-between p-[12px]">
         <button onClick={goBack} className="text-gray-900">
           <Icon name="BackIcon" />

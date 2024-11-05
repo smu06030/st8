@@ -5,7 +5,7 @@ interface StepMainFormProps {
   onNext: () => void;
 }
 
-const StepMainForm: React.FC<StepMainFormProps> = ({ onNext }) => {
+const StepMainForm = ({ onNext }: StepMainFormProps) => {
   return (
     <div className="fixed flex flex-col items-center space-y-4">
       <h2>회원가입을 완료했어요!</h2>

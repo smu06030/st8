@@ -21,13 +21,15 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
-    reset,
+    setValue,
     formState: { errors },
     watch
   } = useForm<LoginFormInputs>();
   const [showPassword, setShowPassword] = useState(false); // 비밀번호 보기 토글
   const [isEmailError, setIsEmailError] = useState(false); // 이메일 오류
   const [isPasswordError, setIsPasswordError] = useState(false); // 비밀번호 오류
+  const [emailStatus, setEmailStatus] = useState<'default' | 'active' | 'done'>('default');
+  const [passwordStatus, setPasswordStatus] = useState<'default' | 'active' | 'done'>('default');
   const router = useRouter();
 
   // 입력 필드 값 감지
@@ -48,23 +50,31 @@ const LoginForm = () => {
     } else {
       if (result.type === 'password') {
         setIsPasswordError(true); // 비밀번호 오류
+        setPasswordStatus('done');
       } else {
         setIsEmailError(true); // 이메일 오류
+        setEmailStatus('done');
       }
     }
-    // reset();
   };
 
   return (
     <div className="m-[32px] min-h-screen flex-col justify-between">
       <form onSubmit={handleSubmit(onHandleLogin)} className="flex flex-col items-center justify-center space-y-[24px]">
         <InputField
-          icon={<Icon name="MailIcon" color="#A1A1A1" />}
-          // iconName="LockIcon"
-          // color={isFocused ? '#A1A1A1' : '#333333'}
-          label="이메일"
+          iconName="MailIcon"
+          text="이메일"
           placeholder="이메일을 입력해주세요."
-          register={register('email')}
+          value={email || ''}
+          onChange={(e) => {
+            setValue('email', e.target.value);
+            setEmailStatus('active'); // 입력 중일 때 active로 변경
+          }}
+          onBlur={() => {
+            console.log('Setting status to done or default based on error');
+            setEmailStatus(isEmailError ? 'default' : 'done'); // 블러 시 상태 변경
+          }}
+          status={emailStatus}
         />
 
         {/* 이메일 오류 시 이미지 표시 */}
@@ -75,11 +85,17 @@ const LoginForm = () => {
         )}
 
         <InputField
-          icon={<Icon name="LockIcon" color="#A1A1A1" />}
-          label="비밀번호"
+          iconName="LockIcon"
+          text="비밀번호"
           placeholder="비밀번호를 입력해주세요."
           type={showPassword ? 'text' : 'password'} // 상태에 따라 비밀번호 타입 변경
-          register={register('password')}
+          value={password || ''}
+          onChange={(e) => {
+            setValue('password', e.target.value);
+            setPasswordStatus('active'); // 입력 중일 때 active로 변경
+          }}
+          onBlur={() => setPasswordStatus(isPasswordError ? 'done' : 'default')}
+          status={passwordStatus}
           rightIcon={
             <button type="button" onClick={() => setShowPassword(!showPassword)}>
               {showPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
@@ -100,7 +116,7 @@ const LoginForm = () => {
             자동 로그인
           </label>
           <a href="/forgot-password" className="text-[14px] text-gray-700">
-            아아디/비밀번호 찾기
+            아이디/비밀번호 찾기
           </a>
         </div>
 

@@ -6,9 +6,9 @@ interface LinkButtonProps {
   className?: string;
 }
 
-const LinkButton: React.FC<LinkButtonProps> = ({ text, href, className }) => {
+const LinkButton = ({ text, href, className }: LinkButtonProps) => {
   return (
-    <Link href={href} className={`font-bold text-[14px] text-[#00688A] underline ${className || ''}`}>
+    <Link href={href} className={`text-sm font-semibold leading-snug text-secondary-800 underline ${className || ''}`}>
       {text}
     </Link>
   );
