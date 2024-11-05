@@ -3,25 +3,37 @@
 import { QUERY_KEY } from '@/queries/query.keys';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { fetchPlaces, Place } from '@/serverActions/fetchPlacesAction';
+import { fetchPlaceData, Place } from '../../../../serverActions/fetchPlacesAction';
 import PlaceCard from '@/components/tourism/placeCard';
-
-interface RecommendedPlacesProps {
-  groupedPlaces: Record<string, Place[]>;
-}
+import { groupPlacesByCity } from '../../../../serverActions/groupPlaces';
 
 const RecommendedPlaces = () => {
-  const { data: groupedPlaces = {}, isPending } = useQuery({
+  const {
+    data = [],
+    isLoading,
+    isError
+  } = useQuery({
     queryKey: QUERY_KEY.PLACES,
-    queryFn: () => fetchPlaces()
+    queryFn: fetchPlaceData
   });
 
-  if (isPending) {
-    return <div>Loading...</div>;
+  if (isLoading) {
+    return <div className="flex min-h-screen items-center justify-center">Loading...</div>;
   }
 
+  if (isError) {
+    return (
+      <div className="flex min-h-screen items-center justify-center text-red-500">
+        데이터를 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.
+      </div>
+    );
+  }
+
+  // 그룹화된 데이터를 가져옴
+  const groupedPlaces = groupPlacesByCity(data);
+
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen p-6">
       <header className="mb-6">
         <h1 className="text-2xl font-semibold leading-tight text-secondary-900">
           <span className="sm:inline block">모아가 엄선한</span>
@@ -33,18 +45,17 @@ const RecommendedPlaces = () => {
         {Object.entries(groupedPlaces).map(([city, places]) => (
           <section key={city} className="mb-6">
             <div className="mb-2 flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-800">{places[0].citytitle}</h2>
+              <h2 className="text-lg font-semibold text-gray-800">{places[0]?.citytitle || '도시 정보 없음'}</h2>
             </div>
             <p className="mb-4 text-sm text-gray-500">{city}</p>
             <div className="flex space-x-4 overflow-x-auto pb-4">
-              {places.map((place, index) => (
+              {places.map((place) => (
                 <PlaceCard
-                  key={index}
-                  contentid={place.contentid || '등록되지않는 여행지'}
-                  title={place.title || '등록되지않는 여행지'}
-                  imageUrl={place.firstimage ? place.firstimage : '/placeholder.png'}
+                  key={place.contentid}
+                  contentid={place.contentid || '등록되지 않는 여행지'}
+                  title={place.title || '등록되지 않는 여행지'}
+                  firstimage={place.firstimage}
                   description={place.supabaseText || '여행지 정보 없음'}
-                  userId={''}
                 />
               ))}
             </div>

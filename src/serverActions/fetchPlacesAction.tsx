@@ -1,59 +1,46 @@
-'use server';
+// serverActions/fetchPlacesAction.ts
+'use client';
 
-import fs from 'fs';
-import path from 'path';
-import { createClient } from '@/utils/supabase/server';
+import browserClient from '@/utils/supabase/client';
 
 export interface Place {
   firstimage: string | null;
   contentid: string | null;
   title: string | null;
   city: string | null;
-  citytitle: string | null;
   supabaseText: string | null;
+  citytitle: string | null;
+  citydetail: string | null;
 }
 
-export const fetchPlaces = async () => {
-  const serverClient = createClient();
-  const { data: supabaseData, error } = await serverClient
-    .from('tourlist')
-    .select('contentid, title, text, city, citytitle');
+// 데이터 호출 함수 (클라이언트에서 호출)
+export const fetchPlaceData = async (): Promise<Place[]> => {
+  try {
+    const { data: supabaseData, error } = await browserClient
+      .from('tourlist')
+      .select('contentid, title, text, city, citytitle, citydetail, firstimage');
 
-  if (error) {
-    console.error('Supabase 데이터 요청 실패:', error);
-    return {};
-  }
-
-  // db.json 파일 경로 설정
-  const filePath = path.join(process.cwd(), 'db.json');
-  const jsonData = fs.readFileSync(filePath, 'utf-8');
-  const jsonParsedData = JSON.parse(jsonData);
-
-  // contentid 매칭하여 JSON 파일에서 데이터를 가져오기
-  const allPlaces: (Place | null)[] = supabaseData.map((placeData) => {
-    const jsonPlaceData = jsonParsedData.find((item: any) => item.contentid === placeData.contentid);
-
-    if (jsonPlaceData) {
-      return {
-        contentid: placeData.contentid,
-        title: placeData.title ?? null,
-        firstimage: jsonPlaceData.firstimage ?? null,
-        city: placeData.city ?? null,
-        citytitle: placeData.citytitle ?? null,
-        supabaseText: placeData.text ?? null
-      };
+    if (error) {
+      console.error('Supabase 데이터 요청 실패:', error);
+      return [];
     }
-    return null;
-  });
 
-  const validPlaces: Place[] = allPlaces.filter((place): place is Place => place !== null);
+    if (!supabaseData || supabaseData.length === 0) {
+      console.warn('Supabase 데이터가 비어있습니다.');
+      return [];
+    }
 
-  const groupedByCity: Record<string, Place[]> = validPlaces.reduce<Record<string, Place[]>>((acc, place) => {
-    const city = place.city || '기타';
-    if (!acc[city]) acc[city] = [];
-    acc[city].push(place);
-    return acc;
-  }, {});
-
-  return groupedByCity;
+    return supabaseData.map((item) => ({
+      firstimage: item.firstimage ?? null,
+      contentid: item.contentid ?? null,
+      title: item.title ?? null,
+      city: item.city ?? null,
+      supabaseText: item.text ?? null,
+      citytitle: item.citytitle ?? null,
+      citydetail: item.citydetail ?? null
+    }));
+  } catch (e) {
+    console.error('데이터 요청 중 예외 발생:', e);
+    return [];
+  }
 };

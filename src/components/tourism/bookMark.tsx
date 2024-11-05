@@ -75,24 +75,30 @@ async function removeBookmark(user_id: string, contentId: string) {
 }
 
 // 북마크 존재 여부 확인 함수
-async function isBookmarkExists(user_id: string, contentId: string) {
+// 북마크 존재 여부 확인 함수
+async function isBookmarkExists(user_id: string, contentId: string): Promise<boolean> {
+  if (!user_id || !contentId) {
+    console.warn('Invalid user_id or contentId. Skipping bookmark check.');
+    return false;
+  }
+
   try {
     const { data, error } = await browserClient
       .from('bookmark')
-      .select('id, choose')
+      .select('id')
       .eq('user_id', user_id)
       .eq('contentid', contentId)
       .maybeSingle();
 
-    if (error && error.code !== 'PGRST116') {
+    if (error) {
       console.error('Error checking bookmark existence:', error);
-      throw error;
+      return false;
     }
 
-    return data; // 데이터가 있으면 반환, 없으면 null
+    return data !== null;
   } catch (error) {
     console.error('Error checking if bookmark exists:', error);
-    return null;
+    return false;
   }
 }
 
@@ -133,7 +139,6 @@ const handleBookmarkClick = async (contentId: string, title: string, text: strin
   }
 };
 
-// 북마크의 choose 값을 업데이트하는 함수
 async function updateBookmarkChoose(user_id: string, contentId: string, choose: boolean) {
   try {
     const { error } = await browserClient

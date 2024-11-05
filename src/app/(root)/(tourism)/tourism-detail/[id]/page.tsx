@@ -54,7 +54,6 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
     enabled: !!id
   });
 
-  // bookmark
   const [isBookmarked, setIsBookmarked] = React.useState(false);
 
   const onBookmarkClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -70,36 +69,15 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
   }
 
   if (error) {
-    return <p>Error fetching data: {error.message}</p>;
+    return <p className="text-center text-red-500">Error fetching data: {error.message}</p>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+    <div className="min-h-screen p-4">
       {/* 상단 이미지 */}
       <div className="relative">
-        <div
-          style={{
-            width: '100%',
-            height: 375,
-            borderTopLeftRadius: 0,
-            borderTopRightRadius: 0,
-            borderBottomLeftRadius: 24,
-            borderBottomRightRadius: 24,
-            overflow: 'hidden',
-            position: 'relative'
-          }}
-        >
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'black',
-              opacity: 0.5,
-              position: 'absolute',
-              top: 0,
-              left: 0
-            }}
-          ></div>
+        <div className="relative h-[375px] w-full overflow-hidden rounded-b-2xl">
+          <div className="absolute inset-0 bg-black opacity-50"></div>
           <Image src={data?.firstImage} alt="장소 사진" layout="fill" objectFit="cover" />
         </div>
         <button
@@ -111,26 +89,8 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
       </div>
 
       {/* 제목 및 설명 */}
-      <div
-        className="flex items-center space-x-2 p-6"
-        style={{
-          maxWidth: '100%',
-          textAlign: 'left',
-          position: 'relative',
-          borderBottom: '1px solid rgba(156, 156, 156, 1)'
-        }}
-      >
-        <h1
-          className="font-semibold text-black"
-          style={{
-            fontFamily: 'Pretendard',
-            fontSize: 24,
-            width: 193,
-            textAlign: 'left'
-          }}
-        >
-          {data?.text}
-        </h1>
+      <div className="flex items-center space-x-2 border-b border-gray-400 p-6 text-left">
+        <h1 className="w-48 text-2xl font-semibold text-black">{data?.text}</h1>
       </div>
 
       {/* 개장일 및 휴무일 정보 */}
@@ -138,37 +98,38 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
         <div className="mt-4 px-6">
           {data?.openDate && (
             <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
-              <Icon name="TimeIcon" size={32} bgColor="rgba(0, 0, 0, 1)" color="#FFFFFF" rx="50%" />
-              <span className="ml-2 mt-3 text-sm">{data.openDate}</span>
+              <Icon name="TimeIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
+              <span className="ml-2">{data.openDate}</span>
             </p>
           )}
           {data?.parking && (
             <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
-              <Icon name="ParkingIcon" size={32} bgColor="rgba(0, 0, 0, 1)" color="#FFFFFF" rx="50%" />
-              <span className="ml-2 mt-3 text-sm">{data.parking}</span>
+              <Icon name="ParkingIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
+              <span className="ml-2">{data.parking}</span>
             </p>
           )}
           {data?.restDate && (
             <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
-              <Icon name="DayOffIcon" size={32} bgColor="rgba(0, 0, 0, 1)" color="#FFFFFF" rx="50%" />
-              <span className="ml-2 mt-3 text-sm">{data.restDate}</span>
+              <Icon name="DayOffIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
+              <span className="ml-2">{data.restDate}</span>
             </p>
           )}
           {data?.creditCard && (
             <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
-              <Icon name="CreditCardIcon" size={32} bgColor="rgba(0, 0, 0, 1)" color="#FFFFFF" rx="50%" />
-              <span className="ml-2 mt-3 text-sm">{data.creditCard}</span>
+              <Icon name="CreditCardIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
+              <span className="ml-2">{data.creditCard}</span>
             </p>
           )}
           {data?.babyCarriage && (
             <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
-              <Icon name="StrollerIcon" size={32} bgColor="rgba(0, 0, 0, 1)" color="#FFFFFF" rx="50%" />
-              <span className="ml-2 mt-3 text-sm">{data.babyCarriage}</span>
+              <Icon name="StrollerIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
+              <span className="ml-2">{data.babyCarriage}</span>
             </p>
           )}
         </div>
       )}
       <div className="my-6 border-b border-gray-300"></div>
+
       {/* 상세 정보 및 더보기 버튼 */}
       <div className="mt-4 px-6">
         <p className="text-sm text-gray-700">{data?.overview}</p>
