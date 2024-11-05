@@ -4,6 +4,7 @@ import InputField from '@/components/common/InputField';
 import Button from '@/components/common/Buttons/Button';
 import Icon from '@/components/common/Icons/Icon';
 import PasswordCheck from './PasswordCheck';
+import Image from 'next/image';
 
 interface PasswordStepProps {
   onNext: (password: string) => void;
@@ -53,12 +54,12 @@ const PasswordStep: React.FC<PasswordStepProps> = ({ onNext }) => {
 
   return (
     <div className="fixed flex min-h-screen flex-col items-center space-y-6 px-6 py-8">
-      <span className="text-secondary-700 mb-6 w-full max-w-[327px] text-left font-bold text-[32px]">
+      <span className="mb-6 w-full max-w-[327px] text-left font-bold text-[32px] text-secondary-700">
         모아에게 <br /> 비밀번호를 알려주세요.
       </span>
 
       <InputField
-        icon={<Icon name="LockIcon" />}
+        icon={<Icon name="LockIcon" color="#A1A1A1" />}
         label="비밀번호"
         placeholder="비밀번호를 입력해주세요."
         type={showPassword ? 'text' : 'password'}
@@ -81,8 +82,7 @@ const PasswordStep: React.FC<PasswordStepProps> = ({ onNext }) => {
       />
       <PasswordCheck password={password} />
       <InputField
-        icon={<Icon name="LockIcon" />}
-        error={!!errors.password}
+        icon={<Icon name="LockIcon" color="#A1A1A1" />}
         label="비밀번호 확인"
         placeholder="비밀번호를 다시 입력해주세요."
         type={showConfirmPassword ? 'text' : 'password'}
@@ -99,13 +99,9 @@ const PasswordStep: React.FC<PasswordStepProps> = ({ onNext }) => {
       {/* 비밀번호 일치 여부 메시지 */}
       <div className="flex items-center space-x-2">
         {isMatching ? (
-          <span className="text-secondary-600 flex items-center">
-            <Icon name="CheckIcon" /> 비밀번호가 동일합니다.
-          </span>
+          <Image src="/images/pass-check1.png" alt="비밀번호 일치" width={128} height={128} />
         ) : confirmPassword.length > 0 ? (
-          <span className="flex items-center text-red-500">
-            <Icon name="XIcon" /> 비밀번호가 동일하지 않습니다.
-          </span>
+          <Image src="/images/pass-alert1.png" alt="비밀번호 불일치" width={160} height={160} />
         ) : null}
       </div>
       <Button

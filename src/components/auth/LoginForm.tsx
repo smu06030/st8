@@ -9,6 +9,7 @@ import LinkButton from '@/components/common/Buttons/LinkButton';
 import InputField from '@/components/common/InputField';
 import Icon from '@/components/common/Icons/Icon';
 import { useState } from 'react';
+import Image from 'next/image';
 
 interface LoginFormInputs {
   email: string;
@@ -24,7 +25,9 @@ const LoginForm = () => {
     formState: { errors },
     watch
   } = useForm<LoginFormInputs>();
-  const [showPassword, setShowPassword] = useState(false); // 비밀번호 보기 토글 상태
+  const [showPassword, setShowPassword] = useState(false); // 비밀번호 보기 토글
+  const [isEmailError, setIsEmailError] = useState(false); // 이메일 오류
+  const [isPasswordError, setIsPasswordError] = useState(false); // 비밀번호 오류
   const router = useRouter();
 
   // 입력 필드 값 감지
@@ -35,35 +38,44 @@ const LoginForm = () => {
   const isFormFilled = email && password;
 
   const onHandleLogin = async (data: LoginFormInputs) => {
-    try {
-      const result = await login(data.email, data.password);
-      if (result) {
-        router.push('/mypage');
+    console.log(data);
+    setIsPasswordError(false);
+    setIsEmailError(false); // 기존 오류 상태 초기화
+    const result = await login(data.email, data.password);
+    console.log('>>>');
+    console.log(result);
+    if (result.success) {
+      router.push('/mypage');
+    } else {
+      if (result.type === 'password') {
+        setIsPasswordError(true); // 비밀번호 오류
+      } else {
+        setIsEmailError(true); // 이메일 오류
       }
-      reset();
-    } catch (error) {
-      alert('로그인 중 오류가 발생했습니다: ');
     }
+    // reset();
   };
 
   return (
-    <div className="min-h-screen flex-col justify-between">
+    <div className="m-[32px] min-h-screen flex-col justify-between">
       <h1 className="mb-4 text-center font-bold">로그인</h1>
-      <form onSubmit={handleSubmit(onHandleLogin)} className="flex flex-col items-center space-y-[24px]">
+      <form onSubmit={handleSubmit(onHandleLogin)} className="flex flex-col items-center justify-center space-y-[24px]">
         <InputField
-          icon={<Icon name="MailIcon" />}
+          icon={<Icon name="MailIcon" color="#A1A1A1" />}
           label="이메일"
           placeholder="이메일을 입력해주세요."
           register={register('email')}
-          error={!!errors.email}
-          // errorMessage={errors.email ? '등록되지 않은 이메일입니다.' : undefined}
-          errorMessage="등록되지 않은 이메일입니다."
         />
+
+        {/* 이메일 오류 시 이미지 표시 */}
+        {isEmailError && (
+          <div className="mb-2 flex items-center space-x-1">
+            <Image src="/images/login-email-alert1.png" alt="이메일 오류" width={160} height={160} />
+          </div>
+        )}
+
         <InputField
-          icon={<Icon name="LockIcon" />}
-          error={!!errors.password}
-          // errorMessage={errors.password ? '등록되지 않은 비밀번호입니다.' : undefined}
-          errorMessage="등록되지 않은 비밀번호입니다."
+          icon={<Icon name="LockIcon" color="#A1A1A1" />}
           label="비밀번호"
           placeholder="비밀번호를 입력해주세요."
           type={showPassword ? 'text' : 'password'} // 상태에 따라 비밀번호 타입 변경
@@ -75,13 +87,20 @@ const LoginForm = () => {
           }
         />
 
-        <div className="flex w-full justify-center gap-20">
+        {/* 비밀번호 오류 시 이미지 표시 */}
+        {isPasswordError && (
+          <div className="mb-2 flex items-center justify-end space-x-1">
+            <Image src="/images/login-pass-alert1.png" alt="비밀번호 오류" width={168} height={168} />
+          </div>
+        )}
+
+        <div className="mx-auto flex w-full max-w-md justify-between px-8">
           <label className="flex items-center text-gray-700">
-            <input type="checkbox" className="mr-2" />
+            <input type="checkbox" className="mr-2 text-[14px]" />
             자동 로그인
           </label>
-          <a href="/find-id-password" className="text-gray-700">
-            아이디/비밀번호 찾기
+          <a href="/forgot-password" className="text-[14px] text-gray-700">
+            아아디/비밀번호 찾기
           </a>
         </div>
 
@@ -97,23 +116,24 @@ const LoginForm = () => {
             onClick={() => loginWithProvider('google')}
             className="shadow-md h-[50px] w-[50px] rounded-full bg-white p-1"
           >
-            <img src="/images/apple-icon.png" alt="apple Login" className="rounded-full" />
+            <Image src="/images/apple-icon.png" alt="apple Login" className="rounded-full" width={50} height={50} />
           </button>
 
           <button
             onClick={() => loginWithProvider('google')}
             className="shadow-md h-[50px] w-[50px] rounded-full bg-white p-3"
           >
-            <img src="/images/google-icon.png" alt="Google Login" />
+            <Image src="/images/google-icon.png" alt="Google Login" width={50} height={50} />
           </button>
 
           <button
             onClick={() => loginWithProvider('kakao')}
             className="shadow-md h-[50px] w-[50px] rounded-full bg-[#FEE500] px-3"
           >
-            <img src="/images/kakao-icon.png" alt="Kakao Login" />
+            <Image src="/images/kakao-icon.png" alt="Kakao Login" width={50} height={50} />
           </button>
         </div>
+
         <div className="mb-4 flex items-center justify-center space-x-2">
           <span className="text-[14px] text-gray-600">아직 회원이 아니신가요?</span>
           <LinkButton label="회원가입" href="/signup" />

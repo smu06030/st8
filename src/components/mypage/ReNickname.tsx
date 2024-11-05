@@ -63,23 +63,26 @@ const ReNickname = () => {
       </div>
 
       <Modal>
-        <div className="fixed inset-0 m-[32px] flex items-center justify-center">
-          <div className="w-full rounded-[12px] bg-white p-[32px]" onClick={(e) => e.stopPropagation()}>
-            <h3 className="mb-4 text-lg font-semibold">이름을 변경하시겠습니까?</h3>
-
-            <InputField
-              icon={<Icon name="UserIcon" />}
-              label="변경할 이름을 입력해주세요"
-              placeholder=""
-              type="text"
-              value={newNickname || ''}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewNickname(e.target.value)}
-            />
-
-            <div className="mt-4 flex">
+        <div className="fixed inset-0 m-[18px] flex items-center justify-center">
+          <div className="mx-4 w-full max-w-md rounded-[12px] bg-white p-[32px]" onClick={(e) => e.stopPropagation()}>
+            <h3 className="mb-4 text-[14px] font-semibold">이름을 변경하시겠습니까?</h3>
+            <div className="mt-4 w-full whitespace-nowrap">
+              <InputField
+                icon={<Icon name="UserIcon" />}
+                label="변경할 이름을 입력해주세요"
+                placeholder=""
+                type="text"
+                register={{
+                  name: 'nickname',
+                  onChange: (e) => setNewNickname(e.target.value),
+                  value: newNickname
+                }}
+              />
+            </div>
+            <div className="mt-4 flex w-full">
               <Button
                 label="변경하기"
-                variant={newNickname ? 'yellow' : 'gray'}
+                variant={newNickname ? 'blue' : 'gray'}
                 onClick={handleNameChange}
                 disabled={!newNickname}
               />

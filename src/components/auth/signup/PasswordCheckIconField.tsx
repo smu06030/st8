@@ -18,7 +18,7 @@ const PasswordConfirmField: React.FC<PasswordConfirmFieldProps> = ({ register, p
 
   return (
     <InputField
-      icon={<Icon name="LockIcon" />}
+      icon={<Icon name="LockIcon" color="#A1A1A1" />}
       label="비밀번호 확인"
       placeholder="비밀번호를 다시 입력해주세요."
       type={showPassword ? 'text' : 'password'}

@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 const useModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
-  console.log('>>>>>>>>>>>');
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setPortalElement(document.getElementById('overlays'));
@@ -20,19 +20,22 @@ const useModal = () => {
     document.body.style.overflowY = 'auto';
   }, []);
 
-  const Modal = useCallback(({ children }: { children: React.ReactNode }) => {
-    if (!isOpen || !portalElement) return null;
-    return createPortal(
-      <div
-        onClick={closeModal}
-        style={{ zIndex: 999, backgroundColor: 'rgba(53, 53, 53, 0.6)' }}
-        className="fixed inset-0"
-      >
-        {children}
-      </div>,
-      portalElement
-    );
-  }, []);
+  const Modal = useCallback(
+    ({ children }: { children: React.ReactNode }) => {
+      if (!isOpen || !portalElement) return null;
+      return createPortal(
+        <div
+          onClick={closeModal}
+          style={{ zIndex: 999, backgroundColor: 'rgba(53, 53, 53, 0.6)' }}
+          className="fixed inset-0"
+        >
+          {children}
+        </div>,
+        portalElement
+      );
+    },
+    [isOpen, portalElement, closeModal]
+  );
 
   return {
     isOpen,

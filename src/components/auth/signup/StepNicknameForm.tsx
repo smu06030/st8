@@ -35,12 +35,12 @@ const NicknameStep: React.FC<NicknameStepProps> = ({ onNext }) => {
   };
 
   return (
-    <div className="fixed flex min-h-screen flex-col items-center space-y-6 px-6 py-8">
-      <span className="mb-6 w-full max-w-[327px] text-left font-bold text-[32px] text-secondary-700">
+    <div className="flex min-h-screen flex-col items-center space-y-6 px-6 py-8">
+      <span className="mb-6 w-full text-left font-bold text-[32px] text-secondary-700">
         모아에게 <br /> 이름을 알려주세요.
       </span>
       <InputField
-        icon={<Icon name="UserIcon" />}
+        icon={<Icon name="UserIcon" color="#A1A1A1" />}
         label="이름"
         placeholder="이름을 입력해주세요."
         register={register('nickname', { required: '이름을 입력해주세요' })}

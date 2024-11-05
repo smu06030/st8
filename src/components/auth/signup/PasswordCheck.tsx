@@ -1,4 +1,4 @@
-import Icon from '@/components/common/Icons/Icon';
+import Image from 'next/image';
 import React from 'react';
 
 interface PasswordCheckProps {
@@ -11,15 +11,35 @@ const PasswordCheck: React.FC<PasswordCheckProps> = ({ password = '' }) => {
   const isLongEnough = password.length >= 8;
 
   return (
-    <div className="flex space-x-2 text-left text-[12px]">
-      <div className={`flex items-center ${hasNumber ? 'text-secondary-600' : 'text-red-500'}`}>
-        {hasNumber ? <Icon name="SCheckIcon" /> : <Icon name="SXIcon" />} 숫자 포함
+    <div className="flex flex-row justify-end space-x-2">
+      {/* 숫자 포함 */}
+      <div className="flex items-center justify-end">
+        <Image
+          src={hasNumber ? '/images/check2.png' : '/images/alert2.png'}
+          alt={hasNumber ? 'alert1' : 'alert1'}
+          width={56}
+          height={56}
+        />
       </div>
-      <div className={`flex items-center ${hasLetter ? 'text-secondary-600' : 'text-red-500'}`}>
-        {hasNumber ? <Icon name="SCheckIcon" /> : <Icon name="SXIcon" />}영문 포함
+
+      {/* 영문 포함 */}
+      <div className="flex items-center justify-end">
+        <Image
+          src={hasLetter ? '/images/check1.png' : '/images/alert1.png'}
+          alt={hasLetter ? 'check2' : 'alert2'}
+          width={56}
+          height={56}
+        />
       </div>
-      <div className={`flex items-center ${isLongEnough ? 'text-secondary-600' : 'text-red-500'}`}>
-        {hasNumber ? <Icon name="SCheckIcon" /> : <Icon name="SXIcon" />} 8자리 이상
+
+      {/* 8자리 이상 */}
+      <div className="flex items-center justify-end">
+        <Image
+          src={isLongEnough ? '/images/check3.png' : '/images/alert3.png'}
+          alt={isLongEnough ? 'check3' : 'alert3'}
+          width={120}
+          height={120}
+        />
       </div>
     </div>
   );
