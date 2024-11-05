@@ -66,7 +66,7 @@ const ForgotPasswordForm = () => {
           })}
         />
 
-        <Button label="비밀번호 찾기" variant={isFormFilled ? 'blue' : 'gray'} disabled={!isFormFilled} />
+        <Button text="비밀번호 찾기" variant={isFormFilled ? 'blue' : 'gray'} disabled={!isFormFilled} />
       </form>
     </div>
   );

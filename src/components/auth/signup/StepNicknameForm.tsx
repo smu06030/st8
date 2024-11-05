@@ -46,7 +46,7 @@ const NicknameStep: React.FC<NicknameStepProps> = ({ onNext }) => {
         register={register('nickname', { required: '이름을 입력해주세요' })}
       />
       <Button
-        label="다음으로"
+        text="다음으로"
         variant={isFormFilled ? 'blue' : 'gray'}
         disabled={!isFormFilled}
         onClick={handleSubmit(handleNext)}

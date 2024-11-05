@@ -13,7 +13,7 @@ const LandingPage = () => {
   return (
     <div>
       <div className="flex flex-col items-center justify-center space-y-4 p-10">
-        <Button label="여행 떠나기" variant={'blue'} onClick={goToLogin} />
+        <Button text="여행 떠나기" variant={'blue'} onClick={goToLogin} />
       </div>
     </div>
   );

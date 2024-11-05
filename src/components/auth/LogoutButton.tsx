@@ -33,7 +33,7 @@ const LogoutButton = () => {
           <div className="w-full rounded-[12px] bg-white p-[32px]">
             <p className="mb-4 text-[14px] font-semibold">정말 로그아웃 하시겠습니까?</p>
             <div className="mt-4 flex w-full">
-              <Button label="로그아웃 하기" variant="blue" onClick={handleLogout} />
+              <Button text="로그아웃 하기" variant="blue" onClick={handleLogout} />
             </div>
           </div>
         </div>

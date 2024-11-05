@@ -84,7 +84,7 @@ const ReNickname = () => {
             </div>
             <div className="mt-4 flex w-full">
               <Button
-                label="변경하기"
+                text="변경하기"
                 variant={tempNickname ? 'blue' : 'gray'}
                 onClick={handleNameChange}
                 disabled={!tempNickname}

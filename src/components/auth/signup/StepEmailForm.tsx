@@ -54,7 +54,7 @@ const EmailStep: React.FC<EmailStepProps> = ({ onNext }) => {
       />
 
       <Button
-        label="다음으로"
+        text="다음으로"
         variant={isFormFilled ? 'blue' : 'gray'}
         disabled={!isFormFilled}
         onClick={handleSubmit(handleNext)}

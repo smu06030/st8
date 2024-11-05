@@ -42,8 +42,7 @@ const LoginForm = () => {
     setIsPasswordError(false);
     setIsEmailError(false); // 기존 오류 상태 초기화
     const result = await login(data.email, data.password);
-    console.log('>>>');
-    console.log(result);
+
     if (result.success) {
       router.push('/mypage');
     } else {
@@ -106,7 +105,7 @@ const LoginForm = () => {
         </div>
 
         <Button
-          label="로그인"
+          text="로그인"
           variant={isFormFilled ? 'blue' : 'gray'}
           disabled={!isFormFilled}
           onClick={handleSubmit(onHandleLogin)}
@@ -137,7 +136,7 @@ const LoginForm = () => {
 
         <div className="mb-4 flex items-center justify-center space-x-2">
           <span className="text-[14px] text-gray-600">아직 회원이 아니신가요?</span>
-          <LinkButton label="회원가입" href="/signup" />
+          <LinkButton text="회원가입" href="/signup" />
         </div>
       </form>
     </div>
