@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { fetchPlaces, Place } from '../../serverActions/fetchPlacesAction';
 import PlaceCard from '../../components/tourism/placeCard';
-import { Metadata } from 'next';
 
 interface RecommendedPlacesProps {
   groupedPlaces: Record<string, Place[]>;
@@ -45,6 +44,7 @@ const RecommendedPlaces = () => {
                   title={place.title || '등록되지않는 여행지'}
                   imageUrl={place.firstimage ? place.firstimage : '/placeholder.png'}
                   description={place.supabaseText || '여행지 정보 없음'}
+                  userId={''}
                 />
               ))}
             </div>

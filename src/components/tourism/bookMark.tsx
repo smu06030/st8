@@ -89,10 +89,10 @@ async function isBookmarkExists(user_id: string, contentId: string) {
       throw error;
     }
 
-    return data;
+    return data; // 데이터가 있으면 반환, 없으면 null
   } catch (error) {
     console.error('Error checking if bookmark exists:', error);
-    return false;
+    return null;
   }
 }
 
