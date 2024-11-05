@@ -38,7 +38,8 @@ async function addBookmark({
         user_id,
         contentid: contentId,
         title,
-        text
+        text,
+        choose: true
       }
     ]);
 
@@ -78,7 +79,7 @@ async function isBookmarkExists(user_id: string, contentId: string) {
   try {
     const { data, error } = await browserClient
       .from('bookmark')
-      .select('id')
+      .select('id, choose')
       .eq('user_id', user_id)
       .eq('contentid', contentId)
       .maybeSingle();
@@ -88,7 +89,7 @@ async function isBookmarkExists(user_id: string, contentId: string) {
       throw error;
     }
 
-    return !!data;
+    return data;
   } catch (error) {
     console.error('Error checking if bookmark exists:', error);
     return false;
@@ -96,35 +97,62 @@ async function isBookmarkExists(user_id: string, contentId: string) {
 }
 
 // 북마크 클릭 처리 함수
-const handleBookmarkClick = async (contentId: string, title: string, text: string) => {
-  const user_id = await getUserIdFromProfile();
-  if (!user_id) {
-    alert('로그인 후에 북마크를 추가할 수 있습니다.');
-    return;
-  }
-
+const handleBookmarkClick = async (contentId: string, title: string, text: string): Promise<boolean> => {
   try {
+    const user_id = await getUserIdFromProfile();
+    if (!user_id) {
+      alert('로그인 후에 북마크를 추가할 수 있습니다.');
+      return false;
+    }
+
     const bookmarkExists = await isBookmarkExists(user_id, contentId);
 
     if (bookmarkExists) {
       const isBookmarkRemoved = await removeBookmark(user_id, contentId);
       if (isBookmarkRemoved) {
         alert('북마크가 삭제되었습니다.');
+        return true;
       } else {
         alert('북마크 삭제에 실패했습니다. 다시 시도해주세요.');
+        return false;
       }
     } else {
       const isBookmarkAdded = await addBookmark({ user_id, contentId, title, text });
       if (isBookmarkAdded) {
         alert('북마크가 추가되었습니다!');
+        return true;
       } else {
         alert('북마크 추가에 실패했습니다. 다시 시도해주세요.');
+        return false;
       }
     }
   } catch (error) {
     console.error('Error handling bookmark click:', error);
     alert('북마크 처리 중 오류가 발생했습니다. 다시 시도해주세요.');
+    return false;
   }
 };
 
-export { handleBookmarkClick };
+// 북마크의 choose 값을 업데이트하는 함수
+async function updateBookmarkChoose(user_id: string, contentId: string, choose: boolean) {
+  try {
+    const { error } = await browserClient
+      .from('bookmark')
+      .update({ choose })
+      .eq('user_id', user_id)
+      .eq('contentid', contentId);
+
+    if (error) {
+      console.error('Error updating bookmark choose status:', error);
+      return false;
+    }
+
+    console.log('Bookmark choose status updated successfully');
+    return true;
+  } catch (error) {
+    console.error('Error updating bookmark choose status:', error);
+    return false;
+  }
+}
+
+export { handleBookmarkClick, isBookmarkExists };

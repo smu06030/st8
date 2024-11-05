@@ -139,37 +139,36 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
           {data?.openDate && (
             <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
               <Icon name="TimeIcon" size={32} bgColor="rgba(0, 0, 0, 1)" color="#FFFFFF" rx="50%" />
-              <span className="ml-2">{data.openDate}</span>
+              <span className="ml-2 mt-3 text-sm">{data.openDate}</span>
             </p>
           )}
           {data?.parking && (
             <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
               <Icon name="ParkingIcon" size={32} bgColor="rgba(0, 0, 0, 1)" color="#FFFFFF" rx="50%" />
-              <span className="ml-2">{data.parking}</span>
+              <span className="ml-2 mt-3 text-sm">{data.parking}</span>
             </p>
           )}
           {data?.restDate && (
             <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
               <Icon name="DayOffIcon" size={32} bgColor="rgba(0, 0, 0, 1)" color="#FFFFFF" rx="50%" />
-              <span className="ml-2">{data.restDate}</span>
+              <span className="ml-2 mt-3 text-sm">{data.restDate}</span>
             </p>
           )}
           {data?.creditCard && (
             <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
               <Icon name="CreditCardIcon" size={32} bgColor="rgba(0, 0, 0, 1)" color="#FFFFFF" rx="50%" />
-              <span className="ml-2">{data.creditCard}</span>
+              <span className="ml-2 mt-3 text-sm">{data.creditCard}</span>
             </p>
           )}
           {data?.babyCarriage && (
             <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
               <Icon name="StrollerIcon" size={32} bgColor="rgba(0, 0, 0, 1)" color="#FFFFFF" rx="50%" />
-              <span className="ml-2">{data.babyCarriage}</span>
+              <span className="ml-2 mt-3 text-sm">{data.babyCarriage}</span>
             </p>
           )}
-          <div className="my-6 border-b border-gray-300"></div>
         </div>
       )}
-
+      <div className="my-6 border-b border-gray-300"></div>
       {/* 상세 정보 및 더보기 버튼 */}
       <div className="mt-4 px-6">
         <p className="text-sm text-gray-700">{data?.overview}</p>
