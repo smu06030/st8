@@ -1,15 +1,11 @@
 'use client';
-
-import React, { useState } from 'react';
+import React from 'react';
 import Icon from '@/components/common/Icons/Icon';
 import Link from 'next/link';
+import useNavActive from '@/hooks/useNavActive';
 
 const Nav = () => {
-  const [activePage, setActivePage] = useState('/');
-
-  const handleClick = (link: string) => {
-    setActivePage(link);
-  };
+  const { activePage, handleClick } = useNavActive();
 
   const navCategory = [
     {
@@ -45,7 +41,7 @@ const Nav = () => {
           color = '#fff';
         }
         return React.cloneElement(<Icon name="StampIcon" size={28} bgColor={bgColor} rx="16" />, {
-          color: color, // 명시적으로 color prop 전달
+          color: color,
           style: { color: color }
         });
       })()
@@ -73,7 +69,7 @@ const Nav = () => {
       })()
     }
   ];
-  console.log('activePage', activePage);
+
   return (
     <div className="border-top fixed bottom-0 left-0 z-10 w-full border-t border-[#B5B5B5] bg-white">
       <ul className="grid grid-cols-5">
