@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import LoginForm from '@/components/auth/LoginForm';
+import Header from '@/components/common/header/Header';
 
 export const metadata: Metadata = {
-  title: '로그인 페이지',
+  title: '로그인',
   description: '로그인 페이지입니다.'
 };
 

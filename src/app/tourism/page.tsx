@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { fetchPlaces, Place } from '../../serverActions/fetchPlacesAction';
 import PlaceCard from '../../components/tourism/placeCard';
+import { Metadata } from 'next';
 
 interface RecommendedPlacesProps {
   groupedPlaces: Record<string, Place[]>;
@@ -23,7 +24,7 @@ const RecommendedPlaces = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <header className="mb-6">
-        <h1 className="text-secondary-900 text-2xl font-semibold leading-tight">
+        <h1 className="text-2xl font-semibold leading-tight text-secondary-900">
           <span className="sm:inline block">모아가 엄선한</span>
           <span className="sm:inline block">추천 국내 여행지</span>
         </h1>
