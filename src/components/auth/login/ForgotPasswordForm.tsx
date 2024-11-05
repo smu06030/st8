@@ -46,14 +46,15 @@ const ForgotPasswordForm = () => {
   };
 
   return (
-    <div className="fixed flex min-h-screen flex-col items-center space-y-6 px-6 py-8">
-      <span className="mb-6 w-full max-w-[327px] text-left font-bold text-[32px] text-secondary-700">
-        비밀번호 찾기
+    <div className="m-[32px] min-h-screen flex-col justify-between">
+      <span className="mb-6 w-full text-left font-bold text-[32px] text-secondary-700">
+        등록된 이메일로 <br />
+        비밀번호를 변경합니다.
       </span>
 
-      <form onSubmit={handleSubmit(handlePasswordReset)} className="w-full max-w-[327px] space-y-4">
+      <form onSubmit={handleSubmit(handlePasswordReset)} className="w-full space-y-4">
         <InputField
-          icon={<Icon name="MailIcon" />}
+          icon={<Icon name="MailIcon" color="#A1A1A1" />}
           label="이메일"
           placeholder="이메일을 입력해주세요."
           register={register('email', {
@@ -65,7 +66,7 @@ const ForgotPasswordForm = () => {
           })}
         />
 
-        <Button label="이메일 보내기" variant={isFormFilled ? 'blue' : 'gray'} disabled={!isFormFilled} />
+        <Button label="비밀번호 찾기" variant={isFormFilled ? 'blue' : 'gray'} disabled={!isFormFilled} />
       </form>
     </div>
   );

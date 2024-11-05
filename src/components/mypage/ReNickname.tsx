@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import InputField from '@/components/common/InputField';
-import Button from '@/components/common/Buttons/Button';
-import Icon from '@/components/common/Icons/Icon';
+import { useController, useForm } from 'react-hook-form';
+import Button from '../common/Buttons/Button';
+import InputField from '../common/InputField';
+import Icon from '../common/Icons/Icon';
+import { useEffect, useState } from 'react';
 import useModal from '@/hooks/useModal';
 import supabase from '@/utils/supabase/client';
 
 const ReNickname = () => {
   const { openModal, Modal, closeModal } = useModal();
+  const { control, handleSubmit } = useForm();
   const [nickname, setNickname] = useState<string | null>(null); // 현재 닉네임 상태
-  const [newNickname, setNewNickname] = useState<string | null>(nickname || ''); // 수정할 닉네임 상태
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -23,12 +24,17 @@ const ReNickname = () => {
           setError('닉네임을 가져오는 중 오류가 발생했습니다.');
         } else {
           setNickname(data.nickname);
-          setNewNickname(data.nickname); // 처음에 닉네임을 초기값으로 설정
         }
       }
     };
     fetchNickname();
   }, []);
+
+  const { field } = useController({
+    name: 'nickname',
+    control,
+    defaultValue: nickname || ''
+  });
 
   const handleNameChange = async () => {
     try {
@@ -36,7 +42,7 @@ const ReNickname = () => {
       if (!sessionData?.session) return;
 
       const userId = sessionData.session.user.id;
-      const nicknameToSave = newNickname?.trim() || nickname;
+      const nicknameToSave = field.value.trim();
 
       const { error } = await supabase.from('profile').update({ nickname: nicknameToSave }).eq('id', userId);
 
@@ -44,7 +50,6 @@ const ReNickname = () => {
         setError('닉네임 업데이트 중 오류가 발생했습니다.');
       } else {
         setNickname(nicknameToSave); // 닉네임 상태 즉시 업데이트
-        setNewNickname(nicknameToSave); // 업데이트된 닉네임을 입력 필드에 반영
         closeModal(); // 모달 닫기
       }
     } catch (updateError) {
@@ -72,19 +77,15 @@ const ReNickname = () => {
                 label="변경할 이름을 입력해주세요"
                 placeholder=""
                 type="text"
-                register={{
-                  name: 'nickname',
-                  onChange: (e) => setNewNickname(e.target.value),
-                  value: newNickname
-                }}
+                {...field} // useController로 받아온 필드를 펼쳐서 사용
               />
             </div>
             <div className="mt-4 flex w-full">
               <Button
                 label="변경하기"
-                variant={newNickname ? 'blue' : 'gray'}
+                variant={field.value ? 'blue' : 'gray'}
                 onClick={handleNameChange}
-                disabled={!newNickname}
+                disabled={!field.value}
               />
             </div>
           </div>
