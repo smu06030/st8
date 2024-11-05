@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import browserClient from '@/utils/supabase/client';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/queries/query.keys';
 import { handleBookmarkClick } from '@/components/tourism/bookMark';
 import LoadingBounce from '@/components/common/Loading/Loading';
@@ -48,6 +48,8 @@ const fetchPlaceDetail = async (id: string) => {
 
 const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
   const { id } = params;
+  const queryClient = useQueryClient(); // React Query 클라이언트 가져오기
+
   const { data, isLoading, error } = useQuery({
     queryKey: QUERY_KEY.PLACE_DETAIL(id),
     queryFn: () => fetchPlaceDetail(id),
@@ -55,12 +57,51 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
   });
 
   const [isBookmarked, setIsBookmarked] = React.useState(false);
+  const mapContainer = useRef<HTMLDivElement>(null); // 지도 컨테이너를 참조하기 위한 ref
 
-  const onBookmarkClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  useEffect(() => {
+    if (data?.mapX && data?.mapY && mapContainer.current) {
+      // 카카오 지도 API 스크립트를 동적으로 추가
+      const script = document.createElement('script');
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&autoload=false`;
+      script.async = true;
+
+      script.onload = () => {
+        const { kakao } = window as any;
+        kakao.maps.load(() => {
+          const mapOption = {
+            center: new kakao.maps.LatLng(data.mapY, data.mapX), // 좌표 설정
+            level: 3 // 지도 확대 레벨
+          };
+
+          // 지도 생성
+          const map = new kakao.maps.Map(mapContainer.current, mapOption);
+
+          // 마커 생성
+          const markerPosition = new kakao.maps.LatLng(data.mapY, data.mapX);
+          const marker = new kakao.maps.Marker({
+            position: markerPosition
+          });
+
+          marker.setMap(map);
+        });
+      };
+
+      document.head.appendChild(script);
+    }
+  }, [data?.mapX, data?.mapY]);
+
+  const onBookmarkClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     if (data) {
-      handleBookmarkClick(id, data.title, data.text);
-      setIsBookmarked(!isBookmarked);
+      const bookmarkSuccess = await handleBookmarkClick(id, data.title, data.text);
+      if (bookmarkSuccess) {
+        setIsBookmarked((prev) => !prev);
+
+        // 북마크 상태가 변경된 후, React Query 캐시 무효화
+        queryClient.invalidateQueries({ queryKey: QUERY_KEY.PLACE_DETAIL(id) }); // PLACE_DETAIL 쿼리 무효화
+        queryClient.invalidateQueries({ queryKey: QUERY_KEY.PLACES }); // 목록 페이지 쿼리도 무효화
+      }
     }
   };
 
@@ -84,18 +125,16 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
           onClick={onBookmarkClick}
           className="absolute bottom-4 right-4 z-20 flex h-14 w-14 items-center justify-center rounded-full bg-black bg-opacity-50"
         >
-          <Icon name="BookMarkIcon" size={40} color={isBookmarked ? '#FFD700' : '#FFFFFF'} />
+          <Icon name="BookMarkIcon2" size={54} color={isBookmarked ? '#FFD700' : '#FFFFFF'} />
         </button>
       </div>
-
       {/* 제목 및 설명 */}
       <div className="flex items-center space-x-2 border-b border-gray-400 p-6 text-left">
         <h1 className="w-48 text-2xl font-semibold text-black">{data?.text}</h1>
       </div>
-
       {/* 개장일 및 휴무일 정보 */}
       {(data?.openDate || data?.parking || data?.restDate || data?.creditCard || data?.babyCarriage) && (
-        <div className="mt-4 px-6">
+        <div className="mt-4 space-y-3 px-6">
           {data?.openDate && (
             <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
               <Icon name="TimeIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
@@ -105,7 +144,7 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
           {data?.parking && (
             <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
               <Icon name="ParkingIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
-              <span className="ml-2">{data.parking}</span>
+              <span className="ml-2">주차 {data.parking}</span>
             </p>
           )}
           {data?.restDate && (
@@ -117,29 +156,27 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
           {data?.creditCard && (
             <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
               <Icon name="CreditCardIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
-              <span className="ml-2">{data.creditCard}</span>
+              <span className="ml-2">신용카드 {data.creditCard}</span>
             </p>
           )}
           {data?.babyCarriage && (
             <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
               <Icon name="StrollerIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
-              <span className="ml-2">{data.babyCarriage}</span>
+              <span className="ml-2">유모차 대여{data.babyCarriage}</span>
             </p>
           )}
         </div>
       )}
       <div className="my-6 border-b border-gray-300"></div>
-
-      {/* 상세 정보 및 더보기 버튼 */}
+      {/* 상세 정보 */}
       <div className="mt-4 px-6">
         <p className="text-sm text-gray-700">{data?.overview}</p>
       </div>
       <div className="my-6 border-b border-gray-300"></div>
-
       {/* 위치 섹션 */}
       <div className="mt-8 px-6">
         <h2 className="text-lg font-semibold text-gray-800">이곳이 위치예요</h2>
-        <div id="map" className="relative mt-4 h-60 w-full rounded-lg bg-gray-300" />
+        <div ref={mapContainer} className="relative mt-4 h-[327px] w-full rounded-3xl bg-gray-300" />
       </div>
     </div>
   );

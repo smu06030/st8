@@ -1,4 +1,3 @@
-// serverActions/fetchPlacesAction.ts
 'use client';
 
 import browserClient from '@/utils/supabase/client';

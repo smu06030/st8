@@ -61,10 +61,6 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ firstimage, description, contenti
     }
   };
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
   return (
     <div className="relative h-[374px] w-[327px] min-w-[327px] cursor-pointer overflow-hidden rounded-[24px] bg-gray-800">
       <Link href={`/tourism-detail/${contentid}`} passHref>
@@ -82,7 +78,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ firstimage, description, contenti
         onClick={onBookmarkClick}
         className={`absolute right-4 top-4 z-20 ${isBookmarked ? 'text-yellow-500' : 'text-gray-500'}`}
       >
-        <Icon name="BookMarkIcon" size={64} bgColor="#4e4e4e" rx="32" color={isBookmarked ? '#FFD700' : '#808080'} />
+        <Icon name="BookMarkIcon2" size={64} bgColor="#4e4e4e" rx="32" color={isBookmarked ? '#FFD700' : '#808080'} />
       </button>
       <div className="absolute bottom-[42px] left-[36px] flex h-[90px] w-[204px] flex-col justify-end text-left text-white">
         <Link href={`/tourism-detail/${contentid}`} passHref>

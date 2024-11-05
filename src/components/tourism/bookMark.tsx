@@ -75,7 +75,6 @@ async function removeBookmark(user_id: string, contentId: string) {
 }
 
 // 북마크 존재 여부 확인 함수
-// 북마크 존재 여부 확인 함수
 async function isBookmarkExists(user_id: string, contentId: string): Promise<boolean> {
   if (!user_id || !contentId) {
     console.warn('Invalid user_id or contentId. Skipping bookmark check.');
