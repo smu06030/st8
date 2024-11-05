@@ -10,7 +10,7 @@ import { fetchUser } from '@/utils/fetchUser';
 import { fetchStampList } from '@/apis/fetchStampList';
 import Link from 'next/link';
 import Icon from '@/components/common/Icons/Icon';
-import Loading from '@/app/stamp-map/loading';
+import Loading from '@/app/(root)/(stamp)/loading';
 import useModal from '@/hooks/useModal';
 import AliasCheckModal from '../common/Modal/AliasCheckModal';
 
@@ -153,7 +153,7 @@ const MyLocation = () => {
     );
 
   return (
-    <div className="bottom-padding flex h-[100vh] flex-col px-[24px] py-[36px]">
+    <div className="flex flex-col px-[24px] py-[36px]" style={{ height: 'calc(100vh - 64px)' }}>
       {address ? (
         <>
           {/* <p>현재 내 위치 : {address.address_name}</p> */}
