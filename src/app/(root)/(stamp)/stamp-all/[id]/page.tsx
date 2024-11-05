@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { fetchUser } from '@/utils/fetchUser';
 import { fetchStampActive } from '@/apis/fetchStampList';
-import Loading from '@/app/stamp-map/loading';
+import Loading from '@/app/(root)/(stamp)/loading';
 import Icon from '@/components/common/Icons/Icon';
 import useDropdoun from '@/hooks/useDropdoun';
 

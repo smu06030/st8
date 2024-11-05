@@ -2,10 +2,10 @@
 
 import React from 'react';
 import Image from 'next/image';
-import browserClient from '../../../utils/supabase/client';
+import browserClient from '@/utils/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/queries/query.keys';
-import { handleBookmarkClick } from '../../../components/tourism/bookMark';
+import { handleBookmarkClick } from '@/components/tourism/bookMark';
 import LoadingBounce from '@/components/common/Loading/Loading';
 import Icon from '@/components/common/Icons/Icon';
 
