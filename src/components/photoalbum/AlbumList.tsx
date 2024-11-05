@@ -13,9 +13,11 @@ import { useAlbumList, useAlbumAddMutation, useAlbumDeleteMutation } from '@/hoo
 import useAlbumDelete from '@/hooks/useAlbumDelete';
 import useImgModal from '@/hooks/useImgModal';
 import Loading from '@/app/(root)/(stamp)/loading';
+import useUser from '@/hooks/useUser';
 
 const AlbumList = () => {
-  const { data: albumListData, isPending, isError } = useAlbumList();
+  const userId = useUser();
+  const { data: albumListData, isPending, isError } = useAlbumList(userId);
   const AlbumAddMutation = useAlbumAddMutation();
 
   // console.log('albumListData', albumListData);
