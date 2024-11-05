@@ -17,19 +17,21 @@ interface photoInfoType {
 interface ImageModalType {
   selectedImgUrl: string;
   setImgModal: Dispatch<SetStateAction<boolean>>;
-  regionPhoto: photoInfoType[] | null;
+  regionPhoto: photoInfoType[] | undefined | null;
   activeImgId: number | string;
+  currentIndex: number;
+  setCurrentIndex: Dispatch<SetStateAction<number>>;
   // setActiveImgId: Dispatch<SetStateAction<number>>;
 }
-const ImgModal = ({ setImgModal, selectedImgUrl, regionPhoto, activeImgId }: ImageModalType) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    if (regionPhoto) {
-      const index = regionPhoto.findIndex((photo: photoInfoType) => photo.id === activeImgId);
-      setCurrentIndex(index);
-    }
-  }, [activeImgId, regionPhoto]);
+const ImgModal = ({
+  setImgModal,
+  selectedImgUrl,
+  regionPhoto,
+  activeImgId,
+  currentIndex,
+  setCurrentIndex
+}: ImageModalType) => {
+  // const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-[#363636] bg-opacity-50">
