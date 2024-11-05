@@ -3,6 +3,7 @@
 import { useState, Dispatch, SetStateAction, ChangeEvent, useEffect } from 'react';
 import CategoryModal from '@/components/photoalbum/CategoryModal';
 import Icon from '@/components/common/Icons/Icon';
+import useModal from '@/hooks/useModal';
 
 interface AddAlbumParamsType {
   setImgSrc: Dispatch<React.SetStateAction<string[]>>;
@@ -13,10 +14,11 @@ interface AddAlbumParamsType {
 }
 
 const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: AddAlbumParamsType) => {
-  const [isRigionModal, setIsRigionModal] = useState(false);
+  // const [isRigionModal, setIsRigionModal] = useState(false);
   const [regionCate, setRegionCate] = useState(item);
 
   const [currentRegion, setCurrentRegion] = useState(''); //지칭한값이 내가 준 지역이 맞는지 확인용
+  const { closeModal, openModal, Modal, isOpen } = useModal();
 
   useEffect(() => {
     if (imgSrc && activeTab === 'rigionTab' && currentRegion === item) {
@@ -38,7 +40,8 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
         if (typeof e.target?.result === 'string' && e.target.result) {
           if (activeTab === 'allTab') {
             setImgSrc((prev) => [...prev, e.target!.result as string]);
-            setIsRigionModal(true);
+            // setIsRigionModal(true);
+            openModal();
           } else if (activeTab === 'rigionTab') {
             setImgSrc((prev) => [...prev, e.target!.result as string]);
             setRegionCate(item);
@@ -58,7 +61,8 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
       setCurrentRegion('');
       setImgSrc([]);
       if (activeTab === 'allTab') {
-        setIsRigionModal(false);
+        // setIsRigionModal(false);
+        closeModal();
       }
     }
   };
@@ -83,7 +87,7 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
       </label>
 
       {/* 팝업 */}
-      {isRigionModal && <CategoryModal onHandleUpload={onHandleUpload} setRegionCate={setRegionCate} />}
+      {isOpen && <CategoryModal Modal={Modal} onHandleUpload={onHandleUpload} setRegionCate={setRegionCate} />}
     </li>
   );
 };

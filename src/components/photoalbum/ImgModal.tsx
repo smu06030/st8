@@ -23,6 +23,7 @@ interface ImageModalType {
   setCurrentIndex: Dispatch<SetStateAction<number>>;
   // setActiveImgId: Dispatch<SetStateAction<number>>;
 }
+
 const ImgModal = ({
   setImgModal,
   selectedImgUrl,

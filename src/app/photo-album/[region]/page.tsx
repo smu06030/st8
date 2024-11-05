@@ -9,9 +9,18 @@ import useImgModal from '@/hooks/useImgModal';
 import AlbumImgEdit from '@/components/photoalbum/AlbumImgEdit';
 import useAlbumDelete from '@/hooks/useAlbumDelete';
 //{ params }: { params: { region: string } }
+import type { Metadata } from 'next';
+
+// async function generateMetadata({ params }: string) {
+//   const region = params.region
+//   return {
+//     title: `${region}`,
+//   }
+// }
 
 const RegionDetail = () => {
   const { region } = useParams<{ region: string }>();
+
   const regionTitle = decodeURIComponent(region);
   const { data: albumListData } = useAlbumList(); //TODO: 서버로할거면 서버액션으로 패치만들기
   const {
