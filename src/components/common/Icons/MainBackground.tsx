@@ -1,6 +1,13 @@
 const MainBackground = () => {
   return (
-    <svg width="317" height="373" viewBox="0 0 317 373" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="317"
+      height="373"
+      viewBox="0 0 317 373"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="absolute -left-6 bottom-0"
+    >
       <g opacity="0.2">
         <path
           d="M135.427 108.637L-39.3873 252.944C-48.0319 260.095 -46.1436 273.84 -35.8859 278.386L149.442 360.517C159.7 365.062 171.151 357.229 170.642 346.022L160.129 119.583C159.552 107.163 145.039 100.731 135.45 108.647L135.427 108.637Z"

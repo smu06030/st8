@@ -3,6 +3,7 @@ import Image from 'next/image';
 import React, { ReactPortal } from 'react';
 import Link from 'next/link';
 import Icon from '../Icons/Icon';
+import { DEFAULT_REGION_ITEM } from '@/constants/regions';
 
 interface StampModalPropsType {
   Modal: ({ children }: { children: React.ReactNode }) => ReactPortal | null;
@@ -15,6 +16,9 @@ const StampModal = ({ Modal }: StampModalPropsType) => {
 
   // 날짜 형식 변환
   const formattedDate = `${date.getUTCFullYear()}년 ${date.getUTCMonth() + 1}월 ${date.getUTCDate()}일 ${date.getUTCHours() + 9}시`;
+  // 동적 라우트 경로
+  const regionLink = DEFAULT_REGION_ITEM.filter((item) => item.includes(stamp.region));
+
   return (
     <Modal>
       <div
@@ -39,7 +43,10 @@ const StampModal = ({ Modal }: StampModalPropsType) => {
             <p className="h-6 w-[186px] truncate leading-normal text-gray-700">{stamp.address}</p>
           </div>
         </div>
-        <Link href={'/stamp-all'} className="my-9 cursor-pointer text-sm leading-tight text-gray-500 underline">
+        <Link
+          href={`/stamp-all/${regionLink}`}
+          className="my-9 cursor-pointer text-sm leading-tight text-gray-500 underline"
+        >
           앨범 보러가기
         </Link>
       </div>

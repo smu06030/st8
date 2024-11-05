@@ -5,12 +5,12 @@ import Icon from '../common/Icons/Icon';
 const MainFooter = () => {
   return (
     <>
-      <div className="relative -bottom-6 -left-6">
+      <div className="relative h-[373px] w-full">
         <MainBackground />
       </div>
       <Link
         href={'/stamp-tracking'}
-        className="shadow-mainStampShadow fixed bottom-[46px] right-6 cursor-pointer rounded-full"
+        className="fixed bottom-[100px] right-6 cursor-pointer rounded-full shadow-mainStampShadow"
       >
         <Icon name="StampIcon" size={86} color="#23C9FF" bgColor="white" rx="43" />
       </Link>

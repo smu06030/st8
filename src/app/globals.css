@@ -87,6 +87,10 @@ body {
   font-family: 'Pretendard-Regular', sans-serif;
 }
 
+.bottom-padding {
+  @apply pb-16;
+}
+
 .albumTab {
   @apply text-[#9C9C9C];
 }

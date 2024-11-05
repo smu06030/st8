@@ -2,6 +2,10 @@ import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
 
 const MainRecommendSection = () => {
+  // 여행지 데이터 가져와 보여주기
+  // const places = await fetchPlaces();
+  // console.log(places);
+
   return (
     <section className="mt-[58px]">
       <div className="flex flex-col items-start justify-start gap-1.5">
