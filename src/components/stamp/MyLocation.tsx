@@ -40,23 +40,6 @@ const MyLocation = () => {
     checkUser();
   }, []);
 
-  // //별칭입력확인여부
-  // const onCheckAlias = () => {
-  //   if (!aliasLocation) {
-  //     alert('장소에 대한 정보를 적어주세요!');
-  //     return false;
-  //   }
-  //   return false;
-  // };
-  // //별칭입력안했을때 링크이동막기..?
-  // const handleLinkClick = (e) => {
-  //   if (!onCheckAlias()) {
-  //     e.preventDefault();
-  //   }
-  // };
-
-  //useQuery
-
   const {
     data: stampList,
     isLoading,
@@ -71,14 +54,12 @@ const MyLocation = () => {
     enabled: !!userId
   });
 
-  // console.log('stampList', stampList);
   useEffect(() => {
     if (stampList && stampList.length > 0) {
       setVisit(stampList[0].visited);
     }
   }, [stampList]);
-  // console.log('visited', visit);
-  // console.log('address', address);
+
   const addAliasLocation = async (alias: string) => {
     const { data, error } = await browserClient
       .from('stamp')
@@ -172,7 +153,7 @@ const MyLocation = () => {
     );
 
   return (
-    <div className="flex h-[100vh] flex-col px-[24px] py-[36px]">
+    <div className="bottom-padding flex h-[100vh] flex-col px-[24px] py-[36px]">
       {address ? (
         <>
           {/* <p>현재 내 위치 : {address.address_name}</p> */}
@@ -212,18 +193,23 @@ const MyLocation = () => {
               />
             </span>
           </div>
-          {/* <Link href={'/stamp-all'}> */}
-          <button
-            onClick={() => {
-              if (aliasLocation !== null) {
-                openModal();
-              }
-            }}
-            className={`w-full rounded-[12px] bg-secondary-500 py-[21px] font-semiBold text-[20px] text-[#004157] ${visit && 'animate-fadeUpBtn'}`}
-          >
-            스탬프 확인하러 가기
-          </button>
-          {/* </Link> */}
+
+          {aliasLocation === null ? (
+            <button
+              onClick={openModal}
+              className={`w-full rounded-[12px] bg-secondary-500 py-[21px] font-semiBold text-[20px] text-[#004157] ${visit && 'animate-fadeUpBtn'}`}
+            >
+              스탬프 확인하러 가기
+            </button>
+          ) : (
+            <Link href={'/stamp-all'}>
+              <button
+                className={`w-full rounded-[12px] bg-secondary-500 py-[21px] font-semiBold text-[20px] text-[#004157] ${visit && 'animate-fadeUpBtn'}`}
+              >
+                스탬프 확인하러 가기
+              </button>
+            </Link>
+          )}
           {isOpen && <AliasCheckModal Modal={Modal} />}
         </div>
       )}
@@ -232,20 +218,3 @@ const MyLocation = () => {
 };
 
 export default MyLocation;
-
-/**
- * 스탬프 확인하러가기 버튼
- -> 도장 활성화 됬을때 나타나기
- -> 로그인유저의 전체항목 가져와(로그인유저패치함수,fetchStampList)
- -> 
-
-
-
-
- * 추후지울예정
-Geolocation API는 CSR에서만 작동할 수 있다.
-Geolocation API는 비동기적으로 동작한다.
-처음리랜더링됬을때 작동하게하고, 항상 최신 위치정보를 수집하게한다.
-1분이내로 카운트 ㄱㄱ
-깃허브안올라가게 .env.local (주의!!!)
- */
