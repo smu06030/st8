@@ -14,7 +14,7 @@ const RecommendedPlaces = () => {
     isError
   } = useQuery({
     queryKey: QUERY_KEY.PLACES,
-    queryFn: fetchPlaceData
+    queryFn: () => fetchPlaceData()
   });
 
   if (isLoading) {
