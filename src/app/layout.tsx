@@ -3,8 +3,8 @@ import localFont from 'next/font/local';
 import './globals.css';
 import RQProviders from '@/providers/RQRovider';
 import KakaoMapLoader from '@/components/stampMap/KakaoMapLoader';
-import Nav from '@/components/common/nav/Nav';
-import Header from '@/components/common/header/Header';
+import Nav from '@/components/layout/Nav';
+import Header from '@/components/layout/Header';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
