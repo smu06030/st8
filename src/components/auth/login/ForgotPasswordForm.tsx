@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import supabase from '@/utils/supabase/client';
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField';
 import { useForm } from 'react-hook-form';
+import browserClient from '@/utils/supabase/client';
 
 interface ForgotFormInputs {
   email: string;
@@ -16,7 +16,7 @@ const ForgotPasswordForm = () => {
   const [emailStatus, setEmailStatus] = useState<'default' | 'active' | 'done'>('default');
   const [email, setEmail] = useState(''); // 이메일 입력 상태를 직접 관리
 
-  const { handleSubmit, reset } = useForm<ForgotFormInputs>();
+  const { handleSubmit } = useForm<ForgotFormInputs>();
 
   const isFormFilled = Boolean(email);
 
@@ -25,7 +25,7 @@ const ForgotPasswordForm = () => {
     setMessage('');
     setError('');
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email);
+      const { error } = await browserClient.auth.resetPasswordForEmail(email);
       if (error) {
         setError('이메일 전송 중 오류가 발생했습니다. 다시 시도해주세요.');
       } else {

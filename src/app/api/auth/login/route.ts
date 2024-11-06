@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
 
 export async function POST(req: Request) {
-  const supabase = createClient();
+  const serverClient = createClient();
 
   try {
     const { email, password } = await req.json();
@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     }
 
     // Supabase 인증 처리
-    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+    const { data: authData, error: authError } = await serverClient.auth.signInWithPassword({
       email,
       password
     });
@@ -23,7 +23,10 @@ export async function POST(req: Request) {
     }
 
     // 인증 성공 후, profile 테이블에서 사용자 확인
-    const { data: userData, error: userError } = await supabase.from('profile').select('*').eq('id', authData.user.id);
+    const { data: userData, error: userError } = await serverClient
+      .from('profile')
+      .select('*')
+      .eq('id', authData.user.id);
 
     if (userError || !userData.length) {
       return NextResponse.json({ message: '사용자를 찾을 수 없습니다. 회원가입 페이지로 이동합니다.' });

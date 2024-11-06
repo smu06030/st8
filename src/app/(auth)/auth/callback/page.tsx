@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import supabase from '@/utils/supabase/client';
+import browserClient from '@/utils/supabase/client';
 
 const CallbackPage = () => {
   const router = useRouter();
@@ -10,7 +10,7 @@ const CallbackPage = () => {
   useEffect(() => {
     const fetchSession = async () => {
       // 현재 세션을 확인하여 인증 완료 여부 체크
-      const { data, error } = await supabase.auth.getSession();
+      const { data, error } = await browserClient.auth.getSession();
       if (data.session) {
         router.push('/mypage');
       } else if (error) {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Button from '../common/Buttons/Button';
 import InputField from '@/components/common/InputField';
 import useModal from '@/hooks/useModal';
-import supabase from '@/utils/supabase/client';
+import browserClient from '@/utils/supabase/client';
 
 const ReNickname = () => {
   const { openModal, Modal, closeModal } = useModal();
@@ -13,10 +13,10 @@ const ReNickname = () => {
 
   useEffect(() => {
     const fetchNickname = async () => {
-      const { data: sessionData } = await supabase.auth.getSession();
+      const { data: sessionData } = await browserClient.auth.getSession();
       if (sessionData?.session) {
         const userId = sessionData.session.user.id;
-        const { data, error } = await supabase.from('profile').select('nickname').eq('id', userId).single();
+        const { data, error } = await browserClient.from('profile').select('nickname').eq('id', userId).single();
 
         if (error) {
           setError('닉네임을 가져오는 중 오류가 발생했습니다.');
@@ -31,13 +31,13 @@ const ReNickname = () => {
 
   const handleNameChange = async () => {
     try {
-      const { data: sessionData } = await supabase.auth.getSession();
+      const { data: sessionData } = await browserClient.auth.getSession();
       if (!sessionData?.session) return;
 
       const userId = sessionData.session.user.id;
       const nicknameToSave = tempNickname?.trim() || nickname;
 
-      const { error } = await supabase.from('profile').update({ nickname: nicknameToSave }).eq('id', userId);
+      const { error } = await browserClient.from('profile').update({ nickname: nicknameToSave }).eq('id', userId);
 
       if (error) {
         setError('닉네임 업데이트 중 오류가 발생했습니다.');
