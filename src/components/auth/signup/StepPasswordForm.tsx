@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import InputField from '@/components/common/InputField';
+
 import Button from '@/components/common/Buttons/Button';
 import Icon from '@/components/common/Icons/Icon';
 import PasswordCheck from './PasswordCheck';
 import Image from 'next/image';
+import InputField from '@/components/common/InputField';
 
 interface PasswordStepProps {
   onNext: (password: string) => void;
@@ -12,8 +13,6 @@ interface PasswordStepProps {
 
 const PasswordStep = ({ onNext }: PasswordStepProps) => {
   const {
-    handleSubmit,
-    watch,
     formState: { errors }
   } = useForm();
 

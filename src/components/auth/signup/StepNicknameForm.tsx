@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import InputField from '@/components/common/InputField';
+
 import Button from '@/components/common/Buttons/Button';
 import Icon from '@/components/common/Icons/Icon';
+import InputField from '@/components/common/InputField';
 
 interface NicknameStepProps {
   onNext: (nickname: string) => void;

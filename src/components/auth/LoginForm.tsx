@@ -6,10 +6,11 @@ import { useSocialLogin } from '@/hooks/useSocialLogin';
 import { login } from '@/utils/supabase/auth';
 import Button from '@/components/common/Buttons/Button';
 import LinkButton from '@/components/common/Buttons/LinkButton';
-import InputField from '@/components/common/InputField';
+
 import Icon from '@/components/common/Icons/Icon';
 import { useState } from 'react';
 import Image from 'next/image';
+import InputField from '../common/InputField';
 
 interface LoginFormInputs {
   email: string;
