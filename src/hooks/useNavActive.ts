@@ -5,11 +5,10 @@ export const useNavActive = () => {
   const params = useParams();
 
   const [activePage, setActivePage] = useState('/');
-  const currentPath = window.location.pathname;
 
   useEffect(() => {
+    const currentPath = window.location.pathname;
     setActivePage(currentPath);
-    console.log('currentPath', currentPath);
   }, [params]);
 
   const handleClick = (link: string) => {
