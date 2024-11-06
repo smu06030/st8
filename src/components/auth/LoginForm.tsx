@@ -39,7 +39,6 @@ const LoginForm = () => {
   const isFormFilled = email && password;
 
   const onHandleLogin = async (data: LoginFormInputs) => {
-    console.log(data);
     setIsPasswordError(false);
     setIsEmailError(false); // 기존 오류 상태 초기화
     const result = await login(data.email, data.password);
