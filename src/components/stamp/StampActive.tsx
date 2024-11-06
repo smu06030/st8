@@ -6,7 +6,8 @@ import browserClient from '@/utils/supabase/client';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 // import { fetchUser } from '@/utils/fetchUser';
 import useUser from '@/hooks/useUser';
-import { STAMPIMG_REGION_NAME } from '@/components/stamp/StampImg'; //이미지
+// import { STAMPIMG_REGION_NAME } from '@/components/stamp/StampImg'; //이미지
+import { STAMPIMG_REGION_IMG, STAMPIMG_REGION_ACTIVE_IMG } from '@/components/stamp/RegionNames';
 import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 
 interface StampActivePropsType {
@@ -36,7 +37,7 @@ const addStampList = async ({
     user_id: userId,
     region: regionName,
     address: address,
-    stampimg: STAMPIMG_REGION_NAME[regionName],
+    stampimg: STAMPIMG_REGION_ACTIVE_IMG[regionName],
     visited: true,
     lat: location.lat,
     lng: location.lng,
@@ -94,8 +95,9 @@ const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocat
       return;
     }
   };
-
-  const REGIONimageUrl = STAMPIMG_REGION_NAME[address.region_1depth_name];
+  console.log('stampList', stampList);
+  const DefaultStamp = STAMPIMG_REGION_IMG[address.region_1depth_name];
+  const ActiveStamp = STAMPIMG_REGION_ACTIVE_IMG[address.region_1depth_name];
 
   return (
     <div
@@ -108,10 +110,10 @@ const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocat
               <Image
                 key={stamp.id}
                 className="opacity-100"
-                src={stamp.stampimg}
+                src={ActiveStamp}
                 alt={stamp.region}
-                width={300}
-                height={300}
+                width={200}
+                height={200}
                 onClick={() => onClickVisitedCencle(address.address_name)}
               />
             );
@@ -121,10 +123,10 @@ const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocat
       ) : (
         <Image
           className="opacity-30"
-          src={REGIONimageUrl}
+          src={DefaultStamp}
           alt={address.region_1depth_name}
-          width={300}
-          height={300}
+          width={200}
+          height={200}
           onClick={() => onClickVisitedAdd(address.address_name, address.region_1depth_name)}
         />
       )}
@@ -133,5 +135,3 @@ const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocat
 };
 
 export default StampActive;
-
-//온클릭 추가함수를 하나 더 만들어야할듯 인풋전용으로 스탬프 확인하러가기에 이벤트걸기

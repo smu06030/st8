@@ -4,12 +4,11 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import useUser from '@/hooks/useUser';
-// import { fetchUser } from '@/utils/fetchUser';
-// import { fetchStampActive } from '@/apis/fetchStampList';
 import useQuerys from '@/queries/useQuerys';
 import Loading from '@/app/(root)/(stamp)/loading';
 import Icon from '@/components/common/Icons/Icon';
 import useDropdoun from '@/hooks/useDropdoun';
+import { REGION_NAME_MAP_EN } from '@/components/stamp/RegionNames';
 
 interface StampDetailPropsType {
   id: string;
@@ -22,7 +21,7 @@ interface StampDetailPropsType {
 const StampItemDetail = () => {
   const userId = useUser();
   const params = useParams();
-  const region = decodeURIComponent((params.id as string[]).toString());
+  const region = REGION_NAME_MAP_EN[decodeURIComponent((params.id as string[]).toString())];
   const [stampData, setStampData] = useState<StampDetailPropsType[]>([]);
   const { isOpen, toggleDropdown, dropdownRef } = useDropdoun();
   const { data: stampList, isLoading } = useQuerys.useGetStampActive(userId);
@@ -32,8 +31,8 @@ const StampItemDetail = () => {
       const fetchData = async () => {
         try {
           const res = stampList;
-          const decodedParams = region;
-          const stampFilterList = res?.filter((item) => item.region === decodedParams) || [];
+          const stampFilterList = res?.filter((item) => item.region === region) || [];
+          console.log('stampFilterList', stampFilterList);
           setStampData(stampFilterList);
         } catch (error) {
           console.error(error);
@@ -59,13 +58,13 @@ const StampItemDetail = () => {
 
   //TODO :이미지명이랑 키값 동일하게하기
   return (
-    <div className="flex h-[100%] flex-col bg-no-repeat">
+    <div className="flex h-[100%] flex-col bg-no-repeat pb-[200px]">
       <div className="relative mb-[82px] block h-[145px] w-full bg-[#fff] shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)]">
         <span className="absolute left-1/2 top-[16px] block h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full bg-white shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)]"></span>
         <div className="absolute h-full w-full bg-[#fff]"></div>
-        <span className="absolute left-1/2 top-[16px] block h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full bg-white p-[6px]">
-          <div className="h-full w-full rounded-full bg-[#081425]">
-            <Image src={`/images/${region}.png`} alt={region} width={300} height={300} />
+        <span className="absolute left-1/2 top-[16px] block h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full border-[6px] border-secondary-300 bg-white p-[24px]">
+          <div className="h-full w-full rounded-full bg-white">
+            <Image src={`/images/${params.id}-active.png`} alt={region} width={300} height={300} />
           </div>
         </span>
       </div>
@@ -107,7 +106,7 @@ const StampItemDetail = () => {
           </button>
         </div>
         {isOpen && (
-          <ul className="animate-dropdownList flex flex-col gap-[12px] transition-all duration-300">
+          <ul className="flex animate-dropdownList flex-col gap-[12px] transition-all duration-300">
             {stampData.map((list) => (
               <li
                 key={list.id}

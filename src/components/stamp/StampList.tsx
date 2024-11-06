@@ -30,8 +30,10 @@ const StampList: React.FC = (): React.JSX.Element => {
       {stampInActive &&
         stampInActive.map((stamp) => (
           <li key={stamp} className="flex flex-col items-center justify-center rounded-[24px] bg-[#ccc] p-3">
-            <Image src={`/images/${stamp}.png`} alt={stamp} width={300} height={300} className="opacity-50" />
-            <div className="font-black">{stamp}</div> {/* TODO: 지우기 */}
+            {/* TODO : 스탬프 준비되면 교체 */}
+            {/* <Image src={`/images/${stamp}.png`} alt={stamp} width={300} height={300} className="opacity-50" />  */}
+            <Image src={`/images/preparing-img.png`} alt={stamp} width={300} height={300} />
+            {/* <div className="font-black">{stamp}</div> 비활성지역이름 */}
           </li>
         ))}
     </ul>
