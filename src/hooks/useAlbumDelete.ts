@@ -4,20 +4,8 @@ import { useAlbumDeleteMutation } from '@/hooks/useAlbumList';
 const useAlbumDelete = () => {
   const [edit, setEdit] = useState(false); //편집중이냐?
   const [deleteId, setDeleteId] = useState<number[]>([]); //삭제할아이디 담은 배열
-  //   const [isLongPressed, setIsLongPressed] = useState(false); //꾹눌렀냐?
-  //   let pressTimer;
+
   const AlbumDeletemutation = useAlbumDeleteMutation();
-
-  //   const handleLongPress = () => {
-  //     setIsLongPressed(true);
-  //     setEdit(true); //편집중상태로
-  //     alert('이미지를 2초 동안 눌렀습니다!');
-  //   };
-
-  //   //2초후에 handleLongPress 실행
-  //   const handleTouthDown = () => {
-  //     pressTimer = setTimeout(handleLongPress, 2000);
-  //   };
 
   //체크이벤트로 아이디값 배열로 담기
   const handleCheckboxChange = (id: number) => {
@@ -49,7 +37,6 @@ const useAlbumDelete = () => {
     setDeleteId,
     handleCheckboxChange,
     onHandleDelete
-    // handleTouthDown
   };
 };
 

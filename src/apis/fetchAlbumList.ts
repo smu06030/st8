@@ -1,9 +1,12 @@
 import browserClient from '@/utils/supabase/client';
 
 //앨범전체테이블
-export const fetchAlbum = async () => {
-  const { data, error } = await browserClient.from('album').select('*');
-  if (error) console.error('가져오기 오류4:', error.message);
+export const fetchAlbum = async (userId: string) => {
+  const { data, error } = await browserClient.from('album').select('*').eq('user_id', userId);
+  if (error) {
+    console.error('가져오기 오류4:', error.message);
+    console.error('가져오기 오류4: 유효하지 않은 UUID 형식:', userId);
+  }
   return data;
 };
 
