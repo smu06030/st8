@@ -5,7 +5,7 @@ import Image from 'next/image';
 import browserClient from '@/utils/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/queries/query.keys';
-import { handleBookmarkClick } from '@/components/tourism/bookMark';
+import { handleBookmarkClick, isBookmarkExists } from '@/components/tourism/bookMark';
 import LoadingBounce from '@/components/common/Loading/Loading';
 import Icon from '@/components/common/Icons/Icon';
 
@@ -56,8 +56,44 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
     enabled: !!id
   });
 
-  const [isBookmarked, setIsBookmarked] = React.useState(false);
+  const [isBookmarked, setIsBookmarked] = React.useState<boolean | null>(null);
+  const [isLoadingBookmark, setIsLoadingBookmark] = React.useState(true);
   const mapContainer = useRef<HTMLDivElement>(null); // 지도 컨테이너를 참조하기 위한 ref
+
+  // 북마크 상태를 가져오는 함수
+  const fetchBookmarkStatus = async () => {
+    if (!id) {
+      setIsLoadingBookmark(false);
+      return;
+    }
+
+    try {
+      // Supabase에서 현재 사용자의 정보 가져오기
+      const {
+        data: { user }
+      } = await browserClient.auth.getUser(); // Supabase로부터 유저 정보를 가져옴
+
+      if (!user) {
+        console.error('사용자 정보가 없습니다.');
+        setIsLoadingBookmark(false);
+        return;
+      }
+
+      // Supabase에서 북마크 존재 여부를 확인
+      const bookmarkExists = await isBookmarkExists(user.id, id); // user 객체에서 id 가져오기
+      setIsBookmarked(bookmarkExists);
+    } catch (error) {
+      console.error('북마크 상태를 가져오는 중 오류가 발생했습니다:', error);
+      setIsBookmarked(false);
+    } finally {
+      setIsLoadingBookmark(false);
+    }
+  };
+
+  // useEffect로 북마크 상태를 한번만 가져오도록 설정
+  useEffect(() => {
+    fetchBookmarkStatus();
+  }, [id]);
 
   useEffect(() => {
     if (data?.mapX && data?.mapY && mapContainer.current) {
@@ -93,8 +129,11 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
 
   const onBookmarkClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-    if (data) {
-      const bookmarkSuccess = await handleBookmarkClick(id, data.title, data.text);
+
+    if (isBookmarked === null) return;
+
+    try {
+      const bookmarkSuccess = await handleBookmarkClick(id, data?.title || '', data?.text || '');
       if (bookmarkSuccess) {
         setIsBookmarked((prev) => !prev);
 
@@ -102,10 +141,13 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
         queryClient.invalidateQueries({ queryKey: QUERY_KEY.PLACE_DETAIL(id) }); // PLACE_DETAIL 쿼리 무효화
         queryClient.invalidateQueries({ queryKey: QUERY_KEY.PLACES }); // 목록 페이지 쿼리도 무효화
       }
+    } catch (error) {
+      console.error('북마크 처리 중 오류가 발생했습니다:', error);
+      alert('북마크 처리 중 오류가 발생했습니다. 다시 시도해주세요.');
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isLoadingBookmark) {
     return <LoadingBounce />;
   }
 
@@ -130,7 +172,7 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
       </div>
       {/* 제목 및 설명 */}
       <div className="flex items-center space-x-2 border-b border-gray-400 p-6 text-left">
-        <h1 className="w-48 text-2xl font-semibold text-black">{data?.text}</h1>
+        <h1 className="w-[193px] text-2xl font-semibold text-black">{data?.text}</h1>
       </div>
       {/* 개장일 및 휴무일 정보 */}
       {(data?.openDate || data?.parking || data?.restDate || data?.creditCard || data?.babyCarriage) && (
@@ -175,7 +217,7 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
       <div className="my-6 border-b border-gray-300"></div>
       {/* 위치 섹션 */}
       <div className="mt-8 px-6">
-        <h2 className="text-lg font-semibold text-gray-800">이곳이 위치예요</h2>
+        <h2 className="text-2xl font-semibold text-gray-800">이곳이 위치예요</h2>
         <div ref={mapContainer} className="relative mt-4 h-[327px] w-full rounded-3xl bg-gray-300" />
       </div>
     </div>

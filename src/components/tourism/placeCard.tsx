@@ -25,6 +25,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ firstimage, description, contenti
       setIsLoading(false);
       return;
     }
+    [];
 
     try {
       // Supabase에서 북마크 존재 여부를 확인
@@ -53,7 +54,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ firstimage, description, contenti
     try {
       const bookmarkSuccess = await handleBookmarkClick(contentid, title, description);
       if (bookmarkSuccess) {
-        setIsBookmarked((prev) => !prev); // 상태를 토글
+        setIsBookmarked((prev) => !prev);
       }
     } catch (error) {
       console.error('북마크 처리 중 오류가 발생했습니다:', error);
