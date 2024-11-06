@@ -3,7 +3,7 @@
 import { Map, Polygon } from 'react-kakao-maps-sdk';
 import { MAP_COLOR } from '@/constants/mapColor';
 import ReSetttingMapBounds from '@/components/stampMap/ReSetttingMapBounds';
-import ScrollButtonSwiper from '@/components/stampMap/ScrollButtonSwiper';
+import MapButtonSwiper from '@/components/stampMap/MapButtonSwiper';
 import KakaoMapMarker from './KakaoMapMarker';
 import useKakaoMap from '@/hooks/useKakaoMap';
 import StampModal from '../common/Modal/StampModal';
@@ -61,7 +61,7 @@ const KakaoMap = () => {
         <ReSetttingMapBounds paths={selectedPath} activeIndex={activeIndex} />
       </Map>
       <StampModal Modal={Modal} />
-      <ScrollButtonSwiper />
+      <MapButtonSwiper />
     </>
   );
 };

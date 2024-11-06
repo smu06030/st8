@@ -2,6 +2,7 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { PAGE_NAMES } from '@/constants/pageName';
 
 const useHeaderActive = () => {
   const params = useParams();
@@ -12,26 +13,28 @@ const useHeaderActive = () => {
     const currentPath = window.location.pathname;
 
     // 동적 페이지도 헤더가 보이도록
-    if (currentPath.startsWith('/stamp-all')) {
-      setPageTitle('스탬프 페이지');
-    } else if (currentPath.startsWith('/photo-album')) {
-      setPageTitle('앨범 페이지');
-    } else if (currentPath.startsWith('/tourism')) {
-      setPageTitle('추천 여행지');
-    } else if (currentPath.startsWith('/mypage')) {
-      setPageTitle('마이페이지');
-    } else if (currentPath.startsWith('/login')) {
-      setPageTitle('로그인');
-    } else if (currentPath.startsWith('/signup')) {
-      setPageTitle('회원가입');
-    } else if (currentPath.startsWith('/forgot-password')) {
-      setPageTitle('비밀번호 찾기');
-    } else if (currentPath === '/') {
-      setPageTitle('홈');
-    } else if (currentPath.startsWith('/stamp-map')) {
-      setPageTitle('지도');
-    } else if (currentPath.startsWith('/stamp-tracking')) {
-      setPageTitle('스탬프 찍기');
+    if (currentPath.startsWith(PAGE_NAMES.STAMP.link)) {
+      setPageTitle(PAGE_NAMES.STAMP.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.ALBUM.link)) {
+      setPageTitle(PAGE_NAMES.ALBUM.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.TOURISM.link)) {
+      setPageTitle(PAGE_NAMES.TOURISM.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.MYPAGE.link)) {
+      setPageTitle(PAGE_NAMES.MYPAGE.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.LOGIN.link)) {
+      setPageTitle(PAGE_NAMES.LOGIN.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.SIGNUP.link)) {
+      setPageTitle(PAGE_NAMES.SIGNUP.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.FORGOT_PASSWORD.link)) {
+      setPageTitle(PAGE_NAMES.FORGOT_PASSWORD.page);
+    } else if (currentPath === PAGE_NAMES.HOME.link) {
+      setPageTitle(PAGE_NAMES.HOME.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.MAP.link)) {
+      setPageTitle(PAGE_NAMES.MAP.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.STAMP_TRACKING.link)) {
+      setPageTitle(PAGE_NAMES.STAMP_TRACKING.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.BOOKMARK.link)) {
+      setPageTitle(PAGE_NAMES.BOOKMARK.page);
     } else {
       setPageTitle(''); // 정의되지 않은 페이지는 빈 제목
     }

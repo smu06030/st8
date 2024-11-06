@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
 import { createClient } from '@/utils/supabase/server';
-import { fetchStampActive } from '@/serverActions/fetchStampActions';
+import { fetchActiveStamp } from '@/serverActions/fetchStampActions';
 import Image from 'next/image';
 
 const MainStampSection = async () => {
@@ -11,7 +11,7 @@ const MainStampSection = async () => {
 
   let stampList = null;
   if (data?.user) {
-    stampList = await fetchStampActive(data.user.id);
+    stampList = await fetchActiveStamp(data.user.id);
   }
 
   return (
@@ -30,9 +30,13 @@ const MainStampSection = async () => {
           stampList
             .filter((_, index) => index < 4)
             .map((stamp) => (
-              <div key={stamp.id} className="flex h-40 w-full items-center justify-center rounded-3xl bg-[#071325]">
+              <Link
+                href={`/stamp-all/${stamp.region}`}
+                key={stamp.id}
+                className="flex h-40 w-full items-center justify-center rounded-3xl bg-[#071325]"
+              >
                 <Image src={stamp.stampimg} width={146} height={146} priority alt={stamp.region} />
-              </div>
+              </Link>
             ))
         ) : (
           <p className="text-sm text-gray-500">스탬프가 없습니다.</p>

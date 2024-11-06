@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import MainBackground from '../common/Icons/MainBackground';
+import MainBackground from '../common/Icons/MainBackgroundIcon';
 import Icon from '../common/Icons/Icon';
 
 const MainFooter = () => {
@@ -10,7 +10,7 @@ const MainFooter = () => {
       </div>
       <Link
         href={'/stamp-tracking'}
-        className="fixed bottom-[100px] right-6 cursor-pointer rounded-full shadow-mainStampShadow"
+        className="fixed bottom-[100px] right-6 z-[99] cursor-pointer rounded-full shadow-mainStampShadow"
       >
         <Icon name="StampIcon" size={86} color="#23C9FF" bgColor="white" rx="43" />
       </Link>

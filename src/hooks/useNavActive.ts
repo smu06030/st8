@@ -1,9 +1,11 @@
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { PAGE_NAMES } from '@/constants/pageName';
 
 export const useNavActive = () => {
   const params = useParams();
-  const [activePage, setActivePage] = useState('/');
+
+  const [activePage, setActivePage] = useState(PAGE_NAMES.HOME.link);
 
   useEffect(() => {
     const currentPath = window.location.pathname;

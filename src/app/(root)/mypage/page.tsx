@@ -1,4 +1,3 @@
-import Header from '@/components/common/header/Header';
 import MyPageLayout from '@/components/mypage/MyPageLayout';
 import { Metadata } from 'next';
 
