@@ -37,14 +37,14 @@
   </tr>
   <tr>
       <td align="center"><img src="https://avatars.githubusercontent.com/kyulipark" width="100px" /></td>   
-    <td align="center"><img src="https://avatars.githubusercontent.com/kyulipark" width="100px" /></td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/kyulipark" width="100px" /></td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/lim-bora" width="100px" /></td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/smu06030" width="100px" /></td>
     <td align="center"><img src="https://avatars.githubusercontent.com/kyulipark" width="100px" /></td>
   </tr>
   <tr>
       <td align="center"><b><a href="https://github.com/kyulipark">팀장 : 송혜인</a></b></td>
-    <td align="center"><b><a href="https://github.com/kyulipark">팀원 : 임보라</a></b></td>
-    <td align="center"><b><a href="https://github.com/kyulipark">팀원 : 유인철</a></b></td>
+    <td align="center"><b><a href="https://github.com/lim-bora">팀원 : 임보라</a></b></td> 
+    <td align="center"><b><a href="https://github.com/smu06030">팀원 : 유인철</a></b></td> 
     <td align="center"><b><a href="https://github.com/kyulipark">팀원 : 박규리</a></b></td>
   </tr>
 </table>
@@ -57,7 +57,11 @@
 
 ### 보라
 
-스탬프 페이지, 앨범 : 스탬프 활성,비활성 상태 및 앨범
+스탬프 추가삭제, 스탬프목록, 앨범목록
+
+- Geolocation API와 Kakao map을 사용하여 사용자의 현재위치를 기준으로 지역별 카테고리로 나눈 스탬프가 활성화되게하고, 사용자 본인의 스탬프 현황을 알 수 있는 목록화면을 구성하였습니다. 
+- 사용자의 기준의 데이터를 TanstackQuery로 불러와 사용자가 업로드한 사진을 시각화하였고, useMutations으로 이미지를 올릴 수 있는 input과 데이터를 연결하여 파일리더가 로드되었을때 데이터가 저장되어 추가되는 기능과 사용자의 아이디를 기준으로 삭제할 수 있는 기능으로 사용자의 경험을 향상시켰습니다. 
+또한 TanstackQuery에서 제공하는 invalidateQueries로 항상 최신상태를 유지하도록 구현하였습니다.
 
 ### 인철
 
@@ -133,9 +137,9 @@ const getMultiPolygonPathList = (coordinates: CoordinatesType) => {
 - zustand<br/>
 - tanstack <br/>
 - API
-  - 카카오지도 api
-  - GeolocationAPI
-  - 한국 관광공사 api
+  - 카카오지도 Api
+  - Geolocation Api
+  - 한국 관광공사 Api
 
 ## MVP
 
@@ -156,8 +160,10 @@ const getMultiPolygonPathList = (coordinates: CoordinatesType) => {
 
   - [x] 나의 추억들
     - [x] 전체보기, 지역별 보기
-    - [x] 추억의 장소 지정 업로드
-    - [x] 사진 슬라이드, 편집
+    - [x] 전체보기로 이미지업로드시 지역선택모달창 
+    - [x] 지역별로 이미지업로드
+    - [x] 지역별 이미지 상세보기
+    - [x] 사진 슬라이드, 편집기능
 
 - [x] **`login` 페이지**
 - [x] 이메일 로그인
