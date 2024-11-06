@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
+import { Place, fetchPlaceData } from '@/serverActions/fetchPlacesAction';
 
-const MainRecommendSection = () => {
-  // 여행지 데이터 가져와 보여주기
-  // const places = await fetchPlaces();
-  // console.log(places);
+import TouristSwiper from './TouristSwiper';
+
+const MainRecommendSection = async () => {
+  const places: Place[] = await fetchPlaceData();
 
   return (
     <section className="mt-[58px]">
@@ -17,15 +18,7 @@ const MainRecommendSection = () => {
         </Link>
         <p className="text-sm leading-tight text-gray-600">모아가 엄선 한 국내 여행지를 모았어요.</p>
       </div>
-      <div className="relative mt-5 h-[374px] w-[327px]">
-        <div className="absolute left-0 top-0 h-[374px] w-[327px] rounded-3xl bg-gray-900/70"></div>
-        <div className="absolute left-[36px] top-[302px] h-[30px] w-[204px] text-2xl font-semibold leading-[31.20px] text-white">
-          아름다운 부산의 야경
-        </div>
-        <div className="absolute left-[247px] top-[20px]">
-          <Icon name="BookMarkIcon" size={64} />
-        </div>
-      </div>
+      <TouristSwiper places={places} />
     </section>
   );
 };
