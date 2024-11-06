@@ -3,18 +3,21 @@
 import { QUERY_KEY } from '@/queries/query.keys';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { fetchPlaceData, Place } from '../../../../serverActions/fetchPlacesAction';
+import { fetchPlaceData } from '../../../../serverActions/fetchPlacesAction';
 import PlaceCard from '@/components/tourism/placeCard';
 import { groupPlacesByCity } from '../../../../serverActions/groupPlaces';
+import useUser from '@/hooks/useUser';
 
 const RecommendedPlaces = () => {
+  const userId = useUser(); // 현재 로그인한 사용자 ID 가져오기
+
   const {
     data = [],
     isLoading,
     isError
   } = useQuery({
-    queryKey: QUERY_KEY.PLACES,
-    queryFn: fetchPlaceData
+    queryKey: [QUERY_KEY.PLACES, userId], // userId를 쿼리 키에 포함하여 캐싱
+    queryFn: () => fetchPlaceData(userId) // userId를 fetchPlaceData에 전달
   });
 
   if (isLoading) {
@@ -56,6 +59,7 @@ const RecommendedPlaces = () => {
                   title={place.title || '등록되지 않는 여행지'}
                   firstimage={place.firstimage}
                   description={place.supabaseText || '여행지 정보 없음'}
+                  isBookmarked={place.isBookmarked} // 북마크 상태 전달
                 />
               ))}
             </div>

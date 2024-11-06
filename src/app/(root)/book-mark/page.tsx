@@ -5,18 +5,23 @@ import browserClient from '@/utils/supabase/client';
 import PlaceCard from '../../../components/tourism/placeCard';
 import useUser from '@/hooks/useUser';
 import LoadingBounce from '@/components/common/Loading/Loading';
+import updateBookmarkStatus from '@/components/tourism/updateBookmark';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/queries/query.keys';
 
 interface Place {
   contentid: string;
   title: string;
   text: string;
   firstimage: string | null;
+  isBookmarked: boolean;
 }
 
 const BookmarksPage: React.FC = () => {
   const [places, setPlaces] = useState<Place[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const userId = useUser();
+  const queryClient = useQueryClient();
 
   // 북마크된 장소의 정보를 가져오는 함수
   const fetchBookmarksWithDetails = async () => {
@@ -32,6 +37,7 @@ const BookmarksPage: React.FC = () => {
         .select(
           `
             contentid,
+            choose,
             tourlist (
               title,
               text,
@@ -49,7 +55,8 @@ const BookmarksPage: React.FC = () => {
           contentid: bookmark.contentid,
           title: bookmark.tourlist.title,
           text: bookmark.tourlist.text,
-          firstimage: bookmark.tourlist.firstimage
+          firstimage: bookmark.tourlist.firstimage,
+          isBookmarked: bookmark.choose || false
         }));
         setPlaces(placesData);
       }
@@ -62,8 +69,15 @@ const BookmarksPage: React.FC = () => {
   };
 
   // 북마크 해제 시 장소를 목록에서 제거하는 함수
-  const handleRemoveBookmark = (contentid: string) => {
-    setPlaces((prevPlaces) => prevPlaces.filter((place) => place.contentid !== contentid));
+  const handleRemoveBookmark = async (contentid: string) => {
+    if (!userId) return;
+    try {
+      await updateBookmarkStatus(contentid, userId, true, '', '', false);
+      queryClient.invalidateQueries();
+      fetchBookmarksWithDetails(); // 북마크 상태가 변경될 때 목록을 다시 가져옴
+    } catch (error) {
+      console.error('북마크 해제 중 오류가 발생했습니다:', error);
+    }
   };
 
   // 페이지가 렌더링될 때 북마크 목록을 가져옵니다.
@@ -92,6 +106,7 @@ const BookmarksPage: React.FC = () => {
             description={place.text}
             contentid={place.contentid}
             title={place.title}
+            isBookmarked={place.isBookmarked}
             onRemoveBookmark={() => handleRemoveBookmark(place.contentid)}
           />
         ))}

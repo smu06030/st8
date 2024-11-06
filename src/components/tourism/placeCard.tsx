@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Icon from '../common/Icons/Icon';
-import { handleBookmarkClick, isBookmarkExists } from './bookMark';
+import updateBookmarkStatus from '@/components/tourism/updateBookmark';
 import Link from 'next/link';
 import useUser from '@/hooks/useUser';
 
@@ -12,56 +12,37 @@ interface PlaceCardProps {
   description: string;
   contentid: string;
   title: string;
-  onRemoveBookmark?: () => void; // 북마크 해제 콜백 함수 추가
+  isBookmarked: boolean; // choose 값으로 전달받는 북마크 상태
+  onRemoveBookmark?: () => void;
 }
 
-const PlaceCard: React.FC<PlaceCardProps> = ({ firstimage, description, contentid, title, onRemoveBookmark }) => {
-  const [isBookmarked, setIsBookmarked] = useState<boolean | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+const PlaceCard: React.FC<PlaceCardProps> = ({
+  firstimage,
+  description,
+  contentid,
+  title,
+  isBookmarked: initialBookmarked, // 초기 북마크 상태로 설정
+  onRemoveBookmark
+}) => {
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(initialBookmarked);
   const userId = useUser();
 
-  // 북마크 상태를 가져오는 함수
-  const fetchBookmarkStatus = async () => {
-    if (!userId || !contentid) {
-      setIsLoading(false);
+  // 북마크 추가 또는 해제 함수
+  const onBookmarkClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+
+    if (!userId) {
+      console.log('로그인이 필요합니다.');
       return;
     }
 
     try {
-      const bookmarkExists = await isBookmarkExists(userId, contentid);
-      setIsBookmarked(bookmarkExists);
+      // 북마크 상태 업데이트 - title과 description 추가
+      await updateBookmarkStatus(contentid, userId, isBookmarked, title, description);
+      setIsBookmarked(!isBookmarked); // 상태 반전
+      console.log(`북마크 ${isBookmarked ? '해제' : '추가'} 성공`);
     } catch (error) {
-      console.error('북마크 상태를 가져오는 중 오류가 발생했습니다:', error);
-      setIsBookmarked(false);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // useEffect로 북마크 상태를 한번만 가져오도록 설정
-  useEffect(() => {
-    if (userId) {
-      fetchBookmarkStatus();
-    }
-  }, [userId, contentid]);
-
-  const onBookmarkClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-
-    if (isBookmarked === null) return;
-
-    try {
-      const bookmarkSuccess = await handleBookmarkClick(contentid, title, description);
-      if (bookmarkSuccess) {
-        setIsBookmarked((prev) => !prev);
-
-        // 북마크 해제가 성공적이고, 상위 컴포넌트에서 콜백이 전달된 경우
-        if (isBookmarked && onRemoveBookmark) {
-          onRemoveBookmark(); // 상위 컴포넌트에서 해당 항목을 제거하도록 요청
-        }
-      }
-    } catch (error) {
-      console.error('북마크 처리 중 오류가 발생했습니다:', error);
+      console.error('북마크 업데이트 중 오류:', error);
       alert('북마크 처리 중 오류가 발생했습니다. 다시 시도해주세요.');
     }
   };

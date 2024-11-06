@@ -14,7 +14,7 @@ export interface Place {
 }
 
 // 데이터 호출 함수 (북마크 상태 추가)
-export const fetchPlaceData = async (userId: string, page: number = 1, limit: number = 50): Promise<Place[]> => {
+export const fetchPlaceData = async (userId: string, page: number = 1, limit: number = 10): Promise<Place[]> => {
   try {
     const start = (page - 1) * limit;
     const end = start + limit - 1;
@@ -55,7 +55,7 @@ export const fetchPlaceData = async (userId: string, page: number = 1, limit: nu
       supabaseText: item.text ?? null,
       citytitle: item.citytitle ?? null,
       citydetail: item.citydetail ?? null,
-      isBookmarked: item.bookmark ? item.bookmark.some((bookmark: any) => bookmark.choose === true) : false // 북마크 상태 확인
+      isBookmarked: item.bookmark?.some((bookmark: any) => bookmark.choose === true) || false // 북마크 상태 확인
     }));
   } catch (e) {
     console.error('데이터 요청 중 예외 발생:', e);
