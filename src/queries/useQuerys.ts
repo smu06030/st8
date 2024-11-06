@@ -15,7 +15,7 @@ const useGetStampActive = (userId: string) => {
 // 사용자의 스템프 항목 중 현재위치 주소가 일치하는 데이터 가져오기
 const useGetLocationStampActive = (address: string | undefined, userId: string) => {
   return useQuery({
-    queryKey: ['nowStamp', address],
+    queryKey: QUERY_KEY.NOWLOCATION_STAMP,
     queryFn: async () => {
       if (address) {
         return await fetchLocationStamp(address, userId);

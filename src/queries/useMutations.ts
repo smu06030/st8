@@ -16,7 +16,7 @@ const usePatchAlias = () => {
       return await fatchLocationAlias(alias, userId, address);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['nowStamp'] });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY.NOWLOCATION_STAMP });
     }
   });
 };

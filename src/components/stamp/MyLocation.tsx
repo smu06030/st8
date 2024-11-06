@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import StampActive from './StampActive';
 import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
-import { useQueryClient } from '@tanstack/react-query';
 
 import useUser from '@/hooks/useUser';
 import Link from 'next/link';
@@ -22,7 +21,6 @@ interface LocationType {
 
 const MyLocation = () => {
   const userId = useUser();
-  const queryClient = useQueryClient();
   const [address, setAddress] = useState<AddressPropsType | null>(); //현재주소
   const [error, setError] = useState<string | null>(null);
   const [visit, setVisit] = useState<boolean>(false); //방문상태
@@ -48,12 +46,14 @@ const MyLocation = () => {
       return;
     }
   };
+
   useEffect(() => {
     if (aliasLocation) {
       onClickAliasAdd(aliasLocation);
     }
   }, [aliasLocation]);
 
+  // 카카오맵 주소값 가져오기
   const getAddress = async (lat: number, lng: number) => {
     try {
       const res = await fetch(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}`, {
@@ -76,6 +76,7 @@ const MyLocation = () => {
     }
   };
 
+  // Geolocation API 로 유저의 위도,경도값 추출
   useEffect(() => {
     if ('geolocation' in navigator) {
       //현 브라우저가 Geolocation API를 지원하는지 확인
@@ -106,7 +107,7 @@ const MyLocation = () => {
     </div>;
 
   return (
-    <div className="flex flex-col px-[24px] py-[36px]" style={{ height: 'calc(100vh - 64px)' }}>
+    <div className="flex flex-col px-[24px] pt-[36px]" style={{ height: 'calc(100vh - 64px)' }}>
       {address ? (
         <>
           <StampActive
@@ -122,7 +123,7 @@ const MyLocation = () => {
         <div>{isError ? `Error: ${isError}` : <Loading />}</div>
       )}
       {visit && (
-        <div className="mt-[36px] flex flex-1 flex-col justify-between">
+        <div className="mb-[99px] mt-[36px] flex flex-1 flex-col justify-between">
           <div className="flex flex-col gap-[8px]">
             <label className="px-[6px] py-[8px]">스탬프 별명 설정하기</label>
             <span
