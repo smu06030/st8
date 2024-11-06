@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Icon from '../common/Icons/Icon';
-import updateBookmarkStatus from '@/components/tourism/updateBookmark';
+import updateBookmarkStatus from '@/hooks/useUpdateBookmark';
 import Link from 'next/link';
 import useUser from '@/hooks/useUser';
 
@@ -12,7 +12,7 @@ interface PlaceCardProps {
   description: string;
   contentid: string;
   title: string;
-  isBookmarked: boolean; // choose 값으로 전달받는 북마크 상태
+  isBookmarked: boolean;
   onRemoveBookmark?: () => void;
 }
 
@@ -37,9 +37,8 @@ const PlaceCard: React.FC<PlaceCardProps> = ({
     }
 
     try {
-      // 북마크 상태 업데이트 - title과 description 추가
       await updateBookmarkStatus(contentid, userId, isBookmarked, title, description);
-      setIsBookmarked(!isBookmarked); // 상태 반전
+      setIsBookmarked(!isBookmarked);
       console.log(`북마크 ${isBookmarked ? '해제' : '추가'} 성공`);
     } catch (error) {
       console.error('북마크 업데이트 중 오류:', error);

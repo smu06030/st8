@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import browserClient from '@/utils/supabase/client';
-import PlaceCard from '../../../components/tourism/placeCard';
+import PlaceCard from '@/components/tourism/placeCard';
 import useUser from '@/hooks/useUser';
 import LoadingBounce from '@/components/common/Loading/Loading';
-import updateBookmarkStatus from '@/components/tourism/updateBookmark';
+import updateBookmarkStatus from '@/hooks/useUpdateBookmark';
 import { useQueryClient } from '@tanstack/react-query';
 
 interface Place {

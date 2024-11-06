@@ -35,7 +35,7 @@ const MyPageLayout = () => {
           </div>
 
           <div className="row-span-2 flex h-[327px] items-center justify-center rounded-2xl bg-gray-300 p-6">
-            <Link href="/tourism" className="relative flex h-full w-full items-end justify-end">
+            <Link href="/book-mark" className="relative flex h-full w-full items-end justify-end">
               <p className="text-[20px]leading-tight mb-4 text-right font-bold text-white">
                 내가 찜한 <br />
                 여행지

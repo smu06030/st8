@@ -5,7 +5,7 @@ import Image from 'next/image';
 import browserClient from '@/utils/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/queries/query.keys';
-import updateBookmarkStatus from '@/components/tourism/updateBookmark';
+import updateBookmarkStatus from '@/hooks/useUpdateBookmark';
 import LoadingBounce from '@/components/common/Loading/Loading';
 import Icon from '@/components/common/Icons/Icon';
 
@@ -78,13 +78,12 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
         return;
       }
 
-      // Replace isBookmarkExists with direct fetching from Supabase
       const { data: bookmarkData, error: bookmarkError } = await browserClient
         .from('bookmark')
         .select('choose')
         .eq('user_id', user.id)
         .eq('contentid', id)
-        .single();
+        .maybeSingle();
 
       if (bookmarkError) {
         throw new Error(bookmarkError.message);
@@ -139,22 +138,61 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
   const onBookmarkClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
 
-    if (isBookmarked === null) return;
-
     try {
-      const bookmarkSuccess = await updateBookmarkStatus(
-        id,
-        data?.title || '',
-        isBookmarked,
-        data?.title || '',
-        data?.text || ''
-      );
-      if (bookmarkSuccess !== undefined) {
-        // Check for non-void response
-        setIsBookmarked((prev) => !prev);
-        queryClient.invalidateQueries({ queryKey: QUERY_KEY.PLACE_DETAIL(id) });
-        queryClient.invalidateQueries({ queryKey: QUERY_KEY.PLACES });
+      // 현재 사용자 ID 확인
+      const {
+        data: { user }
+      } = await browserClient.auth.getUser();
+
+      if (!user || !user.id) {
+        console.error('UUID 형식의 사용자 ID가 아닙니다.');
+        alert('유효한 사용자 정보가 필요합니다. 다시 로그인해 주세요.');
+        return;
       }
+
+      // 북마크 상태 확인 (maybeSingle() 사용)
+      const { data: bookmarkData, error: fetchError } = await browserClient
+        .from('bookmark')
+        .select('choose')
+        .eq('user_id', user.id)
+        .eq('contentid', id)
+        .maybeSingle();
+
+      if (fetchError) {
+        throw new Error(fetchError.message);
+      }
+
+      // 북마크가 이미 존재하고 choose가 true라면 삭제, 아니면 추가
+      if (bookmarkData?.choose) {
+        const { error: deleteError } = await browserClient
+          .from('bookmark')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('contentid', id);
+
+        if (deleteError) throw new Error(deleteError.message);
+
+        setIsBookmarked(false);
+      } else {
+        // 북마크 추가
+        const { error: insertError } = await browserClient
+          .from('bookmark')
+          .upsert({
+            user_id: user.id,
+            contentid: id,
+            choose: true,
+            title: data?.title || '제목 없음',
+            text: data?.text || '내용 없음'
+          });
+
+        if (insertError) throw new Error(insertError.message);
+
+        setIsBookmarked(true);
+      }
+
+      // React Query를 사용하여 관련된 쿼리를 무효화하고 최신 상태로 갱신
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY.PLACE_DETAIL(id) });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY.PLACES });
     } catch (error) {
       console.error('북마크 처리 중 오류가 발생했습니다:', error);
       alert('북마크 처리 중 오류가 발생했습니다. 다시 시도해주세요.');
@@ -168,7 +206,6 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
   if (error) {
     return <p className="text-center text-red-500">Error fetching data: {error.message}</p>;
   }
-
   return (
     <div className="min-h-screen">
       <div className="relative">
