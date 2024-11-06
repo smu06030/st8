@@ -17,7 +17,7 @@ const StampModal = ({ Modal }: StampModalPropsType) => {
   // 날짜 형식 변환
   const formattedDate = `${date.getUTCFullYear()}년 ${date.getUTCMonth() + 1}월 ${date.getUTCDate()}일 ${date.getUTCHours() + 9}시`;
   // 동적 라우트 경로
-  const regionLink = DEFAULT_REGION_ITEM.filter((item) => item.includes(stamp.region));
+  const regionLink = DEFAULT_REGION_ITEM.find((item) => item.includes(stamp.region));
 
   return (
     <Modal>
