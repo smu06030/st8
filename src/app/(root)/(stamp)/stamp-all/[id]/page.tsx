@@ -5,7 +5,8 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import useUser from '@/hooks/useUser';
 // import { fetchUser } from '@/utils/fetchUser';
-import { fetchStampActive } from '@/apis/fetchStampList';
+// import { fetchStampActive } from '@/apis/fetchStampList';
+import useQuerys from '@/queries/useQuerys';
 import Loading from '@/app/(root)/(stamp)/loading';
 import Icon from '@/components/common/Icons/Icon';
 import useDropdoun from '@/hooks/useDropdoun';
@@ -24,12 +25,13 @@ const StampItemDetail = () => {
   const region = decodeURIComponent((params.id as string[]).toString());
   const [stampData, setStampData] = useState<StampDetailPropsType[]>([]);
   const { isOpen, toggleDropdown, dropdownRef } = useDropdoun();
+  const { data: stampList, isLoading } = useQuerys.useGetStampActive(userId);
 
   useEffect(() => {
     if (userId) {
       const fetchData = async () => {
         try {
-          const res = await fetchStampActive(userId);
+          const res = stampList;
           const decodedParams = region;
           const stampFilterList = res?.filter((item) => item.region === decodedParams) || [];
           setStampData(stampFilterList);
@@ -55,7 +57,6 @@ const StampItemDetail = () => {
       </div>
     );
 
-  // console.log('stampData', stampData);
   //TODO :이미지명이랑 키값 동일하게하기
   return (
     <div className="flex h-[100%] flex-col bg-no-repeat">
@@ -118,7 +119,6 @@ const StampItemDetail = () => {
                     <span className="ellipsis-multiline text-[#4F4F4F]">
                       {list.aliasLocation !== null ? list.aliasLocation : list.address}
                     </span>
-                    {/* TODO: 주소->장소이름으로 대체 - 클릭시 지도로 이동 (?)*/}
                   </li>
                   <li className="flex items-center gap-[8px]">
                     <Icon name="ComPassIcon" size={28} color="white" bgColor="#00688A" rx="16" />

@@ -4,17 +4,16 @@ import { useEffect, useState } from 'react';
 import StampActive from './StampActive';
 import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
-import browserClient from '@/utils/supabase/client';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-// import { fetchUser } from '@/utils/fetchUser';
+import { useQueryClient } from '@tanstack/react-query';
+
 import useUser from '@/hooks/useUser';
-// import { fetchStampList } from '@/apis/fetchStampList';
 import Link from 'next/link';
 import Icon from '@/components/common/Icons/Icon';
 import Loading from '@/app/(root)/(stamp)/loading';
 import useModal from '@/hooks/useModal';
 import AliasCheckModal from '../common/Modal/AliasCheckModal';
 import useQuerys from '@/queries/useQuerys';
+import useMutations from '@/queries/useMutations';
 
 interface LocationType {
   lat: number;
@@ -24,55 +23,26 @@ interface LocationType {
 const MyLocation = () => {
   const userId = useUser();
   const queryClient = useQueryClient();
-  // const [error, setError] = useState<string | null>(null); //에러상태
   const [address, setAddress] = useState<AddressPropsType | null>(); //현재주소
+  const [error, setError] = useState<string | null>(null);
   const [visit, setVisit] = useState<boolean>(false); //방문상태
   const [location, setLocation] = useState<LocationType>({ lat: 0, lng: 0 });
   const [parentFocused, setParentFocused] = useState(false);
   const [aliasLocation, setAliasLocation] = useState<string | null>(null); //장소별칭
   const { openModal, Modal, isOpen } = useModal();
   const { data: stampList, isLoading, isError } = useQuerys.useGetLocationStampActive(address?.address_name, userId);
+  const patchAliasMutation = useMutations.usePatchAlias();
 
-  // const {
-  //   data: stampList,
-  //   isLoading,
-  //   isError
-  // } = useQuery({
-  //   queryKey: ['nowStamp', address?.address_name], //고유키값
-  //   queryFn: async () => {
-  //     if (address && address.address_name) {
-  //       return await fetchStampList(address.address_name!);
-  //     } else return null;
-  //   }, // 주소를 인자로 넘김
-  //   enabled: !!userId
-  // });
-
+  //저장된스탬프의 방문여부 저장
   useEffect(() => {
     if (stampList && stampList.length > 0) {
       setVisit(stampList[0].visited);
     }
   }, [stampList]);
 
-  const addAliasLocation = async (alias: string) => {
-    const { data, error } = await browserClient
-      .from('stamp')
-      .update({ aliasLocation: alias })
-      .eq('user_id', userId)
-      .eq('address', address?.address_name);
-    if (error) console.log('error', error);
-    return data;
-  };
-
-  const AliasAddMutation = useMutation({
-    mutationFn: addAliasLocation,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['nowStamp'] });
-    }
-  });
-
   const onClickAliasAdd = (alias: string) => {
     if (userId) {
-      AliasAddMutation.mutate(alias);
+      patchAliasMutation.mutate({ alias, userId, address: address?.address_name ?? '' });
     } else {
       console.error('유저아이디가 없습니다.');
       return;
@@ -86,7 +56,6 @@ const MyLocation = () => {
 
   const getAddress = async (lat: number, lng: number) => {
     try {
-      //주소 데이터를 요청
       const res = await fetch(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}`, {
         headers: {
           Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`
@@ -118,8 +87,7 @@ const MyLocation = () => {
           await getAddress(latitude, longitude);
         },
         (err) => {
-          console.log('오류가 발생했습니다.', err.message);
-          // showErrorMsg(err.message, setError);
+          showErrorMsg(err.message, setError);
         },
         {
           enableHighAccuracy: true, // 정확도 우선 모드
@@ -137,13 +105,10 @@ const MyLocation = () => {
       <Loading />
     </div>;
 
-  // if (isError) return console.log('error', isError);
-
   return (
     <div className="flex flex-col px-[24px] py-[36px]" style={{ height: 'calc(100vh - 64px)' }}>
       {address ? (
         <>
-          {/* <p>현재 내 위치 : {address.address_name}</p> */}
           <StampActive
             address={address}
             stampList={stampList}

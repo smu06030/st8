@@ -31,10 +31,3 @@ const useQuerys = {
 };
 
 export default useQuerys;
-
-// queryKey: ['nowStamp', address?.address_name],
-// queryFn: async () => {
-//    if (address && address.address_name) {
-//      return await fetchLocationStamp(address.address_name,userId);
-//    } else return null;
-//  }, // 주소를 인자로 넘김

@@ -32,3 +32,16 @@ export const fetchLocationStamp = async (address: string, userId: string) => {
   }
   return nowStampList;
 };
+
+//로그인유저가 찍은 스탬프의 별칭만 업데이트
+export const fatchLocationAlias = async (alias: string, userId: string, address: string) => {
+  const serverClient = createClient();
+
+  const { data, error } = await serverClient
+    .from('stamp')
+    .update({ aliasLocation: alias })
+    .eq('user_id', userId)
+    .eq('address', address);
+  if (error) console.log('error', error);
+  return data;
+};
