@@ -1,6 +1,6 @@
-'use client';
+'use server';
 
-import browserClient from '@/utils/supabase/client';
+import { createClient } from '@/utils/supabase/server';
 
 export interface Place {
   firstimage: string | null;
@@ -12,10 +12,11 @@ export interface Place {
   citydetail: string | null;
 }
 
-// 데이터 호출 함수 (클라이언트에서 호출)
+// 데이터 호출 함수 (서버에서 호출)
 export const fetchPlaceData = async (): Promise<Place[]> => {
+  const serverClient = createClient();
   try {
-    const { data: supabaseData, error } = await browserClient
+    const { data: supabaseData, error } = await serverClient
       .from('tourlist')
       .select('contentid, title, text, city, citytitle, citydetail, firstimage');
 
