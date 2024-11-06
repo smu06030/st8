@@ -37,14 +37,14 @@
   </tr>
   <tr>
       <td align="center"><img src="https://avatars.githubusercontent.com/kyulipark" width="100px" /></td>   
-    <td align="center"><img src="https://avatars.githubusercontent.com/kyulipark" width="100px" /></td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/kyulipark" width="100px" /></td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/lim-bora" width="100px" /></td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/smu06030" width="100px" /></td>
     <td align="center"><img src="https://avatars.githubusercontent.com/kyulipark" width="100px" /></td>
   </tr>
   <tr>
       <td align="center"><b><a href="https://github.com/kyulipark">팀장 : 송혜인</a></b></td>
-    <td align="center"><b><a href="https://github.com/kyulipark">팀원 : 임보라</a></b></td>
-    <td align="center"><b><a href="https://github.com/kyulipark">팀원 : 유인철</a></b></td>
+    <td align="center"><b><a href="https://github.com/lim-bora">팀원 : 임보라</a></b></td> 
+    <td align="center"><b><a href="https://github.com/smu06030">팀원 : 유인철</a></b></td> 
     <td align="center"><b><a href="https://github.com/kyulipark">팀원 : 박규리</a></b></td>
   </tr>
 </table>
@@ -57,7 +57,11 @@
 
 ### 보라
 
-스탬프 페이지, 앨범 : 스탬프 활성,비활성 상태 및 앨범
+스탬프 추가삭제, 스탬프목록, 앨범목록
+
+- Geolocation API와 Kakao map을 사용하여 사용자의 현재위치를 기준으로 지역별 카테고리로 나눈 스탬프가 활성화되게하고, 사용자 본인의 스탬프 현황을 알 수 있는 목록화면을 구성하였습니다. 
+- 사용자의 기준의 데이터를 TanstackQuery로 불러와 사용자가 업로드한 사진을 시각화하였고, useMutations으로 이미지를 올릴 수 있는 input과 데이터를 연결하여 파일리더가 로드되었을때 데이터가 저장되어 추가되는 기능과 사용자의 아이디를 기준으로 삭제할 수 있는 기능으로 사용자의 경험을 향상시켰습니다. 
+또한 TanstackQuery에서 제공하는 invalidateQueries로 항상 최신상태를 유지하도록 구현하였습니다.
 
 ### 인철
 
@@ -123,6 +127,72 @@ const getMultiPolygonPathList = (coordinates: CoordinatesType) => {
 ### 규리
 
 로그인, 회원가입, 마이페이지 : Supabase를 활용한 로그인, 로그아웃, 회원 가입과 마이 페이지
+- 인풋창을 분리하여 재사용이 가능하도록 구현하였고, 동작에 따라 창의 색을 달리하여 유저가 시각적으로 액티브상태를 볼 수 있도록 하였습니다.
+```ts
+ const styles = {
+    default: {
+      border: 'border-gray-300',
+      iconColor: '#9C9C9C',
+      textColor: 'text-gray-400'
+    },
+    active: {
+      border: 'border-secondary-800',
+      iconColor: '#00688A',
+      textColor: 'text-secondary-800'
+    },
+    done: {
+      border: 'border-green-900',
+      iconColor: '#1D1D1D',
+      textColor: 'text-green-900'
+    }
+  };
+
+useEffect(() => {
+    if (!value) {
+      setCurrentStatus('default');
+    } else if (status === 'done') {
+      setCurrentStatus('done');
+    } else {
+      setCurrentStatus('active');
+    }
+  }, [value, status]);
+
+   <Icon name={iconName} color={currentStyle.iconColor} />
+        <input
+          type={type}
+          placeholder={placeholder}
+          className={`flex-grow bg-transparent text-sm font-normal text-[#004156] focus:outline-none ${currentStyle.textColor}`}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+        />
+
+```
+
+
+- 보다 재미있고 친근하게 회원가입을 할 수 있도록 스텝 페이지 작업을 하였습니다.
+
+```ts
+import NicknameStep from './signup/StepNicknameForm';
+import EmailStep from './signup/StepEmailForm';
+import PasswordStep from './signup/StepPasswordForm';
+import GoMainStep from './signup/StepMainForm';
+
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center">
+      {step === 0 && <NicknameStep onNext={(nickname: string) => handleNext({ nickname })} />}
+      {step === 1 && <EmailStep onNext={(email: string) => handleNext({ email })} />}
+      {step === 2 && <PasswordStep onNext={(password: string) => handleNext({ password })} />}
+      {step === 3 && <GoMainStep onNext={() => handleSignup()} />}
+    </div>
+  );
+```
+
+<img width="180" alt="스크린샷 2024-11-07 오전 12 20 28" src="https://github.com/user-attachments/assets/862aec71-9576-4b2d-8c5c-736ea25f2832">
+
+<img width="180" alt="스크린샷 2024-11-07 오전 12 20 38" src="https://github.com/user-attachments/assets/b3c94b75-5570-4cce-abb3-b8e691a9dc31">
+
+<img width="180" alt="스크린샷 2024-11-07 오전 12 20 12" src="https://github.com/user-attachments/assets/a43aa871-818a-4b3a-818e-8cec57b5fa08">
 
 ## 기술적 의사결정
 
@@ -133,9 +203,9 @@ const getMultiPolygonPathList = (coordinates: CoordinatesType) => {
 - zustand<br/>
 - tanstack <br/>
 - API
-  - 카카오지도 api
-  - GeolocationAPI
-  - 한국 관광공사 api
+  - 카카오지도 Api
+  - Geolocation Api
+  - 한국 관광공사 Api
 
 ## MVP
 
@@ -156,8 +226,10 @@ const getMultiPolygonPathList = (coordinates: CoordinatesType) => {
 
   - [x] 나의 추억들
     - [x] 전체보기, 지역별 보기
-    - [x] 추억의 장소 지정 업로드
-    - [x] 사진 슬라이드, 편집
+    - [x] 전체보기로 이미지업로드시 지역선택모달창 
+    - [x] 지역별로 이미지업로드
+    - [x] 지역별 이미지 상세보기
+    - [x] 사진 슬라이드, 편집기능
 
 - [x] **`login` 페이지**
 - [x] 이메일 로그인
@@ -185,7 +257,7 @@ const getMultiPolygonPathList = (coordinates: CoordinatesType) => {
 
 ## 모아 미리보기
 
-- home
+
 
 ## 🔥 트러블슈팅
 
