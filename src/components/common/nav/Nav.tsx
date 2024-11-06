@@ -6,7 +6,7 @@ import useNavActive from '@/hooks/useNavActive';
 
 const Nav = () => {
   const { activePage, handleClick } = useNavActive();
-
+  console.log('activePage', activePage);
   const navCategory = [
     {
       page: '홈',
@@ -24,7 +24,7 @@ const Nav = () => {
       link: '/photo-album',
       icon: (() => {
         let color = '#B5B5B5';
-        if (activePage === '/photo-album') {
+        if (/^\/photo-album(\/.*)?$/.test(activePage)) {
           color = '#00688A';
         }
         return React.cloneElement(<Icon name="AlbumIcon" size={28} color={color} bgColor="transparent" />);
@@ -36,7 +36,7 @@ const Nav = () => {
       icon: (() => {
         let bgColor = '#B5B5B5';
         let color = '#fff';
-        if (activePage === '/stamp-all') {
+        if (/^\/stamp-all(\/.*)?$/.test(activePage) || activePage === '/stamp-tracking') {
           bgColor = '#00688A';
           color = '#fff';
         }
@@ -51,7 +51,7 @@ const Nav = () => {
       link: '/tourism',
       icon: (() => {
         let color = '#B5B5B5';
-        if (activePage === '/tourism') {
+        if (activePage === '/tourism' || activePage === '/tourism-detail') {
           color = '#00688A';
         }
         return React.cloneElement(<Icon name="MapIcon" size={28} color={color} bgColor="transparent" />);

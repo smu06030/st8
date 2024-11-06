@@ -8,12 +8,23 @@ import { useAlbumList } from '@/hooks/useAlbumList';
 import useImgModal from '@/hooks/useImgModal';
 import AlbumImgEdit from '@/components/photoalbum/AlbumImgEdit';
 import useAlbumDelete from '@/hooks/useAlbumDelete';
+import useUser from '@/hooks/useUser';
 //{ params }: { params: { region: string } }
+import type { Metadata } from 'next';
+
+// async function generateMetadata({ params }: string) {
+//   const region = params.region
+//   return {
+//     title: `${region}`,
+//   }
+// }
 
 const RegionDetail = () => {
+  const userId = useUser();
   const { region } = useParams<{ region: string }>();
+
   const regionTitle = decodeURIComponent(region);
-  const { data: albumListData } = useAlbumList(); //TODO: 서버로할거면 서버액션으로 패치만들기
+  const { data: albumListData } = useAlbumList(userId); //TODO: 서버로할거면 서버액션으로 패치만들기
   const {
     selectedImgUrl,
     imgModal,
@@ -41,10 +52,14 @@ const RegionDetail = () => {
           편집
         </button>
       </ul>
-      <ul className="mt-[16px] grid grid-cols-3 gap-[6px]">
+      <ul className="mt-[32px] grid grid-cols-3 gap-[6px]">
         {regionPhoto?.map((item, index) => (
           <li
-            onClick={() => onClickImgModal(item.photoImg, item.id, index)}
+            onClick={() => {
+              if (!edit) {
+                onClickImgModal(item.photoImg, item.id, index);
+              }
+            }}
             key={item.id}
             className={`${deleteId.includes(item.id) && 'border-red-500'} relative aspect-square overflow-hidden border`}
           >
