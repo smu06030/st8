@@ -108,12 +108,12 @@ const LoginForm = () => {
           </div>
         )}
 
-        <div className="mx-auto !mt-[66px] flex w-full max-w-md justify-between px-8">
+        <div className="mx-auto !mt-[66px] flex w-full max-w-md justify-between px-3">
           <label className="flex items-center text-gray-700">
             <input type="checkbox" className="mr-2 text-[14px]" />
             자동 로그인
           </label>
-          <a href="/forgot-password" className="text-[14px] text-gray-700">
+          <a href="/forgot-password" className="text-[16px] text-gray-700">
             아이디/비밀번호 찾기
           </a>
         </div>
