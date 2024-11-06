@@ -11,7 +11,7 @@ const PasswordCheck = ({ password = '' }: PasswordCheckProps) => {
   const isLongEnough = password.length >= 8;
 
   return (
-    <div className="flex flex-row justify-end space-x-2">
+    <div className="flex w-full flex-row justify-end space-x-2">
       {/* 숫자 포함 */}
       <div className="flex items-center justify-end">
         <Image

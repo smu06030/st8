@@ -99,7 +99,7 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
       />
 
       {/* 비밀번호 일치 여부 메시지 */}
-      <div className="flex items-center space-x-2">
+      <div className="flex-end w-full items-center justify-end space-x-2">
         {isMatching ? (
           <Image src="/images/pass-check1.png" alt="비밀번호 일치" width={128} height={128} />
         ) : confirmPassword.length > 0 ? (

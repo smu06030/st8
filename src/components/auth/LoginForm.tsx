@@ -78,7 +78,7 @@ const LoginForm = () => {
 
         {/* 이메일 오류 시 이미지 표시 */}
         {isEmailError && (
-          <div className="mb-2 flex items-center space-x-1">
+          <div className="mb-2 flex w-full items-end justify-end">
             <Image src="/images/login-email-alert1.png" alt="이메일 오류" width={160} height={160} />
           </div>
         )}
@@ -104,7 +104,7 @@ const LoginForm = () => {
 
         {/* 비밀번호 오류 시 이미지 표시 */}
         {isPasswordError && (
-          <div className="mb-2 flex items-center justify-end space-x-1">
+          <div className="mb-2 flex w-full items-end justify-end">
             <Image src="/images/login-pass-alert1.png" alt="비밀번호 오류" width={168} height={168} />
           </div>
         )}
