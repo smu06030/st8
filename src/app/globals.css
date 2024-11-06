@@ -88,7 +88,7 @@ body {
 }
 
 .body-padding {
-  @apply py-16;
+  @apply pb-16 pt-[56px];
 }
 
 .albumTab {

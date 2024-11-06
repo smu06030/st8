@@ -28,31 +28,10 @@ const MyLocation = () => {
   const [parentFocused, setParentFocused] = useState(false);
   const [aliasLocation, setAliasLocation] = useState<string | null>(null); //장소별칭
   const { openModal, Modal, isOpen } = useModal();
+  const { data: stampList, isLoading, isError } = useQuerys.useGetLocationStampActive(address?.address_name, userId);
+  const patchAliasMutation = useMutations.usePatchAlias();
 
-  //로그인유저아이디 패치불러오기
-  useEffect(() => {
-    const checkUser = async () => {
-      const user = await fetchUser();
-      if (!user) return;
-      else setUserId(user);
-    };
-    checkUser();
-  }, []);
-
-  const {
-    data: stampList,
-    isLoading,
-    error: stampListError
-  } = useQuery({
-    queryKey: ['nowStamp', address?.address_name], //고유키값
-    queryFn: async () => {
-      if (address && address.address_name) {
-        return await fetchStampList(address.address_name!);
-      } else return null;
-    }, // 주소를 인자로 넘김
-    enabled: !!userId
-  });
-
+  //저장된스탬프의 방문여부 저장
   useEffect(() => {
     if (stampList && stampList.length > 0) {
       setVisit(stampList[0].visited);
@@ -61,8 +40,7 @@ const MyLocation = () => {
 
   const onClickAliasAdd = (alias: string) => {
     if (userId) {
-      AliasAddMutation.mutate(alias);
-      // console.log('별명찍힘', alias);
+      patchAliasMutation.mutate({ alias, userId, address: address?.address_name ?? '' });
     } else {
       console.error('유저아이디가 없습니다.');
       return;
@@ -101,7 +79,9 @@ const MyLocation = () => {
   // Geolocation API 로 유저의 위도,경도값 추출
   useEffect(() => {
     if ('geolocation' in navigator) {
+      //현 브라우저가 Geolocation API를 지원하는지 확인
       navigator.geolocation.getCurrentPosition(
+        //사용자의 현재 위치를 요청
         async (position) => {
           const { latitude, longitude } = position.coords;
           setLocation({ lat: latitude, lng: longitude });
