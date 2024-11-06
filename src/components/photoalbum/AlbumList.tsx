@@ -73,7 +73,7 @@ const AlbumList = () => {
   );
 
   return (
-    <div>
+    <div className="pb-[200px]">
       <Toptitle
         activeTab={activeTab}
         edit={edit}
