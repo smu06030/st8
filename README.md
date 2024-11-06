@@ -127,6 +127,72 @@ const getMultiPolygonPathList = (coordinates: CoordinatesType) => {
 ### 규리
 
 로그인, 회원가입, 마이페이지 : Supabase를 활용한 로그인, 로그아웃, 회원 가입과 마이 페이지
+- 인풋창을 분리하여 재사용이 가능하도록 구현하였고, 동작에 따라 창의 색을 달리하여 유저가 시각적으로 액티브상태를 볼 수 있도록 하였습니다.
+```ts
+ const styles = {
+    default: {
+      border: 'border-gray-300',
+      iconColor: '#9C9C9C',
+      textColor: 'text-gray-400'
+    },
+    active: {
+      border: 'border-secondary-800',
+      iconColor: '#00688A',
+      textColor: 'text-secondary-800'
+    },
+    done: {
+      border: 'border-green-900',
+      iconColor: '#1D1D1D',
+      textColor: 'text-green-900'
+    }
+  };
+
+useEffect(() => {
+    if (!value) {
+      setCurrentStatus('default');
+    } else if (status === 'done') {
+      setCurrentStatus('done');
+    } else {
+      setCurrentStatus('active');
+    }
+  }, [value, status]);
+
+   <Icon name={iconName} color={currentStyle.iconColor} />
+        <input
+          type={type}
+          placeholder={placeholder}
+          className={`flex-grow bg-transparent text-sm font-normal text-[#004156] focus:outline-none ${currentStyle.textColor}`}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+        />
+
+```
+
+
+- 보다 재미있고 친근하게 회원가입을 할 수 있도록 스텝 페이지 작업을 하였습니다.
+
+```ts
+import NicknameStep from './signup/StepNicknameForm';
+import EmailStep from './signup/StepEmailForm';
+import PasswordStep from './signup/StepPasswordForm';
+import GoMainStep from './signup/StepMainForm';
+
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center">
+      {step === 0 && <NicknameStep onNext={(nickname: string) => handleNext({ nickname })} />}
+      {step === 1 && <EmailStep onNext={(email: string) => handleNext({ email })} />}
+      {step === 2 && <PasswordStep onNext={(password: string) => handleNext({ password })} />}
+      {step === 3 && <GoMainStep onNext={() => handleSignup()} />}
+    </div>
+  );
+```
+
+<img width="180" alt="스크린샷 2024-11-07 오전 12 20 28" src="https://github.com/user-attachments/assets/862aec71-9576-4b2d-8c5c-736ea25f2832">
+
+<img width="180" alt="스크린샷 2024-11-07 오전 12 20 38" src="https://github.com/user-attachments/assets/b3c94b75-5570-4cce-abb3-b8e691a9dc31">
+
+<img width="180" alt="스크린샷 2024-11-07 오전 12 20 12" src="https://github.com/user-attachments/assets/a43aa871-818a-4b3a-818e-8cec57b5fa08">
 
 ## 기술적 의사결정
 
@@ -191,7 +257,7 @@ const getMultiPolygonPathList = (coordinates: CoordinatesType) => {
 
 ## 모아 미리보기
 
-- home
+
 
 ## 🔥 트러블슈팅
 
