@@ -1,7 +1,12 @@
-import React from 'react';
-
 const CompassIcon = () => (
-  <svg width="242" height="242" viewBox="0 0 242 242" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="242"
+    height="242"
+    viewBox="0 0 242 242"
+    fill="none"
+    className="absolute right-auto animate-bounceLoading"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
       d="M77.1033 197.618C119.292 221.976 173.24 207.521 197.597 165.331C221.955 123.142 207.5 69.1952 165.311 44.8373C123.122 20.4794 69.1749 34.9345 44.817 77.1236C20.4591 119.313 34.9141 173.26 77.1033 197.618Z"
       fill="#008EBD"

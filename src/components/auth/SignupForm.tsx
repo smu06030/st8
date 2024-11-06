@@ -35,7 +35,6 @@ const SignupForm = () => {
       if (result.error) {
         alert(result.error);
       } else {
-        alert('회원가입 성공!');
         router.push('/');
       }
     } catch (err) {

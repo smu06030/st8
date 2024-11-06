@@ -74,6 +74,8 @@ const config: Config = {
       lg: '1024px' // 데스크탑 추후 수정가능
     },
     animation: {
+      scaleStamp: 'scaleUp 1s ease-in-out infinite',
+      successStamp: 'stampActive .8s ease-in-out',
       fadeUpText: 'fadeUp .8s ease-in-out',
       fadeUpBtn: 'fadeUp 1.2s ease-in-out',
       dropdownList: 'slideDropdown .5s ease-in-out',
@@ -82,6 +84,23 @@ const config: Config = {
     },
 
     keyframes: {
+      stampActive: {
+        from: {
+          position: 'absolute',
+          opacity: '0',
+          transformOrigin: '50% 50%',
+          transform: 'rotate(-2deg) scale(5)',
+          transition: 'all .3s cubic-bezier(0.6, 0.04, 0.98, 0.335)'
+        },
+        to: {
+          opacity: '1',
+          transform: 'rotate(0deg) scale(1)'
+        }
+      },
+      scaleUp: {
+        '0%, 100%': { transform: 'scale(1)' },
+        '50%': { transform: 'scale(1.05)' }
+      },
       fadeUp: {
         from: { opacity: '0', transform: 'translateY(100%)' },
         to: { opacity: '1', transform: 'translateY(0)' }

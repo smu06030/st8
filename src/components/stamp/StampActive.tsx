@@ -57,7 +57,7 @@ const deleteStampList = async ({ address, userId }: { address: string; userId: s
 const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocation }: StampActivePropsType) => {
   const queryClient = useQueryClient();
   const userId = useUser();
-
+  console.log('address', address);
   //useMutation(삭제)
   const StampDeleteMutation = useMutation({
     mutationFn: deleteStampList,
@@ -78,7 +78,7 @@ const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocat
     if (userId) {
       StampAddMutation.mutate({ address, regionName, userId, location, aliasLocation });
       setVisit(true);
-      alert('스탬프가 찍혔습니다.');
+      // alert('스탬프가 찍혔습니다.');
     } else {
       console.error('유저아이디가 없습니다.');
       return;
@@ -98,31 +98,26 @@ const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocat
   console.log('stampList', stampList);
   const DefaultStamp = STAMPIMG_REGION_IMG[address.region_1depth_name];
   const ActiveStamp = STAMPIMG_REGION_ACTIVE_IMG[address.region_1depth_name];
-
+  const SealStamp = stampList?.map((stamp) => stamp.region === address.region_1depth_name);
   return (
     <div
       className={`flex ${!visit ? 'h-[100vh]' : 'h-[30%]'} items-center justify-center transition-transform duration-500 ${visit ? 'scale-75' : 'scale-100'}`}
     >
-      {stampList && stampList?.length > 0 ? (
-        stampList?.map((stamp) => {
-          if (stamp.region === address.region_1depth_name) {
-            return (
-              <Image
-                key={stamp.id}
-                className="opacity-100"
-                src={ActiveStamp}
-                alt={stamp.region}
-                width={200}
-                height={200}
-                onClick={() => onClickVisitedCencle(address.address_name)}
-              />
-            );
-          }
-          return null;
-        })
+      {stampList && stampList.length > 0 ? (
+        SealStamp && (
+          <Image
+            key={stampList[0].id}
+            className="animate-successStamp opacity-100"
+            src={ActiveStamp}
+            alt={stampList[0].region}
+            width={200}
+            height={200}
+            onClick={() => onClickVisitedCencle(address.address_name)}
+          />
+        )
       ) : (
         <Image
-          className="opacity-30"
+          className="animate-scaleStamp opacity-30"
           src={DefaultStamp}
           alt={address.region_1depth_name}
           width={200}
