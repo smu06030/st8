@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import LoginForm from '@/components/auth/LoginForm';
-import Header from '@/components/common/header/Header';
 
 export const metadata: Metadata = {
   title: '로그인',

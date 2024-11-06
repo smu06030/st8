@@ -1,15 +1,15 @@
 import Link from 'next/link';
 
 interface LinkButtonProps {
-  label: string;
+  text: string;
   href: string;
   className?: string;
 }
 
-const LinkButton: React.FC<LinkButtonProps> = ({ label, href, className }) => {
+const LinkButton = ({ text, href, className }: LinkButtonProps) => {
   return (
-    <Link href={href} className={`font-bold text-[14px] text-[#00688A] underline ${className || ''}`}>
-      {label}
+    <Link href={href} className={`text-sm font-semibold leading-snug text-secondary-800 underline ${className || ''}`}>
+      {text}
     </Link>
   );
 };

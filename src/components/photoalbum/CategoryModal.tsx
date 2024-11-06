@@ -1,5 +1,5 @@
 'use client';
-
+import React, { ReactPortal } from 'react';
 import { useState, Dispatch, SetStateAction } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Mousewheel } from 'swiper/modules';
@@ -9,11 +9,12 @@ import 'swiper/swiper-bundle.css';
 import 'swiper/css/mousewheel';
 
 interface CategoryNodalType {
+  Modal: ({ children }: { children: React.ReactNode }) => ReactPortal | null;
   setRegionCate: Dispatch<React.SetStateAction<string>>;
   onHandleUpload: (imgArr: string | string[]) => void;
 }
 
-const CategoryModal = ({ onHandleUpload, setRegionCate }: CategoryNodalType) => {
+const CategoryModal = ({ Modal, onHandleUpload, setRegionCate }: CategoryNodalType) => {
   const cate = [
     '서울',
     '경기',
@@ -50,8 +51,11 @@ const CategoryModal = ({ onHandleUpload, setRegionCate }: CategoryNodalType) => 
   };
 
   return (
-    <div className="fixed inset-0 z-10 flex items-center justify-center bg-[#363636] bg-opacity-50">
-      <div className="relative flex h-[65vh] w-[90%] flex-col rounded-[24px] bg-white px-[32px] py-[36px]">
+    <Modal>
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="modal-box flex h-[65vh] w-[90%] flex-col rounded-[24px] px-[32px] py-[36px]"
+      >
         <h2 className="font-semiBold text-[20px] leading-[26px]">
           이 사진에 어떤 장소의
           <br />
@@ -91,7 +95,7 @@ const CategoryModal = ({ onHandleUpload, setRegionCate }: CategoryNodalType) => 
           </label>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 };
 

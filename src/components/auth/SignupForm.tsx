@@ -18,18 +18,9 @@ const SignupForm = () => {
   const [formData, setFormData] = useState<FormData>({ nickname: '', email: '', password: '' });
   const router = useRouter();
 
-  // const handleNext = (data: Partial<FormData>) => {
-  //   setFormData((prev) => ({ ...prev, ...data }));
-  //   setStep(step + 1);
-  // };
-
   const handleNext = (data: Partial<FormData>) => {
     setFormData((prev) => ({ ...prev, ...data }));
-    if (step === 3) {
-      handleSignup();
-    } else {
-      setStep(step + 1);
-    }
+    setStep(step + 1);
   };
 
   const handleSignup = async () => {
@@ -45,7 +36,7 @@ const SignupForm = () => {
         alert(result.error);
       } else {
         alert('회원가입 성공!');
-        setStep(step + 1); // GoMainStep 페이지로 이동
+        router.push('/');
       }
     } catch (err) {
       alert('회원가입 중 오류가 발생했습니다.');
@@ -57,7 +48,7 @@ const SignupForm = () => {
       {step === 0 && <NicknameStep onNext={(nickname: string) => handleNext({ nickname })} />}
       {step === 1 && <EmailStep onNext={(email: string) => handleNext({ email })} />}
       {step === 2 && <PasswordStep onNext={(password: string) => handleNext({ password })} />}
-      {step === 3 && <GoMainStep onNext={() => router.push('/')} />}
+      {step === 3 && <GoMainStep onNext={() => handleSignup()} />}
     </div>
   );
 };

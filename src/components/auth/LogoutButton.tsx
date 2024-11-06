@@ -25,15 +25,15 @@ const LogoutButton = () => {
 
   return (
     <>
-      <button onClick={openLogoutModal} className="text-[14px] text-gray-500">
+      <button onClick={openLogoutModal} className="mt-[34px] text-sm text-gray-500">
         로그아웃
       </button>
       <Modal>
-        <div className="fixed inset-0 m-[18px] flex items-center justify-center">
-          <div className="w-full rounded-[12px] bg-white p-[32px]">
-            <p className="mb-4 text-[14px] font-semibold">정말 로그아웃 하시겠습니까?</p>
-            <div className="mt-4 flex w-full">
-              <Button label="로그아웃 하기" variant="blue" onClick={handleLogout} />
+        <div className="fixed inset-0 mx-[25px] flex items-center justify-center">
+          <div className="w-full max-w-[327px] rounded-3xl bg-white p-[32px]">
+            <p className="text-xl font-semibold leading-relaxed">정말 로그아웃 하시겠습니까?</p>
+            <div className="mt-[18px] flex w-full">
+              <Button text="로그아웃 하기" variant="blue" onClick={handleLogout} />
             </div>
           </div>
         </div>

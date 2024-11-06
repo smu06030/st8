@@ -1,15 +1,14 @@
 import React from 'react';
 
 interface ButtonProps {
-  label: string;
+  text: string;
   onClick?: () => void;
   variant?: 'gray' | 'blue' | 'yellow';
   disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, variant = 'gray', disabled = false }) => {
-  const baseStyles =
-    ' h-[64px] w-full rounded-[12px] p-[10px] font-semiBold text-[16px] transition-colors duration-300 ease-in-out';
+const Button = ({ text, onClick, variant = 'gray', disabled = false }: ButtonProps) => {
+  const baseStyles = 'h-16 w-full rounded-xl p-2.5 font-semiBold text-base transition-colors duration-300 ease-in-out';
 
   const variantStyles = {
     gray: 'bg-gray-100 text-gray-300 cursor-not-allowed',
@@ -24,7 +23,7 @@ const Button: React.FC<ButtonProps> = ({ label, onClick, variant = 'gray', disab
       onClick={onClick}
       disabled={variant === 'gray' || disabled}
     >
-      {label}
+      {text}
     </button>
   );
 };

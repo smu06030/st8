@@ -1,7 +1,6 @@
 'use client';
 import Link from 'next/link';
 import StampNum from './StampNum';
-import useUserNickname from '@/hooks/useUserNickname';
 import ReNickname from './ReNickname';
 import LogoutButton from '../auth/LogoutButton';
 import PhotoNum from './PhotoNum';

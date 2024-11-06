@@ -1,7 +1,6 @@
 import React from 'react';
 import StampList from '@/components/stamp/StampList';
 import { Metadata } from 'next';
-import Header from '@/components/common/header/Header';
 
 export const metadata: Metadata = {
   title: '스탬프',

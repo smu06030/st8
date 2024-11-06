@@ -5,7 +5,7 @@ interface PasswordCheckProps {
   password: string;
 }
 
-const PasswordCheck: React.FC<PasswordCheckProps> = ({ password = '' }) => {
+const PasswordCheck = ({ password = '' }: PasswordCheckProps) => {
   const hasNumber = /\d/.test(password);
   const hasLetter = /[A-Za-z]/.test(password);
   const isLongEnough = password.length >= 8;
