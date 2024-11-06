@@ -17,13 +17,14 @@ const Header = () => {
     { page: '마이페이지', link: '/mypage' },
     { page: '로그인', link: '/login' },
     { page: '회원가입', link: '/signup' },
-    { page: '비밀번호 찾기', link: '/forgot-password' }
+    { page: '비밀번호 찾기', link: '/forgot-password' },
+    { page: '찜한 여행지', link: '/book-mark' }
   ];
 
   if (!pageTitle) return null;
 
   return (
-    <header className="shadow-headerShadow fixed top-0 z-[100] h-[56px] w-full bg-white">
+    <header className="fixed top-0 z-[100] h-[56px] w-full bg-white shadow-headerShadow">
       <div className="flex items-center justify-between p-[12px]">
         <button onClick={goBack} className="text-gray-900">
           <Icon name="BackIcon" />

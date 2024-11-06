@@ -12,9 +12,10 @@ interface PlaceCardProps {
   description: string;
   contentid: string;
   title: string;
+  onRemoveBookmark?: () => void; // 북마크 해제 콜백 함수 추가
 }
 
-const PlaceCard: React.FC<PlaceCardProps> = ({ firstimage, description, contentid, title }) => {
+const PlaceCard: React.FC<PlaceCardProps> = ({ firstimage, description, contentid, title, onRemoveBookmark }) => {
   const [isBookmarked, setIsBookmarked] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const userId = useUser();
@@ -25,10 +26,8 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ firstimage, description, contenti
       setIsLoading(false);
       return;
     }
-    [];
 
     try {
-      // Supabase에서 북마크 존재 여부를 확인
       const bookmarkExists = await isBookmarkExists(userId, contentid);
       setIsBookmarked(bookmarkExists);
     } catch (error) {
@@ -55,6 +54,11 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ firstimage, description, contenti
       const bookmarkSuccess = await handleBookmarkClick(contentid, title, description);
       if (bookmarkSuccess) {
         setIsBookmarked((prev) => !prev);
+
+        // 북마크 해제가 성공적이고, 상위 컴포넌트에서 콜백이 전달된 경우
+        if (isBookmarked && onRemoveBookmark) {
+          onRemoveBookmark(); // 상위 컴포넌트에서 해당 항목을 제거하도록 요청
+        }
       }
     } catch (error) {
       console.error('북마크 처리 중 오류가 발생했습니다:', error);
@@ -63,16 +67,17 @@ const PlaceCard: React.FC<PlaceCardProps> = ({ firstimage, description, contenti
   };
 
   return (
-    <div className="relative h-[374px] w-[327px] min-w-[327px] cursor-pointer overflow-hidden rounded-[24px] bg-gray-800">
+    <div className="relative h-[374px] w-[327px] min-w-[327px] cursor-pointer overflow-hidden rounded-3xl bg-[#1d1d1d]/70">
       <Link href={`/tourism-detail/${contentid}`} passHref>
         <div className="absolute inset-0">
           <Image
-            src={firstimage ? firstimage : '/placeholder.png'} // firstimage가 null이거나 빈 값일 경우 대체 이미지 사용
-            alt={description || '이미지 설명 없음'} // description이 없을 경우 기본 텍스트
-            layout="fill" // 이미지를 컨테이너 크기에 맞게 조정
-            objectFit="cover" // 이미지가 잘리더라도 컨테이너에 맞추기
+            src={firstimage ? firstimage : '/placeholder.png'}
+            alt={description || '이미지 설명 없음'}
+            layout="fill"
+            objectFit="cover"
             className="rounded-[24px]"
           />
+          <div className="absolute inset-0 rounded-3xl bg-[#1d1d1d]/70"></div>
         </div>
       </Link>
       <button

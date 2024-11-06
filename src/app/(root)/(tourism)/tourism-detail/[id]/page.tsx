@@ -99,34 +99,46 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
     if (data?.mapX && data?.mapY && mapContainer.current) {
       // 카카오 지도 API 스크립트를 동적으로 추가
       const script = document.createElement('script');
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&autoload=false`;
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&autoload=false`;
       script.async = true;
 
+      // 스크립트 로드 완료 후 지도 초기화
       script.onload = () => {
-        const { kakao } = window as any;
-        kakao.maps.load(() => {
-          const mapOption = {
-            center: new kakao.maps.LatLng(data.mapY, data.mapX), // 좌표 설정
-            level: 3 // 지도 확대 레벨
-          };
+        if (typeof window.kakao !== 'undefined') {
+          window.kakao.maps.load(() => {
+            if (mapContainer.current) {
+              const mapOption = {
+                center: new window.kakao.maps.LatLng(data.mapY, data.mapX), // 좌표 설정
+                level: 3 // 지도 확대 레벨
+              };
 
-          // 지도 생성
-          const map = new kakao.maps.Map(mapContainer.current, mapOption);
+              // 지도 생성
+              const map = new window.kakao.maps.Map(mapContainer.current, mapOption);
 
-          // 마커 생성
-          const markerPosition = new kakao.maps.LatLng(data.mapY, data.mapX);
-          const marker = new kakao.maps.Marker({
-            position: markerPosition
+              // 마커 생성
+              const markerPosition = new window.kakao.maps.LatLng(data.mapY, data.mapX);
+              const marker = new window.kakao.maps.Marker({
+                position: markerPosition
+              });
+
+              marker.setMap(map);
+            }
           });
-
-          marker.setMap(map);
-        });
+        } else {
+          console.error('카카오 객체를 찾을 수 없습니다.');
+        }
       };
 
       document.head.appendChild(script);
+
+      // cleanup 함수로 스크립트 제거 (중복 추가 방지)
+      return () => {
+        if (script) {
+          document.head.removeChild(script);
+        }
+      };
     }
   }, [data?.mapX, data?.mapY]);
-
   const onBookmarkClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
 
@@ -159,9 +171,10 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
     <div className="min-h-screen p-4">
       {/* 상단 이미지 */}
       <div className="relative">
-        <div className="relative h-[375px] w-full overflow-hidden rounded-b-2xl">
-          <div className="absolute inset-0 bg-black opacity-50"></div>
+        <div className="relative h-[375px] w-[full] overflow-hidden rounded-bl-3xl rounded-br-3xl">
+          {/* 이미지 */}
           <Image src={data?.firstImage} alt="장소 사진" layout="fill" objectFit="cover" />
+          <div className="absolute inset-0 bg-black/50"></div>
         </div>
         <button
           onClick={onBookmarkClick}

@@ -27,7 +27,6 @@ const BookmarksPage: React.FC = () => {
 
     try {
       setIsLoading(true);
-      // Supabase에서 현재 사용자의 북마크와 관련된 관광지 데이터 가져오기
       const { data, error } = await browserClient
         .from('bookmark')
         .select(
@@ -62,6 +61,11 @@ const BookmarksPage: React.FC = () => {
     }
   };
 
+  // 북마크 해제 시 장소를 목록에서 제거하는 함수
+  const handleRemoveBookmark = (contentid: string) => {
+    setPlaces((prevPlaces) => prevPlaces.filter((place) => place.contentid !== contentid));
+  };
+
   // 페이지가 렌더링될 때 북마크 목록을 가져옵니다.
   useEffect(() => {
     fetchBookmarksWithDetails();
@@ -72,20 +76,26 @@ const BookmarksPage: React.FC = () => {
   }
 
   if (places.length === 0) {
-    return <p>북마크된 장소가 없습니다. 마음에 드는 장소를 북마크해보세요!</p>;
+    return <p>좋아하는 장소가 없습니다. 마음에 드는 장소를 북마크해보세요!</p>;
   }
 
   return (
-    <div className="flex flex-wrap justify-center gap-6 p-4">
-      {places.map((place) => (
-        <PlaceCard
-          key={place.contentid}
-          firstimage={place.firstimage}
-          description={place.text}
-          contentid={place.contentid}
-          title={place.title}
-        />
-      ))}
+    <div>
+      <div className="mb-6 ml-6 text-xl font-semibold leading-relaxed text-[#140f00]">
+        찜한 여행지 ({places.length}개)
+      </div>
+      <div className="flex flex-wrap justify-center gap-6 p-4">
+        {places.map((place) => (
+          <PlaceCard
+            key={place.contentid}
+            firstimage={place.firstimage}
+            description={place.text}
+            contentid={place.contentid}
+            title={place.title}
+            onRemoveBookmark={() => handleRemoveBookmark(place.contentid)}
+          />
+        ))}
+      </div>
     </div>
   );
 };
