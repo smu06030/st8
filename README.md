@@ -36,7 +36,7 @@
     <td align="center"><b>Frontend</b></td>
   </tr>
   <tr>
-      <td align="center"><img src="https://avatars.githubusercontent.com/kyulipark" width="100px" /></td>   
+      <td align="center"><img src="https://avatars.githubusercontent.com/songhyein0123" width="100px" /></td>   
     <td align="center"><img src="https://avatars.githubusercontent.com/lim-bora" width="100px" /></td>
     <td align="center"><img src="https://avatars.githubusercontent.com/smu06030" width="100px" /></td>
     <td align="center"><img src="https://avatars.githubusercontent.com/kyulipark" width="100px" /></td>
@@ -54,6 +54,12 @@
 ### 혜인
 
 추천 여행지 : 북마크
+
+- 관광지 목록 페이지: Supabase에서 자료를 불러와 사용자에게 다양한 관광지를 표시하는 페이지를 구성하였습니다. 데이터는 Tanstack Query를 사용하여 비동기적으로 불러오고, 사용자 경험을 향상시키기 위해 React Query의 캐싱 기능을 활용하여 페이지 로딩 속도를 최적화했습니다.
+
+- 관광지 디테일 페이지: 공공 API를 이용해 각 관광지의 상세 정보를 불러와 세부 정보를 제공하는 페이지를 구현하였습니다. Kakao Map API를 통합하여 사용자가 지도 상에서 해당 관광지의 위치를 시각적으로 확인할 수 있도록 하였으며, 북마크 기능을 추가하여 사용자가 관심 있는 관광지를 쉽게 저장하고 관리할 수 있도록 했습니다.
+
+- 찜한 목록(북마크) 페이지: 사용자가 북마크한 관광지를 관리하는 페이지를 제작하였습니다. Supabase를 통해 사용자별 북마크 데이터를 저장하고 불러오며, 사용자가 북마크 상태를 실시간으로 업데이트할 수 있도록 Tanstack Query의 invalidateQueries를 사용하여 최신 상태를 유지하도록 구성하였습니다.
 
 ### 보라
 
