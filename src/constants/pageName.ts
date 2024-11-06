@@ -8,18 +8,6 @@ export const PAGE_NAMES = {
   MYPAGE: { page: '마이페이지', link: '/mypage' },
   LOGIN: { page: '로그인', link: '/login' },
   SIGNUP: { page: '회원가입', link: '/signup' },
-  FORGOT_PASSWORD: { page: '비밀번호 찾기', link: '/forgot-password' }
-};
-
-export const PAGE_PATHS = {
-  HOME: '/',
-  STAMP_ALL: '/stamp-all',
-  PHOTO_ALBUM: '/photo-album',
-  TOURISM: '/tourism',
-  MY_PAGE: '/mypage',
-  LOGIN: '/login',
-  SIGN_UP: '/signup',
-  FORGOT_PASSWORD: '/forgot-password',
-  STAMP_MAP: '/stamp-map',
-  STAMP_TRACKING: '/stamp-tracking'
+  FORGOT_PASSWORD: { page: '비밀번호 찾기', link: '/forgot-password' },
+  BOOKMARK: { page: '찜한여행지', link: '/book-mark' }
 };
