@@ -6,7 +6,7 @@ const MainBackground = () => {
       viewBox="0 0 317 373"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="absolute -left-6 bottom-0"
+      className="absolute -bottom-14 -left-6"
     >
       <g opacity="0.2">
         <path
