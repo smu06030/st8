@@ -3,25 +3,26 @@ import React from 'react';
 import Icon from '@/components/common/Icons/Icon';
 import Link from 'next/link';
 import useNavActive from '@/hooks/useNavActive';
+import { PAGE_NAMES } from '@/constants/pageName';
 
 const Nav = () => {
   const { activePage, handleClick } = useNavActive();
   console.log('activePage', activePage);
   const navCategory = [
     {
-      page: '홈',
-      link: '/',
+      page: PAGE_NAMES.HOME.page,
+      link: PAGE_NAMES.HOME.link,
       icon: (() => {
         let color = '#B5B5B5';
-        if (activePage === '/') {
+        if (activePage === PAGE_NAMES.HOME.link) {
           color = '#00688A';
         }
         return React.cloneElement(<Icon name="HomeIcon" size={28} color={color} bgColor="transparent" />);
       })()
     },
     {
-      page: '앨범',
-      link: '/photo-album',
+      page: PAGE_NAMES.ALBUM.page,
+      link: PAGE_NAMES.ALBUM.link,
       icon: (() => {
         let color = '#B5B5B5';
         if (/^\/photo-album(\/.*)?$/.test(activePage)) {
@@ -31,12 +32,12 @@ const Nav = () => {
       })()
     },
     {
-      page: '스탬프',
-      link: '/stamp-all',
+      page: PAGE_NAMES.STAMP.page,
+      link: PAGE_NAMES.STAMP.link,
       icon: (() => {
         let bgColor = '#B5B5B5';
         let color = '#fff';
-        if (/^\/stamp-all(\/.*)?$/.test(activePage) || activePage === '/stamp-tracking') {
+        if (/^\/stamp-all(\/.*)?$/.test(activePage) || activePage === PAGE_NAMES.STAMP_TRACKING.link) {
           bgColor = '#00688A';
           color = '#fff';
         }
@@ -47,22 +48,22 @@ const Nav = () => {
       })()
     },
     {
-      page: '추천 여행지',
-      link: '/tourism',
+      page: PAGE_NAMES.TOURISM.page,
+      link: PAGE_NAMES.TOURISM.link,
       icon: (() => {
         let color = '#B5B5B5';
-        if (activePage === '/tourism' || activePage === '/tourism-detail') {
+        if (activePage === PAGE_NAMES.TOURISM.link || activePage === '/tourism-detail') {
           color = '#00688A';
         }
         return React.cloneElement(<Icon name="MapIcon" size={28} color={color} bgColor="transparent" />);
       })()
     },
     {
-      page: '마이페이지',
-      link: '/mypage',
+      page: PAGE_NAMES.MYPAGE.page,
+      link: PAGE_NAMES.MYPAGE.link,
       icon: (() => {
         let color = '#B5B5B5';
-        if (activePage === '/mypage') {
+        if (activePage === PAGE_NAMES.MYPAGE.link) {
           color = '#00688A';
         }
         return React.cloneElement(<Icon name="UserIcon" size={28} color={color} bgColor="transparent" />);

@@ -33,6 +33,8 @@ const useHeaderActive = () => {
       setPageTitle(PAGE_NAMES.MAP.page);
     } else if (currentPath.startsWith(PAGE_NAMES.STAMP_TRACKING.link)) {
       setPageTitle(PAGE_NAMES.STAMP_TRACKING.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.BOOKMARK.link)) {
+      setPageTitle(PAGE_NAMES.BOOKMARK.page);
     } else {
       setPageTitle(''); // 정의되지 않은 페이지는 빈 제목
     }
