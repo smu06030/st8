@@ -7,6 +7,7 @@ import { PAGE_NAMES } from '@/constants/pageName';
 
 const Nav = () => {
   const { activePage, handleClick } = useNavActive();
+
   console.log('activePage', activePage);
   const navCategory = [
     {

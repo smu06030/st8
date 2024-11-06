@@ -6,7 +6,6 @@ import { useSocialLogin } from '@/hooks/useSocialLogin';
 import { login } from '@/utils/supabase/auth';
 import Button from '@/components/common/Buttons/Button';
 import LinkButton from '@/components/common/Buttons/LinkButton';
-
 import Icon from '@/components/common/Icons/Icon';
 import { useState } from 'react';
 import Image from 'next/image';
@@ -20,7 +19,6 @@ interface LoginFormInputs {
 const LoginForm = () => {
   const { loginWithProvider } = useSocialLogin(); // 소셜 로그인 훅
   const {
-    register,
     handleSubmit,
     setValue,
     formState: { errors },
@@ -111,7 +109,7 @@ const LoginForm = () => {
           </div>
         )}
 
-        <div className="mx-auto flex w-full max-w-md justify-between px-8">
+        <div className="mx-auto !mt-[66px] flex w-full max-w-md justify-between px-8">
           <label className="flex items-center text-gray-700">
             <input type="checkbox" className="mr-2 text-[14px]" />
             자동 로그인
@@ -128,7 +126,7 @@ const LoginForm = () => {
           onClick={handleSubmit(onHandleLogin)}
         />
 
-        <div className="flex justify-center space-x-[16px]">
+        <div className="!mt-[48px] flex justify-center space-x-[16px]">
           <button
             onClick={() => loginWithProvider('google')}
             className="shadow-md h-[50px] w-[50px] rounded-full bg-white p-1"
@@ -151,7 +149,7 @@ const LoginForm = () => {
           </button>
         </div>
 
-        <div className="mb-4 flex items-center justify-center space-x-2">
+        <div className="!mt-[210px] mb-4 flex items-center justify-center space-x-2">
           <span className="text-[14px] text-gray-600">아직 회원이 아니신가요?</span>
           <LinkButton text="회원가입" href="/signup" />
         </div>

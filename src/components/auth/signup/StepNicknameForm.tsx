@@ -28,7 +28,6 @@ const NicknameStep = ({ onNext }: NicknameStepProps) => {
       <span className="mb-6 w-full text-left font-bold text-[32px] text-secondary-700">
         모아에게 <br /> 이름을 알려주세요.
       </span>
-
       <InputField
         iconName="UserIcon"
         text="이름"

@@ -3,9 +3,9 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '../common/Buttons/Button';
-import CameraIcon from './LandingIcons/CameraIcon';
-import CompassIcon from './LandingIcons/CompassIcon';
-import ArrowIcon from './LandingIcons/ArrowIcon';
+import CameraIcon from '../common/Icons/LandingIcons/CameraIcon';
+import CompassIcon from '../common/Icons/LandingIcons/CompassIcon';
+import ArrowIcon from '../common/Icons/LandingIcons/ArrowIcon';
 
 const LandingPage = () => {
   const router = useRouter();
@@ -15,22 +15,22 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b flex min-h-screen flex-col items-center justify-between from-blue-100 to-white">
+    <div className="relative flex min-h-[calc(100vh-8rem)] flex-col items-center justify-between overflow-hidden">
       {/* 아이콘 영역 */}
-      <div className="relative flex w-full flex-grow items-center justify-center">
-        <div className="absolute left-[-10%] top-[50%]">
+      <div className="flex w-full flex-grow items-center justify-center">
+        <div className="absolute h-[30%]">
           <CameraIcon />
         </div>
-        <div className="absolute right-[-10%] top-[30%]">
+        <div className="absolute h-[50%]">
           <CompassIcon />
         </div>
-        <div className="absolute left-[10%] top-[30%] rotate-[-15deg] transform">
+        <div className="absolute h-[60%]">
           <ArrowIcon />
         </div>
       </div>
 
       {/* 여행 떠나기 버튼 */}
-      <div className="mb-10 w-full px-6">
+      <div className="mb-[50px] flex w-full flex-col items-center justify-center px-6">
         <Button text="여행 떠나기" variant="blue" onClick={goToLogin} />
       </div>
     </div>

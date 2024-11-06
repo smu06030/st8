@@ -12,7 +12,7 @@ const LogoutButton = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      closeModal(); // 로그아웃 후 모달 닫기
+      closeModal();
       router.push('/landing'); // 로그아웃 후 landing 페이지로 이동
     } catch (error) {
       alert('로그아웃 중 오류가 발생했습니다: ');

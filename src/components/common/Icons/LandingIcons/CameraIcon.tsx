@@ -1,7 +1,12 @@
-import React from 'react';
-
 const CameraIcon = () => (
-  <svg width="310" height="310" viewBox="0 0 310 310" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="310"
+    height="310"
+    viewBox="0 0 310 310"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="absolute right-[-10%] animate-bounceLoading"
+  >
     <path
       d="M250 70.676L157.192 27.4976C124.575 12.3224 85.8309 26.4623 70.6557 59.0799L27.4774 151.888C12.3022 184.505 26.442 223.249 59.0597 238.424L151.867 281.603C184.485 296.778 223.229 282.638 238.404 250.02L281.582 157.213C296.757 124.595 282.618 85.8512 250 70.676Z"
       fill="#00688A"

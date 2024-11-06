@@ -1,5 +1,4 @@
 import { useRouter } from 'next/navigation';
-// import supabase from '@/utils/supabase/client';
 import browserClient from '@/utils/supabase/client';
 
 const getRedirectUrl = () => {
