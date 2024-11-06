@@ -7,5 +7,6 @@ export const QUERY_KEY = {
   BOOKMARKS: (userId: string) => ['bookmarks', userId],
   SEARCH_RESULTS: (query: string) => ['searchResults', query],
   AREAS: ['areas'],
-  RECOMMENDED_PLACES: (userId: string) => ['recommendedPlaces', userId]
+  RECOMMENDED_PLACES: (userId: string) => ['recommendedPlaces', userId],
+  NOWLOCATION_STAMP: ['nowStamp']
 };
