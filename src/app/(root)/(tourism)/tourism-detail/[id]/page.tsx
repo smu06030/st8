@@ -174,11 +174,11 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
       <div className="relative">
         <div className="relative h-[375px] w-[full] overflow-hidden rounded-bl-3xl rounded-br-3xl">
           <Image src={data?.firstImage} alt="장소 사진" layout="fill" objectFit="cover" />
-          <div className="absolute inset-0 bg-[#1d1d1d]/70"></div>
+          <div className="absolute inset-0 bg-black/50"></div>
         </div>
         <button
           onClick={onBookmarkClick}
-          className="absolute bottom-4 right-4 z-20 flex h-14 w-14 items-center justify-center rounded-full bg-[#4e4e4e]/30"
+          className="absolute bottom-4 right-4 z-20 flex h-14 w-14 items-center justify-center rounded-full bg-black bg-opacity-50"
         >
           <Icon name="BookMarkIcon2" size={54} color={isBookmarked ? '#FFD700' : '#FFFFFF'} />
         </button>

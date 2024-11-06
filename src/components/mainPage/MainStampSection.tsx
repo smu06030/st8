@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
 import { createClient } from '@/utils/supabase/server';
-import { fetchStampActive } from '@/serverActions/fetchStampActions';
+import { fetchActiveStamp } from '@/serverActions/fetchStampActions';
 import Image from 'next/image';
 
 const MainStampSection = async () => {
@@ -11,7 +11,7 @@ const MainStampSection = async () => {
 
   let stampList = null;
   if (data?.user) {
-    stampList = await fetchStampActive(data.user.id);
+    stampList = await fetchActiveStamp(data.user.id);
   }
 
   return (

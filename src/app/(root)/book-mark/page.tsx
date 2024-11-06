@@ -7,7 +7,6 @@ import useUser from '@/hooks/useUser';
 import LoadingBounce from '@/components/common/Loading/Loading';
 import updateBookmarkStatus from '@/components/tourism/updateBookmark';
 import { useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEY } from '@/queries/query.keys';
 
 interface Place {
   contentid: string;
@@ -74,7 +73,7 @@ const BookmarksPage: React.FC = () => {
     try {
       await updateBookmarkStatus(contentid, userId, true, '', '', false);
       queryClient.invalidateQueries();
-      fetchBookmarksWithDetails(); // 북마크 상태가 변경될 때 목록을 다시 가져옴
+      fetchBookmarksWithDetails();
     } catch (error) {
       console.error('북마크 해제 중 오류가 발생했습니다:', error);
     }

@@ -1,6 +1,6 @@
 'use server';
 
-import browserClient from '@/utils/supabase/client';
+import { createClient } from '@/utils/supabase/server';
 
 export interface Place {
   firstimage: string | null;
@@ -10,16 +10,15 @@ export interface Place {
   supabaseText: string | null;
   citytitle: string | null;
   citydetail: string | null;
-  isBookmarked: boolean; // 북마크 상태 추가
+  isBookmarked: boolean;
 }
 
 // 데이터 호출 함수 (북마크 상태 추가)
-export const fetchPlaceData = async (userId: string, page: number = 1, limit: number = 50): Promise<Place[]> => {
-  try {
-    const start = (page - 1) * limit;
-    const end = start + limit - 1;
+export const fetchPlaceData = async (userId: string): Promise<Place[]> => {
+  const serverClient = createClient();
 
-    const { data: supabaseData, error } = await browserClient
+  try {
+    const { data: supabaseData, error } = await serverClient
       .from('tourlist')
       .select(
         `
@@ -33,7 +32,6 @@ export const fetchPlaceData = async (userId: string, page: number = 1, limit: nu
         bookmark!left (choose)
       `
       )
-      .range(start, end)
       .eq('bookmark.user_id', userId); // 특정 사용자의 북마크 상태만 가져오기
 
     if (error) {
@@ -55,7 +53,10 @@ export const fetchPlaceData = async (userId: string, page: number = 1, limit: nu
       supabaseText: item.text ?? null,
       citytitle: item.citytitle ?? null,
       citydetail: item.citydetail ?? null,
-      isBookmarked: item.bookmark ? item.bookmark.some((bookmark: any) => bookmark.choose === true) : false // 북마크 상태 확인
+      isBookmarked:
+        item.bookmark && Array.isArray(item.bookmark)
+          ? item.bookmark.some((bookmark: any) => bookmark.choose === true)
+          : false // 북마크 상태 확인
     }));
   } catch (e) {
     console.error('데이터 요청 중 예외 발생:', e);

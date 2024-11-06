@@ -3,9 +3,16 @@ import Icon from '../common/Icons/Icon';
 import { Place, fetchPlaceData } from '@/serverActions/fetchPlacesAction';
 
 import TouristSwiper from './TouristSwiper';
+import { createClient } from '@/utils/supabase/server';
 
 const MainRecommendSection = async () => {
-  const places: Place[] = await fetchPlaceData();
+  const serverClient = createClient();
+  const { data } = await serverClient.auth.getUser();
+  const user = data.user;
+  if (!user) {
+    return <p>로그인이 필요한 서비스입니다.</p>;
+  }
+  const places: Place[] = await fetchPlaceData(user.id);
 
   return (
     <section className="mt-[58px]">
