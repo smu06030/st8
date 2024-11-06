@@ -6,13 +6,15 @@ import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
 import browserClient from '@/utils/supabase/client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchUser } from '@/utils/fetchUser';
-import { fetchStampList } from '@/apis/fetchStampList';
+// import { fetchUser } from '@/utils/fetchUser';
+import useUser from '@/hooks/useUser';
+// import { fetchStampList } from '@/apis/fetchStampList';
 import Link from 'next/link';
 import Icon from '@/components/common/Icons/Icon';
 import Loading from '@/app/(root)/(stamp)/loading';
 import useModal from '@/hooks/useModal';
 import AliasCheckModal from '../common/Modal/AliasCheckModal';
+import useQuerys from '@/queries/useQuerys';
 
 interface LocationType {
   lat: number;
@@ -20,39 +22,30 @@ interface LocationType {
 }
 
 const MyLocation = () => {
+  const userId = useUser();
   const queryClient = useQueryClient();
-  const [userId, setUserId] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null); //에러상태
-  const [address, setAddress] = useState<AddressPropsType>(); //현재주소
+  // const [error, setError] = useState<string | null>(null); //에러상태
+  const [address, setAddress] = useState<AddressPropsType | null>(); //현재주소
   const [visit, setVisit] = useState<boolean>(false); //방문상태
   const [location, setLocation] = useState<LocationType>({ lat: 0, lng: 0 });
   const [parentFocused, setParentFocused] = useState(false);
   const [aliasLocation, setAliasLocation] = useState<string | null>(null); //장소별칭
   const { openModal, Modal, isOpen } = useModal();
+  const { data: stampList, isLoading, isError } = useQuerys.useGetLocationStampActive(address?.address_name, userId);
 
-  //로그인유저아이디 패치불러오기
-  useEffect(() => {
-    const checkUser = async () => {
-      const user = await fetchUser();
-      if (!user) return;
-      else setUserId(user);
-    };
-    checkUser();
-  }, []);
-
-  const {
-    data: stampList,
-    isLoading,
-    error: stampListError
-  } = useQuery({
-    queryKey: ['nowStamp', address?.address_name], //고유키값
-    queryFn: async () => {
-      if (address && address.address_name) {
-        return await fetchStampList(address.address_name!);
-      } else return null;
-    }, // 주소를 인자로 넘김
-    enabled: !!userId
-  });
+  // const {
+  //   data: stampList,
+  //   isLoading,
+  //   isError
+  // } = useQuery({
+  //   queryKey: ['nowStamp', address?.address_name], //고유키값
+  //   queryFn: async () => {
+  //     if (address && address.address_name) {
+  //       return await fetchStampList(address.address_name!);
+  //     } else return null;
+  //   }, // 주소를 인자로 넘김
+  //   enabled: !!userId
+  // });
 
   useEffect(() => {
     if (stampList && stampList.length > 0) {
@@ -80,7 +73,6 @@ const MyLocation = () => {
   const onClickAliasAdd = (alias: string) => {
     if (userId) {
       AliasAddMutation.mutate(alias);
-      // console.log('별명찍힘', alias);
     } else {
       console.error('유저아이디가 없습니다.');
       return;
@@ -111,7 +103,7 @@ const MyLocation = () => {
         });
       }
     } catch (error) {
-      setError('주소를 가져오는 중 오류가 발생했습니다.');
+      console.log('주소를 가져오는 중 오류가 발생했습니다.', error);
     }
   };
 
@@ -123,10 +115,11 @@ const MyLocation = () => {
         async (position) => {
           const { latitude, longitude } = position.coords;
           setLocation({ lat: latitude, lng: longitude });
-          await getAddress(latitude, longitude); //위도경도 인자로 넘기기
+          await getAddress(latitude, longitude);
         },
         (err) => {
-          showErrorMsg(err.message, setError);
+          console.log('오류가 발생했습니다.', err.message);
+          // showErrorMsg(err.message, setError);
         },
         {
           enableHighAccuracy: true, // 정확도 우선 모드
@@ -135,22 +128,16 @@ const MyLocation = () => {
         }
       );
     } else {
-      setError('브라우저가 Geolocation을 지원하지 않습니다.');
+      console.log('오류가 발생했습니다.', isError);
     }
   }, []);
 
   if (isLoading)
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
-  if (stampListError)
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
+    <div>
+      <Loading />
+    </div>;
+
+  // if (isError) return console.log('error', isError);
 
   return (
     <div className="flex flex-col px-[24px] py-[36px]" style={{ height: 'calc(100vh - 64px)' }}>
@@ -167,7 +154,7 @@ const MyLocation = () => {
           />
         </>
       ) : (
-        <div>{error ? `Error: ${error}` : <Loading />}</div>
+        <div>{isError ? `Error: ${isError}` : <Loading />}</div>
       )}
       {visit && (
         <div className="mt-[36px] flex flex-1 flex-col justify-between">

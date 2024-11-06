@@ -1,4 +1,4 @@
-import { fetchStampActive } from '@/serverActions/fetchStampActions';
+import { fetchStampActive, fetchLocationStamp } from '@/serverActions/fetchStampActions';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY } from './query.keys';
 
@@ -12,8 +12,29 @@ const useGetStampActive = (userId: string) => {
   });
 };
 
+// 사용자의 스템프 항목 중 현재위치 주소가 일치하는 데이터 가져오기
+const useGetLocationStampActive = (address: string | undefined, userId: string) => {
+  return useQuery({
+    queryKey: ['nowStamp', address],
+    queryFn: async () => {
+      if (address) {
+        return await fetchLocationStamp(address, userId);
+      } else return null;
+    },
+    enabled: !!userId
+  });
+};
+
 const useQuerys = {
-  useGetStampActive
+  useGetStampActive,
+  useGetLocationStampActive
 };
 
 export default useQuerys;
+
+// queryKey: ['nowStamp', address?.address_name],
+// queryFn: async () => {
+//    if (address && address.address_name) {
+//      return await fetchLocationStamp(address.address_name,userId);
+//    } else return null;
+//  }, // 주소를 인자로 넘김

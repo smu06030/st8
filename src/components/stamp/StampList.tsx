@@ -3,22 +3,15 @@
 import React, { useEffect, useState } from 'react';
 import StampItem from '@/components/stamp/StampItem';
 import { useQuery } from '@tanstack/react-query';
-import { fetchUser } from '@/utils/fetchUser';
+// import { fetchUser } from '@/utils/fetchUser';
+import useUser from '@/hooks/useUser';
 import { fetchStampActive } from '@/apis/fetchStampList';
 import Image from 'next/image';
 import { DEFAULT_REGION_ITEM } from '@/constants/regions';
 
 const StampList: React.FC = (): React.JSX.Element => {
-  const [userId, setUserId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const checkUser = async () => {
-      const user = await fetchUser();
-      if (!user) return;
-      else setUserId(user);
-    };
-    checkUser();
-  }, []);
+  // const [userId, setUserId] = useState<string | null>(null);
+  const userId = useUser();
 
   const {
     //스탬프 방문한거 전체데이터
@@ -26,7 +19,7 @@ const StampList: React.FC = (): React.JSX.Element => {
     isLoading,
     error
   } = useQuery({
-    queryKey: ['stamp'], //고유키
+    queryKey: ['stamp'],
     queryFn: async () => {
       if (userId) {
         return await fetchStampActive(userId);
@@ -34,7 +27,7 @@ const StampList: React.FC = (): React.JSX.Element => {
         return [];
       }
     },
-    enabled: !!userId // userId가 있을 때만 쿼리 실행
+    enabled: !!userId
   });
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>로드실패</div>;
@@ -43,8 +36,6 @@ const StampList: React.FC = (): React.JSX.Element => {
   const groupTrueRegion = [...new Set(stampList?.map((item) => item.region))]; //갖고있는스탬프 지역이름
   const stampInActive = DEFAULT_REGION_ITEM.filter((item) => !groupTrueRegion.includes(item)); //비활성화 지역
 
-  // console.log('stampInActive', stampInActive);
-  // console.log('groupTrueRegion', groupTrueRegion);
   return (
     <ul className="grid grid-cols-2 gap-[15px] py-[42px]">
       {groupTrueRegion?.map((list) => <StampItem key={list} list={list} stampList={stampList} />)}
@@ -60,7 +51,3 @@ const StampList: React.FC = (): React.JSX.Element => {
 };
 
 export default StampList;
-
-/**
-그냥 다 나열하고 있는것만 오파시티할까..
- */

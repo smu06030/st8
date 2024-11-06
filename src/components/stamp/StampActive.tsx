@@ -4,10 +4,9 @@ import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
 import browserClient from '@/utils/supabase/client';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
-import { fetchUser } from '@/utils/fetchUser';
-
+// import { fetchUser } from '@/utils/fetchUser';
+import useUser from '@/hooks/useUser';
 import { STAMPIMG_REGION_NAME } from '@/components/stamp/StampImg'; //이미지
-// import { fetchStampList } from '@/apis/fetchStampList'; //로그인유저의 스템프 항목 가져오기
 import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 
 interface StampActivePropsType {
@@ -15,7 +14,7 @@ interface StampActivePropsType {
   setVisit: Dispatch<SetStateAction<boolean>>;
   visit: boolean;
   location: { lat: number; lng: number };
-  stampList: any[] | null | undefined; //TODO: any 추후수정
+  stampList: any[] | null | undefined;
   aliasLocation: string | null;
 }
 
@@ -56,16 +55,7 @@ const deleteStampList = async ({ address, userId }: { address: string; userId: s
 
 const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocation }: StampActivePropsType) => {
   const queryClient = useQueryClient();
-  const [userId, setUserId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const checkUser = async () => {
-      const user = await fetchUser();
-      if (!user) return;
-      else setUserId(user);
-    };
-    checkUser();
-  }, []);
+  const userId = useUser();
 
   //useMutation(삭제)
   const StampDeleteMutation = useMutation({

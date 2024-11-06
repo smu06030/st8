@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { fetchUser } from '@/utils/fetchUser';
+import useUser from '@/hooks/useUser';
+// import { fetchUser } from '@/utils/fetchUser';
 import { fetchStampActive } from '@/apis/fetchStampList';
 import Loading from '@/app/(root)/(stamp)/loading';
 import Icon from '@/components/common/Icons/Icon';
@@ -18,22 +19,12 @@ interface StampDetailPropsType {
 }
 
 const StampItemDetail = () => {
+  const userId = useUser();
   const params = useParams();
   const region = decodeURIComponent((params.id as string[]).toString());
   const [stampData, setStampData] = useState<StampDetailPropsType[]>([]);
-  const [userId, setUserId] = useState<string | null>(null);
   const { isOpen, toggleDropdown, dropdownRef } = useDropdoun();
 
-  // console.log('userId', userId);
-  useEffect(() => {
-    const checkUser = async () => {
-      const user = await fetchUser();
-      if (!user) return;
-      else setUserId(user);
-    };
-    checkUser();
-  }, []);
-  // console.log('params', params);
   useEffect(() => {
     if (userId) {
       const fetchData = async () => {
@@ -49,7 +40,6 @@ const StampItemDetail = () => {
       fetchData();
     }
   }, [params.id, userId]);
-  // console.log('stampData', stampData);
 
   // 가장 오래된 날짜 구하기
   const oldestDate = stampData.reduce((oldest, current) => {
@@ -116,7 +106,7 @@ const StampItemDetail = () => {
           </button>
         </div>
         {isOpen && (
-          <ul className="flex animate-dropdownList flex-col gap-[12px] transition-all duration-300">
+          <ul className="animate-dropdownList flex flex-col gap-[12px] transition-all duration-300">
             {stampData.map((list) => (
               <li
                 key={list.id}
@@ -156,8 +146,3 @@ const StampItemDetail = () => {
 };
 
 export default StampItemDetail;
-
-/**
- ! : null이 아님을 보증
- as 타입 : 타입단언(특정타입임을 명시적으로 알려줌->확신하기애매할때)
- */
