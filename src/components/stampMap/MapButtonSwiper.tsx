@@ -9,7 +9,7 @@ import 'swiper/css/pagination';
 import useKakaoMap from '@/hooks/useKakaoMap';
 import Icon from '../common/Icons/Icon';
 
-const ScrollButtonSwiper = () => {
+const MapButtonSwiper = () => {
   const { activeIndex, siDoName, onSlideChangeHandler } = useKakaoMap();
   const swiperRef = useRef<any>(null); // Swiper 인스턴스 참조
 
@@ -48,4 +48,4 @@ const ScrollButtonSwiper = () => {
   );
 };
 
-export default ScrollButtonSwiper;
+export default MapButtonSwiper;

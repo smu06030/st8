@@ -48,30 +48,26 @@ const PlaceCard: React.FC<PlaceCardProps> = ({
   };
 
   return (
-    <div className="relative h-[374px] w-[327px] min-w-[327px] cursor-pointer overflow-hidden rounded-3xl bg-[#1d1d1d]/70">
+    <div className="relative h-[374px] w-[100%] overflow-hidden rounded-3xl bg-[#1d1d1d]/70">
       <Link href={`/tourism-detail/${contentid}`} passHref>
-        <div className="absolute inset-0">
-          <Image
-            src={firstimage ? firstimage : '/placeholder.png'}
-            alt={description || '이미지 설명 없음'}
-            layout="fill"
-            objectFit="cover"
-            className="rounded-[24px]"
-          />
-          <div className="absolute inset-0 rounded-3xl bg-[#1d1d1d]/70"></div>
-        </div>
+        <Image
+          src={firstimage ? firstimage : '/placeholder.png'}
+          fill
+          priority
+          alt={description || '이미지 설명 없음'}
+          style={{ objectFit: 'cover' }}
+        />
+        <div className="absolute inset-0 rounded-3xl bg-[#1d1d1d]/70"></div>
       </Link>
       <button
         onClick={onBookmarkClick}
-        className={`absolute right-4 top-4 z-20 ${isBookmarked ? 'text-yellow-500' : 'text-gray-500'}`}
+        className={`absolute right-[18px] top-5 z-20 flex h-14 w-14 items-center justify-center rounded-full ${isBookmarked ? 'text-yellow-500' : 'text-gray-500'} bg-[#4e4e4e]/60`}
       >
-        <Icon name="BookMarkIcon2" size={64} bgColor="#4e4e4e" rx="32" color={isBookmarked ? '#FFD700' : '#808080'} />
+        <Icon name="BookMarkIcon2" size={64} color={isBookmarked ? '#FFD700' : 'white'} />
       </button>
-      <div className="absolute bottom-[42px] left-[36px] flex h-[90px] w-[204px] flex-col justify-end text-left text-white">
+      <div className="absolute bottom-[42px] left-[36px] right-[36px] flex flex-col justify-end text-left text-white">
         <Link href={`/tourism-detail/${contentid}`} passHref>
-          <h3 className="text-xl font-semibold leading-tight">
-            {description}, {title}
-          </h3>
+          <p className="break-keep text-xl font-semibold leading-[31.20px]">{description}</p>
         </Link>
       </div>
     </div>

@@ -1,4 +1,4 @@
-'use client';
+'use server';
 
 import browserClient from '@/utils/supabase/client';
 

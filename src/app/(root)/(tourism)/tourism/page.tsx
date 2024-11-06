@@ -16,8 +16,8 @@ const RecommendedPlaces = () => {
     isLoading,
     isError
   } = useQuery({
-    queryKey: [QUERY_KEY.PLACES, userId], // userId를 쿼리 키에 포함하여 캐싱
-    queryFn: () => fetchPlaceData(userId) // userId를 fetchPlaceData에 전달
+    queryKey: [QUERY_KEY.PLACES, userId],
+    queryFn: () => fetchPlaceData(userId)
   });
 
   if (isLoading) {
