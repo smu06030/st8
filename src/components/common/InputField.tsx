@@ -1,72 +1,83 @@
-import React, { useState } from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react';
+import Icon from '@/components/common/Icons/Icon';
 
 interface InputFieldProps {
-  label: string;
   placeholder: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: () => void;
+  status: 'default' | 'active' | 'done';
+  iconName: 'MailIcon' | 'UserIcon' | 'LockIcon' | 'LocationIcon' | 'Eye2Icon' | 'EyeIcon';
+  text?: string;
   type?: string;
-  icon?: React.ReactNode; // 좌측 아이콘
-  rightIcon?: React.ReactNode; // 우측 아이콘
-  register?: UseFormRegisterReturn; // register 타입을 prop으로 추가
+  rightIcon?: ReactNode;
 }
 
-const InputField: React.FC<InputFieldProps> = ({ label, placeholder, type = 'text', icon, rightIcon, register }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [isFilled, setIsFilled] = useState(false);
+function InputField({
+  placeholder,
+  value,
+  onChange,
+  onBlur,
+  status,
+  iconName,
+  text,
+  type = 'text',
+  rightIcon
+}: InputFieldProps) {
+  const [currentStatus, setCurrentStatus] = useState(status);
 
-  const handleFocus = () => setIsFocused(true);
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    setIsFocused(false);
-    setIsFilled(!!e.target.value); // 입력값이 있는 경우 isFilled를 true로 설정
+  // 상태별 스타일 정의
+  const styles = {
+    default: {
+      border: 'border-gray-300',
+      iconColor: '#9C9C9C',
+      textColor: 'text-gray-400'
+    },
+    active: {
+      border: 'border-secondary-800',
+      iconColor: '#00688A',
+      textColor: 'text-secondary-800'
+    },
+    done: {
+      border: 'border-green-900',
+      iconColor: '#1D1D1D',
+      textColor: 'text-green-900'
+    }
   };
 
-  const inputColorClasses = isFocused
-    ? 'border-secondary-800 text-secondary-800 placeholder-secondary-800' // 포커스 상태
-    : isFilled
-      ? 'border-gray-300 text-gray-900 placeholder-gray-900' // 입력 완료
-      : 'border-gray-300 text-gray-400 placeholder-gray-400'; // 초기 상태
+  // value 값에 따라 상태를 동적으로 설정
+  useEffect(() => {
+    if (!value) {
+      setCurrentStatus('default');
+    } else if (status === 'done') {
+      setCurrentStatus('done');
+    } else {
+      setCurrentStatus('active');
+    }
+  }, [value, status]);
 
-  const iconColor = isFocused
-    ? 'secondary-800' // 포커스 상태
-    : isFilled
-      ? 'gray-900' // 입력 완료
-      : 'gray-300'; // 초기 상태
+  const currentStyle = styles[currentStatus];
+  // console.log('Current status:', currentStatus);
 
   return (
-    <div className="flex w-full flex-col">
-      <label className="mb-[8px] px-[6px] text-[16px] text-gray-900">{label}</label>
-      <div
-        className={`flex h-[60px] items-center rounded-[12px] border bg-transparent px-[16px] py-[10px] text-[14px] ${inputColorClasses} transition-colors duration-300 ease-in-out`}
+    <div className="flex flex-col space-y-1">
+      {text && <label className="text-base font-normal text-gray-900">{text}</label>}
+      <span
+        className={`flex items-center gap-1.5 rounded-xl border ${currentStyle.border} px-4 py-2.5 transition-colors duration-300 ease-in-out`}
       >
-        {icon && (
-          <div className="mr-2" style={{ color: iconColor }}>
-            {icon}
-          </div>
-        )}
-
-        {/* {iconName && (
-          <div className="mr-2">
-            <Icon name={iconName} color={iconColor} />
-          </div>
-        )} */}
-        {/* icon이라는 props대신 iconName이라는 props를 받게 바뀌고 icon && 이아니라 iconName && 있을때 */}
-
+        <Icon name={iconName} color={currentStyle.iconColor} />
         <input
           type={type}
           placeholder={placeholder}
-          className="flex-1 bg-transparent outline-none"
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          {...register} // register를 input에 연결
+          className={`w-[235px] bg-transparent text-sm font-normal text-[#004156] ${currentStyle.textColor}`}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
         />
-        {rightIcon && (
-          <div className="ml-2 cursor-pointer" style={{ color: iconColor }}>
-            {rightIcon}
-          </div>
-        )}
-      </div>
+        {rightIcon && <div className="ml-2">{rightIcon}</div>}
+      </span>
     </div>
   );
-};
+}
 
 export default InputField;

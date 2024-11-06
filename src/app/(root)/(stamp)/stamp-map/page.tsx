@@ -1,4 +1,3 @@
-import Header from '@/components/common/header/Header';
 import KakaoMap from '@/components/stampMap/KakaoMap';
 import { MapProvider } from '@/providers/mapStoreProvider';
 import { QUERY_KEY } from '@/queries/query.keys';
