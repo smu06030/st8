@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <body
-        className={`bg-backgroundGradient bg-no-repeat font-regular ${geistSans.variable} ${geistMono.variable} body-padding antialiased`}
+        className={`bg-backgroundGradient bg-no-repeat font-regular ${geistSans.variable} ${geistMono.variable} ${!showSplash ? 'body-padding' : ''} antialiased`}
       >
         {showSplash ? (
           <SplashPage />
