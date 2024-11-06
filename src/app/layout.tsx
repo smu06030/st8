@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
@@ -5,6 +8,7 @@ import RQProviders from '@/providers/RQRovider';
 import KakaoMapLoader from '@/components/stampMap/KakaoMapLoader';
 import Nav from '@/components/layout/Nav';
 import Header from '@/components/layout/Header';
+import SplashPage from './splash/page';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -18,28 +22,39 @@ const geistMono = localFont({
   weight: '100 900'
 });
 
-export const metadata: Metadata = {
-  title: '모아 메인 페이지',
-  description: '모아 메인 페이지 입니다.'
-};
+// export const metadata: Metadata = {
+//   title: '모아 메인 페이지',
+//   description: '모아 메인 페이지 입니다.'
+// };
 
-export default function RootLayout({
-  children
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <html lang="en">
+    <html lang="ko">
       <body
         className={`bg-backgroundGradient bg-no-repeat font-regular ${geistSans.variable} ${geistMono.variable} body-padding antialiased`}
       >
-        <Header />
-        <KakaoMapLoader />
-        <RQProviders>
-          {children}
-          <div id="overlays"></div> {/* 모달창 */}
-        </RQProviders>
-        <Nav />
+        {showSplash ? (
+          <SplashPage />
+        ) : (
+          <>
+            <Header />
+            <KakaoMapLoader />
+            <RQProviders>
+              {children}
+              <div id="overlays"></div> {/* 모달창 */}
+            </RQProviders>
+            <Nav />
+          </>
+        )}
       </body>
     </html>
   );

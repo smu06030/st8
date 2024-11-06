@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import InputField from '@/components/common/InputField';
+
 import Icon from '@/components/common/Icons/Icon';
+import InputField from '@/components/common/InputField';
 
 interface PasswordConfirmFieldProps {
   password: string; // password는 string 타입

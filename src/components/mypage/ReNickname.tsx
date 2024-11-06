@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Button from '../common/Buttons/Button';
-import InputField from '@/components/common/InputField';
+
 import useModal from '@/hooks/useModal';
-import supabase from '@/utils/supabase/client';
+import browserClient from '@/utils/supabase/client';
+import InputField from '../common/InputField';
 
 const ReNickname = () => {
   const { openModal, Modal, closeModal } = useModal();
@@ -13,10 +14,10 @@ const ReNickname = () => {
 
   useEffect(() => {
     const fetchNickname = async () => {
-      const { data: sessionData } = await supabase.auth.getSession();
+      const { data: sessionData } = await browserClient.auth.getSession();
       if (sessionData?.session) {
         const userId = sessionData.session.user.id;
-        const { data, error } = await supabase.from('profile').select('nickname').eq('id', userId).single();
+        const { data, error } = await browserClient.from('profile').select('nickname').eq('id', userId).single();
 
         if (error) {
           setError('닉네임을 가져오는 중 오류가 발생했습니다.');
@@ -31,13 +32,13 @@ const ReNickname = () => {
 
   const handleNameChange = async () => {
     try {
-      const { data: sessionData } = await supabase.auth.getSession();
+      const { data: sessionData } = await browserClient.auth.getSession();
       if (!sessionData?.session) return;
 
       const userId = sessionData.session.user.id;
       const nicknameToSave = tempNickname?.trim() || nickname;
 
-      const { error } = await supabase.from('profile').update({ nickname: nicknameToSave }).eq('id', userId);
+      const { error } = await browserClient.from('profile').update({ nickname: nicknameToSave }).eq('id', userId);
 
       if (error) {
         setError('닉네임 업데이트 중 오류가 발생했습니다.');
@@ -65,7 +66,7 @@ const ReNickname = () => {
         <div className="fixed inset-0 m-[18px] flex items-center justify-center">
           <div className="w-[327px] max-w-md rounded-3xl bg-white p-[32px]" onClick={(e) => e.stopPropagation()}>
             <h3 className="text-xl font-semibold">이름을 변경하시겠습니까?</h3>
-            <div className="mt-4 w-full whitespace-nowrap">
+            <div className="mb-[28px] mt-4 w-full whitespace-nowrap">
               <InputField
                 iconName="UserIcon"
                 text="변경할 이름을 입력해주세요"

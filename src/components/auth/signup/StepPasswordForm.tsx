@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import InputField from '@/components/common/InputField';
+
 import Button from '@/components/common/Buttons/Button';
 import Icon from '@/components/common/Icons/Icon';
 import PasswordCheck from './PasswordCheck';
 import Image from 'next/image';
+import InputField from '@/components/common/InputField';
 
 interface PasswordStepProps {
   onNext: (password: string) => void;
@@ -12,8 +13,6 @@ interface PasswordStepProps {
 
 const PasswordStep = ({ onNext }: PasswordStepProps) => {
   const {
-    handleSubmit,
-    watch,
     formState: { errors }
   } = useForm();
 
@@ -100,7 +99,7 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
       />
 
       {/* 비밀번호 일치 여부 메시지 */}
-      <div className="flex items-center space-x-2">
+      <div className="flex w-full items-center justify-end space-x-2">
         {isMatching ? (
           <Image src="/images/pass-check1.png" alt="비밀번호 일치" width={128} height={128} />
         ) : confirmPassword.length > 0 ? (

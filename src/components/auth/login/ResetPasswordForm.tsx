@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import supabase from '@/utils/supabase/client';
+import browserClient from '@/utils/supabase/client';
 
 const ResetPasswordForm = () => {
   const [newPassword, setNewPassword] = useState('');
@@ -13,7 +13,7 @@ const ResetPasswordForm = () => {
   const handlePasswordUpdate = async () => {
     setMessage('');
     setError('');
-    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    const { error } = await browserClient.auth.updateUser({ password: newPassword });
     if (error) {
       setError('비밀번호 재설정 중 오류가 발생했습니다. 다시 시도해주세요.');
       console.error(error.message);

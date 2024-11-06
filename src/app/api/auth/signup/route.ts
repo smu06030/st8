@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
 
 export async function POST(req: Request) {
-  const supabase = createClient();
+  const serverClient = createClient();
 
   try {
     const { email, password, nickname } = await req.json();
@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     }
 
     // Supabase에서 회원가입 처리
-    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+    const { data: signUpData, error: signUpError } = await serverClient.auth.signUp({
       email,
       password
     });
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     }
 
     // 회원가입이 성공하면 profile 테이블에 정보 저장
-    const { error: insertError } = await supabase
+    const { error: insertError } = await serverClient
       .from('profile')
       .insert([{ id: signUpData.user?.id, email, nickname }]); // Supabase의 auth.user ID와 동기화
 
