@@ -23,8 +23,19 @@
   : 스탬프 투어를 모바일 기기로 쉽게 할 수 있으면 다양한 스탬프 투어 경험을 제공 할 수 있다.
 
 ## 📚 기술 스택
+![Next.js](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/tailwind_css-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Zustand](https://img.shields.io/badge/zustand-000000?style=for-the-badge&logo=zustand&logoColor=white)
+![Supabase](https://img.shields.io/badge/supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Git](https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white)
+![Vercel](https://img.shields.io/badge/vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![React Query](https://img.shields.io/badge/react_query-FF4154?style=for-the-badge&logo=react-query&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
-<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=vite&logoColor=white"> <img src="https://img.shields.io/badge/dotenv-ECD53F?style=for-the-badge&logo=dotenv&logoColor=white"> <img src="https://img.shields.io/badge/reactrouter-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white"> <img src="https://img.shields.io/badge/supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white"> <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white"> <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"><img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/vercel-000000?style=for-the-badge&logo=vercel&logoColor=white">
+
+
 
 ## 🪖 팀원
 
@@ -262,6 +273,15 @@ import GoMainStep from './signup/StepMainForm';
   - [x] supabase
 
 ## 모아 미리보기
+
+<img width="180" alt="스크린샷 2024-11-07 오전 9 30 01" src="https://github.com/user-attachments/assets/90b8ec8c-24d3-4240-9354-937682725a14">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 28 05" src="https://github.com/user-attachments/assets/0a327fbd-3f1a-4fcb-98a1-1afda8eb0559">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 28 49" src="https://github.com/user-attachments/assets/0b6f0c2a-3542-4532-b445-b01e9e8a4477">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 28 58" src="https://github.com/user-attachments/assets/ba6d6c2a-006c-4814-873b-bb1b7bed0ab0">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 29 16" src="https://github.com/user-attachments/assets/c359b6aa-eb7c-46ed-b53f-a9805eac929c">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 29 23" src="https://github.com/user-attachments/assets/027b4b5a-d61b-458d-aff7-e5f3bf51f13b">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 29 34" src="https://github.com/user-attachments/assets/bf770b57-8a11-47ff-bdad-45dff341e47e">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 29 43" src="https://github.com/user-attachments/assets/51007137-283c-47c8-954a-c3f656025b8f">
 
 
 
