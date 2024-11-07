@@ -8,7 +8,7 @@ import { useGetStampListQuery } from '@/queries/query/useStampQuery';
 import Loading from '@/app/(root)/(stamp)/loading';
 import Icon from '@/components/common/Icons/Icon';
 import useDropdoun from '@/hooks/useDropdoun';
-import { REGION_NAME_MAP_EN } from '@/components/stamp/RegionNames';
+import { REGION_NAME_MAP_EN } from '@/utils/region/RegionNames';
 
 interface StampDetailPropsType {
   id: string;

@@ -7,7 +7,7 @@ import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 // import { fetchUser } from '@/utils/fetchUser';
 import useUser from '@/hooks/useUser';
 // import { STAMPIMG_REGION_NAME } from '@/components/stamp/StampImg'; //이미지
-import { STAMPIMG_REGION_IMG, STAMPIMG_REGION_ACTIVE_IMG } from '@/components/stamp/RegionNames';
+import { STAMPIMG_REGION_IMG, STAMPIMG_REGION_ACTIVE_IMG } from '@/utils/region/RegionNames';
 import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 
 interface StampActivePropsType {
@@ -57,7 +57,7 @@ const deleteStampList = async ({ address, userId }: { address: string; userId: s
 const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocation }: StampActivePropsType) => {
   const queryClient = useQueryClient();
   const userId = useUser();
-  console.log('address', address);
+  // console.log('address', address);
   //useMutation(삭제)
   const StampDeleteMutation = useMutation({
     mutationFn: deleteStampList,
@@ -95,7 +95,7 @@ const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocat
       return;
     }
   };
-  console.log('stampList', stampList);
+  // console.log('stampList', stampList);
   const DefaultStamp = STAMPIMG_REGION_IMG[address.region_1depth_name];
   const ActiveStamp = STAMPIMG_REGION_ACTIVE_IMG[address.region_1depth_name];
   const SealStamp = stampList?.map((stamp) => stamp.region === address.region_1depth_name);
