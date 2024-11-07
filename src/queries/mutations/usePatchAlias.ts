@@ -1,6 +1,6 @@
 import { fatchLocationAlias } from '@/serverActions/fetchStampActions';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-import { QUERY_KEY } from './query.keys';
+import { QUERY_KEY } from '@/queries/query.keys';
 
 interface PatchAliasType {
   alias: string;

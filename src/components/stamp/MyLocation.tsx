@@ -13,7 +13,7 @@ import useModal from '@/hooks/useModal';
 import AliasCheckModal from '../common/Modal/AliasCheckModal';
 import browserClient from '@/utils/supabase/client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import useMutations from '@/queries/useMutations';
+import useMutations from '@/queries/mutations/usePatchAlias';
 
 interface LocationType {
   lat: number;
