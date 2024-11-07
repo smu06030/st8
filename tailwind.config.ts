@@ -13,6 +13,7 @@ const config: Config = {
         foreground: 'var(--foreground)',
         main: '#1D1D1D',
         defaultcolor: '#E8E8E8',
+        alert: '#D22730',
         primary: {
           50: '#fff7e0',
           100: '#ffecad',
