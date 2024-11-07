@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
-import { Place, fetchPlaceData } from '@/serverActions/fetchPlacesAction';
+import { Place, getPlaceList } from '@/serverActions/placeActions';
 import TouristSwiper from './TouristSwiper';
 import { createClient } from '@/utils/supabase/server';
 
@@ -11,7 +11,7 @@ const MainRecommendSection = async () => {
   let places: Place[] | null = null;
 
   if (data?.user) {
-    places = await fetchPlaceData(data.user.id);
+    places = await getPlaceList(data.user.id);
   }
 
   return (
