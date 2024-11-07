@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { REGION_NAME_MAP_KO } from '@/components/stamp/RegionNames';
+import { REGION_NAME_MAP_KO } from '@/utils/region/RegionNames';
 interface RegionStampPropsType {
   list: string;
   stampList: {

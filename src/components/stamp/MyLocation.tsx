@@ -5,15 +5,16 @@ import StampActive from './StampActive';
 import { AddressPropsType } from '@/types/stamp/AddressProps.types';
 import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
 
+import browserClient from '@/utils/supabase/client';
+import { useQuery } from '@tanstack/react-query';
 import useUser from '@/hooks/useUser';
 import Link from 'next/link';
 import Icon from '@/components/common/Icons/Icon';
 import Loading from '@/app/(root)/(stamp)/loading';
 import useModal from '@/hooks/useModal';
 import AliasCheckModal from '../common/Modal/AliasCheckModal';
-import browserClient from '@/utils/supabase/client';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import useMutations from '@/queries/mutations/usePatchAlias';
+import { useGetStampLocationQuery } from '@/queries/query/useStampQuery';
+import { usePatchAliasMutation } from '@/queries/mutation/useAliasMutation';
 
 interface LocationType {
   lat: number;
@@ -29,7 +30,7 @@ const MyLocation = () => {
   const [parentFocused, setParentFocused] = useState(false);
   const [aliasLocation, setAliasLocation] = useState<string | null>(null); //장소별칭
   const { openModal, Modal, isOpen } = useModal();
-  const patchAliasMutation = useMutations.usePatchAlias();
+  const patchAliasMutation = usePatchAliasMutation();
   // const [saveAlias,setSaveAlias] = useState(stampList?.[0]?.aliasLocation)
 
   const fetchLocationStamp = async (address: string) => {

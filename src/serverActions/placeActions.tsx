@@ -14,7 +14,7 @@ export interface Place {
 }
 
 // 데이터 호출 함수 (북마크 상태 추가)
-export const fetchPlaceData = async (userId: string): Promise<Place[]> => {
+export const getPlaceList = async (userId: string): Promise<Place[]> => {
   const serverClient = createClient();
 
   try {

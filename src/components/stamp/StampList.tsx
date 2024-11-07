@@ -6,27 +6,14 @@ import StampItem from '@/components/stamp/StampItem';
 import useUser from '@/hooks/useUser';
 import Image from 'next/image';
 import { DEFAULT_REGION_ITEM } from '@/constants/regions';
-import useQuerys from '@/queries/useQuerys';
+import { useGetStampListQuery } from '@/queries/query/useStampQuery';
 import Loading from '@/app/(root)/(stamp)/loading';
-import { STAMPIMG_REGION_IMG } from '@/components/stamp/RegionNames';
+import { STAMPIMG_REGION_IMG } from '@/utils/region/RegionNames';
 import { promptLogin } from '@/utils/promptLogin';
-
-interface RegionStampPropsType {
-  address: string;
-  aliasLocation: string;
-  id: string;
-  lat: string;
-  lng: string;
-  user_id: string;
-  region: string;
-  visited: boolean;
-  created_at: string;
-  stampimg: string;
-}
 
 const StampList = () => {
   const userId = useUser();
-  const { data: stampList = [], isLoading } = useQuerys.useGetStampActive(userId);
+  const { data: stampList = [], isLoading } = useGetStampListQuery(userId);
 
   if (isLoading)
     return (
