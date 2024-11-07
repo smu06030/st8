@@ -88,7 +88,7 @@ body {
 }
 
 .body-padding {
-  @apply py-16;
+  @apply pb-16 pt-[56px];
 }
 
 .albumTab {
@@ -131,7 +131,7 @@ body {
 }
 .ellipsis-multiline {
   display: -webkit-box;
-  -webkit-line-clamp: 1; /* 원하는 줄 수로 변경 */
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

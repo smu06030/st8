@@ -43,6 +43,7 @@ const TouristSwiper = ({ places }: TouristSwiperPropsType) => {
               title={place.title || '등록되지 않는 여행지'}
               firstimage={place.firstimage}
               description={place.supabaseText || '여행지 정보 없음'}
+              isBookmarked={place.isBookmarked}
             />
           </SwiperSlide>
         ))}

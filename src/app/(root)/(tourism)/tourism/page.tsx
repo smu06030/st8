@@ -3,18 +3,21 @@
 import { QUERY_KEY } from '@/queries/query.keys';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { fetchPlaceData, Place } from '../../../../serverActions/fetchPlacesAction';
-import PlaceCard from '@/components/tourism/placeCard';
-import { groupPlacesByCity } from '../../../../serverActions/groupPlaces';
+import { fetchPlaceData } from '@/serverActions/fetchPlacesAction';
+import TouristSwiper from '@/components/mainPage/TouristSwiper';
+import { groupPlacesByCity } from '@/serverActions/groupPlaces';
+import useUser from '@/hooks/useUser';
 
 const RecommendedPlaces = () => {
+  const userId = useUser();
+
   const {
     data = [],
     isLoading,
     isError
   } = useQuery({
-    queryKey: QUERY_KEY.PLACES,
-    queryFn: () => fetchPlaceData()
+    queryKey: [QUERY_KEY.PLACES, userId],
+    queryFn: () => fetchPlaceData(userId)
   });
 
   if (isLoading) {
@@ -48,17 +51,9 @@ const RecommendedPlaces = () => {
               <h2 className="text-lg font-semibold text-gray-800">{places[0]?.citytitle || '도시 정보 없음'}</h2>
             </div>
             <p className="mb-4 text-sm text-gray-500">{city}</p>
-            <div className="flex space-x-4 overflow-x-auto pb-4">
-              {places.map((place) => (
-                <PlaceCard
-                  key={place.contentid}
-                  contentid={place.contentid || '등록되지 않는 여행지'}
-                  title={place.title || '등록되지 않는 여행지'}
-                  firstimage={place.firstimage}
-                  description={place.supabaseText || '여행지 정보 없음'}
-                />
-              ))}
-            </div>
+
+            {/* TouristSwiper로 도시별 여행지 목록을 스와이프 가능하게 표시 */}
+            <TouristSwiper places={places} />
           </section>
         ))}
       </main>

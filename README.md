@@ -23,8 +23,19 @@
   : 스탬프 투어를 모바일 기기로 쉽게 할 수 있으면 다양한 스탬프 투어 경험을 제공 할 수 있다.
 
 ## 📚 기술 스택
+![Next.js](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/tailwind_css-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Zustand](https://img.shields.io/badge/zustand-000000?style=for-the-badge&logo=zustand&logoColor=white)
+![Supabase](https://img.shields.io/badge/supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Git](https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white)
+![Vercel](https://img.shields.io/badge/vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![React Query](https://img.shields.io/badge/react_query-FF4154?style=for-the-badge&logo=react-query&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
-<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=vite&logoColor=white"> <img src="https://img.shields.io/badge/dotenv-ECD53F?style=for-the-badge&logo=dotenv&logoColor=white"> <img src="https://img.shields.io/badge/reactrouter-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white"> <img src="https://img.shields.io/badge/supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white"> <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white"> <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"><img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/vercel-000000?style=for-the-badge&logo=vercel&logoColor=white">
+
+
 
 ## 🪖 팀원
 
@@ -36,7 +47,7 @@
     <td align="center"><b>Frontend</b></td>
   </tr>
   <tr>
-      <td align="center"><img src="https://avatars.githubusercontent.com/kyulipark" width="100px" /></td>   
+      <td align="center"><img src="https://avatars.githubusercontent.com/songhyein0123" width="100px" /></td>   
     <td align="center"><img src="https://avatars.githubusercontent.com/lim-bora" width="100px" /></td>
     <td align="center"><img src="https://avatars.githubusercontent.com/smu06030" width="100px" /></td>
     <td align="center"><img src="https://avatars.githubusercontent.com/kyulipark" width="100px" /></td>
@@ -54,6 +65,12 @@
 ### 혜인
 
 추천 여행지 : 북마크
+
+- 관광지 목록 페이지: Supabase에서 자료를 불러와 사용자에게 다양한 관광지를 표시하는 페이지를 구성하였습니다. 데이터는 Tanstack Query를 사용하여 비동기적으로 불러오고, 사용자 경험을 향상시키기 위해 React Query의 캐싱 기능을 활용하여 페이지 로딩 속도를 최적화했습니다.
+
+- 관광지 디테일 페이지: 공공 API를 이용해 각 관광지의 상세 정보를 불러와 세부 정보를 제공하는 페이지를 구현하였습니다. Kakao Map API를 통합하여 사용자가 지도 상에서 해당 관광지의 위치를 시각적으로 확인할 수 있도록 하였으며, 북마크 기능을 추가하여 사용자가 관심 있는 관광지를 쉽게 저장하고 관리할 수 있도록 했습니다.
+
+- 찜한 목록(북마크) 페이지: 사용자가 북마크한 관광지를 관리하는 페이지를 제작하였습니다. Supabase를 통해 사용자별 북마크 데이터를 저장하고 불러오며, 사용자가 북마크 상태를 실시간으로 업데이트할 수 있도록 Tanstack Query의 invalidateQueries를 사용하여 최신 상태를 유지하도록 구성하였습니다.
 
 ### 보라
 
@@ -256,6 +273,15 @@ import GoMainStep from './signup/StepMainForm';
   - [x] supabase
 
 ## 모아 미리보기
+
+<img width="180" alt="스크린샷 2024-11-07 오전 9 30 01" src="https://github.com/user-attachments/assets/90b8ec8c-24d3-4240-9354-937682725a14">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 28 05" src="https://github.com/user-attachments/assets/0a327fbd-3f1a-4fcb-98a1-1afda8eb0559">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 28 49" src="https://github.com/user-attachments/assets/0b6f0c2a-3542-4532-b445-b01e9e8a4477">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 28 58" src="https://github.com/user-attachments/assets/ba6d6c2a-006c-4814-873b-bb1b7bed0ab0">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 29 16" src="https://github.com/user-attachments/assets/c359b6aa-eb7c-46ed-b53f-a9805eac929c">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 29 23" src="https://github.com/user-attachments/assets/027b4b5a-d61b-458d-aff7-e5f3bf51f13b">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 29 34" src="https://github.com/user-attachments/assets/bf770b57-8a11-47ff-bdad-45dff341e47e">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 29 43" src="https://github.com/user-attachments/assets/51007137-283c-47c8-954a-c3f656025b8f">
 
 
 
