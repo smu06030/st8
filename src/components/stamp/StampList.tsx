@@ -9,10 +9,24 @@ import { DEFAULT_REGION_ITEM } from '@/constants/regions';
 import useQuerys from '@/queries/useQuerys';
 import Loading from '@/app/(root)/(stamp)/loading';
 import { STAMPIMG_REGION_IMG } from '@/components/stamp/RegionNames';
+import { promptLogin } from '@/utils/promptLogin';
 
-const StampList: React.FC = (): React.JSX.Element => {
+interface RegionStampPropsType {
+  address: string;
+  aliasLocation: string;
+  id: string;
+  lat: string;
+  lng: string;
+  user_id: string;
+  region: string;
+  visited: boolean;
+  created_at: string;
+  stampimg: string;
+}
+
+const StampList = () => {
   const userId = useUser();
-  const { data: stampList, isLoading } = useQuerys.useGetStampActive(userId);
+  const { data: stampList = [], isLoading } = useQuerys.useGetStampActive(userId);
 
   if (isLoading)
     return (
@@ -20,20 +34,18 @@ const StampList: React.FC = (): React.JSX.Element => {
         <Loading />
       </div>
     );
-  // if (!stampList) return <div>데이터가 없습니다.</div>;
-  // console.log('STAMPIMG_REGION_IMG', STAMPIMG_REGION_IMG);
-  const DeactiveRegionList = Object.entries(STAMPIMG_REGION_IMG).map(([region, img]) => ({ region, img }));
-  // console.log('DeactiveRegionList', DeactiveRegionList);
-  const groupTrueRegion = [...new Set(stampList?.map((item) => item.region))]; //갖고있는스탬프 지역이름
-  const stampInActive = DEFAULT_REGION_ITEM.filter((item) => !groupTrueRegion.includes(item)); //비활성화 지역
+
+  const loginRequiredRegions = Object.entries(STAMPIMG_REGION_IMG).map(([region, img]) => ({ region, img })); //비활성화지역이름(로그인안한상태)
+  const ActiveRegionList = [...new Set(stampList?.map((item) => item.region))]; //갖고있는스탬프 지역이름
+  const DeactiveRegionList = DEFAULT_REGION_ITEM.filter((item) => !ActiveRegionList.includes(item)); //비활성화 지역
 
   return (
     <ul className="grid grid-cols-2 gap-[15px] py-[42px]">
       {userId ? (
         <>
-          {groupTrueRegion?.map((list) => <StampItem key={list} list={list} stampList={stampList} />)}
-          {stampInActive &&
-            stampInActive.map((stamp) => (
+          {ActiveRegionList?.map((list) => <StampItem key={list} list={list} stampList={stampList} />)}
+          {DeactiveRegionList &&
+            DeactiveRegionList.map((stamp) => (
               <li key={stamp} className="flex flex-col items-center justify-center rounded-[24px] bg-[#ccc] p-3">
                 {/* TODO : 스탬프 준비되면 교체 */}
                 {/* <Image src={`/images/${stamp}.png`} alt={stamp} width={300} height={300} className="opacity-50" />  */}
@@ -44,9 +56,10 @@ const StampList: React.FC = (): React.JSX.Element => {
         </>
       ) : (
         <>
-          {DeactiveRegionList.map((stamp) => (
+          {/* 로그인안됬을때 화면 */}
+          {loginRequiredRegions.map((stamp) => (
             <li key={stamp.region} className="flex flex-col items-center justify-center rounded-[24px] bg-[#ccc] p-3">
-              <Image src={stamp.img} alt={stamp.region} width={300} height={300} />
+              <Image src={stamp.img} alt={stamp.region} width={300} height={300} onClick={promptLogin} />
             </li>
           ))}
         </>
@@ -54,5 +67,5 @@ const StampList: React.FC = (): React.JSX.Element => {
     </ul>
   );
 };
-//로그인안되어있으면 지역 비공개처리된거 나열하고 + 클릭했을때 일단 로그인해라 얼럿
+
 export default StampList;
