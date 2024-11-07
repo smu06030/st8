@@ -14,7 +14,6 @@ const MainRecommendSection = async () => {
     places = await fetchPlaceData(data.user.id);
   }
 
-  console.log(places);
   return (
     <section className="mt-[58px]">
       <div className="flex flex-col items-start justify-start gap-1.5">
@@ -26,11 +25,7 @@ const MainRecommendSection = async () => {
         </Link>
         <p className="text-sm leading-tight text-gray-600">모아가 엄선 한 국내 여행지를 모았어요.</p>
       </div>
-      {places && places.length > 0 ? (
-        <TouristSwiper places={places} />
-      ) : (
-        <p className="text-sm text-alert">텅</p>
-      )}
+      {places && places.length > 0 ? <TouristSwiper places={places} /> : <p className="text-alert text-sm">텅</p>}
     </section>
   );
 };
