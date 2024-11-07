@@ -1,6 +1,7 @@
-import { getStampList, getStampLocation } from '@/serverActions/stampActions';
+import { getStampList } from '@/serverActions/stampActions';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY } from '../query.keys';
+import { getStampLocation } from '@/components/stamp/getStampLocation';
 
 // 스탬프 리스트 가져오기
 export const useGetStampListQuery = (userId: string) => {
@@ -18,7 +19,7 @@ export const useGetStampLocationQuery = (address: string | undefined, userId: st
     queryKey: QUERY_KEY.USER_LOCATION_STAMP,
     queryFn: async () => {
       if (address) {
-        return await getStampLocation(address, userId);
+        return await getStampLocation(address);
       } else return null;
     },
     enabled: !!userId

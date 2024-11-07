@@ -12,9 +12,10 @@ import Link from 'next/link';
 import Icon from '@/components/common/Icons/Icon';
 import Loading from '@/app/(root)/(stamp)/loading';
 import useModal from '@/hooks/useModal';
-import AliasCheckModal from '../common/Modal/AliasCheckModal';
+import AliasCheckModal from '@/components/common/Modal/AliasCheckModal';
 import { useGetStampLocationQuery } from '@/queries/query/useStampQuery';
 import { usePatchAliasMutation } from '@/queries/mutation/useAliasMutation';
+import { getStampLocation } from '@/components/stamp/getStampLocation';
 
 interface LocationType {
   lat: number;
@@ -33,34 +34,34 @@ const MyLocation = () => {
   const patchAliasMutation = usePatchAliasMutation();
   // const [saveAlias,setSaveAlias] = useState(stampList?.[0]?.aliasLocation)
 
-  const fetchLocationStamp = async (address: string) => {
-    const { data: nowStampList, error } = await browserClient
-      .from('stamp')
-      .select('*')
-      .eq('user_id', userId)
-      .eq('address', address);
+  // const fetchLocationStamp = async (address: string) => {
+  //   const { data: userLocationStamp, error } = await browserClient
+  //     .from('stamp')
+  //     .select('*')
+  //     .eq('user_id', userId)
+  //     .eq('address', address);
 
-    if (error) {
-      console.error('위치 기반 스탬프 리스트 가져오기 오류 :', error.message);
-      throw new Error('위치 기반 스탬프 리스트 데이터를 가져오는 중 오류가 발생했습니다.' + error.message);
-    }
-    console.log('nowStampList', nowStampList);
-    return nowStampList;
-  };
+  //   if (error) {
+  //     console.error('위치 기반 스탬프 리스트 가져오기 오류 :', error.message);
+  //     throw new Error('위치 기반 스탬프 리스트 데이터를 가져오는 중 오류가 발생했습니다.' + error.message);
+  //   }
+  //   return userLocationStamp;
+  // };
 
   const {
     data: stampList,
     isLoading,
     isError: stampListError
-  } = useQuery({
-    queryKey: ['nowStamp', address?.address_name], //고유키값
-    queryFn: async () => {
-      if (address && address.address_name) {
-        return await fetchLocationStamp(address.address_name!);
-      } else return null;
-    }, // 주소를 인자로 넘김
-    enabled: !!userId
-  });
+  } = useGetStampLocationQuery(address?.address_name, userId);
+  // useQuery({
+  //   queryKey: ['nowStamp', address?.address_name], //고유키값
+  //   queryFn: async () => {
+  //     if (address && address.address_name) {
+  //       return await getStampLocation(address.address_name!);
+  //     } else return null;
+  //   }, // 주소를 인자로 넘김
+  //   enabled: !!userId
+  // });
 
   //저장된스탬프의 방문여부 저장
   useEffect(() => {
