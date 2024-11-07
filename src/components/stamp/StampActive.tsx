@@ -57,7 +57,7 @@ const deleteStampList = async ({ address, userId }: { address: string; userId: s
 const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocation }: StampActivePropsType) => {
   const queryClient = useQueryClient();
   const userId = useUser();
-  console.log('address', address);
+  // console.log('address', address);
   //useMutation(삭제)
   const StampDeleteMutation = useMutation({
     mutationFn: deleteStampList,
@@ -95,7 +95,7 @@ const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocat
       return;
     }
   };
-  console.log('stampList', stampList);
+  // console.log('stampList', stampList);
   const DefaultStamp = STAMPIMG_REGION_IMG[address.region_1depth_name];
   const ActiveStamp = STAMPIMG_REGION_ACTIVE_IMG[address.region_1depth_name];
   const SealStamp = stampList?.map((stamp) => stamp.region === address.region_1depth_name);
