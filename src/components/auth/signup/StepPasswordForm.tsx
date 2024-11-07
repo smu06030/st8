@@ -106,8 +106,9 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
           <Image src="/images/pass-alert1.png" alt="비밀번호 불일치" width={160} height={160} />
         ) : null}
       </div>
-
-      <Button text="다음으로" variant={isMatching ? 'blue' : 'gray'} disabled={!isMatching} onClick={handleNext} />
+      <div className="!mt-[250px]">
+        <Button text="다음으로" variant={isMatching ? 'blue' : 'gray'} disabled={!isMatching} onClick={handleNext} />
+      </div>
     </div>
   );
 };
