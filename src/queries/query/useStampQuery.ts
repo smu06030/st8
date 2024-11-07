@@ -19,7 +19,7 @@ export const useGetStampLocationQuery = (address: string | undefined, userId: st
     queryKey: QUERY_KEY.USER_LOCATION_STAMP,
     queryFn: async () => {
       if (address) {
-        return await getStampLocation(address);
+        return await getStampLocation(address, userId);
       } else return null;
     },
     enabled: !!userId

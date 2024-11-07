@@ -1,8 +1,8 @@
 import browserClient from '@/utils/supabase/client';
-import useUser from '@/hooks/useUser';
+// import useUser from '@/hooks/useUser';
 
-export const getStampLocation = async (address: string) => {
-  const userId = useUser();
+export const getStampLocation = async (address: string, userId: string) => {
+  //   const userId = useUser();
   const { data: userLocationStamp, error } = await browserClient
     .from('stamp')
     .select('*')
