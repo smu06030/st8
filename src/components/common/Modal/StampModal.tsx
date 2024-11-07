@@ -47,7 +47,7 @@ const StampModal = ({ Modal }: StampModalPropsType) => {
           href={`/stamp-all/${regionLink}`}
           className="my-9 cursor-pointer text-sm leading-tight text-gray-500 underline"
         >
-          앨범 보러가기
+          스탬프 보러가기
         </Link>
       </div>
     </Modal>

@@ -3,7 +3,7 @@
 import { QUERY_KEY } from '@/queries/query.keys';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { fetchPlaceData } from '@/serverActions/fetchPlacesAction';
+import { getPlaceList } from '@/serverActions/placeActions';
 import TouristSwiper from '@/components/mainPage/TouristSwiper';
 import { groupPlacesByCity } from '@/serverActions/groupPlaces';
 import useUser from '@/hooks/useUser';
@@ -16,8 +16,8 @@ const RecommendedPlaces = () => {
     isLoading,
     isError
   } = useQuery({
-    queryKey: [QUERY_KEY.PLACES, userId],
-    queryFn: () => fetchPlaceData(userId)
+    queryKey: QUERY_KEY.PLACELIST,
+    queryFn: () => getPlaceList(userId)
   });
 
   if (isLoading) {

@@ -6,12 +6,12 @@ import StampItem from '@/components/stamp/StampItem';
 import useUser from '@/hooks/useUser';
 import Image from 'next/image';
 import { DEFAULT_REGION_ITEM } from '@/constants/regions';
-import useQuerys from '@/queries/useQuerys';
+import { useGetStampListQuery } from '@/queries/query/useStampQuery';
 import Loading from '@/app/(root)/(stamp)/loading';
 
 const StampList: React.FC = (): React.JSX.Element => {
   const userId = useUser();
-  const { data: stampList, isLoading } = useQuerys.useGetStampActive(userId);
+  const { data: stampList, isLoading } = useGetStampListQuery(userId);
 
   if (isLoading)
     return (

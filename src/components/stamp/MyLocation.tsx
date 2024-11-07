@@ -11,8 +11,8 @@ import Icon from '@/components/common/Icons/Icon';
 import Loading from '@/app/(root)/(stamp)/loading';
 import useModal from '@/hooks/useModal';
 import AliasCheckModal from '../common/Modal/AliasCheckModal';
-import useQuerys from '@/queries/useQuerys';
-import useMutations from '@/queries/useMutations';
+import { useGetStampLocationQuery } from '@/queries/query/useStampQuery';
+import { usePatchAliasMutation } from '@/queries/mutation/useAliasMutation';
 
 interface LocationType {
   lat: number;
@@ -28,8 +28,11 @@ const MyLocation = () => {
   const [parentFocused, setParentFocused] = useState(false);
   const [aliasLocation, setAliasLocation] = useState<string | null>(null); //장소별칭
   const { openModal, Modal, isOpen } = useModal();
-  const { data: stampList, isLoading, isError } = useQuerys.useGetLocationStampActive(address?.address_name, userId);
-  const patchAliasMutation = useMutations.usePatchAlias();
+  const { data: stampList, isLoading, isError } = useGetStampLocationQuery(address?.address_name, userId);
+
+  // 객체 구조분해 할당으로 const {mutate: patchAliasMutation} = .... 바꾸고
+  // 아래에서 사용할 때 .mutate => patchAliasMutation({alias ....}) 이렇게 바꾸는게 좋아보입니다!!
+  const patchAliasMutation = usePatchAliasMutation();
 
   //저장된스탬프의 방문여부 저장
   useEffect(() => {
