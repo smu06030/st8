@@ -40,8 +40,14 @@ const NicknameStep = ({ onNext }: NicknameStepProps) => {
         onBlur={() => setNicknameStatus(nickname ? 'done' : 'default')} // 입력 필드에서 벗어날 때 상태 변경
         status={nicknameStatus}
       />
-
-      <Button text="다음으로" variant={isFormFilled ? 'blue' : 'gray'} disabled={!isFormFilled} onClick={handleNext} />
+      <div className="!mt-[400px]">
+        <Button
+          text="다음으로"
+          variant={isFormFilled ? 'blue' : 'gray'}
+          disabled={!isFormFilled}
+          onClick={handleNext}
+        />
+      </div>
     </div>
   );
 };

@@ -50,8 +50,14 @@ const EmailStep = ({ onNext }: EmailStepProps) => {
       />
 
       {emailError && <p className="text-sm text-red-500">{emailError}</p>}
-
-      <Button text="다음으로" variant={isFormFilled ? 'blue' : 'gray'} disabled={!isFormFilled} onClick={handleNext} />
+      <div className="!mt-[400px]">
+        <Button
+          text="다음으로"
+          variant={isFormFilled ? 'blue' : 'gray'}
+          disabled={!isFormFilled}
+          onClick={handleNext}
+        />
+      </div>
     </div>
   );
 };
