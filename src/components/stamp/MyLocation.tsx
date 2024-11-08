@@ -18,7 +18,7 @@ const MyLocation = () => {
   const [parentFocused, setParentFocused] = useState(false); //포커스상태
   const [aliasLocation, setAliasLocation] = useState<string | null>(null); //장소별칭
   const { openModal, Modal, isOpen } = useModal(); //모달훅
-  const postAlias = usePostAliasMutation();
+  const { mutate: postAlias } = usePostAliasMutation();
 
   const { address, location, error } = GetUserAddress();
   const {
@@ -37,7 +37,7 @@ const MyLocation = () => {
   //스탬프 별명 추가 이벤트
   const onClickAliasAdd = (alias: string) => {
     if (userId) {
-      postAlias.mutate({ alias, userId, address: address?.address_name ?? '' });
+      postAlias({ alias, userId, address: address?.address_name ?? '' });
     } else {
       console.error('유저아이디가 없습니다.');
       return;

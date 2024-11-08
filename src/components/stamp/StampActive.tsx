@@ -31,7 +31,7 @@ const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocat
   const queryClient = useQueryClient();
   const userId = useUserId();
   const { mutate: postStampMutate } = usePostStampMutation();
-  // console.log('address', address);
+
   //useMutation(삭제)
   const StampDeleteMutation = useMutation({
     mutationFn: deleteStampList,
