@@ -3,12 +3,14 @@ import { useState } from 'react';
 export const useLoginFormState = () => {
   const [isEmailError, setIsEmailError] = useState(false);
   const [isPasswordError, setIsPasswordError] = useState(false);
-  const [emailStatus, setEmailStatus] = useState<'default' | 'active' | 'done'>('default');
-  const [passwordStatus, setPasswordStatus] = useState<'default' | 'active' | 'done'>('default');
+  const [emailStatus, setEmailStatus] = useState<'default' | 'active' | 'done' | 'error'>('default');
+  const [passwordStatus, setPasswordStatus] = useState<'default' | 'active' | 'done' | 'error'>('default');
 
   const resetErrors = () => {
     setIsEmailError(false);
     setIsPasswordError(false);
+    setEmailStatus('default');
+    setPasswordStatus('default');
   };
 
   return {

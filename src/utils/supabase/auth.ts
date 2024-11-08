@@ -33,4 +33,4 @@ export async function logout() {
   if (error) throw new Error(`로그아웃 실패: ${error.message}`);
 }
 
-//Supabase와 통신하여 회원가입, 로그인, 로그아웃 기능을 처리, profile 테이블로 사용자 인증관련 작업
+//회원가입, 로그인, 로그아웃 기능을 처리, profile 테이블로 사용자 인증관련 작업 로직

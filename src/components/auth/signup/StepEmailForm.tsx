@@ -1,23 +1,42 @@
 import React, { useState } from 'react';
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField';
+import { checkEmailExists } from '@/app/api/auth/authService';
 
 interface EmailStepProps {
   onNext: (email: string) => void;
 }
 
 const EmailStep = ({ onNext }: EmailStepProps) => {
-  const [email, setEmail] = useState(''); // 이메일 상태
+  const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<string | null>(null);
-  const [emailStatus, setEmailStatus] = useState<'default' | 'active' | 'done'>('default'); // 상태 관리
+  const [emailStatus, setEmailStatus] = useState<'default' | 'active' | 'done' | 'error'>('default');
 
-  const isFormFilled = !!email; // 이메일이 입력되었을 때만 버튼 활성화
+  const isFormFilled = !!email;
 
-  const handleNext = () => {
-    if (isFormFilled) {
+  const handleNext = async () => {
+    // handleEmailBlur와 동일한 중복 확인 로직 추가
+    await handleEmailBlur();
+    if (emailStatus === 'done' && !emailError) {
       onNext(email);
+    }
+  };
+
+  const handleEmailBlur = async () => {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!email || !emailPattern.test(email)) {
+      setEmailStatus('error');
+      setEmailError('유효한 이메일 주소를 입력해주세요. ✖');
+      return;
+    }
+
+    const exists = await checkEmailExists(email);
+    if (exists) {
+      setEmailStatus('error');
+      setEmailError('이미 사용 중인 이메일입니다. ✖');
     } else {
-      alert('이메일을 입력해주세요.');
+      setEmailStatus('done');
+      setEmailError(null);
     }
   };
 
@@ -34,27 +53,19 @@ const EmailStep = ({ onNext }: EmailStepProps) => {
         value={email}
         onChange={(e) => {
           setEmail(e.target.value);
-          setEmailStatus('active'); // 입력 중일 때 active 상태로 변경
-          setEmailError(null); // 입력 시 오류 초기화
+          setEmailStatus('active');
+          setEmailError(null);
         }}
-        onBlur={() => {
-          const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-          if (email && emailPattern.test(email)) {
-            setEmailStatus('done'); // 유효한 이메일 형식일 경우 done 상태로 변경
-          } else {
-            setEmailStatus('default');
-            setEmailError('유효한 이메일 주소를 입력해주세요.'); // 유효하지 않을 경우 오류 메시지 설정
-          }
-        }}
-        status={emailStatus}
+        onBlur={handleEmailBlur}
+        status={emailError ? 'error' : emailStatus}
       />
 
-      {emailError && <p className="text-sm text-red-500">{emailError}</p>}
+      {emailError && <p className="flex w-full items-center justify-end text-sm text-red-500">{emailError}</p>}
       <div className="!mt-[400px]">
         <Button
           text="다음으로"
-          variant={isFormFilled ? 'blue' : 'gray'}
-          disabled={!isFormFilled}
+          variant={isFormFilled && !emailError ? 'blue' : 'gray'}
+          disabled={!isFormFilled || !!emailError}
           onClick={handleNext}
         />
       </div>

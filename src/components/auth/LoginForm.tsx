@@ -8,7 +8,7 @@ import LinkButton from '@/components/common/Buttons/LinkButton';
 import InputField from '../common/InputField';
 import SocialLoginButton from '@/components/common/Buttons/SocialLoginButton';
 import { useLoginFormState } from '@/hooks/useLoginFormState';
-import { loginWithEmailAndPassword } from '@/utils/supabase/authService';
+import { loginWithEmailAndPassword } from '@/app/api/auth/authService';
 
 interface LoginFormInputs {
   email: string;
@@ -72,9 +72,10 @@ const LoginForm = () => {
             setEmailStatus('active');
           }}
           onBlur={() => {
-            setEmailStatus(isEmailError ? 'default' : 'done');
+            setEmailStatus(isEmailError ? 'error' : 'done');
           }}
-          status={emailStatus}
+          status={isEmailError ? 'error' : emailStatus}
+          errorMessage={isEmailError ? '이메일 형식이 올바르지 않습니다.' : undefined}
         />
 
         <InputField
@@ -86,8 +87,11 @@ const LoginForm = () => {
             setValue('password', e.target.value);
             setPasswordStatus('active');
           }}
-          onBlur={() => setPasswordStatus(isPasswordError ? 'done' : 'default')}
-          status={passwordStatus}
+          onBlur={() => {
+            setPasswordStatus(isPasswordError ? 'error' : 'done');
+          }}
+          status={isPasswordError ? 'error' : passwordStatus}
+          errorMessage={isPasswordError ? '비밀번호가 올바르지 않습니다.' : undefined}
         />
 
         <div className="mx-auto !mt-[66px] flex w-full max-w-md justify-between px-8">
@@ -133,3 +137,5 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
+//register를 사용하려고 했는데 InputField에서 계속 오류가 생겨 해당 부분은 그냥 두었습니다ㅠ

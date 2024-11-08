@@ -80,7 +80,7 @@ const ReNickname = () => {
                   setTempNickname(e.target.value);
                   setInputStatus('active');
                 }}
-                onBlur={() => setInputStatus(tempNickname ? 'done' : 'default')} // 입력 완료 시 상태 변경
+                onBlur={() => setInputStatus(tempNickname ? 'done' : 'default')}
                 status={inputStatus}
               />
             </div>

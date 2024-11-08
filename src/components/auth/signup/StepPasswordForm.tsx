@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-
 import Button from '@/components/common/Buttons/Button';
 import Icon from '@/components/common/Icons/Icon';
 import PasswordCheck from './PasswordCheck';
-import Image from 'next/image';
 import InputField from '@/components/common/InputField';
+import { useConfirmPassword } from '@/hooks/useConfirmPassword';
 
 interface PasswordStepProps {
   onNext: (password: string) => void;
@@ -17,37 +16,26 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
   } = useForm();
 
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [passwordStatus, setPasswordStatus] = useState<'default' | 'active' | 'done'>('default');
-  const [confirmPasswordStatus, setConfirmPasswordStatus] = useState<'default' | 'active' | 'done'>('default');
-  const [isMatching, setIsMatching] = useState(false);
 
-  useEffect(() => {
-    if (errors.password) {
-      console.log('Password Error:', errors.password.message);
-    }
-  }, [errors.password]);
+  // useConfirmPassword 훅 사용하여 비밀번호 확인 상태 관리
+  const {
+    confirmPassword,
+    // status: confirmPasswordStatus,
+    // error: confirmPasswordError,
+    isMatching,
+    handleConfirmPasswordChange,
+    handleConfirmPasswordBlur
+  } = useConfirmPassword(password);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-    setPasswordStatus('active');
-    setIsMatching(e.target.value === confirmPassword && confirmPassword.length > 0);
-  };
-
-  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmPassword(e.target.value);
-    setConfirmPasswordStatus('active');
-    setIsMatching(e.target.value === password && password.length > 0);
   };
 
   const handlePasswordBlur = () => {
-    setPasswordStatus(password.length >= 8 ? 'done' : 'default');
-  };
-
-  const handleConfirmPasswordBlur = () => {
-    setConfirmPasswordStatus(confirmPassword === password ? 'done' : 'default');
+    if (password.length >= 8) {
+    }
   };
 
   const handleNext = () => {
@@ -72,7 +60,7 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
         value={password}
         onChange={handlePasswordChange}
         onBlur={handlePasswordBlur}
-        status={passwordStatus}
+        status={password.length >= 8 ? 'done' : 'default'}
         rightIcon={
           <button type="button" onClick={() => setShowPassword(!showPassword)}>
             {showPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
@@ -90,7 +78,8 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
         value={confirmPassword}
         onChange={handleConfirmPasswordChange}
         onBlur={handleConfirmPasswordBlur}
-        status={confirmPasswordStatus}
+        status={isMatching ? 'done' : 'error'}
+        // errorMessage={confirmPasswordError}
         rightIcon={
           <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
             {showConfirmPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
@@ -99,13 +88,14 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
       />
 
       {/* 비밀번호 일치 여부 메시지 */}
-      <div className="flex w-full items-center justify-end space-x-2">
+      <div className="flex w-full items-center justify-end text-sm">
         {isMatching ? (
-          <Image src="/images/pass-check1.png" alt="비밀번호 일치" width={128} height={128} />
+          <p className="text-secondary-600">비밀번호가 동일합니다. ✔</p>
         ) : confirmPassword.length > 0 ? (
-          <Image src="/images/pass-alert1.png" alt="비밀번호 불일치" width={160} height={160} />
+          <p className="text-red-600">비밀번호가 동일하지 않습니다. ✖</p>
         ) : null}
       </div>
+
       <div className="!mt-[250px]">
         <Button text="다음으로" variant={isMatching ? 'blue' : 'gray'} disabled={!isMatching} onClick={handleNext} />
       </div>

@@ -41,4 +41,4 @@ export const signUpWithEmail = async (nickname: string, email: string, password:
   }
 };
 
-//supabase에서 이메일 또는 비밀번호 오류 상황을 클라이언트에 전달하는 로직
+//이메일 또는 비밀번호 오류 상황을 클라이언트에 전달하는 로직
