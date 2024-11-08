@@ -3,7 +3,7 @@
 import { QUERY_KEY } from '@/queries/query.keys';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { getPlaceList } from '@/apis/place';
+import { getPlaceList } from '@/serverActions/place';
 import TourlistSwiper from '@/components/mainPage/TourlistSwiper';
 import { groupPlacesByCity } from '@/utils/place/placeGroupFormatter';
 import useUserId from '@/hooks/useUserId';
