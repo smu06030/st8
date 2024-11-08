@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
-import { getStampList } from '@/apis/stamp';
+import { getStampList } from '@/serverActions/stamp';
 import Image from 'next/image';
-import { getUser } from '@/apis/user';
+import { getUser } from '@/serverActions/user';
 import { REGION_NAME_MAP_KO } from '@/utils/region/RegionNames';
 
 const MainStampSection = async () => {

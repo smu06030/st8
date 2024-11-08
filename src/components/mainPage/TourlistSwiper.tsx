@@ -8,11 +8,11 @@ import { Place } from '@/types/place/place.type';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-interface TouristSwiperPropsType {
+interface TourlistSwiperPropsType {
   places: Place[];
 }
 
-const TouristSwiper = ({ places }: TouristSwiperPropsType) => {
+const TourlistSwiper = ({ places }: TourlistSwiperPropsType) => {
   return (
     <Swiper
       slidesPerView={1.1}
@@ -51,4 +51,4 @@ const TouristSwiper = ({ places }: TouristSwiperPropsType) => {
   );
 };
 
-export default TouristSwiper;
+export default TourlistSwiper;
