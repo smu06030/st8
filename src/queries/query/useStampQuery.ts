@@ -1,7 +1,7 @@
 import { getStampList } from '@/serverActions/stampActions';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY } from '../query.keys';
-import { getStampLocation } from '@/components/stamp/getStampLocation';
+import { getStampLocation } from '@/apis/getStampLocation';
 
 // 스탬프 리스트 가져오기
 export const useGetStampListQuery = (userId: string) => {

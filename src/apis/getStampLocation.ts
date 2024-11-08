@@ -1,8 +1,6 @@
 import browserClient from '@/utils/supabase/client';
-// import useUser from '@/hooks/useUser';
 
 export const getStampLocation = async (address: string, userId: string) => {
-  //   const userId = useUser();
   const { data: userLocationStamp, error } = await browserClient
     .from('stamp')
     .select('*')
@@ -15,3 +13,5 @@ export const getStampLocation = async (address: string, userId: string) => {
   }
   return userLocationStamp;
 };
+
+//stamp.ts로 추후이동해야함
