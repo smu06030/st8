@@ -9,7 +9,7 @@ import Loading from '@/app/(root)/(stamp)/loading';
 import useModal from '@/hooks/useModal';
 import AliasCheckModal from '@/components/common/Modal/AliasCheckModal';
 import { useGetStampLocationQuery } from '@/queries/query/useStampQuery';
-import { usePatchAliasMutation } from '@/queries/mutation/useAliasMutation';
+import { usePostAliasMutation } from '@/queries/mutation/usePostAliasMutation';
 import GetUserAddress from '@/components/stamp/GetUserAddress';
 
 const MyLocation = () => {
@@ -18,7 +18,7 @@ const MyLocation = () => {
   const [parentFocused, setParentFocused] = useState(false); //포커스상태
   const [aliasLocation, setAliasLocation] = useState<string | null>(null); //장소별칭
   const { openModal, Modal, isOpen } = useModal(); //모달훅
-  const postAliasMutation = usePatchAliasMutation();
+  const postAlias = usePostAliasMutation();
 
   const { address, location, error } = GetUserAddress();
   const {
@@ -37,7 +37,7 @@ const MyLocation = () => {
   //스탬프 별명 추가 이벤트
   const onClickAliasAdd = (alias: string) => {
     if (userId) {
-      postAliasMutation.mutate({ alias, userId, address: address?.address_name ?? '' });
+      postAlias.mutate({ alias, userId, address: address?.address_name ?? '' });
     } else {
       console.error('유저아이디가 없습니다.');
       return;

@@ -1,6 +1,8 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
-import { AddressPropsType } from '@/types/stamp/AddressProps.types';
+import { AddressType } from '@/types/stamp/Address.types';
 
 interface LocationType {
   lat: number;
@@ -8,7 +10,7 @@ interface LocationType {
 }
 
 const GetUserAddress = () => {
-  const [address, setAddress] = useState<AddressPropsType>(); //현재주소
+  const [address, setAddress] = useState<AddressType>(); //현재주소
   const [location, setLocation] = useState<LocationType>({ lat: 0, lng: 0 });
   const [error, setError] = useState<string | null>(null); //에러상태
 

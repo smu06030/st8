@@ -1,17 +1,17 @@
 'use client';
 
-import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
 import browserClient from '@/utils/supabase/client';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
-// import { fetchUser } from '@/utils/fetchUser';
 import useUser from '@/hooks/useUser';
-// import { STAMPIMG_REGION_NAME } from '@/components/stamp/StampImg'; //이미지
 import { STAMPIMG_REGION_IMG, STAMPIMG_REGION_ACTIVE_IMG } from '@/utils/region/RegionNames';
-import { AddressPropsType } from '@/types/stamp/AddressProps.types';
+import { AddressType } from '@/types/stamp/Address.types';
+// import { postStamp } from '@/apis/postStamp';
+import { usePostStampMutation } from '@/queries/mutation/usePostStampMutaion';
 
 interface StampActivePropsType {
-  address: AddressPropsType;
+  address: AddressType;
   setVisit: Dispatch<SetStateAction<boolean>>;
   visit: boolean;
   location: { lat: number; lng: number };
@@ -20,32 +20,32 @@ interface StampActivePropsType {
 }
 
 //뮤테이션 함수 만들기(수파베이스 값 추가)
-const addStampList = async ({
-  regionName,
-  address,
-  userId,
-  location,
-  aliasLocation
-}: {
-  address: string;
-  regionName: string;
-  userId: string;
-  location: { lat: number; lng: number };
-  aliasLocation: string | null;
-}) => {
-  const { data, error } = await browserClient.from('stamp').insert({
-    user_id: userId,
-    region: regionName,
-    address: address,
-    stampimg: STAMPIMG_REGION_ACTIVE_IMG[regionName],
-    visited: true,
-    lat: location.lat,
-    lng: location.lng,
-    aliasLocation: aliasLocation
-  });
-  if (error) console.log('error', error);
-  return data;
-};
+// const addStampList = async ({
+//   regionName,
+//   address,
+//   userId,
+//   location,
+//   aliasLocation
+// }: {
+//   address: string;
+//   regionName: string;
+//   userId: string;
+//   location: { lat: number; lng: number };
+//   aliasLocation: string | null;
+// }) => {
+//   const { data, error } = await browserClient.from('stamp').insert({
+//     user_id: userId,
+//     region: regionName,
+//     address: address,
+//     stampimg: STAMPIMG_REGION_ACTIVE_IMG[regionName],
+//     visited: true,
+//     lat: location.lat,
+//     lng: location.lng,
+//     aliasLocation: aliasLocation
+//   });
+//   if (error) console.log('error', error);
+//   return data;
+// };
 
 //뮤테이션 함수 만들기(수파베이스 값 삭제)
 const deleteStampList = async ({ address, userId }: { address: string; userId: string }) => {
@@ -57,7 +57,7 @@ const deleteStampList = async ({ address, userId }: { address: string; userId: s
 const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocation }: StampActivePropsType) => {
   const queryClient = useQueryClient();
   const userId = useUser();
-  // console.log('address', address);
+
   //useMutation(삭제)
   const StampDeleteMutation = useMutation({
     mutationFn: deleteStampList,
@@ -65,20 +65,20 @@ const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocat
       queryClient.invalidateQueries({ queryKey: ['nowStamp'] });
     }
   });
-  //useMutation(추가)
-  const StampAddMutation = useMutation({
-    mutationFn: addStampList,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['nowStamp'] });
-    }
-  });
+  // //useMutation(추가)
+  // const StampAddMutation = useMutation({
+  //   mutationFn: postStamp,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ['nowStamp'] });
+  //   }
+  // });
 
+  const { mutate: postStampMutate } = usePostStampMutation();
   //mutate 추가이벤트(방문안한 상태에서 누르면)
-  const onClickVisitedAdd = (address: string, regionName: string) => {
+  const onClickVisitedAdd = (address: string, region: string) => {
     if (userId) {
-      StampAddMutation.mutate({ address, regionName, userId, location, aliasLocation });
+      postStampMutate({ address, region, userId, location, aliasLocation });
       setVisit(true);
-      // alert('스탬프가 찍혔습니다.');
     } else {
       console.error('유저아이디가 없습니다.');
       return;
@@ -95,10 +95,11 @@ const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocat
       return;
     }
   };
-  // console.log('stampList', stampList);
+
   const DefaultStamp = STAMPIMG_REGION_IMG[address.region_1depth_name];
   const ActiveStamp = STAMPIMG_REGION_ACTIVE_IMG[address.region_1depth_name];
   const SealStamp = stampList?.map((stamp) => stamp.region === address.region_1depth_name);
+
   return (
     <div
       className={`flex ${!visit ? 'h-[100vh]' : 'h-[30%]'} items-center justify-center transition-transform duration-500 ${visit ? 'scale-75' : 'scale-100'}`}

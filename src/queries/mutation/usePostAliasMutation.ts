@@ -1,6 +1,6 @@
 import { patchLocationAlias } from '@/serverActions/stampActions';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-import { QUERY_KEY } from '../query.keys';
+import { QUERY_KEY } from '@/queries/query.keys';
 
 interface PatchAliasPropsType {
   alias: string;
@@ -9,7 +9,7 @@ interface PatchAliasPropsType {
 }
 
 // 스탬프 별칭 바꾸기
-export const usePatchAliasMutation = () => {
+export const usePostAliasMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
