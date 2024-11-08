@@ -1,10 +1,10 @@
 import { useMapStore } from '@/providers/mapStoreProvider';
-import { StampType } from '@/types/stamp/stamp.type';
+import { Stamp } from '@/types/supabase/table.type';
 import React from 'react';
 import { MapMarker, useMap } from 'react-kakao-maps-sdk';
 
 interface KakaoMapMarkerPropsType {
-  stamp: StampType;
+  stamp: Stamp;
   openModal: () => void;
 }
 
