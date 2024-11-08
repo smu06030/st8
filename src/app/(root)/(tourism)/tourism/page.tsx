@@ -4,7 +4,7 @@ import { QUERY_KEY } from '@/queries/query.keys';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { getPlaceList } from '@/serverActions/place';
-import TouristSwiper from '@/components/mainPage/TouristSwiper';
+import TourlistSwiper from '@/components/mainPage/TourlistSwiper';
 import { groupPlacesByCity } from '@/utils/place/placeGroupFormatter';
 import useUserId from '@/hooks/useUserId';
 
@@ -54,7 +54,7 @@ const RecommendedPlaces = () => {
             <p className="mb-4 text-sm text-gray-500">{city}</p>
 
             {/* TouristSwiper로 도시별 여행지 목록을 스와이프 가능하게 표시 */}
-            <TouristSwiper places={places} />
+            <TourlistSwiper places={places} />
           </section>
         ))}
       </main>
