@@ -7,7 +7,6 @@ import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import useUser from '@/hooks/useUser';
 import { STAMPIMG_REGION_IMG, STAMPIMG_REGION_ACTIVE_IMG } from '@/utils/region/RegionNames';
 import { AddressType } from '@/types/stamp/Address.types';
-// import { postStamp } from '@/apis/postStamp';
 import { usePostStampMutation } from '@/queries/mutation/usePostStampMutaion';
 
 interface StampActivePropsType {
@@ -19,34 +18,6 @@ interface StampActivePropsType {
   aliasLocation: string | null;
 }
 
-//뮤테이션 함수 만들기(수파베이스 값 추가)
-// const addStampList = async ({
-//   regionName,
-//   address,
-//   userId,
-//   location,
-//   aliasLocation
-// }: {
-//   address: string;
-//   regionName: string;
-//   userId: string;
-//   location: { lat: number; lng: number };
-//   aliasLocation: string | null;
-// }) => {
-//   const { data, error } = await browserClient.from('stamp').insert({
-//     user_id: userId,
-//     region: regionName,
-//     address: address,
-//     stampimg: STAMPIMG_REGION_ACTIVE_IMG[regionName],
-//     visited: true,
-//     lat: location.lat,
-//     lng: location.lng,
-//     aliasLocation: aliasLocation
-//   });
-//   if (error) console.log('error', error);
-//   return data;
-// };
-
 //뮤테이션 함수 만들기(수파베이스 값 삭제)
 const deleteStampList = async ({ address, userId }: { address: string; userId: string }) => {
   const { data, error } = await browserClient.from('stamp').delete().eq('address', address).eq('user_id', userId);
@@ -57,6 +28,7 @@ const deleteStampList = async ({ address, userId }: { address: string; userId: s
 const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocation }: StampActivePropsType) => {
   const queryClient = useQueryClient();
   const userId = useUser();
+  const { mutate: postStampMutate } = usePostStampMutation();
 
   //useMutation(삭제)
   const StampDeleteMutation = useMutation({
@@ -65,15 +37,7 @@ const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocat
       queryClient.invalidateQueries({ queryKey: ['nowStamp'] });
     }
   });
-  // //useMutation(추가)
-  // const StampAddMutation = useMutation({
-  //   mutationFn: postStamp,
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ['nowStamp'] });
-  //   }
-  // });
 
-  const { mutate: postStampMutate } = usePostStampMutation();
   //mutate 추가이벤트(방문안한 상태에서 누르면)
   const onClickVisitedAdd = (address: string, region: string) => {
     if (userId) {
