@@ -16,6 +16,11 @@ interface StampDetailPropsType {
   created_at?: string;
   address: string;
   aliasLocation: string | null;
+  lat: string;
+  lng: string;
+  stampimg: string;
+  user_id: string;
+  visited: boolean;
 }
 
 const StampItemDetail = () => {
@@ -25,6 +30,8 @@ const StampItemDetail = () => {
   const [stampData, setStampData] = useState<StampDetailPropsType[]>([]);
   const { isOpen, toggleDropdown, dropdownRef } = useDropdoun();
   const { data: stampList, isLoading } = useGetStampListQuery(userId);
+
+  console.log('stampData', stampData);
 
   useEffect(() => {
     if (userId) {

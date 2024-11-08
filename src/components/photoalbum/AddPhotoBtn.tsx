@@ -8,15 +8,13 @@ import useModal from '@/hooks/useModal';
 interface AddAlbumParamsType {
   setImgSrc: Dispatch<React.SetStateAction<string[]>>;
   imgSrc: string[];
-  AlbumAddMutation: any;
+  postAlbumMutate: any;
   activeTab: string;
   item: string;
 }
 
-const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: AddAlbumParamsType) => {
-  // const [isRigionModal, setIsRigionModal] = useState(false);
+const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: AddAlbumParamsType) => {
   const [regionCate, setRegionCate] = useState(item);
-
   const [currentRegion, setCurrentRegion] = useState(''); //지칭한값이 내가 준 지역이 맞는지 확인용
   const { closeModal, openModal, Modal, isOpen } = useModal();
 
@@ -25,6 +23,7 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
       onHandleUpload(imgSrc);
     }
   }, [imgSrc, currentRegion]);
+
   // 파일 업로드 시 액션
   const OnChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -55,7 +54,7 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
     const imgs = Array.isArray(imgArr) ? imgArr : imgSrc;
     if (imgs.length > 0) {
       imgs.forEach((src) => {
-        AlbumAddMutation.mutate({ imgs: src, regionCate });
+        postAlbumMutate({ imgs: src, regionCate });
       });
       alert('앨범이 추가되었습니다.');
       setCurrentRegion('');
