@@ -46,3 +46,13 @@ export const postStamp = async ({
   }
   return data;
 };
+
+// 현재위치 스탬프 삭제
+export const deleteStamp = async ({ address, userId }: { address: string; userId: string }) => {
+  const { data, error } = await browserClient.from('stamp').delete().eq('address', address).eq('user_id', userId);
+  if (error) {
+    console.error('스탬프 삭제 오류 :', error.message);
+    throw new Error('스탬프를 삭제하는 중 오류가 발생했습니다.' + error.message);
+  }
+  return data;
+};
