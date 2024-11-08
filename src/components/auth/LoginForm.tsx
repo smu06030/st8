@@ -11,6 +11,7 @@ import { useLoginFormState } from '@/hooks/useLoginFormState';
 import { loginWithEmailAndPassword } from '@/app/api/auth/authService';
 import { useState } from 'react';
 import Icon from '@/components/common/Icons/Icon';
+import InputFieldWithRegister from '../common/InputField/InputFieldWithRegister';
 
 interface LoginFormInputs {
   email: string;
@@ -23,7 +24,8 @@ const LoginForm = () => {
     handleSubmit,
     setValue,
     formState: { errors },
-    watch
+    watch,
+    register
   } = useForm<LoginFormInputs>();
   const {
     isEmailError,
@@ -64,7 +66,7 @@ const LoginForm = () => {
   return (
     <div className="m-[32px] min-h-screen flex-col justify-between">
       <form onSubmit={handleSubmit(onHandleLogin)} className="flex flex-col items-center justify-center space-y-[50px]">
-        <InputField
+        <InputFieldWithRegister
           iconName="MailIcon"
           text="이메일"
           placeholder="이메일을 입력해주세요."
@@ -76,11 +78,19 @@ const LoginForm = () => {
           onBlur={() => {
             setEmailStatus(isEmailError ? 'error' : 'done');
           }}
-          status={isEmailError ? 'error' : emailStatus}
-          errorMessage={isEmailError ? '등록되지 않은 이메일입니다.✖' : undefined}
+          status={emailStatus}
+          // errorMessage={isEmailError ? '등록되지 않은 이메일입니다.✖' : undefined}
+          register={register('email', {
+            required: 'Email is required',
+            pattern: {
+              value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+              message: '등록되지 않은 이메일입니다.✖'
+            }
+          })}
+          error={errors.email}
         />
 
-        <InputField
+        {/* <InputField
           iconName="LockIcon"
           text="비밀번호"
           placeholder="비밀번호를 입력해주세요."
@@ -94,7 +104,37 @@ const LoginForm = () => {
             setPasswordStatus(isPasswordError ? 'error' : 'done');
           }}
           status={isPasswordError ? 'error' : passwordStatus}
-          errorMessage={isPasswordError ? '등록되지 않은 비밀번호입니다.✖' : undefined}
+          // errorMessage={isPasswordError ? '등록되지 않은 비밀번호입니다.✖' : undefined}
+          rightIcon={
+            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+              {showConfirmPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
+            </button>
+          }
+        /> */}
+
+        <InputFieldWithRegister
+          iconName="LockIcon"
+          text="비밀번호"
+          placeholder="비밀번호를 입력해주세요."
+          type={showConfirmPassword ? 'text' : 'password'}
+          value={password || ''}
+          onChange={(e) => {
+            setValue('password', e.target.value);
+            setPasswordStatus('active');
+          }}
+          onBlur={() => {
+            setPasswordStatus(isPasswordError ? 'error' : 'done');
+          }}
+          status={passwordStatus}
+          // errorMessage={isPasswordError ? '등록되지 않은 비밀번호입니다.✖' : undefined}
+          register={register('password', {
+            required: 'Password is required',
+            pattern: {
+              value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/,
+              message: '등록되지 않은 비밀번호입니다.✖'
+            }
+          })}
+          error={errors.email}
           rightIcon={
             <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
               {showConfirmPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
