@@ -2,8 +2,8 @@ import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
 import TourlistSwiper from './TourlistSwiper';
 import { Place } from '@/types/place/place.type';
-import { getPlaceList } from '@/apis/place';
-import { getUser } from '@/apis/user';
+import { getPlaceList } from '@/serverActions/place';
+import { getUser } from '@/serverActions/user';
 
 const MainRecommendSection = async () => {
   const user = await getUser();

@@ -1,5 +1,5 @@
-import { getStampList } from '@/apis/stamp';
-import { getUser } from '@/apis/user';
+import { getStampList } from '@/serverActions/stamp';
+import { getUser } from '@/serverActions/user';
 import KakaoMap from '@/components/stampMap/KakaoMap';
 import { MapProvider } from '@/providers/mapStoreProvider';
 import { QUERY_KEY } from '@/queries/query.keys';
