@@ -68,14 +68,6 @@ const RegionDetail = () => {
                   priority
                   className="h-full w-full object-cover"
                 />
-                {/* {edit && (
-                  <input
-                    type="checkbox"
-                    className="absolute right-[10px] top-[10px] h-6 w-6 appearance-none rounded-full border border-gray-300 text-red-500 checked:border-red-500 checked:bg-[red]"
-                    checked={deleteId.includes(item.id)}
-                    onChange={() => selectPhotoList(item.id)}
-                  />
-                )} */}
               </>
             )}
           </li>
