@@ -1,6 +1,7 @@
-import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useQueryClient, useMutation, UseMutationResult } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/queries/query.keys';
 import { postStamp } from '@/apis/stamp';
+import { Stamp } from '@/types/supabase/table.type';
 
 //useMutation(추가)
 export const usePostStampMutation = () => {
