@@ -7,46 +7,34 @@ import { Mousewheel } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 import 'swiper/css/mousewheel';
+import { REGION_CATEGORY_NAMES } from '@/utils/region/RegionNames';
 
 interface CategoryNodalType {
   Modal: ({ children }: { children: React.ReactNode }) => ReactPortal | null;
   setRegionCate: Dispatch<React.SetStateAction<string>>;
   onHandleUpload: (imgArr: string | string[]) => void;
+  regionCate: string;
 }
 
-const CategoryModal = ({ Modal, onHandleUpload, setRegionCate }: CategoryNodalType) => {
-  const cate = [
-    '서울',
-    '경기',
-    '인천',
-    '강원',
-    '부산',
-    '대구',
-    '울산',
-    '세종',
-    '충북',
-    '충남',
-    '대전',
-    '전북',
-    '전남',
-    '광주',
-    '경북',
-    '경남',
-    '제주'
-  ];
+const CategoryModal = ({ Modal, onHandleUpload, setRegionCate, regionCate }: CategoryNodalType) => {
   const [isNotsetSelect, setIsNotsetSelect] = useState(false);
 
   const handleSlideChange = (swiper: any) => {
     const activeIndex = swiper.activeIndex; //활성화된인덱스번호
-    const activeRegion = cate[activeIndex]; //선택한 지역이름
-    setRegionCate(activeRegion); //선택한 지역이름 저장
+    console.log('activeIndex', activeIndex);
+    setRegionCate(REGION_CATEGORY_NAMES[activeIndex]); //선택한 지역이름 저장
   };
 
   const handleNotSet = () => {
-    setIsNotsetSelect(true);
+    setIsNotsetSelect((prev) => !prev);
     setRegionCate('미설정 지역');
-    if (isNotsetSelect) {
-      //슬라이드 엑티브 제거
+    if (!isNotsetSelect) {
+      const activeSlide = document.querySelector('.swiper-slide-active');
+      console.log('activeSlide', activeSlide);
+      if (activeSlide) {
+        activeSlide.classList.remove('swiper-slide-active');
+        console.log('지역없음');
+      }
     }
   };
 
@@ -65,14 +53,13 @@ const CategoryModal = ({ Modal, onHandleUpload, setRegionCate }: CategoryNodalTy
           <div className="modal-swiper flex h-full w-full flex-1 flex-col justify-center">
             <div className="items-col flex flex-col overflow-hidden py-[31px]">
               <Swiper
-                // loop={true}
                 direction="vertical"
                 slidesPerView={5}
                 centeredSlides={true}
                 mousewheel={true}
                 onSlideChange={handleSlideChange}
               >
-                {cate.map((region, index) => (
+                {REGION_CATEGORY_NAMES.map((region, index) => (
                   <SwiperSlide key={index} className="modal-slide">
                     <span>{region}</span>
                   </SwiperSlide>

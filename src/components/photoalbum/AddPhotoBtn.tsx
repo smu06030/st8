@@ -14,7 +14,8 @@ interface AddAlbumParamsType {
 }
 
 const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: AddAlbumParamsType) => {
-  const [regionCate, setRegionCate] = useState(item);
+  const SelectRegion = activeTab === 'rigionTab' ? item : activeTab === 'allTab' ? '서울' : '';
+  const [regionCate, setRegionCate] = useState(SelectRegion);
   const [currentRegion, setCurrentRegion] = useState(''); //지칭한값이 내가 준 지역이 맞는지 확인용
   const { closeModal, openModal, Modal, isOpen } = useModal();
 
@@ -27,7 +28,6 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: Ad
   // 파일 업로드 시 액션
   const OnChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    console.log('e.target.id', e.target.id);
     setCurrentRegion(e.target.id.split('-')[1]);
     if (!files) return;
 
@@ -54,6 +54,7 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: Ad
     const imgs = Array.isArray(imgArr) ? imgArr : imgSrc;
     if (imgs.length > 0) {
       imgs.forEach((src) => {
+        console.log('regionCate', regionCate);
         postAlbumMutate({ imgs: src, regionCate });
       });
       alert('앨범이 추가되었습니다.');
@@ -86,7 +87,14 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: Ad
       </label>
 
       {/* 팝업 */}
-      {isOpen && <CategoryModal Modal={Modal} onHandleUpload={onHandleUpload} setRegionCate={setRegionCate} />}
+      {isOpen && (
+        <CategoryModal
+          Modal={Modal}
+          onHandleUpload={onHandleUpload}
+          setRegionCate={setRegionCate}
+          regionCate={regionCate}
+        />
+      )}
     </li>
   );
 };

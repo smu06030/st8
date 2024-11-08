@@ -39,7 +39,7 @@ const MainStampSection = async () => {
               </Link>
             ))
         ) : (
-          <p className="text-alert text-sm">텅</p>
+          <p className="text-sm text-alert">텅</p>
         )}
       </div>
     </section>

@@ -2,20 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { REGION_NAME_MAP_KO } from '@/utils/region/RegionNames';
+import { Stamp } from '@/types/supabase/table.type';
 interface RegionStampPropsType {
   list: string;
-  stampList: {
-    address: string;
-    aliasLocation: string;
-    id: string;
-    lat: string;
-    lng: string;
-    user_id: string;
-    region: string;
-    visited: boolean;
-    created_at: string;
-    stampimg: string;
-  }[];
+  stampList: Stamp[];
 }
 
 const StampItem = ({ list, stampList }: RegionStampPropsType) => {
