@@ -7,15 +7,6 @@ export const signUp = async (email: string, password: string, nickname: string) 
   });
 
   if (error) throw new Error(`회원가입 실패: ${error.message}`);
-
-  // 사용자 추가 정보(profile)에 저장
-  if (data.user?.id) {
-    const { error: profileError } = await browserClient.from('profile').insert([{ id: data.user.id, email, nickname }]);
-    if (profileError) throw new Error(`프로필 저장 실패: ${profileError.message}`);
-  } else {
-    throw new Error('회원가입 성공했으나 사용자 ID를 찾을 수 없습니다.');
-  }
-
   return data;
 };
 
