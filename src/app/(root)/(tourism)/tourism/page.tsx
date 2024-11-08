@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { getPlaceList } from '@/serverActions/placeActions';
 import TouristSwiper from '@/components/mainPage/TouristSwiper';
-import { groupPlacesByCity } from '@/serverActions/groupPlaces';
+import { groupPlacesByCity } from '@/utils/place/placeGroupFormatter';
 import useUser from '@/hooks/useUser';
 
 const RecommendedPlaces = () => {

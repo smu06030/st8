@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import StampActive from './StampActive';
-import { AddressPropsType } from '@/types/stamp/AddressProps.types';
+import { AddressPropsType } from '@/types/stamp/addressProps.type';
 import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
 
 import browserClient from '@/utils/supabase/client';

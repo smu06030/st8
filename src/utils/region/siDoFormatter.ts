@@ -1,5 +1,5 @@
-import { GeoData } from '@/types/stampMap/CoordRegionCode.types';
-import { StampType } from '@/types/stampMap/Stamp.types';
+import { GeoData } from '@/types/stamp/coordRegionCode.type';
+import { StampType } from '@/types/stamp/stamp.type';
 
 // geoList 시, 도 이름 포멧
 export const geoListSiDoFormatter = (geoList: GeoData[]) => {

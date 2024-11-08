@@ -1,7 +1,7 @@
 'use client';
 
 import { useMapStore } from '@/providers/mapStoreProvider';
-import { PathType } from '@/types/stampMap/CoordRegionCode.types';
+import { PathType } from '@/types/stamp/coordRegionCode.type';
 import useGeoData from './useGeoData';
 import { Swiper as SwiperProps } from 'swiper/types';
 import { useCallback, useEffect } from 'react';

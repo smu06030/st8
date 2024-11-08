@@ -1,4 +1,4 @@
-import { Place } from './placeActions';
+import { Place } from '@/types/place/place.type';
 
 export const groupPlacesByCity = (places: Place[]): Record<string, Place[]> => {
   return places.reduce<Record<string, Place[]>>((acc, place) => {

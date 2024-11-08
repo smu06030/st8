@@ -8,7 +8,7 @@ import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import useUser from '@/hooks/useUser';
 // import { STAMPIMG_REGION_NAME } from '@/components/stamp/StampImg'; //이미지
 import { STAMPIMG_REGION_IMG, STAMPIMG_REGION_ACTIVE_IMG } from '@/utils/region/RegionNames';
-import { AddressPropsType } from '@/types/stamp/AddressProps.types';
+import { AddressPropsType } from '@/types/stamp/addressProps.type';
 
 interface StampActivePropsType {
   address: AddressPropsType;

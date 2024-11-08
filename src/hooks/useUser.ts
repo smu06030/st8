@@ -21,3 +21,12 @@ const useUser = () => {
 };
 
 export default useUser;
+
+// apis > user.ts
+
+// 1. getUser() return user
+
+// id를 뽑거나 user
+
+// 커스텀 훅 user = getUser()
+// return user.id
