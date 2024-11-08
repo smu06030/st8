@@ -31,7 +31,7 @@ const AlbumList = () => {
     currentIndex,
     setCurrentIndex
   } = useImgModal();
-  const { edit, setEdit, deleteId, setDeleteId, handleCheckboxChange, onHandleDelete } = useAlbumDelete();
+  const { edit, setEdit, deleteId, setDeleteId, selectPhotoList, onHandleDelete } = useAlbumDelete();
 
   const [imgSrc, setImgSrc] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState('allTab');
@@ -95,6 +95,9 @@ const AlbumList = () => {
               onClick={() => {
                 if (!edit) {
                   onClickImgModal(item.photoImg, item.id, index);
+                } else {
+                  deleteId.includes(item.id);
+                  selectPhotoList(item.id);
                 }
               }}
               key={item.id}
@@ -110,14 +113,6 @@ const AlbumList = () => {
                     priority
                     className="h-full w-full object-cover"
                   />
-                  {edit && (
-                    <input
-                      type="checkbox"
-                      className="absolute right-[10px] top-[10px] h-6 w-6 appearance-none rounded-full border border-gray-300 text-red-500 checked:border-red-500 checked:bg-[red]"
-                      checked={deleteId.includes(item.id)}
-                      onChange={() => handleCheckboxChange(item.id)}
-                    />
-                  )}
                 </>
               )}
             </li>

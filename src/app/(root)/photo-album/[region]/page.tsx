@@ -19,7 +19,7 @@ const RegionDetail = () => {
 
   const { selectedImgUrl, imgModal, onClickImgModal, setImgModal, activeImgId, currentIndex, setCurrentIndex } =
     useImgModal();
-  const { edit, setEdit, deleteId, onHandleDelete, handleCheckboxChange } = useAlbumDelete();
+  const { edit, setEdit, deleteId, onHandleDelete, selectPhotoList } = useAlbumDelete();
 
   const regionPhoto = albumListData?.filter((item) => item.region === regionTitle) || [];
 
@@ -50,6 +50,9 @@ const RegionDetail = () => {
             onClick={() => {
               if (!edit) {
                 onClickImgModal(item.photoImg, item.id, index);
+              } else {
+                deleteId.includes(item.id);
+                selectPhotoList(item.id);
               }
             }}
             key={item.id}
@@ -65,14 +68,14 @@ const RegionDetail = () => {
                   priority
                   className="h-full w-full object-cover"
                 />
-                {edit && (
+                {/* {edit && (
                   <input
                     type="checkbox"
                     className="absolute right-[10px] top-[10px] h-6 w-6 appearance-none rounded-full border border-gray-300 text-red-500 checked:border-red-500 checked:bg-[red]"
                     checked={deleteId.includes(item.id)}
-                    onChange={() => handleCheckboxChange(item.id)}
+                    onChange={() => selectPhotoList(item.id)}
                   />
-                )}
+                )} */}
               </>
             )}
           </li>
