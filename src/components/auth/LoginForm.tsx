@@ -3,13 +3,12 @@
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useSocialLogin } from '@/hooks/useSocialLogin';
-import { login } from '@/utils/supabase/auth';
 import Button from '@/components/common/Buttons/Button';
 import LinkButton from '@/components/common/Buttons/LinkButton';
-import Icon from '@/components/common/Icons/Icon';
-import { useState } from 'react';
-import Image from 'next/image';
 import InputField from '../common/InputField';
+import SocialLoginButton from '@/components/common/Buttons/SocialLoginButton';
+import { useLoginFormState } from '@/hooks/useLoginFormState';
+import { loginWithEmailAndPassword } from '@/utils/supabase/authService';
 
 interface LoginFormInputs {
   email: string;
@@ -17,40 +16,44 @@ interface LoginFormInputs {
 }
 
 const LoginForm = () => {
-  const { loginWithProvider } = useSocialLogin(); // 소셜 로그인 훅
+  const { loginWithProvider } = useSocialLogin();
   const {
     handleSubmit,
     setValue,
     formState: { errors },
     watch
   } = useForm<LoginFormInputs>();
-  const [showPassword, setShowPassword] = useState(false); // 비밀번호 보기 토글
-  const [isEmailError, setIsEmailError] = useState(false); // 이메일 오류
-  const [isPasswordError, setIsPasswordError] = useState(false); // 비밀번호 오류
-  const [emailStatus, setEmailStatus] = useState<'default' | 'active' | 'done'>('default');
-  const [passwordStatus, setPasswordStatus] = useState<'default' | 'active' | 'done'>('default');
+  const {
+    isEmailError,
+    setIsEmailError,
+    isPasswordError,
+    setIsPasswordError,
+    emailStatus,
+    setEmailStatus,
+    passwordStatus,
+    setPasswordStatus,
+    resetErrors
+  } = useLoginFormState();
   const router = useRouter();
 
-  // 입력 필드 값 감지
   const email = watch('email');
   const password = watch('password');
 
-  // 이메일과 비밀번호가 모두 입력되었을 때만 버튼 활성화
   const isFormFilled = email && password;
 
   const onHandleLogin = async (data: LoginFormInputs) => {
-    setIsPasswordError(false);
-    setIsEmailError(false); // 기존 오류 상태 초기화
-    const result = await login(data.email, data.password);
+    resetErrors();
+
+    const result = await loginWithEmailAndPassword(data.email, data.password);
 
     if (result.success) {
       router.push('/mypage');
     } else {
       if (result.type === 'password') {
-        setIsPasswordError(true); // 비밀번호 오류
+        setIsPasswordError(true);
         setPasswordStatus('done');
       } else {
-        setIsEmailError(true); // 이메일 오류
+        setIsEmailError(true);
         setEmailStatus('done');
       }
     }
@@ -66,54 +69,33 @@ const LoginForm = () => {
           value={email || ''}
           onChange={(e) => {
             setValue('email', e.target.value);
-            setEmailStatus('active'); // 입력 중일 때 active로 변경
+            setEmailStatus('active');
           }}
           onBlur={() => {
-            console.log('Setting status to done or default based on error');
-            setEmailStatus(isEmailError ? 'default' : 'done'); // 블러 시 상태 변경
+            setEmailStatus(isEmailError ? 'default' : 'done');
           }}
           status={emailStatus}
         />
-
-        {/* 이메일 오류 시 이미지 표시 */}
-        {isEmailError && (
-          <div className="mb-2 flex w-full items-end justify-end">
-            <Image src="/images/login-email-alert1.png" alt="이메일 오류" width={160} height={160} />
-          </div>
-        )}
 
         <InputField
           iconName="LockIcon"
           text="비밀번호"
           placeholder="비밀번호를 입력해주세요."
-          type={showPassword ? 'text' : 'password'} // 상태에 따라 비밀번호 타입 변경
           value={password || ''}
           onChange={(e) => {
             setValue('password', e.target.value);
-            setPasswordStatus('active'); // 입력 중일 때 active로 변경
+            setPasswordStatus('active');
           }}
           onBlur={() => setPasswordStatus(isPasswordError ? 'done' : 'default')}
           status={passwordStatus}
-          rightIcon={
-            <button type="button" onClick={() => setShowPassword(!showPassword)}>
-              {showPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
-            </button>
-          }
         />
 
-        {/* 비밀번호 오류 시 이미지 표시 */}
-        {isPasswordError && (
-          <div className="mb-2 flex w-full items-end justify-end">
-            <Image src="/images/login-pass-alert1.png" alt="비밀번호 오류" width={168} height={168} />
-          </div>
-        )}
-
-        <div className="mx-auto !mt-[66px] flex w-full max-w-md justify-between px-3">
+        <div className="mx-auto !mt-[66px] flex w-full max-w-md justify-between px-8">
           <label className="flex items-center text-gray-700">
             <input type="checkbox" className="mr-2 text-[14px]" />
             자동 로그인
           </label>
-          <a href="/forgot-password" className="text-[16px] text-gray-700">
+          <a href="/forgot-password" className="text-[14px] text-gray-700">
             아이디/비밀번호 찾기
           </a>
         </div>
@@ -126,26 +108,19 @@ const LoginForm = () => {
         />
 
         <div className="!mt-[48px] flex justify-center space-x-[16px]">
-          <button
+          <SocialLoginButton
+            provider="google"
             onClick={() => loginWithProvider('google')}
-            className="shadow-md h-[50px] w-[50px] rounded-full bg-white p-1"
-          >
-            <Image src="/images/apple-icon.png" alt="apple Login" className="rounded-full" width={50} height={50} />
-          </button>
+            altText="Google Login"
+            imageUrl="/images/google-icon.png"
+          />
 
-          <button
-            onClick={() => loginWithProvider('google')}
-            className="shadow-md h-[50px] w-[50px] rounded-full bg-white p-3"
-          >
-            <Image src="/images/google-icon.png" alt="Google Login" width={50} height={50} />
-          </button>
-
-          <button
+          <SocialLoginButton
+            provider="kakao"
             onClick={() => loginWithProvider('kakao')}
-            className="shadow-md h-[50px] w-[50px] rounded-full bg-[#FEE500] px-3"
-          >
-            <Image src="/images/kakao-icon.png" alt="Kakao Login" width={50} height={50} />
-          </button>
+            altText="Kakao Login"
+            imageUrl="/images/kakao-icon.png"
+          />
         </div>
 
         <div className="!mt-[210px] mb-4 flex items-center justify-center space-x-2">
