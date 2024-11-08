@@ -1,17 +1,17 @@
 import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
-import { Place, getPlaceList } from '@/serverActions/placeActions';
 import TouristSwiper from './TouristSwiper';
-import { createClient } from '@/utils/supabase/server';
+import { Place } from '@/types/place/place.type';
+import { getPlaceList } from '@/serverActions/place';
+import { getUser } from '@/serverActions/user';
 
 const MainRecommendSection = async () => {
-  const serverClient = createClient();
-  const { data } = await serverClient.auth.getUser();
+  const user = await getUser();
 
   let places: Place[] | null = null;
 
-  if (data?.user) {
-    places = await getPlaceList(data.user.id);
+  if (user) {
+    places = await getPlaceList(user.id);
   }
 
   return (

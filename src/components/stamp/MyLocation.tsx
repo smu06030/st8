@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import StampActive from '@/components/stamp/StampActive';
-import useUser from '@/hooks/useUser';
+import StampActive from './StampActive';
+import useUserId from '@/hooks/useUserId';
 import Link from 'next/link';
 import Icon from '@/components/common/Icons/Icon';
 import Loading from '@/app/(root)/(stamp)/loading';
@@ -13,7 +13,7 @@ import { usePostAliasMutation } from '@/queries/mutation/usePostAliasMutation';
 import GetUserAddress from '@/components/stamp/GetUserAddress';
 
 const MyLocation = () => {
-  const userId = useUser(); //유저아이디
+  const userId = useUserId();
   const [visit, setVisit] = useState<boolean>(false); //방문상태
   const [parentFocused, setParentFocused] = useState(false); //포커스상태
   const [aliasLocation, setAliasLocation] = useState<string | null>(null); //장소별칭

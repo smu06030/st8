@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import StampItem from '@/components/stamp/StampItem';
 // import { useQuery } from '@tanstack/react-query';
-import useUser from '@/hooks/useUser';
+import useUserId from '@/hooks/useUserId';
 import Image from 'next/image';
 import { DEFAULT_REGION_ITEM } from '@/constants/regions';
 import { useGetStampListQuery } from '@/queries/query/useStampQuery';
@@ -12,7 +12,7 @@ import { STAMPIMG_REGION_IMG } from '@/utils/region/RegionNames';
 import { promptLogin } from '@/utils/promptLogin';
 
 const StampList = () => {
-  const userId = useUser();
+  const userId = useUserId();
   const { data: stampList = [], isLoading } = useGetStampListQuery(userId);
 
   if (isLoading)

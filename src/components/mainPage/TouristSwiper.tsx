@@ -2,8 +2,8 @@
 
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Place } from '@/serverActions/placeActions';
 import PlaceCard from '@/components/tourism/placeCard';
+import { Place } from '@/types/place/place.type';
 
 import 'swiper/css';
 import 'swiper/css/pagination';

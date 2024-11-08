@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/queries/query.keys';
-import { postStamp } from '@/apis/postStamp';
+import { postStamp } from '@/apis/stamp';
 
 interface PostStampPropsType {
   address: string;

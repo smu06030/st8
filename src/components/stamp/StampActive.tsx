@@ -4,7 +4,9 @@ import React, { Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
 import browserClient from '@/utils/supabase/client';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
-import useUser from '@/hooks/useUser';
+// import { fetchUser } from '@/utils/fetchUser';
+import useUserId from '@/hooks/useUserId';
+// import { STAMPIMG_REGION_NAME } from '@/components/stamp/StampImg'; //이미지
 import { STAMPIMG_REGION_IMG, STAMPIMG_REGION_ACTIVE_IMG } from '@/utils/region/RegionNames';
 import { AddressType } from '@/types/stamp/Address.types';
 import { usePostStampMutation } from '@/queries/mutation/usePostStampMutaion';
@@ -27,9 +29,9 @@ const deleteStampList = async ({ address, userId }: { address: string; userId: s
 
 const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocation }: StampActivePropsType) => {
   const queryClient = useQueryClient();
-  const userId = useUser();
+  const userId = useUserId();
   const { mutate: postStampMutate } = usePostStampMutation();
-
+  // console.log('address', address);
   //useMutation(삭제)
   const StampDeleteMutation = useMutation({
     mutationFn: deleteStampList,

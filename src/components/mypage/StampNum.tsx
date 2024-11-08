@@ -2,27 +2,32 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { createClient } from '@/utils/supabase/client';
+import browserClient from '@/utils/supabase/client';
 
 const StampNum = () => {
   const [stampCount, setStampCount] = useState<number | null>(null);
-  const supabase = createClient();
 
   useEffect(() => {
     const fetchStampCount = async () => {
       try {
         // 현재 로그인된 사용자 정보 가져오기
-        const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+        const {
+          data: { user },
+          error: userError
+        } = await browserClient.auth.getUser();
 
-        if (sessionError || !sessionData.session) {
+        if (userError || !user) {
           console.error('로그인 정보가 없습니다.');
           return;
         }
 
-        const userId = sessionData.session.user.id;
+        const userId = user.id;
 
         // 해당 사용자의 스탬프 개수 조회
-        const { count, error } = await supabase.from('stamp').select('*', { count: 'exact' }).eq('user_id', userId);
+        const { count, error } = await browserClient
+          .from('stamp')
+          .select('*', { count: 'exact' })
+          .eq('user_id', userId);
 
         if (error) {
           console.error('스탬프 개수를 불러오는 중 오류:', error);
@@ -36,7 +41,7 @@ const StampNum = () => {
     };
 
     fetchStampCount();
-  }, [supabase]);
+  }, [browserClient]);
 
   return (
     <Link href="/stamp-all">
