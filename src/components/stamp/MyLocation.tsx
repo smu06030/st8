@@ -7,7 +7,7 @@ import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
 
 import browserClient from '@/utils/supabase/client';
 import { useQuery } from '@tanstack/react-query';
-import useUser from '@/hooks/useUser';
+import useUserId from '@/hooks/useUserId';
 import Link from 'next/link';
 import Icon from '@/components/common/Icons/Icon';
 import Loading from '@/app/(root)/(stamp)/loading';
@@ -23,7 +23,7 @@ interface LocationType {
 }
 
 const MyLocation = () => {
-  const userId = useUser();
+  const userId = useUserId();
   const [error, setError] = useState<string | null>(null); //에러상태
   const [address, setAddress] = useState<AddressPropsType>(); //현재주소
   const [visit, setVisit] = useState<boolean>(false); //방문상태

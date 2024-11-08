@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import useUser from '@/hooks/useUser';
+import useUserId from '@/hooks/useUserId';
 import { useGetStampListQuery } from '@/queries/query/useStampQuery';
 import Loading from '@/app/(root)/(stamp)/loading';
 import Icon from '@/components/common/Icons/Icon';
@@ -19,7 +19,7 @@ interface StampDetailPropsType {
 }
 
 const StampItemDetail = () => {
-  const userId = useUser();
+  const userId = useUserId();
   const params = useParams();
   const region = REGION_NAME_MAP_EN[decodeURIComponent((params.id as string[]).toString())];
   const [stampData, setStampData] = useState<StampDetailPropsType[]>([]);

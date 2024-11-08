@@ -1,7 +1,7 @@
 import browserClient from '@/utils/supabase/client';
 import { useEffect, useState } from 'react';
 
-const useUser = () => {
+const useUserId = () => {
   //로그인 유저 아이디 가져오기
   const [userId, setUserId] = useState<string>('');
 
@@ -20,13 +20,4 @@ const useUser = () => {
   return userId;
 };
 
-export default useUser;
-
-// apis > user.ts
-
-// 1. getUser() return user
-
-// id를 뽑거나 user
-
-// 커스텀 훅 user = getUser()
-// return user.id
+export default useUserId;

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Icon from '../common/Icons/Icon';
 import updateBookmarkStatus from '@/hooks/useUpdateBookmark';
 import Link from 'next/link';
-import useUser from '@/hooks/useUser';
+import useUserId from '@/hooks/useUserId';
 
 interface PlaceCardProps {
   firstimage: string | null;
@@ -25,7 +25,7 @@ const PlaceCard: React.FC<PlaceCardProps> = ({
   onRemoveBookmark
 }) => {
   const [isBookmarked, setIsBookmarked] = useState<boolean>(initialBookmarked);
-  const userId = useUser();
+  const userId = useUserId();
 
   // 북마크 추가 또는 해제 함수
   const onBookmarkClick = async (event: React.MouseEvent<HTMLButtonElement>) => {

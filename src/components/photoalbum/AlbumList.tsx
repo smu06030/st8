@@ -13,10 +13,10 @@ import { useAlbumList, useAlbumAddMutation, useAlbumDeleteMutation } from '@/hoo
 import useAlbumDelete from '@/hooks/useAlbumDelete';
 import useImgModal from '@/hooks/useImgModal';
 import Loading from '@/app/(root)/(stamp)/loading';
-import useUser from '@/hooks/useUser';
+import useUserId from '@/hooks/useUserId';
 
 const AlbumList = () => {
-  const userId = useUser();
+  const userId = useUserId();
   const { data: albumListData, isPending, isError } = useAlbumList(userId);
   const AlbumAddMutation = useAlbumAddMutation();
 
