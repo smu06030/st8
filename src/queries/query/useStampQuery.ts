@@ -1,4 +1,4 @@
-import { getStampList } from '@/serverActions/stampActions';
+import { getStampList } from '@/apis/stamp';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY } from '../query.keys';
 import { getStampLocation } from '@/components/stamp/getStampLocation';

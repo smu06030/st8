@@ -8,7 +8,7 @@ import { useAlbumList } from '@/hooks/useAlbumList';
 import useImgModal from '@/hooks/useImgModal';
 import AlbumImgEdit from '@/components/photoalbum/AlbumImgEdit';
 import useAlbumDelete from '@/hooks/useAlbumDelete';
-import useUser from '@/hooks/useUser';
+import useUserId from '@/hooks/useUserId';
 //{ params }: { params: { region: string } }
 import type { Metadata } from 'next';
 
@@ -20,7 +20,7 @@ import type { Metadata } from 'next';
 // }
 
 const RegionDetail = () => {
-  const userId = useUser();
+  const userId = useUserId();
   const { region } = useParams<{ region: string }>();
 
   const regionTitle = decodeURIComponent(region);
