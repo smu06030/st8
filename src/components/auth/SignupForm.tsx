@@ -1,10 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import NicknameStep from './signup/StepNicknameForm';
-import EmailStep from './signup/StepEmailForm';
-import PasswordStep from './signup/StepPasswordForm';
-import GoMainStep from './signup/StepMainForm';
+import NicknameStep from '@/components/auth/signup/StepNicknameForm';
+import EmailStep from '@/components/auth/signup/StepEmailForm';
+import PasswordStep from '@/components/auth/signup/StepPasswordForm';
+import GoMainStep from '@/components/auth/signup/StepMainForm';
 import { useSignupFormState } from '@/hooks/useSignupFormState';
 import { signUpWithEmail } from '@/app/api/auth/authService';
 

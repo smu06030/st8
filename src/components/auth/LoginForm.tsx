@@ -5,10 +5,12 @@ import { useRouter } from 'next/navigation';
 import { useSocialLogin } from '@/hooks/useSocialLogin';
 import Button from '@/components/common/Buttons/Button';
 import LinkButton from '@/components/common/Buttons/LinkButton';
-import InputField from '../common/InputField';
+import InputField from '@/components/common/InputField/InputField';
 import SocialLoginButton from '@/components/common/Buttons/SocialLoginButton';
 import { useLoginFormState } from '@/hooks/useLoginFormState';
 import { loginWithEmailAndPassword } from '@/app/api/auth/authService';
+import { useState } from 'react';
+import Icon from '@/components/common/Icons/Icon';
 
 interface LoginFormInputs {
   email: string;
@@ -35,7 +37,7 @@ const LoginForm = () => {
     resetErrors
   } = useLoginFormState();
   const router = useRouter();
-
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const email = watch('email');
   const password = watch('password');
 
@@ -61,7 +63,7 @@ const LoginForm = () => {
 
   return (
     <div className="m-[32px] min-h-screen flex-col justify-between">
-      <form onSubmit={handleSubmit(onHandleLogin)} className="flex flex-col items-center justify-center space-y-[24px]">
+      <form onSubmit={handleSubmit(onHandleLogin)} className="flex flex-col items-center justify-center space-y-[50px]">
         <InputField
           iconName="MailIcon"
           text="이메일"
@@ -75,13 +77,14 @@ const LoginForm = () => {
             setEmailStatus(isEmailError ? 'error' : 'done');
           }}
           status={isEmailError ? 'error' : emailStatus}
-          errorMessage={isEmailError ? '이메일 형식이 올바르지 않습니다.' : undefined}
+          errorMessage={isEmailError ? '등록되지 않은 이메일입니다.✖' : undefined}
         />
 
         <InputField
           iconName="LockIcon"
           text="비밀번호"
           placeholder="비밀번호를 입력해주세요."
+          type={showConfirmPassword ? 'text' : 'password'}
           value={password || ''}
           onChange={(e) => {
             setValue('password', e.target.value);
@@ -91,7 +94,12 @@ const LoginForm = () => {
             setPasswordStatus(isPasswordError ? 'error' : 'done');
           }}
           status={isPasswordError ? 'error' : passwordStatus}
-          errorMessage={isPasswordError ? '비밀번호가 올바르지 않습니다.' : undefined}
+          errorMessage={isPasswordError ? '등록되지 않은 비밀번호입니다.✖' : undefined}
+          rightIcon={
+            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+              {showConfirmPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
+            </button>
+          }
         />
 
         <div className="mx-auto !mt-[66px] flex w-full max-w-md justify-between px-8">
@@ -127,7 +135,7 @@ const LoginForm = () => {
           />
         </div>
 
-        <div className="!mt-[210px] mb-4 flex items-center justify-center space-x-2">
+        <div className="!mt-[180px] mb-4 flex items-center justify-center space-x-2">
           <span className="text-[14px] text-gray-600">아직 회원이 아니신가요?</span>
           <LinkButton text="회원가입" href="/signup" />
         </div>

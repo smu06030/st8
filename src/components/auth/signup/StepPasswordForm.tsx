@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import Button from '@/components/common/Buttons/Button';
 import Icon from '@/components/common/Icons/Icon';
 import PasswordCheck from './PasswordCheck';
-import InputField from '@/components/common/InputField';
+import InputField from '@/components/common/InputField/InputField';
 import { useConfirmPassword } from '@/hooks/useConfirmPassword';
 
 interface PasswordStepProps {
@@ -16,33 +16,25 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
   } = useForm();
 
   const [password, setPassword] = useState('');
+  const [passwordStatus, setPasswordStatus] = useState<'default' | 'active' | 'done'>('default');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // useConfirmPassword 훅 사용하여 비밀번호 확인 상태 관리
-  const {
-    confirmPassword,
-    // status: confirmPasswordStatus,
-    // error: confirmPasswordError,
-    isMatching,
-    handleConfirmPasswordChange,
-    handleConfirmPasswordBlur
-  } = useConfirmPassword(password);
+  const { confirmPassword, isMatching, handleConfirmPasswordChange, handleConfirmPasswordBlur } =
+    useConfirmPassword(password);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+    setPasswordStatus('active');
   };
 
   const handlePasswordBlur = () => {
-    if (password.length >= 8) {
-    }
+    setPasswordStatus(password.length >= 8 ? 'done' : 'default');
   };
 
   const handleNext = () => {
     if (isMatching) {
       onNext(password);
-    } else {
-      alert('비밀번호가 일치하지 않습니다.');
     }
   };
 
@@ -60,7 +52,7 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
         value={password}
         onChange={handlePasswordChange}
         onBlur={handlePasswordBlur}
-        status={password.length >= 8 ? 'done' : 'default'}
+        status={passwordStatus} // 상태에 따라 스타일 적용
         rightIcon={
           <button type="button" onClick={() => setShowPassword(!showPassword)}>
             {showPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
@@ -76,10 +68,12 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
         placeholder="비밀번호를 다시 입력해주세요."
         type={showConfirmPassword ? 'text' : 'password'}
         value={confirmPassword}
-        onChange={handleConfirmPasswordChange}
+        onChange={(e) => {
+          handleConfirmPasswordChange(e);
+          setPasswordStatus('active');
+        }}
         onBlur={handleConfirmPasswordBlur}
-        status={isMatching ? 'done' : 'error'}
-        // errorMessage={confirmPasswordError}
+        status={isMatching ? 'default' : 'done'}
         rightIcon={
           <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
             {showConfirmPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}

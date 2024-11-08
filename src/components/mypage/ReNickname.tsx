@@ -3,7 +3,7 @@ import Button from '../common/Buttons/Button';
 
 import useModal from '@/hooks/useModal';
 import browserClient from '@/utils/supabase/client';
-import InputField from '../common/InputField';
+import InputField from '../common/InputField/InputField';
 
 const ReNickname = () => {
   const { openModal, Modal, closeModal } = useModal();

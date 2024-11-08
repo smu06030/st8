@@ -3,7 +3,7 @@
 import useModal from '@/hooks/useModal';
 import { logout } from '@/utils/supabase/auth';
 import { useRouter } from 'next/navigation';
-import Button from '../common/Buttons/Button';
+import Button from '@/components/common/Buttons/Button';
 
 const LogoutButton = () => {
   const router = useRouter();

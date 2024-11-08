@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Icon from '@/components/common/Icons/Icon';
-import InputField from '@/components/common/InputField';
+import InputField from '@/components/common/InputField/InputField';
 import { useConfirmPassword } from '@/hooks/useConfirmPassword';
 
 interface PasswordConfirmFieldProps {

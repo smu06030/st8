@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
 import Button from '@/components/common/Buttons/Button';
-import Icon from '@/components/common/Icons/Icon';
-import InputField from '@/components/common/InputField';
+import InputField from '@/components/common/InputField/InputField';
 
 interface NicknameStepProps {
   onNext: (nickname: string) => void;
@@ -35,9 +34,9 @@ const NicknameStep = ({ onNext }: NicknameStepProps) => {
         value={nickname}
         onChange={(e) => {
           setNickname(e.target.value);
-          setNicknameStatus('active'); // 입력 중일 때 active로 변경
+          setNicknameStatus('active');
         }}
-        onBlur={() => setNicknameStatus(nickname ? 'done' : 'default')} // 입력 필드에서 벗어날 때 상태 변경
+        onBlur={() => setNicknameStatus(nickname ? 'done' : 'default')}
         status={nicknameStatus}
       />
       <div className="!mt-[400px]">

@@ -17,3 +17,5 @@ export const useSignupFormState = () => {
 
   return { step, formData, handleNext };
 };
+
+//회원가입 스텝을 저장하는 곳

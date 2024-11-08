@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@/components/common/Buttons/Button';
-import InputField from '@/components/common/InputField';
+import InputField from '@/components/common/InputField/InputField';
 import { checkEmailExists } from '@/app/api/auth/authService';
 
 interface EmailStepProps {
@@ -14,29 +14,31 @@ const EmailStep = ({ onNext }: EmailStepProps) => {
 
   const isFormFilled = !!email;
 
-  const handleNext = async () => {
-    // handleEmailBlur와 동일한 중복 확인 로직 추가
-    await handleEmailBlur();
-    if (emailStatus === 'done' && !emailError) {
-      onNext(email);
-    }
-  };
-
   const handleEmailBlur = async () => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!email || !emailPattern.test(email)) {
       setEmailStatus('error');
       setEmailError('유효한 이메일 주소를 입력해주세요. ✖');
-      return;
+      return false;
     }
 
     const exists = await checkEmailExists(email);
     if (exists) {
       setEmailStatus('error');
       setEmailError('이미 사용 중인 이메일입니다. ✖');
+      return false;
     } else {
       setEmailStatus('done');
       setEmailError(null);
+      return true;
+    }
+  };
+
+  const handleNext = async () => {
+    const isValidEmail = await handleEmailBlur();
+    if (isFormFilled && isValidEmail) {
+      onNext(email);
+    } else if (!isValidEmail) {
     }
   };
 
