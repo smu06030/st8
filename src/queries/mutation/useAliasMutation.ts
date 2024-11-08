@@ -1,4 +1,4 @@
-import { patchLocationAlias } from '@/serverActions/stampActions';
+import { patchLocationAlias } from '@/apis/stamp';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { QUERY_KEY } from '../query.keys';
 

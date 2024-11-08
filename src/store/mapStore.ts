@@ -1,5 +1,5 @@
-import { PathType } from '@/types/stampMap/CoordRegionCode.types';
-import { StampType } from '@/types/stampMap/Stamp.types';
+import { PathType } from '@/types/stamp/coordRegionCode.type';
+import { StampType } from '@/types/stamp/stamp.type';
 import { createStore } from 'zustand';
 
 export interface MapPropsType {

@@ -1,5 +1,5 @@
 import { useMapStore } from '@/providers/mapStoreProvider';
-import { StampType } from '@/types/stampMap/Stamp.types';
+import { StampType } from '@/types/stamp/stamp.type';
 import React from 'react';
 import { MapMarker, useMap } from 'react-kakao-maps-sdk';
 

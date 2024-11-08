@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import browserClient from '@/utils/supabase/client';
 import PlaceCard from '@/components/tourism/placeCard';
-import useUser from '@/hooks/useUser';
+import useUserId from '@/hooks/useUserId';
 import LoadingBounce from '@/components/common/Loading/Loading';
 import updateBookmarkStatus from '@/hooks/useUpdateBookmark';
 import { useQueryClient } from '@tanstack/react-query';
@@ -19,7 +19,7 @@ interface Place {
 const BookmarksPage: React.FC = () => {
   const [places, setPlaces] = useState<Place[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const userId = useUser();
+  const userId = useUserId();
   const queryClient = useQueryClient();
 
   // 북마크된 장소의 정보를 가져오는 함수

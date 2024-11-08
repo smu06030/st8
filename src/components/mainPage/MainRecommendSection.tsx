@@ -1,17 +1,17 @@
 import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
-import { Place, getPlaceList } from '@/serverActions/placeActions';
 import TouristSwiper from './TouristSwiper';
-import { createClient } from '@/utils/supabase/server';
+import { Place } from '@/types/place/place.type';
+import { getPlaceList } from '@/apis/place';
+import { getUser } from '@/apis/user';
 
 const MainRecommendSection = async () => {
-  const serverClient = createClient();
-  const { data } = await serverClient.auth.getUser();
+  const user = await getUser();
 
   let places: Place[] | null = null;
 
-  if (data?.user) {
-    places = await getPlaceList(data.user.id);
+  if (user) {
+    places = await getPlaceList(user.id);
   }
 
   return (
@@ -25,7 +25,7 @@ const MainRecommendSection = async () => {
         </Link>
         <p className="text-sm leading-tight text-gray-600">모아가 엄선 한 국내 여행지를 모았어요.</p>
       </div>
-      {places && places.length > 0 ? <TouristSwiper places={places} /> : <p className="text-alert text-sm">텅</p>}
+      {places && places.length > 0 ? <TouristSwiper places={places} /> : <p className="text-sm text-alert">텅</p>}
     </section>
   );
 };
