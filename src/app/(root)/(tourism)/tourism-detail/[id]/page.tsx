@@ -175,15 +175,13 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
         setIsBookmarked(false);
       } else {
         // 북마크 추가
-        const { error: insertError } = await browserClient
-          .from('bookmark')
-          .upsert({
-            user_id: user.id,
-            contentid: id,
-            choose: true,
-            title: data?.title || '제목 없음',
-            text: data?.text || '내용 없음'
-          });
+        const { error: insertError } = await browserClient.from('bookmark').upsert({
+          user_id: user.id,
+          contentid: id,
+          choose: true,
+          title: data?.title || '제목 없음',
+          text: data?.text || '내용 없음'
+        });
 
         if (insertError) throw new Error(insertError.message);
 
@@ -192,7 +190,7 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ params }) => {
 
       // React Query를 사용하여 관련된 쿼리를 무효화하고 최신 상태로 갱신
       queryClient.invalidateQueries({ queryKey: QUERY_KEY.PLACE_DETAIL(id) });
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY.PLACES });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY.PLACELIST });
     } catch (error) {
       console.error('북마크 처리 중 오류가 발생했습니다:', error);
       alert('북마크 처리 중 오류가 발생했습니다. 다시 시도해주세요.');

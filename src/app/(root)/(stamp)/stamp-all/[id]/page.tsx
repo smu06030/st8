@@ -3,28 +3,21 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import useUser from '@/hooks/useUser';
-import useQuerys from '@/queries/useQuerys';
+import useUserId from '@/hooks/useUserId';
+import { useGetStampListQuery } from '@/queries/query/useStampQuery';
 import Loading from '@/app/(root)/(stamp)/loading';
 import Icon from '@/components/common/Icons/Icon';
 import useDropdoun from '@/hooks/useDropdoun';
 import { REGION_NAME_MAP_EN } from '@/utils/region/RegionNames';
-
-interface StampDetailPropsType {
-  id: string;
-  region: string;
-  created_at?: string;
-  address: string;
-  aliasLocation: string | null;
-}
+import { Stamp } from '@/types/supabase/table.type';
 
 const StampItemDetail = () => {
-  const userId = useUser();
+  const userId = useUserId();
   const params = useParams();
   const region = REGION_NAME_MAP_EN[decodeURIComponent((params.id as string[]).toString())];
-  const [stampData, setStampData] = useState<StampDetailPropsType[]>([]);
+  const [stampData, setStampData] = useState<Stamp[]>([]);
   const { isOpen, toggleDropdown, dropdownRef } = useDropdoun();
-  const { data: stampList, isLoading } = useQuerys.useGetStampActive(userId);
+  const { data: stampList, isLoading } = useGetStampListQuery(userId);
 
   useEffect(() => {
     if (userId) {

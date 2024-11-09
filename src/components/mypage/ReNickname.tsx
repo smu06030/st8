@@ -14,9 +14,11 @@ const ReNickname = () => {
 
   useEffect(() => {
     const fetchNickname = async () => {
-      const { data: sessionData } = await browserClient.auth.getSession();
-      if (sessionData?.session) {
-        const userId = sessionData.session.user.id;
+      const {
+        data: { user }
+      } = await browserClient.auth.getUser();
+      if (user) {
+        const userId = user.id;
         const { data, error } = await browserClient.from('profile').select('nickname').eq('id', userId).single();
 
         if (error) {
@@ -32,10 +34,12 @@ const ReNickname = () => {
 
   const handleNameChange = async () => {
     try {
-      const { data: sessionData } = await browserClient.auth.getSession();
-      if (!sessionData?.session) return;
+      const {
+        data: { user }
+      } = await browserClient.auth.getUser();
+      if (!user) return;
 
-      const userId = sessionData.session.user.id;
+      const userId = user.id;
       const nicknameToSave = tempNickname?.trim() || nickname;
 
       const { error } = await browserClient.from('profile').update({ nickname: nicknameToSave }).eq('id', userId);

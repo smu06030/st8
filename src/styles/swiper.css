@@ -11,7 +11,7 @@
 }
 
 .swiper-slide {
-  @apply flex w-[20%] items-end justify-center text-center text-sm leading-[27px] text-gray-300 lg:w-[120px];
+  @apply flex items-end justify-center text-center text-sm leading-[27px] text-gray-300 lg:w-[120px];
 }
 
 .swiper-slide-active {

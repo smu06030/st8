@@ -1,7 +1,8 @@
+import { getStampList } from '@/serverActions/stamp';
+import { getUser } from '@/serverActions/user';
 import KakaoMap from '@/components/stampMap/KakaoMap';
 import { MapProvider } from '@/providers/mapStoreProvider';
 import { QUERY_KEY } from '@/queries/query.keys';
-import { fetchActiveStamp } from '@/serverActions/fetchStampActions';
 import { createClient } from '@/utils/supabase/server';
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
 import { Metadata } from 'next';
@@ -20,12 +21,12 @@ const StampMapPage = async () => {
     }
   });
 
-  const { data } = await createClient().auth.getUser();
+  const user = await getUser();
 
-  if (data?.user) {
+  if (user) {
     await queryClient.prefetchQuery({
-      queryKey: QUERY_KEY.STAMPLIST(data.user.id),
-      queryFn: () => fetchActiveStamp(data.user.id)
+      queryKey: QUERY_KEY.STAMPLIST(user.id),
+      queryFn: () => getStampList(user.id)
     });
   }
 

@@ -1,20 +1,10 @@
 'use server';
 
+import { Place } from '@/types/place/place.type';
 import { createClient } from '@/utils/supabase/server';
 
-export interface Place {
-  firstimage: string | null;
-  contentid: string | null;
-  title: string | null;
-  city: string | null;
-  supabaseText: string | null;
-  citytitle: string | null;
-  citydetail: string | null;
-  isBookmarked: boolean;
-}
-
 // 데이터 호출 함수 (북마크 상태 추가)
-export const fetchPlaceData = async (userId: string): Promise<Place[]> => {
+export const getPlaceList = async (userId: string): Promise<Place[]> => {
   const serverClient = createClient();
 
   try {

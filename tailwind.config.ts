@@ -13,6 +13,7 @@ const config: Config = {
         foreground: 'var(--foreground)',
         main: '#1D1D1D',
         defaultcolor: '#E8E8E8',
+        alert: '#D22730',
         primary: {
           50: '#fff7e0',
           100: '#ffecad',
@@ -128,6 +129,19 @@ const config: Config = {
         '50%': { transform: 'translateY(-20px)' }
       }
     }
-  }
+  },
+  // 임시 : 부모보다 width값 크게 가질때
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.pc-max-width': {
+          width: '1920px',
+          marginLeft: 'calc((100% - 1920px) / 2)'
+        }
+      };
+
+      addUtilities(newUtilities, ['responsive']);
+    }
+  ]
 };
 export default config;

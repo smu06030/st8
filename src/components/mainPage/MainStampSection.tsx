@@ -1,17 +1,17 @@
 import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
-import { createClient } from '@/utils/supabase/server';
-import { fetchActiveStamp } from '@/serverActions/fetchStampActions';
+import { getStampList } from '@/serverActions/stamp';
 import Image from 'next/image';
+import { getUser } from '@/serverActions/user';
+import { REGION_NAME_MAP_KO } from '@/utils/region/RegionNames';
 
 const MainStampSection = async () => {
   // 커스텀 훅을 사용 안하고 스탬프 정보 가져오기
-  const serverClient = createClient();
-  const { data } = await serverClient.auth.getUser();
+  const user = await getUser();
 
   let stampList = null;
-  if (data?.user) {
-    stampList = await fetchActiveStamp(data.user.id);
+  if (user) {
+    stampList = await getStampList(user.id);
   }
 
   return (
@@ -31,7 +31,7 @@ const MainStampSection = async () => {
             .filter((_, index) => index < 4)
             .map((stamp) => (
               <Link
-                href={`/stamp-all/${stamp.region}`}
+                href={`/stamp-all/${REGION_NAME_MAP_KO[stamp.region]}`}
                 key={stamp.id}
                 className="flex h-40 w-full items-center justify-center rounded-3xl bg-[#071325]"
               >
@@ -39,7 +39,7 @@ const MainStampSection = async () => {
               </Link>
             ))
         ) : (
-          <p className="text-sm text-gray-500">스탬프가 없습니다.</p>
+          <p className="text-sm text-alert">텅</p>
         )}
       </div>
     </section>

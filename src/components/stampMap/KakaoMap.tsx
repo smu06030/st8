@@ -1,7 +1,7 @@
 'use client';
 
 import { Map, Polygon } from 'react-kakao-maps-sdk';
-import { MAP_COLOR } from '@/constants/mapColor';
+import { MAP_COLOR, MAP_COLOR_INDEX } from '@/constants/mapColor';
 import ReSetttingMapBounds from '@/components/stampMap/ReSetttingMapBounds';
 import MapButtonSwiper from '@/components/stampMap/MapButtonSwiper';
 import KakaoMapMarker from './KakaoMapMarker';
@@ -49,10 +49,10 @@ const KakaoMap = () => {
             key={activeIndex}
             path={selectedPath}
             strokeWeight={2}
-            strokeColor={MAP_COLOR[activeIndex - 1]}
+            strokeColor={MAP_COLOR[MAP_COLOR_INDEX[activeIndex - 1]]}
             strokeOpacity={0.7}
             strokeStyle="solid"
-            fillColor={MAP_COLOR[activeIndex - 1]}
+            fillColor={MAP_COLOR[MAP_COLOR_INDEX[activeIndex - 1]]}
             fillOpacity={0.1}
           />
         )}
