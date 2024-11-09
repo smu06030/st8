@@ -14,7 +14,7 @@ import useImgModal from '@/hooks/useImgModal';
 import Loading from '@/app/(root)/(stamp)/loading';
 import useUserId from '@/hooks/useUserId';
 import { useGetAlbumListQuery } from '@/queries/query/useAlbumQuery';
-import { usePostAlbumMutation } from '@/queries/mutation/usePostAlbumMutation';
+import { usePostAlbumMutation } from '@/queries/mutation/useAlbumMutation';
 
 const AlbumList = () => {
   const userId = useUserId();
