@@ -135,7 +135,7 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 85%;
+  width: 100%;
 }
 .modal-box {
   width: calc(100% - 48px);

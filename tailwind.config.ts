@@ -72,7 +72,8 @@ const config: Config = {
       headerShadow: '0px 2px 12px 0px rgba(0, 0, 0, 0.10)'
     },
     screens: {
-      lg: '1024px' // 데스크탑 추후 수정가능
+      lg: '1024px', // 데스크탑 추후 수정가능
+      'mo-only': { max: '1024px' }
     },
     animation: {
       scaleStamp: 'scaleUp 1s ease-in-out infinite',
