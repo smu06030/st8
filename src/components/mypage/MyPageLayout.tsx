@@ -1,16 +1,16 @@
 'use client';
 import Link from 'next/link';
 import StampNum from './StampNum';
-import ReNickname from './ReNickname';
 import LogoutButton from '../auth/LogoutButton';
 import PhotoNum from './PhotoNum';
+import NicknameEditor from './NicknameEditor';
 
 const MyPageLayout = () => {
   return (
     <div className="items-left flex min-h-[100vh] flex-col bg-white px-6">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-4">
-          <ReNickname />
+          <NicknameEditor />
         </div>
         <LogoutButton />
       </div>

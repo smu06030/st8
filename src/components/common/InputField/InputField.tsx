@@ -1,31 +1,39 @@
-import React, { ChangeEvent, ReactNode, useEffect, useState, forwardRef } from 'react';
+import React, { ReactNode, useEffect, useState, forwardRef, ChangeEvent } from 'react';
 import Icon from '@/components/common/Icons/Icon';
 import { InputFieldStyles } from '@/components/common/InputField/InputFieldStyles';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface InputFieldProps {
   placeholder: string;
-  value?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: () => void;
   status: 'default' | 'active' | 'done' | 'error';
   iconName: 'MailIcon' | 'UserIcon' | 'LockIcon' | 'LocationIcon';
   text?: string;
   type?: string;
   rightIcon?: ReactNode;
   errorMessage?: string;
+  register?: UseFormRegisterReturn;
+  error?: { message?: string };
+  value?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: () => void;
 }
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
-  ({ placeholder, value, onChange, onBlur, status, iconName, text, type = 'text', rightIcon, errorMessage }, ref) => {
+  ({ placeholder, status, iconName, text, type = 'text', rightIcon, register, error }) => {
     const [currentStatus, setCurrentStatus] = useState<'default' | 'active' | 'done' | 'error'>(status);
 
     useEffect(() => {
-      if (!value) {
-        setCurrentStatus('default');
-      } else {
-        setCurrentStatus(errorMessage ? 'error' : status);
-      }
-    }, [status, errorMessage, value]);
+      setCurrentStatus(error?.message ? 'error' : status);
+    }, [status, error?.message]);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCurrentStatus('active'); // 입력 중일 때 active 상태로 설정
+      register?.onChange?.(e); // react-hook-form에서 전달된 onChange 호출
+    };
+
+    const handleInputBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCurrentStatus(error?.message ? 'error' : 'done');
+    };
 
     const currentStyle = InputFieldStyles[currentStatus];
 
@@ -37,17 +45,16 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         >
           <Icon name={iconName} color={currentStyle.iconColor} />
           <input
-            // ref={ref}
             type={type}
             placeholder={placeholder}
             className={`flex-grow bg-transparent text-sm font-normal text-[#004156] focus:outline-none ${currentStyle.textColor}`}
-            value={value}
-            onChange={onChange}
-            onBlur={onBlur}
+            {...register}
+            onChange={handleInputChange} // active 상태 반영
+            onBlur={handleInputBlur}
           />
           {rightIcon && <div className="ml-2">{rightIcon}</div>}
         </span>
-        {errorMessage && <p className="absolute bottom-[-35px] right-[-5px] text-xs text-red-500">{errorMessage}</p>}
+        {error?.message && <p className="absolute bottom-[-35px] right-[-5px] text-xs text-red-500">{error.message}</p>}
       </div>
     );
   }

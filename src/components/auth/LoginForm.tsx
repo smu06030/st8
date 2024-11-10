@@ -1,17 +1,14 @@
 'use client';
-
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useSocialLogin } from '@/hooks/useSocialLogin';
 import Button from '@/components/common/Buttons/Button';
 import LinkButton from '@/components/common/Buttons/LinkButton';
-import InputField from '@/components/common/InputField/InputField';
 import SocialLoginButton from '@/components/common/Buttons/SocialLoginButton';
-import { useLoginFormState } from '@/hooks/useLoginFormState';
 import { loginWithEmailAndPassword } from '@/app/api/auth/authService';
-import { useState } from 'react';
 import Icon from '@/components/common/Icons/Icon';
-import InputFieldWithRegister from '../common/InputField/InputFieldWithRegister';
+import InputFieldWithRegister from '../common/InputField/InputField';
 
 interface LoginFormInputs {
   email: string;
@@ -22,168 +19,103 @@ const LoginForm = () => {
   const { loginWithProvider } = useSocialLogin();
   const {
     handleSubmit,
-    setValue,
-    formState: { errors },
-    watch,
+    formState: { errors, isValid },
     register
-  } = useForm<LoginFormInputs>();
-  const {
-    isEmailError,
-    setIsEmailError,
-    isPasswordError,
-    setIsPasswordError,
-    emailStatus,
-    setEmailStatus,
-    passwordStatus,
-    setPasswordStatus,
-    resetErrors
-  } = useLoginFormState();
+  } = useForm<LoginFormInputs>({ mode: 'onChange' });
   const router = useRouter();
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const email = watch('email');
-  const password = watch('password');
-
-  const isFormFilled = email && password;
 
   const onHandleLogin = async (data: LoginFormInputs) => {
-    resetErrors();
-
     const result = await loginWithEmailAndPassword(data.email, data.password);
 
     if (result.success) {
       router.push('/mypage');
     } else {
       if (result.type === 'password') {
-        setIsPasswordError(true);
-        setPasswordStatus('done');
+        alert('비밀번호가 틀렸습니다.');
       } else {
-        setIsEmailError(true);
-        setEmailStatus('done');
+        alert('이메일이 등록되지 않았습니다.');
       }
     }
   };
 
   return (
-    <div className="m-[32px] min-h-screen flex-col justify-between">
-      <form onSubmit={handleSubmit(onHandleLogin)} className="flex flex-col items-center justify-center space-y-[50px]">
-        <InputFieldWithRegister
-          iconName="MailIcon"
-          text="이메일"
-          placeholder="이메일을 입력해주세요."
-          value={email || ''}
-          onChange={(e) => {
-            setValue('email', e.target.value);
-            setEmailStatus('active');
-          }}
-          onBlur={() => {
-            setEmailStatus(isEmailError ? 'error' : 'done');
-          }}
-          status={emailStatus}
-          // errorMessage={isEmailError ? '등록되지 않은 이메일입니다.✖' : undefined}
-          register={register('email', {
-            required: 'Email is required',
-            pattern: {
-              value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-              message: '등록되지 않은 이메일입니다.✖'
-            }
-          })}
-          error={errors.email}
-        />
-
-        {/* <InputField
-          iconName="LockIcon"
-          text="비밀번호"
-          placeholder="비밀번호를 입력해주세요."
-          type={showConfirmPassword ? 'text' : 'password'}
-          value={password || ''}
-          onChange={(e) => {
-            setValue('password', e.target.value);
-            setPasswordStatus('active');
-          }}
-          onBlur={() => {
-            setPasswordStatus(isPasswordError ? 'error' : 'done');
-          }}
-          status={isPasswordError ? 'error' : passwordStatus}
-          // errorMessage={isPasswordError ? '등록되지 않은 비밀번호입니다.✖' : undefined}
-          rightIcon={
-            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-              {showConfirmPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
-            </button>
+    <form onSubmit={handleSubmit(onHandleLogin)} className="mt-7 flex flex-col items-center space-y-6">
+      <InputFieldWithRegister
+        iconName="MailIcon"
+        text="이메일"
+        placeholder="이메일을 입력해주세요."
+        status={errors.email ? 'error' : 'default'}
+        register={register('email', {
+          required: '이메일을 입력해주세요.',
+          pattern: {
+            value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+            message: '올바른 이메일 형식이 아닙니다.'
           }
-        /> */}
+        })}
+        error={errors.email}
+      />
 
-        <InputFieldWithRegister
-          iconName="LockIcon"
-          text="비밀번호"
-          placeholder="비밀번호를 입력해주세요."
-          type={showConfirmPassword ? 'text' : 'password'}
-          value={password || ''}
-          onChange={(e) => {
-            setValue('password', e.target.value);
-            setPasswordStatus('active');
-          }}
-          onBlur={() => {
-            setPasswordStatus(isPasswordError ? 'error' : 'done');
-          }}
-          status={passwordStatus}
-          // errorMessage={isPasswordError ? '등록되지 않은 비밀번호입니다.✖' : undefined}
-          register={register('password', {
-            required: 'Password is required',
-            pattern: {
-              value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/,
-              message: '등록되지 않은 비밀번호입니다.✖'
-            }
-          })}
-          error={errors.email}
-          rightIcon={
-            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-              {showConfirmPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
-            </button>
-          }
+      <InputFieldWithRegister
+        iconName="LockIcon"
+        text="비밀번호"
+        placeholder="비밀번호를 입력해주세요."
+        type={showConfirmPassword ? 'text' : 'password'}
+        status={errors.password ? 'error' : 'default'}
+        register={register('password', {
+          required: '비밀번호를 입력해주세요.'
+          // pattern: {
+          //   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/,
+          //   message: '8-16자의 영문, 숫자를 포함해야 합니다.'
+          // }
+        })}
+        error={errors.password}
+        rightIcon={
+          <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+            {showConfirmPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
+          </button>
+        }
+      />
+
+      <div className="mt-16 flex w-full max-w-md justify-between px-8">
+        <div>
+          <input type="checkbox" className="mr-1" />
+          <span className="text-sm font-normal text-[#4e4e4e]">자동 로그인</span>
+        </div>
+        <a href="/forgot-password" className="text-right text-sm font-normal text-[#4e4e4e]">
+          아이디/비밀번호 찾기
+        </a>
+      </div>
+
+      <Button
+        text="로그인"
+        variant={isValid ? 'blue' : 'gray'}
+        disabled={!isValid}
+        onClick={handleSubmit(onHandleLogin)}
+      />
+
+      <div className="mt-6 flex justify-center space-x-4">
+        <SocialLoginButton
+          provider="google"
+          onClick={() => loginWithProvider('google')}
+          altText="Google Login"
+          imageUrl="/images/google-icon.png"
         />
 
-        <div className="mx-auto !mt-[66px] flex w-full max-w-md justify-between px-8">
-          <label className="flex items-center text-gray-700">
-            <input type="checkbox" className="mr-2 text-[14px]" />
-            자동 로그인
-          </label>
-          <a href="/forgot-password" className="text-[14px] text-gray-700">
-            아이디/비밀번호 찾기
-          </a>
-        </div>
-
-        <Button
-          text="로그인"
-          variant={isFormFilled ? 'blue' : 'gray'}
-          disabled={!isFormFilled}
-          onClick={handleSubmit(onHandleLogin)}
+        <SocialLoginButton
+          provider="kakao"
+          onClick={() => loginWithProvider('kakao')}
+          altText="Kakao Login"
+          imageUrl="/images/kakao-icon.png"
         />
+      </div>
 
-        <div className="!mt-[48px] flex justify-center space-x-[16px]">
-          <SocialLoginButton
-            provider="google"
-            onClick={() => loginWithProvider('google')}
-            altText="Google Login"
-            imageUrl="/images/google-icon.png"
-          />
-
-          <SocialLoginButton
-            provider="kakao"
-            onClick={() => loginWithProvider('kakao')}
-            altText="Kakao Login"
-            imageUrl="/images/kakao-icon.png"
-          />
-        </div>
-
-        <div className="!mt-[180px] mb-4 flex items-center justify-center space-x-2">
-          <span className="text-[14px] text-gray-600">아직 회원이 아니신가요?</span>
-          <LinkButton text="회원가입" href="/signup" />
-        </div>
-      </form>
-    </div>
+      <div className="mt-6 text-center">
+        <span className="text-sm text-gray-600">아직 회원이 아니신가요?</span>
+        <LinkButton text="회원가입" href="/signup" />
+      </div>
+    </form>
   );
 };
 
 export default LoginForm;
-
-//register를 사용하려고 했는데 InputField에서 계속 오류가 생겨 해당 부분은 그냥 두었습니다ㅠ

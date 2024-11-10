@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+
 import Button from '@/components/common/Buttons/Button';
-import Icon from '@/components/common/Icons/Icon';
-import PasswordCheck from './PasswordCheck';
 import InputField from '@/components/common/InputField/InputField';
-import { useConfirmPassword } from '@/hooks/useConfirmPassword';
+import Icon from '@/components/common/Icons/Icon';
 
 interface PasswordStepProps {
   onNext: (password: string) => void;
@@ -12,36 +11,32 @@ interface PasswordStepProps {
 
 const PasswordStep = ({ onNext }: PasswordStepProps) => {
   const {
+    register,
+    handleSubmit,
+    watch,
     formState: { errors }
-  } = useForm();
+  } = useForm<{ password: string; confirmPassword: string }>({
+    mode: 'onChange'
+  });
 
-  const [password, setPassword] = useState('');
-  const [passwordStatus, setPasswordStatus] = useState<'default' | 'active' | 'done'>('default');
+  const passwordValue = watch('password') || '';
+  const confirmPasswordValue = watch('confirmPassword') || '';
+  const hasMinLength = passwordValue.length >= 8;
+  const hasNumber = /\d/.test(passwordValue);
+  const hasLetter = /[A-Za-z]/.test(passwordValue);
+  const isPasswordMatching = passwordValue === confirmPasswordValue;
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { confirmPassword, isMatching, handleConfirmPasswordChange, handleConfirmPasswordBlur } =
-    useConfirmPassword(password);
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-    setPasswordStatus('active');
-  };
-
-  const handlePasswordBlur = () => {
-    setPasswordStatus(password.length >= 8 ? 'done' : 'default');
-  };
-
-  const handleNext = () => {
-    if (isMatching) {
-      onNext(password);
-    }
+  const onSubmit = (data: { password: string }) => {
+    onNext(data.password);
   };
 
   return (
-    <div className="fixed flex min-h-screen flex-col items-center space-y-6 px-6 py-8">
-      <span className="mb-6 w-full max-w-[327px] text-left font-bold text-[32px] text-secondary-700">
-        모아에게 <br /> 비밀번호를 알려주세요.
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
+      <span className="mb-6 w-full text-left font-bold text-4xl text-secondary-700">
+        모아에게 비밀번호를 <br />
+        알려주세요.
       </span>
 
       <InputField
@@ -49,31 +44,42 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
         text="비밀번호"
         placeholder="비밀번호를 입력해주세요."
         type={showPassword ? 'text' : 'password'}
-        value={password}
-        onChange={handlePasswordChange}
-        onBlur={handlePasswordBlur}
-        status={passwordStatus} // 상태에 따라 스타일 적용
+        status={errors.password ? 'error' : 'default'}
         rightIcon={
           <button type="button" onClick={() => setShowPassword(!showPassword)}>
             {showPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
           </button>
         }
+        register={register('password', {
+          // required: '비밀번호를 입력해주세요. ✖',
+          // validate: {
+          //   hasMinLength: (value) => value.length >= 8 || '8자리 이상이어야 합니다. ✖',
+          //   hasNumber: (value) => /\d/.test(value) || '숫자를 포함해야 합니다. ✖',
+          //   hasLetter: (value) => /[A-Za-z]/.test(value) || '영문자를 포함해야 합니다. ✖'
+          // }
+        })}
+        error={errors.password}
       />
 
-      <PasswordCheck password={password} />
+      {/* 유효성 검사 표시 */}
+      <div className="flex w-full items-center justify-end space-x-4 space-y-6 text-sm text-red-500">
+        <p className={hasNumber ? 'text-secondary-700' : ''}></p>
+        <p className={hasNumber ? 'text-secondary-700' : ''}>숫자 포함 {hasNumber ? '✔' : '✖'}</p>
+        <p className={hasLetter ? 'text-secondary-700' : ''}>영문 포함 {hasLetter ? '✔' : '✖'}</p>
+        <p className={hasMinLength ? 'text-secondary-700' : ''}>8자리 이상 {hasMinLength ? '✔' : '✖'}</p>
+      </div>
 
       <InputField
         iconName="LockIcon"
         text="비밀번호 확인"
         placeholder="비밀번호를 다시 입력해주세요."
         type={showConfirmPassword ? 'text' : 'password'}
-        value={confirmPassword}
-        onChange={(e) => {
-          handleConfirmPasswordChange(e);
-          setPasswordStatus('active');
-        }}
-        onBlur={handleConfirmPasswordBlur}
-        status={isMatching ? 'default' : 'done'}
+        status={errors.confirmPassword ? 'error' : 'default'}
+        register={register('confirmPassword', {
+          //   required: '비밀번호를 다시 입력해주세요. ✖',
+          //   validate: (value) => value === passwordValue || '비밀번호가 일치하지 않습니다. ✖'
+        })}
+        error={errors.confirmPassword}
         rightIcon={
           <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
             {showConfirmPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
@@ -81,19 +87,24 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
         }
       />
 
-      {/* 비밀번호 일치 여부 메시지 */}
-      <div className="flex w-full items-center justify-end text-sm">
-        {isMatching ? (
-          <p className="text-secondary-600">비밀번호가 동일합니다. ✔</p>
-        ) : confirmPassword.length > 0 ? (
-          <p className="text-red-600">비밀번호가 동일하지 않습니다. ✖</p>
-        ) : null}
+      <div className="flex w-full items-center justify-end space-y-6 text-sm">
+        <div></div>
+        {isPasswordMatching ? (
+          <p className="text-secondary-700">비밀번호가 동일합니다. ✔</p>
+        ) : (
+          <p className="text-red-500">비밀번호가 동일하지 않습니다. ✖</p>
+        )}
       </div>
 
-      <div className="!mt-[250px]">
-        <Button text="다음으로" variant={isMatching ? 'blue' : 'gray'} disabled={!isMatching} onClick={handleNext} />
+      <div className="mt-8">
+        <Button
+          text="다음으로"
+          variant={hasMinLength && hasNumber && hasLetter && isPasswordMatching ? 'blue' : 'gray'}
+          disabled={!hasMinLength || !hasNumber || !hasLetter || !isPasswordMatching}
+          type="submit"
+        />
       </div>
-    </div>
+    </form>
   );
 };
 

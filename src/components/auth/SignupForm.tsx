@@ -14,19 +14,35 @@ const SignupForm = () => {
 
   const handleSignup = async () => {
     try {
-      console.log(formData);
-      await signUpWithEmail(formData.nickname, formData.email, formData.password);
+      const response = await signUpWithEmail(formData.nickname, formData.email, formData.password);
+      // console.log('SignUp Response:', response);
       router.push('/');
     } catch (error: any) {
-      console.log(error);
-      console.error('회원가입 중 오류 발생:', error.message || error); // 오류 메시지 출력
-      console.error('오류 코드:', error.code || '코드가 없습니다');
       alert('회원가입 중 오류가 발생했습니다.');
     }
   };
 
+  // const handleSignup = async () => {
+  //   try {
+  //     const response = await fetch('/api/auth/signup', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(formData)
+  //     });
+  //     const result = await response.json();
+
+  //     if (result.error) {
+  //       alert(result.error);
+  //     } else {
+  //       router.push('/');
+  //     }
+  //   } catch (err) {
+  //     alert('회원가입 중 오류가 발생했습니다.');
+  //   }
+  // };
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center">
+    <div className="mt-7 flex min-h-screen flex-col items-center space-y-6">
       {step === 0 && <NicknameStep onNext={(nickname: string) => handleNext({ nickname })} />}
       {step === 1 && <EmailStep onNext={(email: string) => handleNext({ email })} />}
       {step === 2 && <PasswordStep onNext={(password: string) => handleNext({ password })} />}

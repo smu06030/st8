@@ -5,9 +5,10 @@ interface ButtonProps {
   onClick?: () => void;
   variant?: 'gray' | 'blue' | 'yellow';
   disabled?: boolean;
+  type?: 'button' | 'submit';
 }
 
-const Button = ({ text, onClick, variant = 'gray', disabled = false }: ButtonProps) => {
+const Button = ({ text, onClick, variant = 'gray', disabled = false, type = 'button' }: ButtonProps) => {
   const baseStyles =
     'h-16 w-[327px] rounded-xl p-2.5 font-semiBold text-base transition-colors duration-300 ease-in-out';
 
@@ -19,7 +20,7 @@ const Button = ({ text, onClick, variant = 'gray', disabled = false }: ButtonPro
 
   return (
     <button
-      type="button"
+      type={type}
       className={`${baseStyles} ${variantStyles[variant]}`}
       onClick={onClick}
       disabled={variant === 'gray' || disabled}
