@@ -12,7 +12,7 @@ const Footer = () => {
   const footerText = ['이용약관', '개인정보처리방침', 'Notion', 'Github', '내일배움캠프'];
 
   return (
-    <div className="w-full bg-[#fff] py-[58px]">
+    <div className="hidden w-full bg-[#fff] py-[58px] lg:block">
       <div className="mx-auto w-full max-w-[1080px]">
         <h2 className="text-semiBold mb-[18px] text-[24px] text-gray-500">모아를 만든 사람들</h2>
         <div className="flex flex-col items-end gap-[124px]">
