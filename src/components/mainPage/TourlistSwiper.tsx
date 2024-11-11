@@ -2,7 +2,7 @@
 
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import PlaceCard from '@/components/tourism/PlaceCard';
+import PlaceCard from '@/components/tourism/PlaceCard2';
 import { Tourism } from '@/types/tourism/tourism.type';
 
 import 'swiper/css';

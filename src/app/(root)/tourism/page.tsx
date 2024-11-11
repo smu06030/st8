@@ -13,7 +13,6 @@ const TourismPage = () => {
   if (isLoading) {
     return <LoadingBounce />;
   }
-  console.log(tourismList);
 
   // 도시별 데이터 그룹화
   const groupedPlaces = tourismList ? groupTourismByCity(tourismList) : [];
