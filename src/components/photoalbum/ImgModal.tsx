@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
 import Image from 'next/image';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -21,7 +20,6 @@ interface ImageModalType {
   activeImgId: number | string;
   currentIndex: number;
   setCurrentIndex: Dispatch<SetStateAction<number>>;
-  // setActiveImgId: Dispatch<SetStateAction<number>>;
 }
 
 const ImgModal = ({
@@ -32,8 +30,6 @@ const ImgModal = ({
   currentIndex,
   setCurrentIndex
 }: ImageModalType) => {
-  // const [currentIndex, setCurrentIndex] = useState(0);
-
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-[#363636] bg-opacity-50">
       <div className="relative h-[100vh] w-full bg-[#D9D9D9]">

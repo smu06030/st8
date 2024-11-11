@@ -8,15 +8,14 @@ import useModal from '@/hooks/useModal';
 interface AddAlbumParamsType {
   setImgSrc: Dispatch<React.SetStateAction<string[]>>;
   imgSrc: string[];
-  AlbumAddMutation: any;
+  postAlbumMutate: any;
   activeTab: string;
   item: string;
 }
 
-const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: AddAlbumParamsType) => {
-  // const [isRigionModal, setIsRigionModal] = useState(false);
-  const [regionCate, setRegionCate] = useState(item);
-
+const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: AddAlbumParamsType) => {
+  const SelectRegion = activeTab === 'rigionTab' ? item : activeTab === 'allTab' ? '서울' : '';
+  const [regionCate, setRegionCate] = useState(SelectRegion);
   const [currentRegion, setCurrentRegion] = useState(''); //지칭한값이 내가 준 지역이 맞는지 확인용
   const { closeModal, openModal, Modal, isOpen } = useModal();
 
@@ -25,10 +24,10 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
       onHandleUpload(imgSrc);
     }
   }, [imgSrc, currentRegion]);
+
   // 파일 업로드 시 액션
   const OnChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    console.log('e.target.id', e.target.id);
     setCurrentRegion(e.target.id.split('-')[1]);
     if (!files) return;
 
@@ -55,7 +54,8 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
     const imgs = Array.isArray(imgArr) ? imgArr : imgSrc;
     if (imgs.length > 0) {
       imgs.forEach((src) => {
-        AlbumAddMutation.mutate({ imgs: src, regionCate });
+        console.log('regionCate', regionCate);
+        postAlbumMutate({ imgs: src, regionCate });
       });
       alert('앨범이 추가되었습니다.');
       setCurrentRegion('');
@@ -87,7 +87,14 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
       </label>
 
       {/* 팝업 */}
-      {isOpen && <CategoryModal Modal={Modal} onHandleUpload={onHandleUpload} setRegionCate={setRegionCate} />}
+      {isOpen && (
+        <CategoryModal
+          Modal={Modal}
+          onHandleUpload={onHandleUpload}
+          setRegionCate={setRegionCate}
+          regionCate={regionCate}
+        />
+      )}
     </li>
   );
 };
