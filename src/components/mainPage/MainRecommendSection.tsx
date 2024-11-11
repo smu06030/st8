@@ -1,17 +1,18 @@
+'use client';
+
 import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
+import useUserId from '@/hooks/useUserId';
 import TourlistSwiper from './TourlistSwiper';
-import { Place } from '@/types/place/place.type';
-import { getPlaceList } from '@/serverActions/place';
-import { getUser } from '@/serverActions/user';
+import LoadingBounce from '../common/Loading/Loading';
+import { useGetTourismListQuery } from '@/queries/query/useTourismQuery';
 
-const MainRecommendSection = async () => {
-  const user = await getUser();
+const MainRecommendSection = () => {
+  const userId = useUserId();
+  const { data: tourismList, isLoading } = useGetTourismListQuery(userId);
 
-  let places: Place[] | null = null;
-
-  if (user) {
-    places = await getPlaceList(user.id);
+  if (isLoading) {
+    return <LoadingBounce />;
   }
 
   return (
@@ -25,7 +26,11 @@ const MainRecommendSection = async () => {
         </Link>
         <p className="text-sm leading-tight text-gray-600">모아가 엄선 한 국내 여행지를 모았어요.</p>
       </div>
-      {places && places.length > 0 ? <TourlistSwiper places={places} /> : <p className="text-sm text-alert">텅</p>}
+      {tourismList && tourismList.length > 0 ? (
+        <TourlistSwiper tourismList={tourismList} userId={userId} />
+      ) : (
+        <p className="text-sm text-alert">텅</p>
+      )}
     </section>
   );
 };
