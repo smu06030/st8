@@ -4,10 +4,10 @@ import { QUERY_KEY } from '../query.keys';
 import { getStampLocation } from '@/apis/stamp';
 import { Stamp } from '@/types/supabase/table.type';
 
-// 스탬프 리스트 가져오기
+// 스탬프 리스트 쿼리
 export const useGetStampListQuery = (userId: string): UseQueryResult<Stamp[]> => {
   return useQuery({
-    queryKey: QUERY_KEY.STAMPLIST(userId),
+    queryKey: QUERY_KEY.STAMP_LIST(userId),
     queryFn: () => getStampList(userId),
     enabled: !!userId // userId가 있을 때만 쿼리 실행
   });

@@ -33,7 +33,7 @@ const MainStampSection = async () => {
               <Link
                 href={`/stamp-all/${REGION_NAME_MAP_KO[stamp.region]}`}
                 key={stamp.id}
-                className="flex h-40 w-full items-center justify-center rounded-3xl bg-[#071325]"
+                className="flex h-40 w-full items-center justify-center rounded-3xl bg-white"
               >
                 <Image src={stamp.stampimg} width={146} height={146} priority alt={stamp.region} />
               </Link>
