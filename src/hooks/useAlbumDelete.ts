@@ -26,6 +26,7 @@ const useAlbumDelete = () => {
     } else if (window.confirm('앨범에서 삭제하시겠습니까?')) {
       await deleteAlbumMutate(deleteId);
       alert('삭제되었습니다.');
+      setDeleteId([]);
     }
   };
 

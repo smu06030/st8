@@ -42,7 +42,7 @@ const RegionCategoryModal = ({ Modal, onHandleUpload, setRegionCate, regionCate 
     <Modal>
       <div
         onClick={(e) => e.stopPropagation()}
-        className="modal-box flex h-[65vh] w-[90%] flex-col rounded-[24px] px-[32px] py-[36px]"
+        className="modal-box flex h-[65vh] w-[90%] flex-col rounded-[24px] px-[32px] py-[36px] lg:h-[497px] lg:w-[327px] lg:pb-[53px]"
       >
         <h2 className="font-semiBold text-[20px] leading-[26px]">
           이 사진에 어떤 장소의
@@ -71,7 +71,7 @@ const RegionCategoryModal = ({ Modal, onHandleUpload, setRegionCate, regionCate 
         <div>
           <button
             onClick={() => onHandleUpload('')}
-            className="w-full rounded-[12px] bg-[#FFC914] py-[20px] font-semiBold text-[#473700]"
+            className="w-full rounded-[12px] bg-secondary-500 py-[20px] font-semiBold text-[#473700]"
           >
             업로드
           </button>

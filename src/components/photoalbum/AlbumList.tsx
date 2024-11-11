@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -71,18 +71,20 @@ const AlbumList = () => {
     (title) => albumListData?.filter((item) => item.region === title) || []
   );
 
+  // console.log('filterRigionTitle', filterRigionTitle);
   return (
-    <div className="pb-[200px]">
+    <div className="pc-inner-width pb-[200px]">
       <Toptitle
         activeTab={activeTab}
         edit={edit}
         onClickTab={onClickTab}
         setEdit={setEdit}
         onHandleDelete={onHandleDelete}
+        deleteId={deleteId}
       />
       {/* 전체보기 */}
       {activeTab === 'allTab' ? (
-        <ul className="mt-[32px] grid grid-cols-3 gap-[6px]">
+        <ul className="mt-[32px] grid grid-cols-3 gap-[6px] lg:grid-cols-7">
           <AddPhotoBtn
             imgSrc={imgSrc}
             setImgSrc={setImgSrc}
@@ -126,7 +128,9 @@ const AlbumList = () => {
                 <div className="flex items-center border-b border-[#9C9C9C]">
                   <h2 className="py-[14px] font-bold text-[24px]">{item}</h2>
                 </div>
-                <ul className="relative mt-[16px] grid grid-cols-2 gap-[6px] pr-[20%]">
+                <ul
+                  className={`relative mt-[16px] grid grid-cols-2 gap-[6px] pr-[20%] lg:pr-[70%] ${item === '미설정 지역' && 'row-start-1'}`}
+                >
                   <AddPhotoBtn
                     imgSrc={imgSrc}
                     setImgSrc={setImgSrc}
@@ -134,7 +138,8 @@ const AlbumList = () => {
                     activeTab={activeTab}
                     item={item}
                   />
-                  <Link href={`/photo-album/${item}`}>
+
+                  <Link href={`/photo-album/${item}`} className={`${item === '미설정 지역' && 'row-start-1'}`}>
                     <li
                       className="h-full w-full bg-cover bg-center"
                       style={{
@@ -142,7 +147,10 @@ const AlbumList = () => {
                       }}
                     ></li>
                   </Link>
-                  <span className="absolute bottom-[-26px] right-0 pr-[20%] text-[14px] text-[#4F4F4F]">
+
+                  <span
+                    className={`absolute bottom-[-26px] right-0 pr-[20%] text-[14px] text-[#4F4F4F] lg:pr-[70%] ${item === '미설정 지역' && 'left-0'}`}
+                  >
                     {filterRigionPhoto[index]?.length}장
                   </span>
                 </ul>
