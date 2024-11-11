@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { DEFAULT_REGION_ITEM } from '@/constants/regions';
 import { useGetStampListQuery } from '@/queries/query/useStampQuery';
 import Loading from '@/app/(root)/(stamp)/loading';
-import { STAMPIMG_REGION_IMG } from '@/utils/region/RegionNames';
+import { REGION_NAME_MAP_KO, STAMPIMG_REGION_IMG } from '@/utils/region/RegionNames';
 import { promptLogin } from '@/utils/promptLogin';
 
 const StampList = () => {
@@ -27,17 +27,23 @@ const StampList = () => {
   const DeactiveRegionList = DEFAULT_REGION_ITEM.filter((item) => !ActiveRegionList.includes(item)); //비활성화 지역
 
   return (
-    <ul className="grid grid-cols-2 gap-[15px] py-[42px] lg:grid-cols-5 lg:gap-[16px]">
+    <ul className="grid grid-cols-2 gap-[15px] lg:grid-cols-5 lg:gap-[16px] lg:pt-[64px] mo-only:py-[42px]">
       {userId ? (
         <>
           {ActiveRegionList?.map((list) => <StampItem key={list} list={list} stampList={stampList} />)}
           {DeactiveRegionList &&
             DeactiveRegionList.map((stamp) => (
-              <li key={stamp} className="flex flex-col items-center justify-center rounded-[24px] bg-[#ccc] p-3">
-                {/* TODO : 스탬프 준비되면 교체 */}
-                {/* <Image src={`/images/${stamp}.png`} alt={stamp} width={300} height={300} className="opacity-50" />  */}
-                <Image src={`/images/preparing-img.png`} alt={stamp} width={300} height={300} />
-                {/* <div className="font-black">{stamp}</div> 비활성지역이름 */}
+              <li
+                key={stamp}
+                className="flex flex-col items-center justify-center rounded-[24px] bg-[#fff] p-[20px] lg:p-[25px]"
+              >
+                <Image
+                  src={`/images/stamp/${REGION_NAME_MAP_KO[stamp]}.png`}
+                  alt={stamp}
+                  width={300}
+                  height={300}
+                  className="opacity-50"
+                />
               </li>
             ))}
         </>
@@ -45,7 +51,10 @@ const StampList = () => {
         <>
           {/* 로그인안됬을때 화면 */}
           {loginRequiredRegions.map((stamp) => (
-            <li key={stamp.region} className="flex flex-col items-center justify-center rounded-[24px] bg-[#ccc] p-3">
+            <li
+              key={stamp.region}
+              className="flex flex-col items-center justify-center rounded-[24px] bg-[#fff] p-[20px] lg:p-[25px]"
+            >
               <Image src={stamp.img} alt={stamp.region} width={300} height={300} onClick={promptLogin} />
             </li>
           ))}
