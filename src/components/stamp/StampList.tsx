@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { DEFAULT_REGION_ITEM } from '@/constants/regions';
 import { useGetStampListQuery } from '@/queries/query/useStampQuery';
 import Loading from '@/app/(root)/(stamp)/loading';
-import { STAMPIMG_REGION_IMG } from '@/utils/region/RegionNames';
+import { REGION_NAME_MAP_KO, STAMPIMG_REGION_IMG } from '@/utils/region/RegionNames';
 import { promptLogin } from '@/utils/promptLogin';
 
 const StampList = () => {
@@ -34,10 +34,13 @@ const StampList = () => {
           {DeactiveRegionList &&
             DeactiveRegionList.map((stamp) => (
               <li key={stamp} className="flex flex-col items-center justify-center rounded-[24px] bg-[#ccc] p-3">
-                {/* TODO : 스탬프 준비되면 교체 */}
-                {/* <Image src={`/images/${stamp}.png`} alt={stamp} width={300} height={300} className="opacity-50" />  */}
-                <Image src={`/images/preparing-img.png`} alt={stamp} width={300} height={300} />
-                {/* <div className="font-black">{stamp}</div> 비활성지역이름 */}
+                <Image
+                  src={`/images/stamp/${REGION_NAME_MAP_KO[stamp]}.png`}
+                  alt={stamp}
+                  width={300}
+                  height={300}
+                  className="opacity-50"
+                />
               </li>
             ))}
         </>
