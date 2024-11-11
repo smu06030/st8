@@ -27,18 +27,31 @@ const NicknameEditor = () => {
       if (user) {
         const userId = user.id;
         const { data, error } = await browserClient.from('profile').select('nickname').eq('id', userId).single();
+        if (user.app_metadata.provider !== 'email') {
+          if (!data && nickname == null) {
+            const email = user.user_metadata.email;
+            const nickname = user.user_metadata.name;
+            const { error: insertError } = await browserClient
+              .from('profile')
+              .insert([{ id: userId, email, nickname }]); //
+
+            setNickname(nickname);
+            setValue('tempNickname', nickname || '');
+            if (insertError) {
+            }
+          }
+        }
 
         if (error) {
           setError('닉네임을 가져오는 중 오류가 발생했습니다.');
         } else {
           setNickname(data.nickname);
-          console.log(data);
-          setValue('tempNickname', data.nickname || ''); // 초기 tempNickname을 설정
+          setValue('tempNickname', data.nickname || '');
         }
       }
     };
     fetchNickname();
-  }, [setValue]);
+  }, [setValue, nickname]);
 
   const handleNameChange = async (formData: { tempNickname: string }) => {
     try {

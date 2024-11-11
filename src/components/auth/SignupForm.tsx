@@ -15,7 +15,6 @@ const SignupForm = () => {
   const handleSignup = async () => {
     try {
       const response = await signUpWithEmail(formData.nickname, formData.email, formData.password);
-      // console.log('SignUp Response:', response);
       router.push('/');
     } catch (error: any) {
       alert('회원가입 중 오류가 발생했습니다.');

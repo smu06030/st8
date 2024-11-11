@@ -7,12 +7,10 @@ export const checkEmailExists = async (email: string) => {
     return false;
   }
   return !!profileData;
-  // return Array.isArray(profileData) && profileData.length > 0;
 };
 
 export const loginWithEmailAndPassword = async (email: string, password: string) => {
   const emailCheck = await checkEmailExists(email);
-
   if (emailCheck) {
     const { error } = await browserClient.auth.signInWithPassword({
       email,
@@ -29,7 +27,6 @@ export const loginWithEmailAndPassword = async (email: string, password: string)
 
 export const signUpWithEmail = async (nickname: string, email: string, password: string) => {
   try {
-    console.log(nickname, email, password);
     const response = await fetch('/api/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -38,13 +35,11 @@ export const signUpWithEmail = async (nickname: string, email: string, password:
     const result = await response.json();
 
     if (result.error) {
-      console.log(result.error);
       throw new Error(result.error);
     }
 
     return result;
   } catch (error) {
-    console.log(error);
     throw new Error('회원가입 중 오류가 발생했습니다.222');
   }
 };

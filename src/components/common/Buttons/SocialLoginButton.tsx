@@ -1,8 +1,9 @@
 import Image from 'next/image';
+import { MouseEventHandler } from 'react';
 
 interface SocialLoginButtonProps {
   provider: 'google' | 'kakao';
-  onClick: () => void;
+  onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 const SocialLoginButton = ({ provider, onClick }: SocialLoginButtonProps) => {

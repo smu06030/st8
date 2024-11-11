@@ -1,8 +1,8 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, MouseEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { useSocialLogin } from '@/hooks/useSocialLogin';
+
 import Button from '@/components/common/Buttons/Button';
 import LinkButton from '@/components/common/Buttons/LinkButton';
 import SocialLoginButton from '@/components/common/Buttons/SocialLoginButton';
@@ -10,6 +10,7 @@ import { checkEmailExists, loginWithEmailAndPassword } from '@/app/api/auth/auth
 import Icon from '@/components/common/Icons/Icon';
 import browserClient from '@/utils/supabase/client';
 import InputField from '../common/InputField/InputField';
+import { useSocialLogin } from '@/hooks/useSocialLogin';
 
 interface LoginFormInputs {
   email: string;
@@ -42,7 +43,6 @@ const LoginForm = () => {
   }, [router]);
 
   const handleEmailBlur = async (email: string) => {
-    console.log(email);
     clearErrors('email');
     const exists = await checkEmailExists(email);
     if (!exists) {
@@ -65,6 +65,11 @@ const LoginForm = () => {
     }
   };
 
+  const handleSocialLogin = (type: 'kakao' | 'google', e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    loginWithProvider(type);
+  };
+
   return (
     <form onSubmit={handleSubmit(onHandleLogin)} className="mt-7 flex flex-col items-center space-y-6">
       <InputField
@@ -73,11 +78,6 @@ const LoginForm = () => {
         placeholder="이메일을 입력해주세요."
         status={errors.email ? 'error' : 'default'}
         register={register('email', {
-          // required: '이메일을 입력해주세요.',
-          // pattern: {
-          //   value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-          //   message: '올바른 이메일 형식이 아닙니다.'
-          // }
           onBlur: (e) => handleEmailBlur(e.target.value)
         })}
         error={errors.email}
@@ -89,13 +89,7 @@ const LoginForm = () => {
         placeholder="비밀번호를 입력해주세요."
         type={showConfirmPassword ? 'text' : 'password'}
         status={errors.password ? 'error' : 'default'}
-        register={register('password', {
-          // required: '비밀번호를 입력해주세요.'
-          // pattern: {
-          //   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/,
-          //   message: '8-16자의 영문, 숫자를 포함해야 합니다.'
-          // }
-        })}
+        register={register('password')}
         error={errors.password}
         rightIcon={
           <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
@@ -122,8 +116,8 @@ const LoginForm = () => {
       />
 
       <div className="mt-6 flex justify-center space-x-4">
-        <SocialLoginButton provider="google" onClick={() => loginWithProvider('google')} />
-        <SocialLoginButton provider="kakao" onClick={() => loginWithProvider('kakao')} />
+        <SocialLoginButton provider="google" onClick={(e) => handleSocialLogin('google', e)} />
+        <SocialLoginButton provider="kakao" onClick={(e) => handleSocialLogin('kakao', e)} />
       </div>
 
       <div className="mt-6 text-center">

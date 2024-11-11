@@ -25,10 +25,8 @@ const EmailStep = ({ onNext }: EmailStepProps) => {
 
   // 이메일 중복 확인 함수
   const handleEmailBlur = async (email: string) => {
-    console.log('handleEmailBlur 호출됨');
     try {
       const exists = await checkEmailExists(email);
-      console.log('Email exists:', exists);
 
       if (exists) {
         setError('email', { type: 'manual', message: '이미 사용 중인 이메일입니다. ✖' });
