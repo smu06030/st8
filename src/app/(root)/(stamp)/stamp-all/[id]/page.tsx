@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import useUserId from '@/hooks/useUserId';
 import { useGetStampListQuery } from '@/queries/query/useStampQuery';
 import Loading from '@/app/(root)/(stamp)/loading';
 import Icon from '@/components/common/Icons/Icon';
-import useDropdoun from '@/hooks/useDropdoun';
 import { REGION_NAME_MAP_EN } from '@/utils/region/RegionNames';
 import { Stamp } from '@/types/supabase/table.type';
 
@@ -16,10 +15,13 @@ const StampItemDetail = () => {
   const params = useParams();
   const region = REGION_NAME_MAP_EN[decodeURIComponent((params.id as string[]).toString())];
   const [stampData, setStampData] = useState<Stamp[]>([]);
-  const { isOpen, toggleDropdown, dropdownRef } = useDropdoun();
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
   const { data: stampList, isLoading } = useGetStampListQuery(userId);
 
-  console.log('stampData', stampData);
+  const toggleDropdown = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   useEffect(() => {
     if (userId) {
@@ -51,15 +53,14 @@ const StampItemDetail = () => {
       </div>
     );
 
-  //TODO :이미지명이랑 키값 동일하게하기
   return (
     <div className="flex h-[100%] flex-col bg-no-repeat pb-[200px] lg:mx-auto lg:w-full lg:max-w-[1080px]">
       <h2 className="mb-[102px] hidden font-bold text-[64px] text-secondary-900 lg:block">{region} 스탬프</h2>
       <div className="lg:flex">
-        <div className="mo-only:bg-[#fff] mo-only:shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)] mo-only:h-[145px] mo-only:mb-[82px] relative block w-full lg:h-full lg:w-[50%]">
-          <span className="mo-only:block absolute left-1/2 top-[16px] block hidden h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full bg-white shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)]"></span>
+        <div className="relative block w-full lg:h-full lg:w-[50%] mo-only:mb-[82px] mo-only:h-[145px] mo-only:bg-[#fff] mo-only:shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)]">
+          <span className="absolute left-1/2 top-[16px] block hidden h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full bg-white shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)] mo-only:block"></span>
           <div className="absolute h-full w-full bg-[#fff] lg:hidden"></div>
-          <span className="mo-only:border-[6px] mo-only:border-secondary-300 absolute left-1/2 top-[16px] block h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full bg-white p-[24px] lg:relative lg:h-full lg:max-h-[500px] lg:w-[100%] lg:max-w-[500px] lg:bg-[#F5F5F7] lg:p-[50px]">
+          <span className="absolute left-1/2 top-[16px] block h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full bg-white p-[24px] lg:relative lg:h-full lg:max-h-[500px] lg:w-[100%] lg:max-w-[500px] lg:bg-[#F5F5F7] lg:p-[50px] mo-only:border-[6px] mo-only:border-secondary-300">
             <div className="h-full w-full rounded-full bg-white">
               <Image
                 src={`/images/${params.id}-active.png`}

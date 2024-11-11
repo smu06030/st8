@@ -4,10 +4,10 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import ImgModal from '@/components/photoalbum/ImgModal';
+import ModalAlbumImg from '@/components/photoalbum/ModalAlbumImg';
 import AddPhotoBtn from '@/components/photoalbum/AddPhotoBtn';
-import Toptitle from '@/components/photoalbum/TopTitle';
-import AlbumImgEdit from '@/components/photoalbum/EditAlbumImg';
+import Toptitle from '@/components/photoalbum/AlbumTitleTab';
+import EditAlbumImg from '@/components/photoalbum/EditAlbumImg';
 
 import useAlbumDelete from '@/hooks/useAlbumDelete';
 import useImgModal from '@/hooks/useImgModal';
@@ -152,7 +152,7 @@ const AlbumList = () => {
         </section>
       )}
       {imgModal && (
-        <ImgModal
+        <ModalAlbumImg
           setImgModal={setImgModal}
           selectedImgUrl={selectedImgUrl}
           regionPhoto={regionPhoto}
@@ -161,7 +161,7 @@ const AlbumList = () => {
           currentIndex={currentIndex}
         />
       )}
-      {edit && <AlbumImgEdit deleteId={deleteId} onHandleDelete={onHandleDelete} />}
+      {edit && <EditAlbumImg deleteId={deleteId} onHandleDelete={onHandleDelete} />}
     </div>
   );
 };
