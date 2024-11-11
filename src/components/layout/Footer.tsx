@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 
 const Footer = () => {
-  const person = [
+  const techTeam = [
     { name: '송혜인', job: 'Front-end Developer', img: '/images/logo.png' },
     { name: '임보라', job: 'Front-end Developer', img: '/images/logo.png' },
     { name: '유인철', job: 'Front-end Developer', img: '/images/logo.png' },
@@ -17,7 +17,7 @@ const Footer = () => {
         <h2 className="text-semiBold mb-[18px] text-[24px] text-gray-500">모아를 만든 사람들</h2>
         <div className="flex flex-col items-end gap-[124px]">
           <ul className="grid grid-cols-5 gap-[12px]">
-            {person.map((info) => (
+            {techTeam.map((info) => (
               <li key={info.name} className="isInfo relative cursor-pointer overflow-hidden rounded-[24px] bg-[#eee]">
                 <Image src={info.img} alt={info.name} width={300} height={300} />
                 <div className="absolute bottom-0 left-0 hidden h-[40%] w-full flex-col gap-[4px] bg-[#1D1D1D] p-[10px] px-[18px] py-[24px] text-[#fff] opacity-[.8]">
@@ -29,16 +29,28 @@ const Footer = () => {
           </ul>
           <ul className="flex">
             {footerText.map((footer) => (
-              <li key={footer} className="px-[16px] py-[12px]">
+              <li key={footer} className="px-[16px] py-[12px] text-gray-500">
                 {footer}
               </li>
             ))}
           </ul>
         </div>
-        <footer className="border border-b-[#D9D9D9]">
-          <div></div>
-          {/* <Image src="/images/logo.png" alt="logo" width={300} height={300} /> */}
-          <div></div>
+        <footer className="flex justify-between border-t border-[#D9D9D9] pt-[40px]">
+          <div className="ml-[8px] flex flex-col gap-[18px]">
+            <h2 className="font-semiBold text-[24px] text-gray-500">내 손안에 여행기 모아</h2>
+            <div>
+              <p className="text-[14px] text-gray-500">
+                내 손안에 여행기 모아(8조) 내일배움캠프 react 6기 8조
+                <br />
+                참여 부트캠프 nbcamp_react_6th
+                <br />
+                ⓒCopyright 2024 - Project MOA
+              </p>
+            </div>
+          </div>
+          <div className="mr-[36px]">
+            <Image src="/images/logo_dark.png" alt="logo" width={100} height={100} />
+          </div>
         </footer>
       </div>
     </div>
