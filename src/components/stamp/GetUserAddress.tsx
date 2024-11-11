@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
-import { AddressType } from '@/types/stamp/Address.types';
+import { AddressType } from '@/types/stamp/addressProps.type';
 
 interface LocationType {
   lat: number;

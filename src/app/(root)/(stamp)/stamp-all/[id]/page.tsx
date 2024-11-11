@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import useUserId from '@/hooks/useUserId';
 import { useGetStampListQuery } from '@/queries/query/useStampQuery';
 import Loading from '@/app/(root)/(stamp)/loading';
 import Icon from '@/components/common/Icons/Icon';
-import useDropdoun from '@/hooks/useDropdoun';
 import { REGION_NAME_MAP_EN } from '@/utils/region/RegionNames';
 import { Stamp } from '@/types/supabase/table.type';
 
@@ -16,8 +15,13 @@ const StampItemDetail = () => {
   const params = useParams();
   const region = REGION_NAME_MAP_EN[decodeURIComponent((params.id as string[]).toString())];
   const [stampData, setStampData] = useState<Stamp[]>([]);
-  const { isOpen, toggleDropdown, dropdownRef } = useDropdoun();
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
   const { data: stampList, isLoading } = useGetStampListQuery(userId);
+
+  const toggleDropdown = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   useEffect(() => {
     if (userId) {
@@ -49,7 +53,6 @@ const StampItemDetail = () => {
       </div>
     );
 
-  //TODO :이미지명이랑 키값 동일하게하기
   return (
     <div className="lg:bg-white">
       <div className="flex h-[100%] flex-col bg-no-repeat pb-[200px] lg:mx-auto lg:w-full lg:max-w-[1080px]">

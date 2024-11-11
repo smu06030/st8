@@ -1,3 +1,23 @@
+export const REGION_CATEGORY_NAMES = [
+  '서울',
+  '경기',
+  '인천',
+  '강원',
+  '부산',
+  '대구',
+  '울산',
+  '세종',
+  '충북',
+  '충남',
+  '대전',
+  '전북',
+  '전남',
+  '광주',
+  '경북',
+  '경남',
+  '제주'
+];
+
 export const REGION_NAME_MAP_KO: { [key: string]: string } = {
   서울: 'seoul',
   경기: 'gyeonggi',

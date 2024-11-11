@@ -34,7 +34,7 @@ const Toptitle = ({ activeTab, edit, onClickTab, setEdit }: AlbumTopParamsType) 
         <div>
           {activeTab === 'allTab' && (
             <button
-              className={`text-${edit ? '[#D22730]' : 'black'} px-[12px] py-[18px]`}
+              className={`text-${edit ? '[#D22730]' : '[#9C9C9C]'} px-[12px] py-[18px]`}
               onClick={() => setEdit((prev) => !prev)}
             >
               편집
