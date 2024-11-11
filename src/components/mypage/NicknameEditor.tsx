@@ -33,7 +33,7 @@ const NicknameEditor = () => {
             const nickname = user.user_metadata.name;
             const { error: insertError } = await browserClient
               .from('profile')
-              .insert([{ id: userId, email, nickname }]); //
+              .insert([{ id: userId, email, nickname }]);
 
             setNickname(nickname);
             setValue('tempNickname', nickname || '');
