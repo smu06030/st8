@@ -3,41 +3,33 @@
 import React from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
+import Loading from '@/app/(root)/(stamp)/loading';
 import ImgModal from '@/components/photoalbum/ImgModal';
-import { useAlbumList } from '@/hooks/useAlbumList';
 import useImgModal from '@/hooks/useImgModal';
-import AlbumImgEdit from '@/components/photoalbum/AlbumImgEdit';
+import AlbumImgEdit from '@/components/photoalbum/EditAlbumImg';
 import useAlbumDelete from '@/hooks/useAlbumDelete';
 import useUserId from '@/hooks/useUserId';
-//{ params }: { params: { region: string } }
-import type { Metadata } from 'next';
-
-// async function generateMetadata({ params }: string) {
-//   const region = params.region
-//   return {
-//     title: `${region}`,
-//   }
-// }
+import { useGetAlbumListQuery } from '@/queries/query/useAlbumQuery';
 
 const RegionDetail = () => {
   const userId = useUserId();
   const { region } = useParams<{ region: string }>();
-
   const regionTitle = decodeURIComponent(region);
-  const { data: albumListData } = useAlbumList(userId); //TODO: 서버로할거면 서버액션으로 패치만들기
-  const {
-    selectedImgUrl,
-    imgModal,
-    onClickImgModal,
-    setImgModal,
-    activeImgId,
-    setActiveImgId,
-    currentIndex,
-    setCurrentIndex
-  } = useImgModal();
-  const { edit, setEdit, deleteId, onHandleDelete, handleCheckboxChange } = useAlbumDelete();
+  const { data: albumListData, isLoading, isError } = useGetAlbumListQuery(userId);
+
+  const { selectedImgUrl, imgModal, onClickImgModal, setImgModal, activeImgId, currentIndex, setCurrentIndex } =
+    useImgModal();
+  const { edit, setEdit, deleteId, onHandleDelete, selectPhotoList } = useAlbumDelete();
 
   const regionPhoto = albumListData?.filter((item) => item.region === regionTitle) || [];
+
+  if (isLoading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  if (isError) return <div>데이터를 가져오지 못하였습니다.</div>;
 
   return (
     <div>
@@ -58,6 +50,9 @@ const RegionDetail = () => {
             onClick={() => {
               if (!edit) {
                 onClickImgModal(item.photoImg, item.id, index);
+              } else {
+                deleteId.includes(item.id);
+                selectPhotoList(item.id);
               }
             }}
             key={item.id}
@@ -66,7 +61,6 @@ const RegionDetail = () => {
             {item.photoImg && (
               <>
                 <Image
-                  // onClick={() => onClickImgModal(item.photoImg, item.id)}
                   src={item.photoImg}
                   alt=""
                   width={200}
@@ -74,14 +68,6 @@ const RegionDetail = () => {
                   priority
                   className="h-full w-full object-cover"
                 />
-                {edit && (
-                  <input
-                    type="checkbox"
-                    className="absolute right-[10px] top-[10px] h-6 w-6 appearance-none rounded-full border border-gray-300 text-red-500 checked:border-red-500 checked:bg-[red]"
-                    checked={deleteId.includes(item.id)}
-                    onChange={() => handleCheckboxChange(item.id)}
-                  />
-                )}
               </>
             )}
           </li>
@@ -95,7 +81,6 @@ const RegionDetail = () => {
           activeImgId={activeImgId}
           setCurrentIndex={setCurrentIndex}
           currentIndex={currentIndex}
-          //   setActiveImgId={setActiveImgId}
         />
       )}
       {edit && <AlbumImgEdit deleteId={deleteId} onHandleDelete={onHandleDelete} />}

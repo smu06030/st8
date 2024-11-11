@@ -7,20 +7,19 @@ import Link from 'next/link';
 import ImgModal from '@/components/photoalbum/ImgModal';
 import AddPhotoBtn from '@/components/photoalbum/AddPhotoBtn';
 import Toptitle from '@/components/photoalbum/TopTitle';
-import AlbumImgEdit from '@/components/photoalbum/AlbumImgEdit';
+import AlbumImgEdit from '@/components/photoalbum/EditAlbumImg';
 
-import { useAlbumList, useAlbumAddMutation, useAlbumDeleteMutation } from '@/hooks/useAlbumList';
 import useAlbumDelete from '@/hooks/useAlbumDelete';
 import useImgModal from '@/hooks/useImgModal';
 import Loading from '@/app/(root)/(stamp)/loading';
 import useUserId from '@/hooks/useUserId';
+import { useGetAlbumListQuery } from '@/queries/query/useAlbumQuery';
+import { usePostAlbumMutation } from '@/queries/mutation/useAlbumMutation';
 
 const AlbumList = () => {
   const userId = useUserId();
-  const { data: albumListData, isPending, isError } = useAlbumList(userId);
-  const AlbumAddMutation = useAlbumAddMutation();
-
-  // console.log('albumListData', albumListData);
+  const { data: albumListData, isLoading, isError } = useGetAlbumListQuery(userId);
+  const { mutate: postAlbumMutate } = usePostAlbumMutation();
 
   const {
     selectedImgUrl,
@@ -32,7 +31,7 @@ const AlbumList = () => {
     currentIndex,
     setCurrentIndex
   } = useImgModal();
-  const { edit, setEdit, deleteId, setDeleteId, handleCheckboxChange, onHandleDelete } = useAlbumDelete();
+  const { edit, setEdit, deleteId, setDeleteId, selectPhotoList, onHandleDelete } = useAlbumDelete();
 
   const [imgSrc, setImgSrc] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState('allTab');
@@ -57,13 +56,13 @@ const AlbumList = () => {
     setActiveTab(tab);
   };
 
-  if (isPending)
+  if (isLoading)
     return (
       <div>
         <Loading />
       </div>
     );
-  if (isError) return <div>Error loading data</div>;
+  if (isError) return <div>데이터를 가져오지 못하였습니다.</div>;
 
   //유저가 등록한 지역이름들(중복_지역이름제거)
   const filterRigionTitle = albumListData ? [...new Set(albumListData?.map((item) => item.region))] : [];
@@ -87,7 +86,7 @@ const AlbumList = () => {
           <AddPhotoBtn
             imgSrc={imgSrc}
             setImgSrc={setImgSrc}
-            AlbumAddMutation={AlbumAddMutation}
+            postAlbumMutate={postAlbumMutate}
             activeTab={activeTab}
             item=""
           />
@@ -96,6 +95,9 @@ const AlbumList = () => {
               onClick={() => {
                 if (!edit) {
                   onClickImgModal(item.photoImg, item.id, index);
+                } else {
+                  deleteId.includes(item.id);
+                  selectPhotoList(item.id);
                 }
               }}
               key={item.id}
@@ -111,14 +113,6 @@ const AlbumList = () => {
                     priority
                     className="h-full w-full object-cover"
                   />
-                  {edit && (
-                    <input
-                      type="checkbox"
-                      className="absolute right-[10px] top-[10px] h-6 w-6 appearance-none rounded-full border border-gray-300 text-red-500 checked:border-red-500 checked:bg-[red]"
-                      checked={deleteId.includes(item.id)}
-                      onChange={() => handleCheckboxChange(item.id)}
-                    />
-                  )}
                 </>
               )}
             </li>
@@ -136,7 +130,7 @@ const AlbumList = () => {
                   <AddPhotoBtn
                     imgSrc={imgSrc}
                     setImgSrc={setImgSrc}
-                    AlbumAddMutation={AlbumAddMutation}
+                    postAlbumMutate={postAlbumMutate}
                     activeTab={activeTab}
                     item={item}
                   />
@@ -165,7 +159,6 @@ const AlbumList = () => {
           activeImgId={activeImgId}
           setCurrentIndex={setCurrentIndex}
           currentIndex={currentIndex}
-          // setActiveImgId={setActiveImgId}
         />
       )}
       {edit && <AlbumImgEdit deleteId={deleteId} onHandleDelete={onHandleDelete} />}

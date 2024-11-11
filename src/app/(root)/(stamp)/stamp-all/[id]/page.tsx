@@ -19,6 +19,8 @@ const StampItemDetail = () => {
   const { isOpen, toggleDropdown, dropdownRef } = useDropdoun();
   const { data: stampList, isLoading } = useGetStampListQuery(userId);
 
+  console.log('stampData', stampData);
+
   useEffect(() => {
     if (userId) {
       const fetchData = async () => {

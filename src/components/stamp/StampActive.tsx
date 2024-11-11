@@ -4,7 +4,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
 import useUserId from '@/hooks/useUserId';
 import { STAMPIMG_REGION_IMG, STAMPIMG_REGION_ACTIVE_IMG } from '@/utils/region/RegionNames';
-import { AddressType } from '@/types/stamp/Address.types';
+import { AddressType } from '@/types/stamp/addressProps.type';
 import { usePostStampMutation } from '@/queries/mutation/usePostStampMutaion';
 import { useDeleteStampMutation } from '@/queries/mutation/useDeleteStampMutation';
 
