@@ -121,7 +121,7 @@ const AlbumList = () => {
           ))}
         </ul>
       ) : (
-        <section className="mx-[24px] my-[18px] flex flex-col">
+        <section className="my-[18px] flex flex-col mo-only:mx-[24px]">
           <div className="flex flex-col gap-[34px]">
             {filterRigionTitle.map((item, index) => (
               <div key={item}>
@@ -141,18 +141,16 @@ const AlbumList = () => {
 
                   <Link href={`/photo-album/${item}`} className={`${item === '미설정 지역' && 'row-start-1'}`}>
                     <li
-                      className="h-full w-full bg-cover bg-center"
+                      className="relative h-full w-full bg-cover bg-center"
                       style={{
                         backgroundImage: `url(${filterRigionPhoto[index]?.[0]?.photoImg})`
                       }}
-                    ></li>
+                    >
+                      <span className={`absolute bottom-[-26px] right-0 text-[14px] text-[#4F4F4F]`}>
+                        {filterRigionPhoto[index]?.length}장
+                      </span>
+                    </li>
                   </Link>
-
-                  <span
-                    className={`absolute bottom-[-26px] right-0 pr-[20%] text-[14px] text-[#4F4F4F] lg:pr-[70%] ${item === '미설정 지역' && 'left-0'}`}
-                  >
-                    {filterRigionPhoto[index]?.length}장
-                  </span>
                 </ul>
               </div>
             ))}
