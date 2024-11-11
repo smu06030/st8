@@ -163,6 +163,9 @@ body {
   color: #fff;
   transition: opacity 0.3s;
 }
+.isInfo:hover > div {
+  @apply flex;
+}
 @media (min-width: 1024px) {
   .stamp-item:hover::before {
     opacity: 0.8;
