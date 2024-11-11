@@ -51,17 +51,6 @@ const MyLocation = () => {
     }
   }, [aliasLocation]);
 
-  //TODO: 추후 지우기
-  useEffect(() => {
-    if (isLoading) {
-      console.log('1');
-    } else if (stampListError) {
-      console.error('Error loading stampList');
-    } else if (stampList) {
-      console.log(stampList);
-    }
-  }, [stampListError, isLoading, stampList]);
-
   if (isLoading) {
     return (
       <div>
