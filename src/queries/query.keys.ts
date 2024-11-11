@@ -9,5 +9,6 @@ export const QUERY_KEY = {
   BOOKMARK: (userId: string) => ['bookmark', userId],
   SINGLE_BOOKMARK: (contentId: string) => ['bookmark', contentId],
   SEARCH_RESULTS: (query: string) => ['searchResults', query],
+  STAMP_COUNT: (userId: string) => ['stampCount', userId],
   ALBUM: ['photo']
 };

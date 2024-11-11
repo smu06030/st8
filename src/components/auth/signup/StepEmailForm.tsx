@@ -1,29 +1,55 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import Button from '@/components/common/Buttons/Button';
-import InputField from '@/components/common/InputField';
+import { checkEmailExists } from '@/app/api/auth/authService';
+import InputField from '@/components/common/InputField/InputField';
 
 interface EmailStepProps {
   onNext: (email: string) => void;
 }
 
+interface FormValues {
+  email: string;
+}
+
 const EmailStep = ({ onNext }: EmailStepProps) => {
-  const [email, setEmail] = useState(''); // 이메일 상태
-  const [emailError, setEmailError] = useState<string | null>(null);
-  const [emailStatus, setEmailStatus] = useState<'default' | 'active' | 'done'>('default'); // 상태 관리
+  const {
+    register,
+    handleSubmit,
+    setError,
+    clearErrors,
+    formState: { errors, isValid }
+  } = useForm<FormValues>({
+    mode: 'onChange' // 입력 시점에서 유효성 검사
+  });
 
-  const isFormFilled = !!email; // 이메일이 입력되었을 때만 버튼 활성화
+  // 이메일 중복 확인 함수
+  const handleEmailBlur = async (email: string) => {
+    try {
+      const exists = await checkEmailExists(email);
 
-  const handleNext = () => {
-    if (isFormFilled) {
-      onNext(email);
+      if (exists) {
+        setError('email', { type: 'manual', message: '이미 사용 중인 이메일입니다. ✖' });
+      } else {
+        clearErrors('email');
+      }
+    } catch (error) {
+      console.error('Error checking email:', error);
+      setError('email', { type: 'manual', message: '이메일 확인 중 오류가 발생했습니다. ✖' });
+    }
+  };
+
+  const onSubmit = (data: FormValues) => {
+    if (isValid) {
+      onNext(data.email);
     } else {
-      alert('이메일을 입력해주세요.');
+      console.error('유효성 검사 오류');
     }
   };
 
   return (
-    <div className="fixed flex min-h-screen flex-col items-center space-y-6 px-6 py-8">
-      <span className="mb-6 w-full text-left font-bold text-[32px] text-secondary-700">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
+      <span className="mb-6 w-full text-left font-bold text-4xl text-secondary-700">
         모아에게 <br /> 이메일을 알려주세요.
       </span>
 
@@ -31,34 +57,23 @@ const EmailStep = ({ onNext }: EmailStepProps) => {
         iconName="MailIcon"
         text="이메일"
         placeholder="이메일을 입력해주세요."
-        value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-          setEmailStatus('active'); // 입력 중일 때 active 상태로 변경
-          setEmailError(null); // 입력 시 오류 초기화
-        }}
-        onBlur={() => {
-          const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-          if (email && emailPattern.test(email)) {
-            setEmailStatus('done'); // 유효한 이메일 형식일 경우 done 상태로 변경
-          } else {
-            setEmailStatus('default');
-            setEmailError('유효한 이메일 주소를 입력해주세요.'); // 유효하지 않을 경우 오류 메시지 설정
-          }
-        }}
-        status={emailStatus}
+        register={register('email', {
+          required: '이메일을 입력해주세요. ✖',
+          pattern: {
+            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+            message: '유효한 이메일 주소를 입력해주세요. ✖'
+          },
+          onBlur: (e) => handleEmailBlur(e.target.value), // 이메일 중복 확인 함수 호출
+          onChange: () => clearErrors('email')
+        })}
+        status={errors.email ? 'error' : 'default'}
+        error={errors.email}
       />
 
-      {emailError && <p className="text-sm text-red-500">{emailError}</p>}
-      <div className="!mt-[400px]">
-        <Button
-          text="다음으로"
-          variant={isFormFilled ? 'blue' : 'gray'}
-          disabled={!isFormFilled}
-          onClick={handleNext}
-        />
+      <div className="mt-8">
+        <Button text="다음으로" variant={isValid ? 'blue' : 'gray'} disabled={!isValid} type="submit" />
       </div>
-    </div>
+    </form>
   );
 };
 

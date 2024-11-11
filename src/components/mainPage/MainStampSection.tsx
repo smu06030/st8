@@ -14,7 +14,6 @@ const MainStampSection = async () => {
     stampList = await getStampList(user.id);
   }
 
-  console.log(stampList?.[0].stampimg);
   return (
     <section className="mt-8">
       <div className="flex flex-col items-start justify-start gap-1.5">

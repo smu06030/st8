@@ -3,7 +3,7 @@
 import useModal from '@/hooks/useModal';
 import { logout } from '@/utils/supabase/auth';
 import { useRouter } from 'next/navigation';
-import Button from '../common/Buttons/Button';
+import Button from '@/components/common/Buttons/Button';
 
 const LogoutButton = () => {
   const router = useRouter();
@@ -13,10 +13,8 @@ const LogoutButton = () => {
     try {
       await logout();
       closeModal();
-      router.push('/landing'); // 로그아웃 후 landing 페이지로 이동
-    } catch (error) {
-      alert('로그아웃 중 오류가 발생했습니다: ');
-    }
+      router.push('/landing');
+    } catch (error) {}
   };
 
   const openLogoutModal = () => {

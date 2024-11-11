@@ -1,54 +1,48 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
 import Button from '@/components/common/Buttons/Button';
-import Icon from '@/components/common/Icons/Icon';
-import InputField from '@/components/common/InputField';
+import InputField from '@/components/common/InputField/InputField';
 
 interface NicknameStepProps {
   onNext: (nickname: string) => void;
 }
 
+interface NicknameFormInputs {
+  nickname: string;
+}
+
 const NicknameStep = ({ onNext }: NicknameStepProps) => {
-  const [nickname, setNickname] = useState(''); // 닉네임 상태 관리
-  const [nicknameStatus, setNicknameStatus] = useState<'default' | 'active' | 'done'>('default'); // 상태 관리
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid }
+  } = useForm<NicknameFormInputs>({ mode: 'onChange' });
 
-  // 닉네임이 입력되었을 때만 버튼 활성화
-  const isFormFilled = !!nickname;
-
-  const handleNext = () => {
-    if (isFormFilled) {
-      onNext(nickname);
-    } else {
-      alert('이름을 입력해주세요.');
-    }
+  const onSubmit = (data: NicknameFormInputs) => {
+    onNext(data.nickname);
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center space-y-6 px-6 py-8">
-      <span className="mb-6 w-full text-left font-bold text-[32px] text-secondary-700">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
+      <span className="mb-6 w-full text-left font-bold text-4xl text-secondary-700">
         모아에게 <br /> 이름을 알려주세요.
       </span>
+
       <InputField
         iconName="UserIcon"
-        text="이름"
         placeholder="이름을 입력해주세요."
-        value={nickname}
-        onChange={(e) => {
-          setNickname(e.target.value);
-          setNicknameStatus('active'); // 입력 중일 때 active로 변경
-        }}
-        onBlur={() => setNicknameStatus(nickname ? 'done' : 'default')} // 입력 필드에서 벗어날 때 상태 변경
-        status={nicknameStatus}
+        text="이름"
+        status={errors.nickname ? 'error' : 'default'}
+        register={register('nickname', {
+          required: '이름을 입력해주세요.'
+        })}
+        error={errors.nickname}
       />
-      <div className="!mt-[400px]">
-        <Button
-          text="다음으로"
-          variant={isFormFilled ? 'blue' : 'gray'}
-          disabled={!isFormFilled}
-          onClick={handleNext}
-        />
+      <div className="mt-8">
+        <Button text="다음으로" variant={isValid ? 'blue' : 'gray'} disabled={!isValid} type="submit" />
       </div>
-    </div>
+    </form>
   );
 };
 

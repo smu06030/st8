@@ -1,25 +1,44 @@
 import { useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 import browserClient from '@/utils/supabase/client';
-
-const getRedirectUrl = () => {
-  return process.env.NODE_ENV === 'development'
-    ? process.env.NEXT_PUBLIC_REDIRECT_URL_LOCAL
-    : process.env.NEXT_PUBLIC_REDIRECT_URL_PRODUCTION;
-};
 
 export const useSocialLogin = () => {
   const router = useRouter();
 
+  const redirectUrl = useMemo(() => {
+    if (process.env.NODE_ENV === 'development') {
+      return process.env.NEXT_PUBLIC_REDIRECT_URL_LOCAL || 'http://localhost:3000';
+    }
+    return process.env.NEXT_PUBLIC_REDIRECT_URL_PRODUCTION || 'https://st8-dev.vercel.app/';
+  }, []);
+
   const loginWithProvider = async (provider: 'kakao' | 'google') => {
-    const { data, error } = await browserClient.auth.signInWithOAuth({
-      provider,
-      options: {
-        redirectTo: getRedirectUrl()
+    console.log(redirectUrl);
+    try {
+      const { data, error } = await browserClient.auth.signInWithOAuth({
+        provider,
+        options: {
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent'
+          },
+          redirectTo: redirectUrl + '/auth/callback'
+        }
+      });
+      if (error) {
+        console.error('Social login error:', error.message);
+
+        alert('로그인에 실패했습니다. 다시 시도해주세요.');
+        return;
       }
-    });
-    if (error) throw error;
-    router.push('/mypage');
-    return data;
+      // console.log('>>>> 구글 로그인 성공');
+      // console.log(data);
+
+      router.push('/mypage');
+      return data;
+    } catch (err) {
+      console.error('social login error:', err);
+    }
   };
 
   return { loginWithProvider };
