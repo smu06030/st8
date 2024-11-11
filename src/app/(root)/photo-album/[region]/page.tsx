@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import Loading from '@/app/(root)/(stamp)/loading';
-import ImgModal from '@/components/photoalbum/ImgModal';
+import ImgModal from '@/components/photoalbum/ModalAlbumImg';
 import useImgModal from '@/hooks/useImgModal';
 import AlbumImgEdit from '@/components/photoalbum/EditAlbumImg';
 import useAlbumDelete from '@/hooks/useAlbumDelete';

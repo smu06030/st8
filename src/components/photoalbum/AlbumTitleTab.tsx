@@ -9,7 +9,6 @@ interface AlbumTopParamsType {
 }
 
 const Toptitle = ({ activeTab, edit, onClickTab, setEdit }: AlbumTopParamsType) => {
-  console.log('edit', edit);
   return (
     <div>
       <h2 className="mx-[24px] mt-[38px] border-b border-[#9C9C9C] py-[14px] font-semiBold text-[24px] text-[#004157]">

@@ -5,8 +5,7 @@ import Image from 'next/image';
 import useUserId from '@/hooks/useUserId';
 import { STAMPIMG_REGION_IMG, STAMPIMG_REGION_ACTIVE_IMG } from '@/utils/region/RegionNames';
 import { AddressType } from '@/types/stamp/addressProps.type';
-import { usePostStampMutation } from '@/queries/mutation/usePostStampMutaion';
-import { useDeleteStampMutation } from '@/queries/mutation/useDeleteStampMutation';
+import { usePostStampMutation, useDeleteStampMutation } from '@/queries/mutation/useStampMutaion';
 
 interface StampActivePropsType {
   address: AddressType;

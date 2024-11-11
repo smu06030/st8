@@ -9,7 +9,7 @@ import Loading from '@/app/(root)/(stamp)/loading';
 import useModal from '@/hooks/useModal';
 import AliasCheckModal from '@/components/common/Modal/AliasCheckModal';
 import { useGetStampLocationQuery } from '@/queries/query/useStampQuery';
-import { usePostAliasMutation } from '@/queries/mutation/usePostAliasMutation';
+import { usePostAliasMutation } from '@/queries/mutation/useStampMutaion';
 import GetUserAddress from '@/components/stamp/GetUserAddress';
 
 const MyLocation = () => {
@@ -50,17 +50,6 @@ const MyLocation = () => {
       onClickAliasAdd(aliasLocation);
     }
   }, [aliasLocation]);
-
-  //TODO: 추후 지우기
-  useEffect(() => {
-    if (isLoading) {
-      console.log('1');
-    } else if (stampListError) {
-      console.error('Error loading stampList');
-    } else if (stampList) {
-      console.log(stampList);
-    }
-  }, [stampListError, isLoading, stampList]);
 
   if (isLoading) {
     return (
