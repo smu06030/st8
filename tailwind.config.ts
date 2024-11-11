@@ -72,7 +72,8 @@ const config: Config = {
       headerShadow: '0px 2px 12px 0px rgba(0, 0, 0, 0.10)'
     },
     screens: {
-      lg: '1024px' // 데스크탑 추후 수정가능
+      lg: '1024px', // 데스크탑 추후 수정가능
+      'mo-only': { max: '1024px' }
     },
     animation: {
       scaleStamp: 'scaleUp 1s ease-in-out infinite',
@@ -129,6 +130,19 @@ const config: Config = {
         '50%': { transform: 'translateY(-20px)' }
       }
     }
-  }
+  },
+  // 임시 : 부모보다 width값 크게 가질때
+  plugins: [
+    function ({ addUtilities }: any) {
+      const newUtilities = {
+        '.pc-max-width': {
+          width: '1920px',
+          marginLeft: 'calc((100% - 1920px) / 2)'
+        }
+      };
+
+      addUtilities(newUtilities, ['responsive']);
+    }
+  ]
 };
 export default config;

@@ -1,22 +1,21 @@
 'use client';
 
 import { useState, Dispatch, SetStateAction, ChangeEvent, useEffect } from 'react';
-import CategoryModal from '@/components/photoalbum/CategoryModal';
+import RegionCategoryModal from '@/components/photoalbum/RegionCategoryModal';
 import Icon from '@/components/common/Icons/Icon';
 import useModal from '@/hooks/useModal';
 
 interface AddAlbumParamsType {
   setImgSrc: Dispatch<React.SetStateAction<string[]>>;
   imgSrc: string[];
-  AlbumAddMutation: any;
+  postAlbumMutate: any;
   activeTab: string;
   item: string;
 }
 
-const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: AddAlbumParamsType) => {
-  // const [isRigionModal, setIsRigionModal] = useState(false);
-  const [regionCate, setRegionCate] = useState(item);
-
+const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: AddAlbumParamsType) => {
+  const SelectRegion = activeTab === 'rigionTab' ? item : activeTab === 'allTab' ? '서울' : '';
+  const [regionCate, setRegionCate] = useState(SelectRegion);
   const [currentRegion, setCurrentRegion] = useState(''); //지칭한값이 내가 준 지역이 맞는지 확인용
   const { closeModal, openModal, Modal, isOpen } = useModal();
 
@@ -25,10 +24,10 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
       onHandleUpload(imgSrc);
     }
   }, [imgSrc, currentRegion]);
+
   // 파일 업로드 시 액션
   const OnChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    console.log('e.target.id', e.target.id);
     setCurrentRegion(e.target.id.split('-')[1]);
     if (!files) return;
 
@@ -55,7 +54,8 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
     const imgs = Array.isArray(imgArr) ? imgArr : imgSrc;
     if (imgs.length > 0) {
       imgs.forEach((src) => {
-        AlbumAddMutation.mutate({ imgs: src, regionCate });
+        console.log('regionCate', regionCate);
+        postAlbumMutate({ imgs: src, regionCate });
       });
       alert('앨범이 추가되었습니다.');
       setCurrentRegion('');
@@ -66,9 +66,7 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
       }
     }
   };
-  //인풋과 라벨 연결값이 텍스트로 넣어놓음 -> 고정값으로 지칭하는 지역이름이 같아 계속 처음 지역에만 이미지가 넣어짐
-  //인풋과 라벨 연결값은 유니크한값으로 지역이름의 변수로 변경 -> 각 지역별로 이미지는 들어가지만 전체보기에서 파일자체가 열리지않음
-  //->기존 고정변수명+유니크한값으로 변수명을 수정함
+
   return (
     <li className={`${activeTab === 'rigionTab' ? 'add-photo-btn' : ''} relative`}>
       <input
@@ -87,7 +85,14 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, AlbumAddMutation, activeTab, item }: A
       </label>
 
       {/* 팝업 */}
-      {isOpen && <CategoryModal Modal={Modal} onHandleUpload={onHandleUpload} setRegionCate={setRegionCate} />}
+      {isOpen && (
+        <RegionCategoryModal
+          Modal={Modal}
+          onHandleUpload={onHandleUpload}
+          setRegionCate={setRegionCate}
+          regionCate={regionCate}
+        />
+      )}
     </li>
   );
 };

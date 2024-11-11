@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import { useAlbumDeleteMutation } from '@/hooks/useAlbumList';
+import { useDeleteAlbumMutation } from '@/queries/mutation/useAlbumMutation';
 
 const useAlbumDelete = () => {
   const [edit, setEdit] = useState(false); //편집중이냐?
   const [deleteId, setDeleteId] = useState<number[]>([]); //삭제할아이디 담은 배열
-
-  const AlbumDeletemutation = useAlbumDeleteMutation();
+  const { mutate: deleteAlbumMutate } = useDeleteAlbumMutation();
 
   //체크이벤트로 아이디값 배열로 담기
-  const handleCheckboxChange = (id: number) => {
+  const selectPhotoList = (id: number) => {
     setDeleteId((prev) => {
       if (prev.includes(id)) {
         //선택한아이디들에 아이디가 포함되어있으면
@@ -25,7 +24,7 @@ const useAlbumDelete = () => {
       alert('선택된 앨범이 없습니다.');
       return;
     } else if (window.confirm('앨범에서 삭제하시겠습니까?')) {
-      await AlbumDeletemutation.mutate(deleteId);
+      await deleteAlbumMutate(deleteId);
       alert('삭제되었습니다.');
     }
   };
@@ -35,7 +34,7 @@ const useAlbumDelete = () => {
     setEdit,
     deleteId,
     setDeleteId,
-    handleCheckboxChange,
+    selectPhotoList,
     onHandleDelete
   };
 };
