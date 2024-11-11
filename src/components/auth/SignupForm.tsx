@@ -32,6 +32,17 @@ const SignupForm = () => {
   //     const result = await response.json();
 
   //     if (result.error) {
+  //       if (result.error.message.includes('already registered')) {
+  //         alert('이미 등록된 이메일입니다. 로그인 페이지로 이동합니다.');
+  //         {
+  //           router.push('/login');
+  //         }
+  //       } else {
+  //         throw new Error(result.error.message);
+  //       }
+  //     }
+
+  //     if (result.error) {
   //       alert(result.error);
   //     } else {
   //       router.push('/');
@@ -42,7 +53,7 @@ const SignupForm = () => {
   // };
 
   return (
-    <div className="mt-7 flex min-h-screen flex-col items-center space-y-6">
+    <div className="mt-7 flex min-h-screen flex-col items-center">
       {step === 0 && <NicknameStep onNext={(nickname: string) => handleNext({ nickname })} />}
       {step === 1 && <EmailStep onNext={(email: string) => handleNext({ email })} />}
       {step === 2 && <PasswordStep onNext={(password: string) => handleNext({ password })} />}

@@ -1,7 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import InputFieldWithRegister from '@/components/common/InputField/InputField';
+
 import Button from '@/components/common/Buttons/Button';
+import InputField from '@/components/common/InputField/InputField';
 
 interface NicknameStepProps {
   onNext: (nickname: string) => void;
@@ -28,7 +29,7 @@ const NicknameStep = ({ onNext }: NicknameStepProps) => {
         모아에게 <br /> 이름을 알려주세요.
       </span>
 
-      <InputFieldWithRegister
+      <InputField
         iconName="UserIcon"
         placeholder="이름을 입력해주세요."
         text="이름"

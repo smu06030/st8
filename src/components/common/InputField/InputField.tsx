@@ -49,6 +49,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             placeholder={placeholder}
             className={`flex-grow bg-transparent text-sm font-normal text-[#004156] focus:outline-none ${currentStyle.textColor}`}
             {...register}
+            // ref={ref}
             onChange={handleInputChange} // active 상태 반영
             onBlur={handleInputBlur}
           />

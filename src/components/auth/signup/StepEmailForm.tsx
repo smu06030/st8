@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '@/components/common/Buttons/Button';
 import { checkEmailExists } from '@/app/api/auth/authService';
-import InputFieldWithRegister from '@/components/common/InputField/InputField';
+import InputField from '@/components/common/InputField/InputField';
 
 interface EmailStepProps {
   onNext: (email: string) => void;
@@ -55,7 +55,7 @@ const EmailStep = ({ onNext }: EmailStepProps) => {
         모아에게 <br /> 이메일을 알려주세요.
       </span>
 
-      <InputFieldWithRegister
+      <InputField
         iconName="MailIcon"
         text="이메일"
         placeholder="이메일을 입력해주세요."

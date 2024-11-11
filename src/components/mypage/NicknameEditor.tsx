@@ -32,6 +32,7 @@ const NicknameEditor = () => {
           setError('닉네임을 가져오는 중 오류가 발생했습니다.');
         } else {
           setNickname(data.nickname);
+          console.log(data);
           setValue('tempNickname', data.nickname || ''); // 초기 tempNickname을 설정
         }
       }

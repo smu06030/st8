@@ -8,5 +8,6 @@ export const QUERY_KEY = {
   RECOMMENDED_PLACES: (userId: string) => ['recommendedPlaces', userId],
   REVIEWS: (placeId: string) => ['reviews', placeId],
   BOOKMARKS: (userId: string) => ['bookmarks', userId],
-  SEARCH_RESULTS: (query: string) => ['searchResults', query]
+  SEARCH_RESULTS: (query: string) => ['searchResults', query],
+  STAMP_COUNT: (userId: string) => ['stampCount', userId]
 };

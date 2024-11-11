@@ -6,8 +6,8 @@ export const checkEmailExists = async (email: string) => {
     console.error('Supabase 요청 오류:', error.message);
     return false;
   }
-  // return !!profileData;
-  return Array.isArray(profileData) && profileData.length > 0;
+  return !!profileData;
+  // return Array.isArray(profileData) && profileData.length > 0;
 };
 
 export const loginWithEmailAndPassword = async (email: string, password: string) => {
