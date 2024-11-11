@@ -1,5 +1,8 @@
 const LoadingBounce = () => (
-  <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-backgroundGradient">
+  <div
+    className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-backgroundGradient"
+    aria-hidden="true"
+  >
     <svg
       width="139"
       height="139"

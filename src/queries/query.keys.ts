@@ -2,12 +2,12 @@ export const QUERY_KEY = {
   AREAS: ['areas'],
   USER: (userId: string) => ['user', userId],
   USER_LOCATION_STAMP: ['userLocationStamp'],
-  STAMPLIST: (userId: string) => ['stampList', userId],
-  PLACELIST: ['placeList'],
-  PLACE_DETAIL: (placeId: string) => ['placeDetail', placeId],
+  STAMP_LIST: (userId: string) => ['stampList', userId],
+  TOURISM_LIST: ['tourismList'],
   RECOMMENDED_PLACES: (userId: string) => ['recommendedPlaces', userId],
   REVIEWS: (placeId: string) => ['reviews', placeId],
-  BOOKMARKS: (userId: string) => ['bookmarks', userId],
+  BOOKMARK: (userId: string) => ['bookmark', userId],
+  SINGLE_BOOKMARK: (contentId: string) => ['bookmark', contentId],
   SEARCH_RESULTS: (query: string) => ['searchResults', query],
-  Album: ['photo']
+  ALBUM: ['photo']
 };
