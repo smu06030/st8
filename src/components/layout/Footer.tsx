@@ -13,7 +13,7 @@ const Footer = () => {
 
   return (
     <div className="hidden w-full bg-[#fff] py-[58px] lg:block">
-      <div className="mx-auto w-full max-w-[1080px]">
+      <div className="pc-inner-width">
         <h2 className="text-semiBold mb-[18px] text-[24px] text-gray-500">모아를 만든 사람들</h2>
         <div className="flex flex-col items-end gap-[124px]">
           <ul className="grid grid-cols-5 gap-[12px]">

@@ -93,3 +93,9 @@ body {
 .body-padding {
   @apply pb-16 pt-[56px];
 }
+
+@media (min-width: 1024px) {
+  .pc-inner-width {
+    @apply mx-auto w-full max-w-[1080px];
+  }
+}
