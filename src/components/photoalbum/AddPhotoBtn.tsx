@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, Dispatch, SetStateAction, ChangeEvent, useEffect } from 'react';
-import CategoryModal from '@/components/photoalbum/CategoryModal';
+import RegionCategoryModal from '@/components/photoalbum/RegionCategoryModal';
 import Icon from '@/components/common/Icons/Icon';
 import useModal from '@/hooks/useModal';
 
@@ -66,9 +66,7 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: Ad
       }
     }
   };
-  //인풋과 라벨 연결값이 텍스트로 넣어놓음 -> 고정값으로 지칭하는 지역이름이 같아 계속 처음 지역에만 이미지가 넣어짐
-  //인풋과 라벨 연결값은 유니크한값으로 지역이름의 변수로 변경 -> 각 지역별로 이미지는 들어가지만 전체보기에서 파일자체가 열리지않음
-  //->기존 고정변수명+유니크한값으로 변수명을 수정함
+
   return (
     <li className={`${activeTab === 'rigionTab' ? 'add-photo-btn' : ''} relative`}>
       <input
@@ -88,7 +86,7 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: Ad
 
       {/* 팝업 */}
       {isOpen && (
-        <CategoryModal
+        <RegionCategoryModal
           Modal={Modal}
           onHandleUpload={onHandleUpload}
           setRegionCate={setRegionCate}

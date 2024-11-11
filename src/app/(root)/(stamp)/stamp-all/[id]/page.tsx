@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import useUserId from '@/hooks/useUserId';
 import { useGetStampListQuery } from '@/queries/query/useStampQuery';
 import Loading from '@/app/(root)/(stamp)/loading';
 import Icon from '@/components/common/Icons/Icon';
-import useDropdoun from '@/hooks/useDropdoun';
 import { REGION_NAME_MAP_EN } from '@/utils/region/RegionNames';
 import { Stamp } from '@/types/supabase/table.type';
 
@@ -16,10 +15,13 @@ const StampItemDetail = () => {
   const params = useParams();
   const region = REGION_NAME_MAP_EN[decodeURIComponent((params.id as string[]).toString())];
   const [stampData, setStampData] = useState<Stamp[]>([]);
-  const { isOpen, toggleDropdown, dropdownRef } = useDropdoun();
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
   const { data: stampList, isLoading } = useGetStampListQuery(userId);
 
-  console.log('stampData', stampData);
+  const toggleDropdown = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   useEffect(() => {
     if (userId) {
@@ -51,7 +53,6 @@ const StampItemDetail = () => {
       </div>
     );
 
-  //TODO :이미지명이랑 키값 동일하게하기
   return (
     <div className="flex h-[100%] flex-col bg-no-repeat pb-[200px]">
       <div className="relative mb-[82px] block h-[145px] w-full bg-[#fff] shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)]">
@@ -68,7 +69,6 @@ const StampItemDetail = () => {
         <ul className="flex flex-col gap-[14px]">
           <li className="flex items-center justify-start gap-[8px]">
             <Icon name="TimeIcon" size={28} color="white" bgColor="#00688A" rx="16" />
-            {/* TODO: 날짜표시 수정*/}
             <p className="text-[#4F4F4F]">
               {oldestDate?.created_at
                 ? new Date(oldestDate.created_at).toLocaleDateString('ko-KR', {

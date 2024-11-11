@@ -16,7 +16,7 @@ interface CategoryNodalType {
   regionCate: string;
 }
 
-const CategoryModal = ({ Modal, onHandleUpload, setRegionCate, regionCate }: CategoryNodalType) => {
+const RegionCategoryModal = ({ Modal, onHandleUpload, setRegionCate, regionCate }: CategoryNodalType) => {
   const [isNotsetSelect, setIsNotsetSelect] = useState(false);
 
   const handleSlideChange = (swiper: any) => {
@@ -86,4 +86,4 @@ const CategoryModal = ({ Modal, onHandleUpload, setRegionCate, regionCate }: Cat
   );
 };
 
-export default CategoryModal;
+export default RegionCategoryModal;

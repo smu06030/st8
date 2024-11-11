@@ -9,7 +9,7 @@ import Loading from '@/app/(root)/(stamp)/loading';
 import useModal from '@/hooks/useModal';
 import AliasCheckModal from '@/components/common/Modal/AliasCheckModal';
 import { useGetStampLocationQuery } from '@/queries/query/useStampQuery';
-import { usePostAliasMutation } from '@/queries/mutation/usePostAliasMutation';
+import { usePostAliasMutation } from '@/queries/mutation/useStampMutaion';
 import GetUserAddress from '@/components/stamp/GetUserAddress';
 
 const MyLocation = () => {
