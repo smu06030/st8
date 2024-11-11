@@ -1,6 +1,6 @@
 'use client';
 
-import PlaceCard from '@/components/tourism/PlaceCard2';
+import PlaceCard from '@/components/tourism/PlaceCard';
 import useUserId from '@/hooks/useUserId';
 import LoadingBounce from '@/components/common/Loading/Loading';
 import { useGetBookmarkListQuery } from '@/queries/query/useBookmarkQuery';
