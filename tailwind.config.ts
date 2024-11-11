@@ -133,7 +133,7 @@ const config: Config = {
   },
   // 임시 : 부모보다 width값 크게 가질때
   plugins: [
-    function ({ addUtilities }) {
+    function ({ addUtilities }: any) {
       const newUtilities = {
         '.pc-max-width': {
           width: '1920px',
