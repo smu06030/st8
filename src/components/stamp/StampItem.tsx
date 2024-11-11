@@ -16,11 +16,11 @@ const StampItem = ({ list, stampList }: RegionStampPropsType) => {
 
   return (
     <>
-      <li className="flex flex-col items-center justify-center rounded-[24px] bg-[white] p-[20px]">
-        <Link href={`/stamp-all/${region}`} className="flex flex-col items-center">
+      <Link href={`/stamp-all/${region}`} className="flex flex-col items-center">
+        <li className="stamp-item relative flex cursor-pointer flex-col items-center justify-center overflow-hidden rounded-[24px] bg-[white] p-[20px] lg:p-[25px]">
           <Image src={stampImg} alt={region} width={300} height={300} />
-        </Link>
-      </li>
+        </li>
+      </Link>
     </>
   );
 };

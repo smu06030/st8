@@ -9,6 +9,7 @@ import KakaoMapLoader from '@/components/stampMap/KakaoMapLoader';
 import Nav from '@/components/layout/Nav';
 import Header from '@/components/layout/Header';
 import SplashPage from './splash/page';
+import Footer from '@/components/layout/Footer';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -40,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <body
-        className={`bg-backgroundGradient bg-no-repeat font-regular ${geistSans.variable} ${geistMono.variable} ${!showSplash ? 'body-padding' : ''} antialiased`}
+        className={`bg-no-repeat font-regular lg:bg-[#F5F5F7] mo-only:bg-backgroundGradient ${geistSans.variable} ${geistMono.variable} ${!showSplash ? 'body-padding' : ''} antialiased`}
       >
         {showSplash ? (
           <SplashPage />
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div id="overlays"></div> {/* 모달창 */}
             </RQProviders>
             <Nav />
+            <Footer />
           </>
         )}
       </body>
