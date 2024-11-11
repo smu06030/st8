@@ -54,3 +54,24 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.swiper-button-prev {
+  left: 0px !important;
+  background-image: url('/images/photo-arrow.png') !important;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 44px !important; /* 버튼의 너비 */
+  height: 44px !important; /* 버튼의 높이 */
+  color: transparent !important;
+}
+.swiper-button-next {
+  right: 0px !important;
+  background-image: url('/images/photo-arrow.png') !important;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 44px !important; /* 버튼의 너비 */
+  height: 44px !important; /* 버튼의 높이 */
+  color: transparent !important;
+}

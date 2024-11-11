@@ -21,7 +21,7 @@ const RegionCategoryModal = ({ Modal, onHandleUpload, setRegionCate, regionCate 
 
   const handleSlideChange = (swiper: any) => {
     const activeIndex = swiper.activeIndex; //활성화된인덱스번호
-    console.log('activeIndex', activeIndex);
+
     setRegionCate(REGION_CATEGORY_NAMES[activeIndex]); //선택한 지역이름 저장
   };
 

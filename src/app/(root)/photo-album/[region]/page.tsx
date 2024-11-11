@@ -4,12 +4,13 @@ import React from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import Loading from '@/app/(root)/(stamp)/loading';
-import ImgModal from '@/components/photoalbum/ModalAlbumImg';
+import ModalAlbumImg from '@/components/photoalbum/ModalAlbumImg';
 import useImgModal from '@/hooks/useImgModal';
 import AlbumImgEdit from '@/components/photoalbum/EditAlbumImg';
 import useAlbumDelete from '@/hooks/useAlbumDelete';
 import useUserId from '@/hooks/useUserId';
 import { useGetAlbumListQuery } from '@/queries/query/useAlbumQuery';
+import useModal from '@/hooks/useModal';
 
 const RegionDetail = () => {
   const userId = useUserId();
@@ -20,6 +21,7 @@ const RegionDetail = () => {
   const { selectedImgUrl, imgModal, onClickImgModal, setImgModal, activeImgId, currentIndex, setCurrentIndex } =
     useImgModal();
   const { edit, setEdit, deleteId, onHandleDelete, selectPhotoList } = useAlbumDelete();
+  const { closeModal, openModal, Modal, isOpen } = useModal();
 
   const regionPhoto = albumListData?.filter((item) => item.region === regionTitle) || [];
 
@@ -30,7 +32,7 @@ const RegionDetail = () => {
       </div>
     );
   if (isError) return <div>데이터를 가져오지 못하였습니다.</div>;
-  console.log('deleteId.length', deleteId.length);
+
   return (
     <div className="pc-inner-width lg:pb-[109px]">
       <h2 className="mt-[38px] border-b border-[#9C9C9C] py-[14px] font-semiBold text-[24px] text-[#004157] mo-only:mx-[24px]">
@@ -63,6 +65,7 @@ const RegionDetail = () => {
             onClick={() => {
               if (!edit) {
                 onClickImgModal(item.photoImg, item.id, index);
+                openModal();
               } else {
                 deleteId.includes(item.id);
                 selectPhotoList(item.id);
@@ -86,8 +89,9 @@ const RegionDetail = () => {
           </li>
         ))}
       </ul>
-      {imgModal && (
-        <ImgModal
+      {isOpen && (
+        <ModalAlbumImg
+          Modal={Modal}
           setImgModal={setImgModal}
           selectedImgUrl={selectedImgUrl}
           regionPhoto={regionPhoto}

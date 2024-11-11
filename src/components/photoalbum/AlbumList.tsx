@@ -8,7 +8,7 @@ import ModalAlbumImg from '@/components/photoalbum/ModalAlbumImg';
 import AddPhotoBtn from '@/components/photoalbum/AddPhotoBtn';
 import Toptitle from '@/components/photoalbum/AlbumTitleTab';
 import EditAlbumImg from '@/components/photoalbum/EditAlbumImg';
-
+import useModal from '@/hooks/useModal';
 import useAlbumDelete from '@/hooks/useAlbumDelete';
 import useImgModal from '@/hooks/useImgModal';
 import Loading from '@/app/(root)/(stamp)/loading';
@@ -19,6 +19,7 @@ import { usePostAlbumMutation } from '@/queries/mutation/useAlbumMutation';
 const AlbumList = () => {
   const userId = useUserId();
   const { data: albumListData, isLoading, isError } = useGetAlbumListQuery(userId);
+  const { closeModal, openModal, Modal, isOpen } = useModal();
   const { mutate: postAlbumMutate } = usePostAlbumMutation();
 
   const {
@@ -97,6 +98,7 @@ const AlbumList = () => {
               onClick={() => {
                 if (!edit) {
                   onClickImgModal(item.photoImg, item.id, index);
+                  openModal();
                 } else {
                   deleteId.includes(item.id);
                   selectPhotoList(item.id);
@@ -157,8 +159,9 @@ const AlbumList = () => {
           </div>
         </section>
       )}
-      {imgModal && (
+      {isOpen && (
         <ModalAlbumImg
+          Modal={Modal}
           setImgModal={setImgModal}
           selectedImgUrl={selectedImgUrl}
           regionPhoto={regionPhoto}

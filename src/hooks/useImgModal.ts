@@ -7,9 +7,9 @@ export const useImgModal = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const onClickImgModal = (url: string, id: string, index: number) => {
-    setSelectedImgUrl(url);
-    setImgModal(true);
-    setActiveImgId(id);
+    // setSelectedImgUrl(url);
+    // setImgModal(true);
+    // setActiveImgId(id);
     setCurrentIndex(index);
   };
 

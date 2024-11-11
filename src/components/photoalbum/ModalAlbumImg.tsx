@@ -1,10 +1,12 @@
 import Image from 'next/image';
+import React, { ReactPortal } from 'react';
 import { Dispatch, SetStateAction } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
+import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
-import 'swiper/css/mousewheel';
+import 'swiper/css/navigation';
 
 interface photoInfoType {
   created_at: string;
@@ -20,6 +22,7 @@ interface ImageModalType {
   activeImgId: number | string;
   currentIndex: number;
   setCurrentIndex: Dispatch<SetStateAction<number>>;
+  Modal: ({ children }: { children: React.ReactNode }) => ReactPortal | null;
 }
 
 const ImgModal = ({
@@ -28,32 +31,39 @@ const ImgModal = ({
   regionPhoto,
   activeImgId,
   currentIndex,
-  setCurrentIndex
+  setCurrentIndex,
+  Modal
 }: ImageModalType) => {
   return (
-    <div className="fixed inset-0 z-10 flex items-center justify-center bg-[#363636] bg-opacity-50">
-      <div className="relative h-[100vh] w-full bg-[#D9D9D9]">
+    <Modal>
+      <div className="relative h-[100vh] w-full bg-[#D9D9D9] bg-transparent lg:left-1/2 lg:top-1/2 lg:h-[50vh] lg:w-[60vw] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:transform">
         <Swiper
           spaceBetween={0}
           pagination={{
             clickable: true
           }}
-          modules={[Pagination]}
+          navigation={true}
+          modules={[Navigation]}
           initialSlide={currentIndex}
-          className="mySwiper h-full"
+          className="mySwiper album-swiper h-full"
         >
           {regionPhoto &&
             regionPhoto.map((photo: photoInfoType, index: number) => (
               <SwiperSlide key={index}>
-                <Image src={photo.photoImg} alt={`Image ${index + 1}`} layout="fill" objectFit="cover" />
+                <Image
+                  src={photo.photoImg}
+                  alt={`Image ${index + 1}`}
+                  layout="fill"
+                  className="object-cover lg:object-contain lg:px-[10%]"
+                />
               </SwiperSlide>
             ))}
         </Swiper>
-        <button className="absolute right-[10px] top-[-30px] text-white" onClick={() => setImgModal(false)}>
+        {/* <button className="absolute right-[10px] top-[-30px] text-white" onClick={() => setImgModal(false)}>
           X
-        </button>
+        </button> */}
       </div>
-    </div>
+    </Modal>
   );
 };
 
