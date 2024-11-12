@@ -39,7 +39,7 @@ const NicknameStep = ({ onNext }: NicknameStepProps) => {
         })}
         error={errors.nickname}
       />
-      <div className="mt-8">
+      <div className="mt-[420px] lg:mt-[380px]">
         <Button text="다음으로" variant={isValid ? 'blue' : 'gray'} disabled={!isValid} type="submit" />
       </div>
     </form>

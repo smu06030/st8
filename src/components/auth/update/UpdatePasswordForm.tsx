@@ -103,7 +103,7 @@ const UpdatePasswordForm = () => {
           )}
         </div>
 
-        <div className="mt-8">
+        <div className="mt-[420px] lg:mt-[380px]">
           <Button
             text="비밀번호 변경"
             variant={hasMinLength && hasNumber && hasLetter && isPasswordMatching ? 'blue' : 'gray'}

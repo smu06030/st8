@@ -92,7 +92,7 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
         )}
       </div>
 
-      <div className="mt-8">
+      <div className="!mt-[242px] lg:!mt-[205px]">
         <Button
           text="다음으로"
           variant={hasMinLength && hasNumber && hasLetter && isPasswordMatching ? 'blue' : 'gray'}

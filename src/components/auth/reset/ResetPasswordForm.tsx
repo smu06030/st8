@@ -64,7 +64,7 @@ const ResetPasswordForm = () => {
           status={errors.email ? 'error' : 'default'}
           error={errors.email}
         />
-        <div className="mt-8">
+        <div className="mt-[420px] lg:mt-[380px]">
           <Button
             text="비밀번호 찾기"
             variant={isValid && !isRequesting ? 'blue' : 'gray'}

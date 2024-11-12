@@ -107,7 +107,7 @@ const LoginForm = () => {
         }
       />
 
-      <div className="flex w-full max-w-md justify-between px-8 pt-14">
+      <div className="flex w-full max-w-sm justify-between px-8 pt-14">
         <div>
           <input type="checkbox" className="mr-1" />
           <span className="text-sm font-normal text-[#4e4e4e]">자동 로그인</span>
