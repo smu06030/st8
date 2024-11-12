@@ -4,6 +4,7 @@
 
 @import '@/styles/stamp.css';
 @import '@/styles/album.css';
+@import '@/styles/tourism.css';
 
 :root {
   --background: #ffffff;
@@ -96,6 +97,7 @@ body {
 
 @media (min-width: 1024px) {
   .pc-inner-width {
+    /* pc innerSection 공통클래스 */
     @apply mx-auto w-full max-w-[1080px];
   }
 }
