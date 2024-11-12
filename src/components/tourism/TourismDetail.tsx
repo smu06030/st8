@@ -38,9 +38,9 @@ const TourismDetail = ({ tourismDetail, contentId }: TourismDetailPropsType) => 
   };
 
   return (
-    <div className="min-h-screen px-6">
+    <div className="pc-inner-width min-h-screen pb-[76px] mo-only:bg-white">
       <div className="relative">
-        <div className="relative h-[375px] w-[full] overflow-hidden rounded-bl-3xl rounded-br-3xl">
+        <div className="relative h-[375px] w-[full] overflow-hidden rounded-bl-3xl rounded-br-3xl lg:h-[450px]">
           <Image src={tourismDetail?.firstImage} alt="장소 사진" fill priority style={{ objectFit: 'cover' }} />
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
@@ -51,62 +51,67 @@ const TourismDetail = ({ tourismDetail, contentId }: TourismDetailPropsType) => 
           <Icon name="BookMarkIcon2" size={54} color={isBookmarked ? '#FFD700' : '#FFFFFF'} />
         </button>
       </div>
-      <div className="flex items-center space-x-2 border-b border-gray-400 py-6 text-left">
-        <h1 className="w-[193px] text-2xl font-semibold text-black">{tourismDetail?.text}</h1>
+      <div className="flex items-center space-x-2 border-b border-gray-400 px-6 py-6 text-left">
+        <h1 className="w-[60vw] text-2xl font-semibold text-black">{tourismDetail?.text}</h1>
       </div>
-      {(tourismDetail?.openDate ||
-        tourismDetail?.parking ||
-        tourismDetail?.restDate ||
-        tourismDetail?.creditCard ||
-        tourismDetail?.babyCarriage) && (
-        <div className="space-y-3 py-6">
-          {tourismDetail?.openDate && (
-            <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
-              <Icon name="TimeIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
-              <span className="ml-2">{tourismDetail.openDate}</span>
-            </p>
+      <div className="lg:flex">
+        <div className="lg:w-[65vw]">
+          {(tourismDetail?.openDate ||
+            tourismDetail?.parking ||
+            tourismDetail?.restDate ||
+            tourismDetail?.creditCard ||
+            tourismDetail?.babyCarriage) && (
+            <div className="space-y-3 px-6 pb-[36px] pt-6">
+              {tourismDetail?.openDate && (
+                <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
+                  <Icon name="TimeIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
+                  <span className="ml-2">{tourismDetail.openDate}</span>
+                </p>
+              )}
+              {tourismDetail?.parking && (
+                <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
+                  <Icon name="ParkingIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
+                  <span className="ml-2">주차 {tourismDetail.parking}</span>
+                </p>
+              )}
+              {tourismDetail?.restDate && (
+                <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
+                  <Icon name="DayOffIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
+                  <span className="ml-2">{tourismDetail.restDate}</span>
+                </p>
+              )}
+              {tourismDetail?.creditCard && (
+                <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
+                  <Icon name="CreditCardIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
+                  <span className="ml-2">신용카드 {tourismDetail.creditCard}</span>
+                </p>
+              )}
+              {tourismDetail?.babyCarriage && (
+                <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
+                  <Icon name="StrollerIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
+                  <span className="ml-2">유모차 대여{tourismDetail.babyCarriage}</span>
+                </p>
+              )}
+            </div>
           )}
-          {tourismDetail?.parking && (
-            <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
-              <Icon name="ParkingIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
-              <span className="ml-2">주차 {tourismDetail.parking}</span>
-            </p>
-          )}
-          {tourismDetail?.restDate && (
-            <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
-              <Icon name="DayOffIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
-              <span className="ml-2">{tourismDetail.restDate}</span>
-            </p>
-          )}
-          {tourismDetail?.creditCard && (
-            <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
-              <Icon name="CreditCardIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
-              <span className="ml-2">신용카드 {tourismDetail.creditCard}</span>
-            </p>
-          )}
-          {tourismDetail?.babyCarriage && (
-            <p className="mt-1 flex items-center space-x-3 text-sm text-gray-500">
-              <Icon name="StrollerIcon" size={32} bgColor="black" color="#FFFFFF" rx="50%" />
-              <span className="ml-2">유모차 대여{tourismDetail.babyCarriage}</span>
-            </p>
-          )}
+          <div className="border-b border-gray-300"></div>
+          <div className="px-6 pb-[36px] pt-6">
+            <p className="text-sm text-gray-700">{tourismDetail?.overview}</p>
+          </div>
+          <div className="border-b border-gray-300"></div>
         </div>
-      )}
-      <div className="border-b border-gray-300"></div>
-      <div className="py-6">
-        <p className="text-sm text-gray-700">{tourismDetail?.overview}</p>
-      </div>
-      <div className="border-b border-gray-300"></div>
-      <div className="mb-14 py-6">
-        <h2 className="text-2xl font-semibold text-gray-800">이곳이 위치예요</h2>
-        {tourismDetail?.address && <p className="mt-2 text-sm text-gray-600">{tourismDetail.address}</p>}
-        <Map
-          center={{ lat: tourismDetail?.mapY, lng: tourismDetail?.mapX }}
-          className="relative mt-4 h-[327px] w-full rounded-3xl bg-gray-300"
-          level={3}
-        >
-          <MapMarker position={{ lat: tourismDetail?.mapY, lng: tourismDetail?.mapX }} />
-        </Map>
+
+        <div className="mb-14 px-6 pb-[56px] pt-[38px] lg:w-[35vw]">
+          <h2 className="text-2xl font-semibold text-gray-800">이곳이 위치예요</h2>
+          {tourismDetail?.address && <p className="mt-2 text-sm text-gray-600">{tourismDetail.address}</p>}
+          <Map
+            center={{ lat: tourismDetail?.mapY, lng: tourismDetail?.mapX }}
+            className="relative mt-4 h-[327px] w-full rounded-3xl bg-gray-300"
+            level={3}
+          >
+            <MapMarker position={{ lat: tourismDetail?.mapY, lng: tourismDetail?.mapX }} />
+          </Map>
+        </div>
       </div>
     </div>
   );
