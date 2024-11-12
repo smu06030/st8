@@ -35,9 +35,9 @@ const TourlistSwiper = ({ tourismList, userId }: TourlistSwiperPropsType) => {
       className="mt-5"
     >
       {tourismList
-        .filter((_, index) => index < 4)
-        .map((tourism) => (
-          <SwiperSlide key={tourism.contentid}>
+        .filter((_, index) => index < 10)
+        .map((tourism, index) => (
+          <SwiperSlide key={tourism.contentid} className={`${index === 0 ? 'ml-6' : ''}`}>
             <PlaceCard
               key={tourism.contentid}
               userId={userId}

@@ -49,29 +49,28 @@ const PlaceCard = ({
   };
 
   return (
-    <div className="relative h-[374px] w-[100%] overflow-hidden rounded-3xl bg-[#1d1d1d]/70">
-      <Link href={`/tourism/${contentId}`}>
+    <Link href={`/tourism/${contentId}`}>
+      <div className="relative h-[374px] w-[100%] overflow-hidden rounded-3xl bg-[#1d1d1d]/70">
         <Image
           src={firstimage ? firstimage : '/placeholder.png'}
+          alt={description || '이미지 설명 없음'}
           fill
           priority
-          alt={description || '이미지 설명 없음'}
+          sizes="(min-width: 640px) 50vw, 30vw"
           style={{ objectFit: 'cover' }}
         />
         <div className="absolute inset-0 rounded-3xl bg-[#1d1d1d]/70"></div>
-      </Link>
-      <button
-        onClick={onClickBookmark}
-        className={`absolute right-[18px] top-5 z-20 flex h-14 w-14 items-center justify-center rounded-full ${isBookmarked ? 'text-yellow-500' : 'text-gray-500'} bg-[#4e4e4e]/60`}
-      >
-        <Icon name="BookMarkIcon2" size={64} color={isBookmarked ? '#FFD700' : 'white'} />
-      </button>
-      <div className="absolute bottom-[42px] left-[36px] right-[36px] flex flex-col justify-end text-left text-white">
-        <Link href={`/tourism/${contentId}`}>
+        <button
+          onClick={onClickBookmark}
+          className={`absolute right-[18px] top-5 z-20 flex h-14 w-14 items-center justify-center rounded-full ${isBookmarked ? 'text-yellow-500' : 'text-gray-500'} bg-[#4e4e4e]/60`}
+        >
+          <Icon name="BookMarkIcon2" size={64} color={isBookmarked ? '#FFD700' : 'white'} />
+        </button>
+        <div className="absolute bottom-[42px] left-[36px] right-[36px] flex flex-col justify-end text-left text-white">
           <p className="break-keep text-xl font-semibold leading-[31.20px]">{description}</p>
-        </Link>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

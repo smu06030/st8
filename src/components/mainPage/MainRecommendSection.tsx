@@ -15,9 +15,11 @@ const MainRecommendSection = () => {
     return <LoadingBounce />;
   }
 
+  console.log(tourismList);
+
   return (
     <section className="mt-[58px]">
-      <div className="flex flex-col items-start justify-start gap-1.5">
+      <div className="flex flex-col items-start justify-start gap-1.5 px-6">
         <Link href={'/tourism'}>
           <div className="flex items-center justify-start gap-1">
             <p className="font-semiBold text-2xl leading-[31.20px] text-gray-900">모아가 추천하는 여행지</p>

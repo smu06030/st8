@@ -15,17 +15,24 @@ const MainStampSection = async () => {
   }
 
   return (
-    <section className="mt-8">
-      <div className="flex flex-col items-start justify-start gap-1.5">
-        <Link href={'/stamp-all'}>
+    <section className="pc-inner-width mt-8 lg:mt-[100px] mo-only:px-6">
+      <div className="flex flex-col items-start justify-start gap-1.5 lg:items-center lg:justify-center">
+        <Link href={'/stamp-all'} className="lg:hidden">
           <div className="flex items-center justify-start gap-1">
             <p className="font-semiBold text-2xl leading-[31.20px] text-gray-900">스탬프</p>
             <Icon name="ArrowIcon" />
           </div>
         </Link>
-        <p className="text-sm leading-tight text-gray-600">지금까지 모은 스탬프들을 확인 할 수 있어요.</p>
+        <p className="hidden font-semiBold text-2xl leading-[31.20px] text-gray-900 lg:flex">최근에 받은 스탬프들</p>
+        <p className="text-sm leading-tight text-gray-600 lg:mt-2">지금까지 모은 스탬프들을 확인 할 수 있어요.</p>
+        <Link href={'/stamp-all'} className="mo-only:hidden">
+          <div className="mt-4 flex items-center justify-center gap-1">
+            <p className="-mb-[1px] text-sm leading-tight text-secondary-600">스탬프 확인하러 가기</p>
+            <Icon name="ArrowIcon" size={14} color="#00b4ef" />
+          </div>
+        </Link>
       </div>
-      <div className="mt-4 grid grid-cols-2 gap-[15px]">
+      <div className="mt-4 grid grid-cols-2 gap-[15px] lg:mt-7 lg:grid-cols-1">
         {stampList && stampList.length > 0 ? (
           stampList
             .filter((_, index) => index < 4)

@@ -25,7 +25,7 @@ const StampModal = ({ Modal }: StampModalPropsType) => {
         onClick={(e) => e.stopPropagation()}
         className="absolute bottom-0 left-0 z-[1000] flex h-[342px] w-full animate-slideDownModal flex-col items-center justify-center rounded-tl-[32px] rounded-tr-[32px] bg-white p-6 shadow-overlayShadow"
       >
-        <div className="-mt-[50px] mb-[18px] h-[152px] w-[152px] rounded-full border-4 border-white bg-[#081425]">
+        <div className="-mt-[50px] mb-[18px] h-[152px] w-[152px] rounded-full border-4 border-white bg-white">
           <Image src={stamp.stampimg} alt={stamp.region} width={146} height={146} priority />
         </div>
         <div className="mb-7 font-semiBold text-2xl leading-[31.20px]">{stamp.region} 스탬프</div>
