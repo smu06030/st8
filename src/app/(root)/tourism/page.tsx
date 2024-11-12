@@ -18,21 +18,26 @@ const TourismPage = () => {
   const groupedPlaces = tourismList ? groupTourismByCity(tourismList) : [];
 
   return (
-    <div className="min-h-screen p-6">
-      <header className="mb-6">
-        <h1 className="text-2xl font-semibold leading-tight text-secondary-900">
-          <span className="sm:inline block">모아가 엄선한</span>
-          <span className="sm:inline block">추천 국내 여행지</span>
+    <div className="min-h-screen pt-[36px] lg:pt-[74px] mo-only:px-6">
+      <header className="pc-inner-width mb-[48px]">
+        <h1 className="font-bold text-2xl leading-tight text-secondary-900">
+          <span className="sm:inline block text-[32px] leading-[41px]">
+            모아가 엄선한
+            <br />
+            추천 국내 여행지
+          </span>
         </h1>
       </header>
 
-      <main>
+      <main className="mb-[93px] flex flex-col gap-[46px]">
         {Object.entries(groupedPlaces).map(([city, tourismList]) => (
-          <section key={city} className="mb-6">
-            <div className="mb-2 flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-800">{tourismList[0]?.citytitle || '도시 정보 없음'}</h2>
+          <section key={city}>
+            <div className="pc-inner-width mb-[6px] flex items-center justify-between">
+              <h2 className="text-[24px] font-semibold text-[#1D1D1D]">
+                {tourismList[0]?.citytitle || '도시 정보 없음'}
+              </h2>
             </div>
-            <p className="mb-4 text-sm text-gray-500">{city}</p>
+            <p className="pc-inner-width mb-[14px] text-sm text-[#696969]">{city}</p>
 
             {/* TouristSwiper로 도시별 여행지 목록을 스와이프 가능하게 표시 */}
             <TourlistSwiper tourismList={tourismList} userId={userId} />

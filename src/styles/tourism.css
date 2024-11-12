@@ -1,0 +1,16 @@
+@media (min-width: 1024px) {
+  .tourism-swiper {
+    padding-right: calc((100vw - 1080px) / 2) !important;
+  }
+  .tourism-swiper .swiper-wrapper {
+    padding-left: calc((100vw - 1080px) / 2);
+  }
+}
+.ellipsis-multiline {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
