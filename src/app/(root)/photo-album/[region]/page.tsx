@@ -34,7 +34,7 @@ const RegionDetail = () => {
   if (isError) return <div>데이터를 가져오지 못하였습니다.</div>;
 
   return (
-    <div className="pc-inner-width lg:pb-[109px]">
+    <div className="pc-inner-width lg:pb-[535px]">
       <h2 className="mt-[38px] border-b border-[#9C9C9C] py-[14px] font-semiBold text-[24px] text-[#004157] mo-only:mx-[24px]">
         {regionTitle}
       </h2>
