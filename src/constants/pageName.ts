@@ -8,6 +8,7 @@ export const PAGE_NAMES = {
   MYPAGE: { page: '마이페이지', link: '/mypage' },
   LOGIN: { page: '로그인', link: '/login' },
   SIGNUP: { page: '회원가입', link: '/signup' },
-  FORGOT_PASSWORD: { page: '비밀번호 찾기', link: '/forgot-password' },
-  BOOKMARK: { page: '찜한여행지', link: '/book-mark' }
+  UPDATE_PASSWORD: { page: '비밀번호 변경', link: '/updatePassword' },
+  BOOKMARK: { page: '찜한여행지', link: '/book-mark' },
+  RESET_PASSWORD: { page: '비밀번호 찾기', link: '/resetPassword' }
 };

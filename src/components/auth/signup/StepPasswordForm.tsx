@@ -38,7 +38,6 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
         모아에게 비밀번호를 <br />
         알려주세요.
       </span>
-
       <InputField
         iconName="LockIcon"
         text="비밀번호"
@@ -60,7 +59,6 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
         })}
         error={errors.password}
       />
-
       {/* 유효성 검사 표시 */}
       <div className="flex w-full items-center justify-end space-x-2 space-y-6 text-xs text-red-500">
         <p className={hasNumber ? 'text-secondary-700' : ''}></p>
@@ -68,7 +66,6 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
         <p className={hasLetter ? 'text-secondary-700' : ''}>영문 포함 {hasLetter ? '✔' : '✖'}</p>
         <p className={hasMinLength ? 'text-secondary-700' : ''}>8자리 이상 {hasMinLength ? '✔' : '✖'}</p>
       </div>
-
       <InputField
         iconName="LockIcon"
         text="비밀번호 확인"
@@ -86,7 +83,6 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
           </button>
         }
       />
-
       <div className="flex w-full items-center justify-end space-y-6 text-xs">
         <div></div>
         {isPasswordMatching ? (
