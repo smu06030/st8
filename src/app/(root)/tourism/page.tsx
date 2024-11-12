@@ -1,6 +1,6 @@
 'use client';
 
-import TourlistSwiper from '@/components/mainPage/TourlistSwiper';
+import TourismSwiper from '@/components/tourism/TourismSwiper';
 import LoadingBounce from '@/components/common/Loading/Loading';
 import useUserId from '@/hooks/useUserId';
 import { useGetTourismListQuery } from '@/queries/query/useTourismQuery';
@@ -40,7 +40,7 @@ const TourismPage = () => {
             <p className="pc-inner-width mb-[14px] text-sm text-[#696969]">{city}</p>
 
             {/* TouristSwiper로 도시별 여행지 목록을 스와이프 가능하게 표시 */}
-            <TourlistSwiper tourismList={tourismList} userId={userId} />
+            <TourismSwiper tourismList={tourismList} userId={userId} />
           </section>
         ))}
       </main>

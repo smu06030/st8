@@ -1,6 +1,6 @@
 'use client';
 
-import PlaceCard from '@/components/tourism/PlaceCard';
+import TourismCard from '@/components/tourism/TourismCard';
 import useUserId from '@/hooks/useUserId';
 import LoadingBounce from '@/components/common/Loading/Loading';
 import { useGetBookmarkListQuery } from '@/queries/query/useBookmarkQuery';
@@ -24,7 +24,7 @@ const BookmarkPage = () => {
       </div>
       <div className="flex flex-wrap justify-center gap-6 p-4">
         {bookmarkList?.map((place) => (
-          <PlaceCard
+          <TourismCard
             key={place.contentid}
             userId={userId}
             firstimage={place.firstimage}
