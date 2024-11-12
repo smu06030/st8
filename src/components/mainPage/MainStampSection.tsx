@@ -15,7 +15,7 @@ const MainStampSection = async () => {
   }
 
   return (
-    <section className="pc-inner-width mt-8 lg:mt-[100px] mo-only:px-6">
+    <section className="pc-inner-width mt-8 lg:mt-16 mo-only:px-6">
       <div className="flex flex-col items-start justify-start gap-1.5 lg:items-center lg:justify-center">
         <Link href={'/stamp-all'} className="lg:hidden">
           <div className="flex items-center justify-start gap-1">
@@ -32,7 +32,7 @@ const MainStampSection = async () => {
           </div>
         </Link>
       </div>
-      <div className="mt-4 grid grid-cols-2 gap-[15px] lg:mt-7 lg:grid-cols-1">
+      <div className="mt-4 grid grid-cols-2 gap-[15px] lg:mt-7 lg:flex lg:justify-center lg:space-x-4">
         {stampList && stampList.length > 0 ? (
           stampList
             .filter((_, index) => index < 4)
@@ -40,7 +40,7 @@ const MainStampSection = async () => {
               <Link
                 href={`/stamp-all/${REGION_NAME_MAP_KO[stamp.region]}`}
                 key={stamp.id}
-                className="flex h-40 w-full items-center justify-center rounded-3xl bg-white"
+                className="flex h-40 w-full items-center justify-center rounded-3xl bg-white lg:h-[200px] lg:w-[200px]"
               >
                 <Image src={stamp.stampimg} width={146} height={146} priority alt={stamp.region} />
               </Link>

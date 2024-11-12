@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useBookmarkMutation } from '@/queries/mutation/useBookmarkMutation';
 import { useRouter } from 'next/navigation';
 
-interface PlaceCardPropsType {
+interface TourismCardPropsType {
   userId: string | undefined;
   firstimage: string | null;
   description: string;
@@ -16,14 +16,14 @@ interface PlaceCardPropsType {
   isBookmarked: boolean;
 }
 
-const PlaceCard = ({
+const TourismCard = ({
   userId,
   firstimage,
   description,
   contentId,
   title,
   isBookmarked: initialBookmarked // 초기 북마크 상태로 설정
-}: PlaceCardPropsType) => {
+}: TourismCardPropsType) => {
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState<boolean>(initialBookmarked);
   const { mutate: bookmarkMutate } = useBookmarkMutation();
@@ -49,8 +49,8 @@ const PlaceCard = ({
   };
 
   return (
-    <Link href={`/tourism/${contentId}`}>
-      <div className="relative h-[374px] w-[100%] overflow-hidden rounded-3xl bg-[#1d1d1d]/70">
+    <div className="relative h-[374px] w-[100%] overflow-hidden rounded-3xl bg-[#1d1d1d]/70">
+      <Link href={`/tourism/${contentId}`}>
         <Image
           src={firstimage ? firstimage : '/placeholder.png'}
           alt={description || '이미지 설명 없음'}
@@ -60,18 +60,20 @@ const PlaceCard = ({
           style={{ objectFit: 'cover' }}
         />
         <div className="absolute inset-0 rounded-3xl bg-[#1d1d1d]/70"></div>
-        <button
-          onClick={onClickBookmark}
-          className={`absolute right-[18px] top-5 z-20 flex h-14 w-14 items-center justify-center rounded-full ${isBookmarked ? 'text-yellow-500' : 'text-gray-500'} bg-[#4e4e4e]/60`}
-        >
-          <Icon name="BookMarkIcon2" size={64} color={isBookmarked ? '#FFD700' : 'white'} />
-        </button>
-        <div className="absolute bottom-[42px] left-[36px] right-[36px] flex flex-col justify-end text-left text-white">
-          <p className="break-keep text-xl font-semibold leading-[31.20px]">{description}</p>
-        </div>
+      </Link>
+      <button
+        onClick={onClickBookmark}
+        className={`absolute right-[18px] top-5 z-20 flex h-14 w-14 items-center justify-center rounded-full ${isBookmarked ? 'text-yellow-500' : 'text-gray-500'} bg-[#4e4e4e]/60`}
+      >
+        <Icon name="BookMarkIcon2" size={64} color={isBookmarked ? '#FFD700' : 'white'} />
+      </button>
+      <div className="absolute bottom-[42px] left-[36px] right-[36px] flex flex-col justify-end text-left text-white">
+        <Link href={`/tourism/${contentId}`}>
+          <p className="ellipsis-multiline break-keep text-[24px] font-semibold leading-[31.20px]">{description}</p>
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 };
 
-export default PlaceCard;
+export default TourismCard;
