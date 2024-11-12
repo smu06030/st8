@@ -29,13 +29,13 @@ const TourlistSwiper = ({ tourismList, userId }: TourlistSwiperPropsType) => {
           slidesPerView: 3.1
         },
         1024: {
-          slidesPerView: 4.1
+          slidesPerView: 3.7
         }
       }}
-      className="mt-5"
+      className="tourism-swiper mt-5"
     >
       {tourismList
-        .filter((_, index) => index < 4)
+        .filter((_, index) => index < 6)
         .map((tourism) => (
           <SwiperSlide key={tourism.contentid}>
             <PlaceCard
