@@ -25,7 +25,7 @@ const useModal = () => {
       if (!isOpen || !portalElement) return null;
       return createPortal(
         <div
-          // onClick={closeModal}
+          onClick={closeModal}
           style={{ zIndex: 999, backgroundColor: 'rgba(53, 53, 53, 0.6)' }}
           className="fixed inset-0"
         >

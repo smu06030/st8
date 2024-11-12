@@ -7,9 +7,14 @@ interface ArrowPropType {
 }
 
 const RoundedArrowButton = ({ disabled, handleClick, direction }: ArrowPropType) => {
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    handleClick();
+  };
+
   return (
     <button
-      onClick={handleClick}
+      onClick={handleButtonClick}
       disabled={disabled}
       style={{
         backgroundImage: `url('${direction === 'left' ? '/images/photo-arrow-prev.png' : '/images/photo-arrow-next.png'}')`,
