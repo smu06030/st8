@@ -20,25 +20,32 @@ interface LoginFormInputs {
 const LoginForm = () => {
   const { loginWithProvider } = useSocialLogin();
   const {
+    register,
     handleSubmit,
     setError,
     clearErrors,
-    formState: { errors, isValid },
-    register
+    formState: { errors, isValid }
   } = useForm<LoginFormInputs>({ mode: 'onChange' });
   const router = useRouter();
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // 로그인 상태 변화를 감지하여 리다이렉트
   useEffect(() => {
-    const { data: authListener } = browserClient.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        router.push('/mypage'); // 로그인 후 자동 리다이렉트
+    const {
+      data: { subscription }
+    } = browserClient.auth.onAuthStateChange(async (event) => {
+      if (event === 'SIGNED_IN') {
+        const {
+          data: { user }
+        } = await browserClient.auth.getUser();
+
+        if (user) {
+          router.push('/');
+        }
       }
     });
 
     return () => {
-      // authListener?.unsubscribe();
+      subscription?.unsubscribe();
     };
   }, [router]);
 
@@ -57,15 +64,14 @@ const LoginForm = () => {
     const result = await loginWithEmailAndPassword(data.email, data.password);
 
     if (result.success) {
-      router.push('/mypage');
+      router.push('/');
     } else {
       if (result.type === 'password') {
-        alert('등록되지 않은 비밀번호입니다.');
       }
     }
   };
 
-  const handleSocialLogin = (type: 'kakao' | 'google', e: MouseEvent<HTMLButtonElement>) => {
+  const handleSocialLogin = (type: 'kakao' | 'google' | 'apple', e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     loginWithProvider(type);
   };
@@ -78,6 +84,7 @@ const LoginForm = () => {
         placeholder="이메일을 입력해주세요."
         status={errors.email ? 'error' : 'default'}
         register={register('email', {
+          required: '이메일을 입력해주세요.',
           onBlur: (e) => handleEmailBlur(e.target.value)
         })}
         error={errors.email}
@@ -89,7 +96,9 @@ const LoginForm = () => {
         placeholder="비밀번호를 입력해주세요."
         type={showConfirmPassword ? 'text' : 'password'}
         status={errors.password ? 'error' : 'default'}
-        register={register('password')}
+        register={register('password', {
+          required: '비밀번호를 입력해주세요.'
+        })}
         error={errors.password}
         rightIcon={
           <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
@@ -103,19 +112,15 @@ const LoginForm = () => {
           <input type="checkbox" className="mr-1" />
           <span className="text-sm font-normal text-[#4e4e4e]">자동 로그인</span>
         </div>
-        <a href="/forgot-password" className="text-right text-sm font-normal text-[#4e4e4e]">
+        <a href="/reset-password" className="text-right text-sm font-normal text-[#4e4e4e]">
           아이디/비밀번호 찾기
         </a>
       </div>
 
-      <Button
-        text="로그인"
-        variant={isValid ? 'blue' : 'gray'}
-        disabled={!isValid}
-        onClick={handleSubmit(onHandleLogin)}
-      />
+      <Button text="로그인" variant={isValid ? 'blue' : 'gray'} disabled={!isValid} type="submit" />
 
       <div className="mt-6 flex justify-center space-x-4">
+        <SocialLoginButton provider="apple" onClick={(e) => handleSocialLogin('apple', e)} />
         <SocialLoginButton provider="google" onClick={(e) => handleSocialLogin('google', e)} />
         <SocialLoginButton provider="kakao" onClick={(e) => handleSocialLogin('kakao', e)} />
       </div>

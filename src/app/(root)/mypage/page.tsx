@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const MyPage = () => {
   return (
-    <div>
+    <div className="block lg:hidden">
       <MyPageLayout />
     </div>
   );

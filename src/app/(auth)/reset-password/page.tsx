@@ -1,6 +1,7 @@
 import React from 'react';
-import ResetPasswordForm from '@/components/auth/ResetPasswordForm';
+
 import { Metadata } from 'next';
+import ResetPasswordForm from '@/components/auth/reset/ResetPasswordForm';
 
 export const metadata: Metadata = {
   title: '비밀번호 찾기',

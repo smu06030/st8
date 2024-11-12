@@ -1,6 +1,7 @@
 'use client';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField/InputField';
 import browserClient from '@/utils/supabase/client';
@@ -10,14 +11,13 @@ interface FormValues {
 }
 
 const ResetPasswordForm = () => {
+  const [isRequesting, setIsRequesting] = useState(false);
   const {
     register,
     handleSubmit,
-
     formState: { errors, isValid }
-  } = useForm<FormValues>({
-    // mode: 'onChange'
-  });
+  } = useForm<FormValues>();
+  const router = useRouter();
 
   const redirectUrl = useMemo(() => {
     if (process.env.NODE_ENV === 'development') {
@@ -27,9 +27,20 @@ const ResetPasswordForm = () => {
   }, []);
 
   const onSubmit = async (profile: FormValues) => {
-    await browserClient.auth.resetPasswordForEmail(profile.email, {
-      redirectTo: redirectUrl + '/updatePassword'
-    });
+    if (isRequesting) return;
+    setIsRequesting(true);
+
+    try {
+      await browserClient.auth.resetPasswordForEmail(profile.email, {
+        redirectTo: redirectUrl + '/updatePassword'
+      });
+
+      router.push('/reset-success');
+    } catch (error) {
+      console.error('비밀번호 재설정 이메일 전송 중 오류:', error);
+    } finally {
+      setIsRequesting(false);
+    }
   };
 
   return (
@@ -49,14 +60,17 @@ const ResetPasswordForm = () => {
               value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
               message: '유효한 이메일 주소를 입력해주세요. ✖'
             }
-            //   onBlur: (e) => handleEmailBlur(e.target.value),
-            //   onChange: () => clearErrors('email')
           })}
           status={errors.email ? 'error' : 'default'}
           error={errors.email}
         />
         <div className="mt-8">
-          <Button text="비밀번호 찾기" variant={isValid ? 'blue' : 'gray'} disabled={!isValid} type="submit" />
+          <Button
+            text="비밀번호 찾기"
+            variant={isValid && !isRequesting ? 'blue' : 'gray'}
+            disabled={!isValid || isRequesting}
+            type="submit"
+          />
         </div>
       </form>
     </div>

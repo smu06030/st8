@@ -1,6 +1,7 @@
 import React from 'react';
-import UpdatePasswordForm from '@/components/auth/UpdatePasswordForm';
+
 import { Metadata } from 'next';
+import UpdatePasswordForm from '@/components/auth/update/UpdatePasswordForm';
 
 export const metadata: Metadata = {
   title: '비밀번호 변경',

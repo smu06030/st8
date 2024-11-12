@@ -37,6 +37,10 @@ const useHeaderActive = () => {
       setPageTitle(PAGE_NAMES.BOOKMARK.page);
     } else if (currentPath.startsWith(PAGE_NAMES.UPDATE_PASSWORD.link)) {
       setPageTitle(PAGE_NAMES.UPDATE_PASSWORD.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.RESET_PASSWORD.link)) {
+      setPageTitle(PAGE_NAMES.RESET_PASSWORD.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.UPDATE_SUCCESS.link)) {
+      setPageTitle(PAGE_NAMES.UPDATE_SUCCESS.page);
     } else {
       setPageTitle('');
     }
