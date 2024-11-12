@@ -71,7 +71,7 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onHandleLogin)} className="mt-7 flex flex-col items-center space-y-6">
+    <form onSubmit={handleSubmit(onHandleLogin)} className="mt-7 flex flex-col items-center space-y-12">
       <InputField
         iconName="MailIcon"
         text="이메일"
@@ -98,7 +98,7 @@ const LoginForm = () => {
         }
       />
 
-      <div className="mt-16 flex w-full max-w-md justify-between px-8">
+      <div className="flex w-full max-w-md justify-between px-8 pt-14">
         <div>
           <input type="checkbox" className="mr-1" />
           <span className="text-sm font-normal text-[#4e4e4e]">자동 로그인</span>
@@ -120,7 +120,7 @@ const LoginForm = () => {
         <SocialLoginButton provider="kakao" onClick={(e) => handleSocialLogin('kakao', e)} />
       </div>
 
-      <div className="mt-6 text-center">
+      <div className="mt-16 text-center">
         <span className="mr-1 text-sm text-gray-600">아직 회원이 아니신가요?</span>
         <LinkButton text="회원가입" href="/signup" />
       </div>
