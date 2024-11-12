@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Button from '../common/Buttons/Button';
-
 import useModal from '@/hooks/useModal';
 import browserClient from '@/utils/supabase/client';
-import InputField from '../common/InputField';
+import InputField from '../common/InputField/InputField';
 
-const ReNickname = () => {
+const NicknameEditor = () => {
   const { openModal, Modal, closeModal } = useModal();
   const [nickname, setNickname] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [tempNickname, setTempNickname] = useState<string | null>(nickname);
-  const [inputStatus, setInputStatus] = useState<'default' | 'active' | 'done'>('default');
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors }
+  } = useForm<{ tempNickname: string }>({
+    mode: 'onBlur'
+  });
 
   useEffect(() => {
     const fetchNickname = async () => {
@@ -20,19 +27,33 @@ const ReNickname = () => {
       if (user) {
         const userId = user.id;
         const { data, error } = await browserClient.from('profile').select('nickname').eq('id', userId).single();
+        if (user.app_metadata.provider !== 'email') {
+          if (!data && nickname == null) {
+            const email = user.user_metadata.email;
+            const nickname = user.user_metadata.name;
+            const { error: insertError } = await browserClient
+              .from('profile')
+              .insert([{ id: userId, email, nickname }]);
+
+            setNickname(nickname);
+            setValue('tempNickname', nickname || '');
+            if (insertError) {
+            }
+          }
+        }
 
         if (error) {
           setError('닉네임을 가져오는 중 오류가 발생했습니다.');
         } else {
           setNickname(data.nickname);
-          setTempNickname(data.nickname); // 닉네임을 초기 tempNickname으로 설정
+          setValue('tempNickname', data.nickname || '');
         }
       }
     };
     fetchNickname();
-  }, []);
+  }, [setValue, nickname]);
 
-  const handleNameChange = async () => {
+  const handleNameChange = async (formData: { tempNickname: string }) => {
     try {
       const {
         data: { user }
@@ -40,7 +61,7 @@ const ReNickname = () => {
       if (!user) return;
 
       const userId = user.id;
-      const nicknameToSave = tempNickname?.trim() || nickname;
+      const nicknameToSave = formData.tempNickname.trim();
 
       const { error } = await browserClient.from('profile').update({ nickname: nicknameToSave }).eq('id', userId);
 
@@ -48,7 +69,6 @@ const ReNickname = () => {
         setError('닉네임 업데이트 중 오류가 발생했습니다.');
       } else {
         setNickname(nicknameToSave);
-        setInputStatus('done'); // 업데이트 성공 시 상태를 done으로 설정
         closeModal();
       }
     } catch (updateError) {
@@ -75,21 +95,20 @@ const ReNickname = () => {
                 iconName="UserIcon"
                 text="변경할 이름을 입력해주세요"
                 placeholder="변경할 이름을 입력해주세요"
-                value={tempNickname || ''}
-                onChange={(e) => {
-                  setTempNickname(e.target.value);
-                  setInputStatus('active');
-                }}
-                onBlur={() => setInputStatus(tempNickname ? 'done' : 'default')} // 입력 완료 시 상태 변경
-                status={inputStatus}
+                status={errors.tempNickname ? 'error' : 'default'}
+                register={register('tempNickname', {
+                  required: '닉네임을 입력해주세요.',
+                  maxLength: { value: 20, message: '닉네임은 20자 이하로 입력해주세요.' }
+                })}
+                error={errors.tempNickname}
               />
             </div>
             <div className="mt-4 flex w-full">
               <Button
                 text="변경하기"
-                variant={tempNickname ? 'blue' : 'gray'}
-                onClick={handleNameChange}
-                disabled={!tempNickname}
+                variant={errors.tempNickname ? 'gray' : 'blue'}
+                onClick={handleSubmit(handleNameChange)}
+                disabled={!!errors.tempNickname}
               />
             </div>
           </div>
@@ -99,4 +118,4 @@ const ReNickname = () => {
   );
 };
 
-export default ReNickname;
+export default NicknameEditor;

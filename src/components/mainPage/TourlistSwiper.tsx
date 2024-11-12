@@ -2,17 +2,18 @@
 
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import PlaceCard from '@/components/tourism/placeCard';
-import { Place } from '@/types/place/place.type';
+import PlaceCard from '@/components/tourism/PlaceCard';
+import { Tourism } from '@/types/tourism/tourism.type';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 
 interface TourlistSwiperPropsType {
-  places: Place[];
+  tourismList: Tourism[];
+  userId: string | undefined;
 }
 
-const TourlistSwiper = ({ places }: TourlistSwiperPropsType) => {
+const TourlistSwiper = ({ tourismList, userId }: TourlistSwiperPropsType) => {
   return (
     <Swiper
       slidesPerView={1.1}
@@ -33,17 +34,18 @@ const TourlistSwiper = ({ places }: TourlistSwiperPropsType) => {
       }}
       className="mt-5"
     >
-      {places
+      {tourismList
         .filter((_, index) => index < 4)
-        .map((place) => (
-          <SwiperSlide key={place.contentid}>
+        .map((tourism) => (
+          <SwiperSlide key={tourism.contentid}>
             <PlaceCard
-              key={place.contentid}
-              contentid={place.contentid || '등록되지 않는 여행지'}
-              title={place.title || '등록되지 않는 여행지'}
-              firstimage={place.firstimage}
-              description={place.supabaseText || '여행지 정보 없음'}
-              isBookmarked={place.isBookmarked}
+              key={tourism.contentid}
+              userId={userId}
+              contentId={tourism.contentid || '등록되지 않는 여행지'}
+              title={tourism.title || '등록되지 않는 여행지'}
+              firstimage={tourism.firstimage}
+              description={tourism.supabaseText || '여행지 정보 없음'}
+              isBookmarked={tourism.isBookmarked}
             />
           </SwiperSlide>
         ))}

@@ -1,16 +1,16 @@
 'use client';
 import Link from 'next/link';
-import StampNum from './StampNum';
-import ReNickname from './ReNickname';
 import LogoutButton from '../auth/LogoutButton';
-import PhotoNum from './PhotoNum';
+import NicknameEditor from './NicknameEditor';
+import StampCount from './StampCount';
+import PhotoCount from './PhotoCount';
 
 const MyPageLayout = () => {
   return (
     <div className="items-left flex min-h-[100vh] flex-col bg-white px-6">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-4">
-          <ReNickname />
+          <NicknameEditor />
         </div>
         <LogoutButton />
       </div>
@@ -20,7 +20,7 @@ const MyPageLayout = () => {
       </div>
       <div>
         <h6 className="mb-[18px] mt-[38px] font-bold text-[20px]">내 정보</h6>
-        <StampNum />
+        <StampCount />
         <div className="grid grid-cols-2 gap-4">
           <div className="relative flex h-[156px] flex-col justify-center rounded-2xl bg-primary-400 p-6 text-black">
             <Link href="/stamp-map" className="flex h-full w-full flex-col">
@@ -42,7 +42,7 @@ const MyPageLayout = () => {
               </p>
             </Link>
           </div>
-          <PhotoNum />
+          <PhotoCount />
         </div>
       </div>
     </div>

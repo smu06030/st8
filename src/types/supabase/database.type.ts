@@ -37,31 +37,31 @@ export type Database = {
       };
       bookmark: {
         Row: {
-          choose: boolean | null;
-          contentid: string | null;
+          choose: boolean;
+          contentid: string;
           created_at: string;
           id: number;
-          text: string | null;
-          title: string | null;
-          user_id: string | null;
+          text: string;
+          title: string;
+          user_id: string;
         };
         Insert: {
-          choose?: boolean | null;
-          contentid?: string | null;
+          choose: boolean;
+          contentid: string;
           created_at?: string;
           id?: number;
-          text?: string | null;
-          title?: string | null;
-          user_id?: string | null;
+          text: string;
+          title: string;
+          user_id?: string;
         };
         Update: {
-          choose?: boolean | null;
-          contentid?: string | null;
+          choose?: boolean;
+          contentid?: string;
           created_at?: string;
           id?: number;
-          text?: string | null;
-          title?: string | null;
-          user_id?: string | null;
+          text?: string;
+          title?: string;
+          user_id?: string;
         };
         Relationships: [
           {
@@ -83,21 +83,21 @@ export type Database = {
       profile: {
         Row: {
           created: string;
-          email: string | null;
+          email: string;
           id: string;
-          nickname: string | null;
+          nickname: string;
         };
         Insert: {
           created?: string;
-          email?: string | null;
+          email: string;
           id?: string;
-          nickname?: string | null;
+          nickname: string;
         };
         Update: {
           created?: string;
-          email?: string | null;
+          email?: string;
           id?: string;
-          nickname?: string | null;
+          nickname?: string;
         };
         Relationships: [];
       };
