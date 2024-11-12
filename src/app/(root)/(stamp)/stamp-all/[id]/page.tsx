@@ -55,7 +55,7 @@ const StampItemDetail = () => {
 
   return (
     <div className="lg:bg-white">
-      <div className="flex h-[100%] flex-col bg-no-repeat pb-[200px] lg:mx-auto lg:w-full lg:max-w-[1080px]">
+      <div className="pc-inner-width flex h-[100%] flex-col bg-no-repeat pb-[200px]">
         <h2 className="mb-[102px] hidden font-bold text-[64px] text-secondary-900 lg:block lg:pt-[74px]">
           {region} 스탬프
         </h2>

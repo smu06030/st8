@@ -4,12 +4,13 @@ import React from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import Loading from '@/app/(root)/(stamp)/loading';
-import ImgModal from '@/components/photoalbum/ModalAlbumImg';
+import ModalAlbumImg from '@/components/photoalbum/ModalAlbumImg';
 import useImgModal from '@/hooks/useImgModal';
 import AlbumImgEdit from '@/components/photoalbum/EditAlbumImg';
 import useAlbumDelete from '@/hooks/useAlbumDelete';
 import useUserId from '@/hooks/useUserId';
 import { useGetAlbumListQuery } from '@/queries/query/useAlbumQuery';
+import useModal from '@/hooks/useModal';
 
 const RegionDetail = () => {
   const userId = useUserId();
@@ -20,6 +21,7 @@ const RegionDetail = () => {
   const { selectedImgUrl, imgModal, onClickImgModal, setImgModal, activeImgId, currentIndex, setCurrentIndex } =
     useImgModal();
   const { edit, setEdit, deleteId, onHandleDelete, selectPhotoList } = useAlbumDelete();
+  const { closeModal, openModal, Modal, isOpen } = useModal();
 
   const regionPhoto = albumListData?.filter((item) => item.region === regionTitle) || [];
 
@@ -32,24 +34,38 @@ const RegionDetail = () => {
   if (isError) return <div>데이터를 가져오지 못하였습니다.</div>;
 
   return (
-    <div>
-      <h2 className="mx-[24px] mt-[38px] border-b border-[#9C9C9C] py-[14px] font-semiBold text-[24px] text-[#004157]">
+    <div className="pc-inner-width lg:pb-[535px]">
+      <h2 className="mt-[38px] border-b border-[#9C9C9C] py-[14px] font-semiBold text-[24px] text-[#004157] mo-only:mx-[24px]">
         {regionTitle}
       </h2>
-      <ul className="mx-[24px] flex justify-end">
+      <ul className="flex justify-end mo-only:mx-[24px]">
         <button
-          className={`text-${edit ? 'red-500' : 'black'} px-[12px] py-[18px]`}
+          className={`text-${edit ? '[#D22730]' : '[#9C9C9C]'} px-[12px] py-[18px]`}
           onClick={() => setEdit((prev) => !prev)}
         >
-          편집
+          {/* pc */}
+          {edit ? (
+            <span className="hidden cursor-pointer lg:inline" onClick={onHandleDelete}>
+              삭제하기
+              {deleteId.length > 0 && <span> ({deleteId.length > 0 ? `${deleteId.length}` : 0}개)</span>}
+            </span>
+          ) : (
+            <span className="hidden cursor-pointer lg:inline">
+              삭제하기
+              {/* {deleteId.length > 0 && <span> ({deleteId.length > 0 ? `${deleteId.length}` : 0}개)</span>} */}
+            </span>
+          )}
+          {/* mo */}
+          <span className="lg:hidden">삭제</span>
         </button>
       </ul>
-      <ul className="mt-[32px] grid grid-cols-3 gap-[6px]">
+      <ul className="pc-inner-width mt-[32px] grid grid-cols-3 gap-[6px] lg:grid-cols-7">
         {regionPhoto?.map((item, index) => (
           <li
             onClick={() => {
               if (!edit) {
                 onClickImgModal(item.photoImg, item.id, index);
+                openModal();
               } else {
                 deleteId.includes(item.id);
                 selectPhotoList(item.id);
@@ -73,8 +89,9 @@ const RegionDetail = () => {
           </li>
         ))}
       </ul>
-      {imgModal && (
-        <ImgModal
+      {isOpen && (
+        <ModalAlbumImg
+          Modal={Modal}
           setImgModal={setImgModal}
           selectedImgUrl={selectedImgUrl}
           regionPhoto={regionPhoto}

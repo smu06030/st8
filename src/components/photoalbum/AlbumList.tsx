@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -8,7 +8,7 @@ import ModalAlbumImg from '@/components/photoalbum/ModalAlbumImg';
 import AddPhotoBtn from '@/components/photoalbum/AddPhotoBtn';
 import Toptitle from '@/components/photoalbum/AlbumTitleTab';
 import EditAlbumImg from '@/components/photoalbum/EditAlbumImg';
-
+import useModal from '@/hooks/useModal';
 import useAlbumDelete from '@/hooks/useAlbumDelete';
 import useImgModal from '@/hooks/useImgModal';
 import Loading from '@/app/(root)/(stamp)/loading';
@@ -19,6 +19,7 @@ import { usePostAlbumMutation } from '@/queries/mutation/useAlbumMutation';
 const AlbumList = () => {
   const userId = useUserId();
   const { data: albumListData, isLoading, isError } = useGetAlbumListQuery(userId);
+  const { closeModal, openModal, Modal, isOpen } = useModal();
   const { mutate: postAlbumMutate } = usePostAlbumMutation();
 
   const {
@@ -71,18 +72,20 @@ const AlbumList = () => {
     (title) => albumListData?.filter((item) => item.region === title) || []
   );
 
+  // console.log('filterRigionTitle', filterRigionTitle);
   return (
-    <div className="pb-[200px]">
+    <div className="pc-inner-width pb-[200px] lg:pb-[535px]">
       <Toptitle
         activeTab={activeTab}
         edit={edit}
         onClickTab={onClickTab}
         setEdit={setEdit}
         onHandleDelete={onHandleDelete}
+        deleteId={deleteId}
       />
       {/* 전체보기 */}
       {activeTab === 'allTab' ? (
-        <ul className="mt-[32px] grid grid-cols-3 gap-[6px]">
+        <ul className="mt-[32px] grid grid-cols-3 gap-[6px] lg:grid-cols-7">
           <AddPhotoBtn
             imgSrc={imgSrc}
             setImgSrc={setImgSrc}
@@ -95,6 +98,7 @@ const AlbumList = () => {
               onClick={() => {
                 if (!edit) {
                   onClickImgModal(item.photoImg, item.id, index);
+                  openModal();
                 } else {
                   deleteId.includes(item.id);
                   selectPhotoList(item.id);
@@ -119,14 +123,16 @@ const AlbumList = () => {
           ))}
         </ul>
       ) : (
-        <section className="mx-[24px] my-[18px] flex flex-col">
+        <section className="my-[18px] flex flex-col mo-only:mx-[24px]">
           <div className="flex flex-col gap-[34px]">
             {filterRigionTitle.map((item, index) => (
               <div key={item}>
                 <div className="flex items-center border-b border-[#9C9C9C]">
                   <h2 className="py-[14px] font-bold text-[24px]">{item}</h2>
                 </div>
-                <ul className="relative mt-[16px] grid grid-cols-2 gap-[6px] pr-[20%]">
+                <ul
+                  className={`relative mt-[16px] grid grid-cols-2 gap-[6px] pr-[20%] lg:pr-[70%] ${item === '미설정 지역' && 'row-start-1'}`}
+                >
                   <AddPhotoBtn
                     imgSrc={imgSrc}
                     setImgSrc={setImgSrc}
@@ -134,25 +140,28 @@ const AlbumList = () => {
                     activeTab={activeTab}
                     item={item}
                   />
-                  <Link href={`/photo-album/${item}`}>
+
+                  <Link href={`/photo-album/${item}`} className={`${item === '미설정 지역' && 'row-start-1'}`}>
                     <li
-                      className="h-full w-full bg-cover bg-center"
+                      className="relative h-full w-full bg-cover bg-center"
                       style={{
                         backgroundImage: `url(${filterRigionPhoto[index]?.[0]?.photoImg})`
                       }}
-                    ></li>
+                    >
+                      <span className={`absolute bottom-[-26px] right-0 text-[14px] text-[#4F4F4F]`}>
+                        {filterRigionPhoto[index]?.length}장
+                      </span>
+                    </li>
                   </Link>
-                  <span className="absolute bottom-[-26px] right-0 pr-[20%] text-[14px] text-[#4F4F4F]">
-                    {filterRigionPhoto[index]?.length}장
-                  </span>
                 </ul>
               </div>
             ))}
           </div>
         </section>
       )}
-      {imgModal && (
+      {isOpen && (
         <ModalAlbumImg
+          Modal={Modal}
           setImgModal={setImgModal}
           selectedImgUrl={selectedImgUrl}
           regionPhoto={regionPhoto}

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const StampAll = () => {
   return (
     <div className="relative overflow-hidden mo-only:px-[24px] mo-only:py-[34px]">
-      <div className="lg:mx-auto lg:w-full lg:max-w-[1080px] lg:pb-[192px] lg:pt-[165px]">
+      <div className="pc-inner-width lg:pb-[192px] lg:pt-[165px]">
         <h3 className="text-left font-semiBold text-[32px] leading-[41.6px] text-[#008EBD] lg:text-center lg:text-[48px] lg:text-gray-900">
           모아와 함께
           <br className="lg:hidden" /> 모아온 스탬프에요.

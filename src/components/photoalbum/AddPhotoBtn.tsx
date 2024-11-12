@@ -68,7 +68,9 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: Ad
   };
 
   return (
-    <li className={`${activeTab === 'rigionTab' ? 'add-photo-btn' : ''} relative`}>
+    <li
+      className={`${activeTab === 'rigionTab' ? 'add-photo-btn' : ''} ${item === '미설정 지역' && 'invisible'} relative`}
+    >
       <input
         id={`fileInput-${item}`}
         className="hidden"
