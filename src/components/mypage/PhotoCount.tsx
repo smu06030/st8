@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import useUserId from '@/hooks/useUserId';
 import { getPhotoCount } from '@/apis/photoCount';
+import Image from 'next/image';
 
 const PhotoCount = () => {
   const userId = useUserId();
@@ -32,14 +33,19 @@ const PhotoCount = () => {
 
   return (
     <Link href="/photo-album">
-      <div className="items-left relative flex h-[156px] flex-col justify-center rounded-2xl bg-gray-800 p-6 text-white">
-        <p className="text-[14px] font-semibold">나의 추억들</p>
-        <p className="mt-1 text-[12px]">
-          내가 지나간곳
-          <br />
-          내가 남긴 사진들
-        </p>
-        <span className="mt-4 font-bold text-[20px]">{`${photoCount}장`}</span>
+      <div className="relative flex h-[156px] flex-col justify-center overflow-hidden rounded-2xl bg-[#081425]/70 text-white">
+        <Image src="/images/mypage_img.png" alt="배경 이미지" fill style={{ objectFit: 'cover' }} priority />
+        <div className="absolute inset-0 bg-black opacity-50"></div>
+
+        <div className="relative flex h-full w-full flex-col p-6">
+          <p className="text-[14px] font-semibold">나의 추억들</p>
+          <p className="mt-1 text-xs">
+            내가 지나간곳
+            <br />
+            내가 남긴 사진들
+          </p>
+          <span className="mt-4 font-bold text-xl">{`${photoCount}장`}</span>
+        </div>
       </div>
     </Link>
   );

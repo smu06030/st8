@@ -5,6 +5,8 @@ import LogoutButton from '../auth/LogoutButton';
 import NicknameEditor from './NicknameEditor';
 import StampCount from './StampCount';
 import PhotoCount from './PhotoCount';
+import mypage_img2 from '@/public/images/mainMap.png';
+import Image from 'next/image';
 
 const MyPageLayout = () => {
   useEffect(() => {
@@ -20,7 +22,7 @@ const MyPageLayout = () => {
   }, []);
 
   return (
-    <div className="items-left flex min-h-[100vh] flex-col bg-white px-6">
+    <div className="items-left mx-auto flex min-h-[100vh] max-w-[600px] flex-col bg-white px-6">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-4">
           <NicknameEditor />
@@ -37,23 +39,27 @@ const MyPageLayout = () => {
           <div className="relative flex h-[156px] flex-col justify-center rounded-2xl bg-primary-400 p-6 text-black">
             <Link href="/stamp-map" className="flex h-full w-full flex-col">
               <p className="text-[12px] font-semibold">지도로 보는 나의 여정</p>
-              <p className="mt-1 text-[12px]">
+              <p className="mt-1 text-xs">
                 내 여정을
                 <br />
                 지도로 한눈에
               </p>
-              <p className="mt-4 font-bold text-[18px]">나의 발자취</p>
+              <p className="mt-4 font-bold text-lg">나의 발자취</p>
             </Link>
           </div>
 
-          <div className="row-span-2 flex h-[327px] items-center justify-center rounded-2xl bg-gray-300 p-6">
-            <Link href="/book-mark" className="relative flex h-full w-full items-end justify-end">
+          <div className="relative row-span-2 flex h-[327px] items-center justify-center overflow-hidden rounded-2xl">
+            <Image src="/images/mypage_img2.png" alt="배경 이미지" fill style={{ objectFit: 'cover' }} priority />
+            <div className="absolute inset-0 bg-[#081425]/70"></div>
+            <Link href="/book-mark" className="relative flex h-full w-full flex-col items-end justify-end p-6">
+              <p className="text-xs font-semibold text-white">지도로 보는 나의 여정</p>
               <p className="mb-4 text-right font-bold text-[20px] leading-tight text-white">
                 내가 찜한 <br />
                 여행지
               </p>
             </Link>
           </div>
+
           <PhotoCount />
         </div>
       </div>
