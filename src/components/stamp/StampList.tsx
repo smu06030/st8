@@ -13,9 +13,9 @@ import { promptLogin } from '@/utils/promptLogin';
 
 const StampList = () => {
   const userId = useUserId();
-  const { data: stampList = [], isLoading } = useGetStampListQuery(userId);
+  const { data: stampList = [], isLoading, isPending } = useGetStampListQuery(userId);
 
-  if (isLoading)
+  if (isLoading || isPending)
     return (
       <div>
         <Loading />
