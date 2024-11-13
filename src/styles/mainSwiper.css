@@ -37,3 +37,9 @@
 .swiper-slide-active {
   @apply lg:z-10 lg:h-[368px] lg:w-[100%];
 }
+
+@media (min-width: 1024px) {
+  .swiper {
+    width: auto !important;
+  }
+}

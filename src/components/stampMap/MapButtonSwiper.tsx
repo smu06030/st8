@@ -1,14 +1,15 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
 import { Pagination } from 'swiper/modules';
+import { useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import useKakaoMap from '@/hooks/useKakaoMap';
 import Icon from '../common/Icons/Icon';
 
-import '@/styles/swiper.css';
 import 'swiper/css';
 import 'swiper/css/pagination';
+
+import '@/styles/mapSwiper.css';
 
 const MapButtonSwiper = () => {
   const { activeIndex, siDoName, onSlideChangeHandler } = useKakaoMap();
@@ -34,6 +35,7 @@ const MapButtonSwiper = () => {
         onSlideChange={onSlideChangeHandler}
         modules={[Pagination]}
         className="swiper"
+        style={{ overflow: 'visible' }}
       >
         <SwiperSlide>
           <div className={`swiper-slide px-4 py-3 ${activeIndex === 0 ? 'swiper-slide-active' : ''}`}>전체</div>
