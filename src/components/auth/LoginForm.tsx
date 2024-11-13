@@ -61,6 +61,7 @@ const LoginForm = () => {
   };
 
   const onHandleLogin = async (data: LoginFormInputs) => {
+    console.log(data);
     const emailExists = await checkEmailExists(data.email);
     if (!emailExists) {
       setError('email', {
@@ -96,10 +97,12 @@ const LoginForm = () => {
         text="이메일"
         placeholder="이메일을 입력해주세요."
         status={errors.email ? 'error' : 'default'}
-        register={register('email', {
-          required: '이메일을 입력해주세요.',
-          onBlur: (e) => handleEmailBlur(e.target.value)
-        })}
+        register={{
+          ...register('email', {
+            required: true
+            // onBlur: (e) => handleEmailBlur(e.target.value)
+          })
+        }}
         error={errors.email}
       />
 
@@ -109,9 +112,11 @@ const LoginForm = () => {
         placeholder="비밀번호를 입력해주세요."
         type={showConfirmPassword ? 'text' : 'password'}
         status={errors.password ? 'error' : 'default'}
-        register={register('password', {
-          required: '비밀번호를 입력해주세요.'
-        })}
+        register={{
+          ...register('password', {
+            required: true
+          })
+        }}
         error={errors.password}
         rightIcon={
           <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
