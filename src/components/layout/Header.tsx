@@ -43,18 +43,25 @@ const Header = () => {
     return isActive ? 'text-gray-900 font-semiBold' : ' hover:font-regular';
   };
 
+  // 헤더를 숨기고 싶은 페이지 경로 리스트
+  const hiddenHeaderPaths = ['/landing'];
+  // 현재 페이지가 hiddenHeaderPaths에 포함되어 있는지 확인
+  const shouldHideMobileHeader = hiddenHeaderPaths.includes(pathname);
+
   return (
     <>
       {/* 모바일 */}
-      <header className="fixed top-0 z-[100] block h-[56px] w-full bg-white shadow-headerShadow lg:hidden">
-        <div className="flex items-center justify-between p-[12px]">
-          <button onClick={goBack} className="text-gray-900">
-            <Icon name="BackIcon" />
-          </button>
-          <h1 className="text-center font-semiBold text-[18px] text-gray-900">{pageTitle}</h1>
-          <span className="w-6" />
-        </div>
-      </header>
+      {!shouldHideMobileHeader && (
+        <header className="fixed top-0 z-[100] block h-[56px] w-full bg-white shadow-headerShadow lg:hidden">
+          <div className="flex items-center justify-between p-[12px]">
+            <button onClick={goBack} className="text-gray-900">
+              <Icon name="BackIcon" />
+            </button>
+            <h1 className="text-center font-semiBold text-[18px] text-gray-900">{pageTitle}</h1>
+            <span className="w-6" />
+          </div>
+        </header>
+      )}
 
       {/* PC */}
       <header className="fixed top-0 z-[100] hidden h-[56px] w-full bg-white shadow-headerShadow lg:block">
@@ -68,7 +75,7 @@ const Header = () => {
           </div>
 
           <nav className="flex flex-1 justify-center space-x-8 text-sm font-normal text-gray-700">
-            <Link href="/" className={getLinkStyle('/')}>
+            <Link href="/landing" className={getLinkStyle('/landing')}>
               서비스 소개
             </Link>
             <Link href="/stamp-map" className={getLinkStyle('/stamp-map')}>

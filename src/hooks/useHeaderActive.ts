@@ -41,6 +41,8 @@ const useHeaderActive = () => {
       setPageTitle(PAGE_NAMES.RESET_PASSWORD.page);
     } else if (currentPath.startsWith(PAGE_NAMES.UPDATE_SUCCESS.link)) {
       setPageTitle(PAGE_NAMES.UPDATE_SUCCESS.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.LANDING.link)) {
+      setPageTitle(PAGE_NAMES.LANDING.page);
     } else {
       setPageTitle('');
     }
