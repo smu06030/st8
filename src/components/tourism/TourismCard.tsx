@@ -69,7 +69,7 @@ const TourismCard = ({
       </button>
       <div className="absolute bottom-[42px] left-[36px] right-[36px] flex flex-col justify-end text-left text-white">
         <Link href={`/tourism/${contentId}`}>
-          <p className="ellipsis-multiline break-keep text-[24px] font-semibold leading-[31.20px]">{description}</p>
+          <p className="ellipsis-multiline break-keep font-semiBold text-[24px] leading-[31.20px]">{description}</p>
         </Link>
       </div>
     </div>

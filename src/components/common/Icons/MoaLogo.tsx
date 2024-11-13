@@ -1,6 +1,6 @@
 const MoaLogo = () => {
   return (
-    <svg width="50" height="auto" viewBox="0 0 63 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="50" height="100%" viewBox="0 0 63 25" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M22.6157 16.4186C22.6157 16.7414 22.6157 17.7244 20.681 18.7561C19.614 19.3253 18.3613 19.6264 17.0594 19.6264H10.8386V17.609H6.39453V24.0697H17.0601C19.0893 24.0697 21.0652 23.5876 22.7737 22.6761C25.5383 21.2016 27.0611 18.9789 27.0611 16.418"
         fill="#1D1D1D"

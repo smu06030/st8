@@ -7,6 +7,8 @@ import Icon from '@/components/common/Icons/Icon';
 import { useBookmarkMutation } from '@/queries/mutation/useBookmarkMutation';
 import { useRouter } from 'next/navigation';
 
+import '@/styles/mainTourismSwiper.css';
+
 interface MainTourismCardPropsType {
   userId: string | undefined;
   firstimage: string | null;
@@ -14,6 +16,8 @@ interface MainTourismCardPropsType {
   contentId: string;
   title: string;
   isBookmarked: boolean;
+  activeIndex?: number;
+  index?: number;
 }
 
 const MainTourismCard = ({
@@ -22,7 +26,9 @@ const MainTourismCard = ({
   description,
   contentId,
   title,
-  isBookmarked: initialBookmarked // 초기 북마크 상태로 설정
+  isBookmarked: initialBookmarked, // 초기 북마크 상태로 설정
+  activeIndex,
+  index
 }: MainTourismCardPropsType) => {
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState<boolean>(initialBookmarked);
@@ -48,12 +54,10 @@ const MainTourismCard = ({
     }
   };
 
-  const handleCardClick = () => {
-    router.push(`/tourism/${contentId}`);
-  };
-
   return (
-    <div className="relative h-[374px] w-[100%] overflow-hidden rounded-3xl bg-[#1d1d1d]/70">
+    <div
+      className={`${activeIndex === index ? 'swiper-slide-active' : ''} relative h-[374px] w-auto overflow-hidden rounded-3xl bg-[#1d1d1d]/70 lg:h-[290px] lg:w-auto lg:shrink-0`}
+    >
       <Link href={`/tourism/${contentId}`}>
         <Image
           src={firstimage ? firstimage : '/placeholder.png'}
@@ -73,7 +77,7 @@ const MainTourismCard = ({
       </button>
       <div className="absolute bottom-[42px] left-[36px] right-[36px] flex flex-col justify-end text-left text-white">
         <Link href={`/tourism/${contentId}`}>
-          <p className="ellipsis-multiline break-keep text-[24px] font-semibold leading-[31.20px]">{description}</p>
+          <p className="ellipsis-multiline break-keep font-semiBold text-[24px] leading-[31.20px]">{description}</p>
         </Link>
       </div>
     </div>

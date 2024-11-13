@@ -35,7 +35,7 @@ const MainStampSection = async () => {
       <div className="mt-4 grid grid-cols-2 gap-[15px] lg:mt-7 lg:flex lg:justify-center lg:space-x-4">
         {stampList && stampList.length > 0 ? (
           stampList
-            .filter((_, index) => index < 4)
+            .filter((_, index) => index < 5)
             .map((stamp) => (
               <Link
                 href={`/stamp-all/${REGION_NAME_MAP_KO[stamp.region]}`}

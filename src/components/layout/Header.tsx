@@ -39,7 +39,7 @@ const Header = () => {
 
   const getLinkStyle = (path: string) => {
     const isActive = pathname === path;
-    return isActive ? 'text-gray-900 font-semibold' : ' hover:font-nomal';
+    return isActive ? 'text-gray-900 font-semiBold' : ' hover:font-regular';
   };
 
   return (
@@ -50,7 +50,7 @@ const Header = () => {
           <button onClick={goBack} className="text-gray-900">
             <Icon name="BackIcon" />
           </button>
-          <h1 className="text-center text-[18px] font-semibold">{pageTitle}</h1>
+          <h1 className="text-center font-semiBold text-[18px]">{pageTitle}</h1>
           <span className="w-6" />
         </div>
       </header>
