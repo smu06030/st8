@@ -5,35 +5,33 @@ import LogoutButton from '../auth/LogoutButton';
 import NicknameEditor from './NicknameEditor';
 import StampCount from './StampCount';
 import PhotoCount from './PhotoCount';
-import mypage_img2 from '@/public/images/mainMap.png';
 import Image from 'next/image';
+import RecentPhoto from './RecentPhoto';
 
 const MyPageLayout = () => {
-  useEffect(() => {
-    // 마운트될 때 스크롤 위치를 맨 위로 이동
-    window.scrollTo(0, 0);
-    // 스크롤을 없앰
-    document.body.style.overflow = 'hidden';
+  // useEffect(() => {
+  //   // 마운트될 때 스크롤 위치를 맨 위로 이동
+  //   window.scrollTo(0, 0);
+  //   // 스크롤을 없앰
+  //   document.body.style.overflow = 'hidden';
 
-    // 컴포넌트 언마운트될 때 스크롤 복원
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, []);
+  //   // 컴포넌트 언마운트될 때 스크롤 복원
+  //   return () => {
+  //     document.body.style.overflow = 'auto';
+  //   };
+  // }, []);
 
   return (
-    <div className="items-left mx-auto flex min-h-[100vh] max-w-[600px] flex-col bg-white px-6">
+    <div className="items-left mx-auto flex h-full max-w-[600px] flex-col bg-white px-6 pb-24">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-4">
           <NicknameEditor />
         </div>
         <LogoutButton />
       </div>
-      <div className="my-4 flex items-start space-x-4 text-gray-900">
-        <p>최근 여행지</p>
-      </div>
+      <RecentPhoto />
       <div>
-        <h6 className="mb-[18px] mt-[38px] font-bold text-[20px] text-gray-900">내 정보</h6>
+        <h6 className="mb-[18px] mt-[20px] font-bold text-[20px] text-gray-900">내 정보</h6>
         <StampCount />
         <div className="grid grid-cols-2 gap-4">
           <div className="relative flex h-[156px] flex-col justify-center rounded-2xl bg-primary-400 p-6 text-black">
@@ -59,7 +57,6 @@ const MyPageLayout = () => {
               </p>
             </Link>
           </div>
-
           <PhotoCount />
         </div>
       </div>
