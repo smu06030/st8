@@ -16,7 +16,6 @@ const MyPageLayout = () => {
       </div>
       <div className="my-4 flex items-start space-x-4 text-gray-900">
         <p>최근 여행지</p>
-        <p>과거의 오늘</p>
       </div>
       <div>
         <h6 className="mb-[18px] mt-[38px] font-bold text-[20px] text-gray-900">내 정보</h6>

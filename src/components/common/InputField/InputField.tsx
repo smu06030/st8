@@ -21,7 +21,7 @@ interface InputFieldProps {
 }
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
-  ({ placeholder, status, iconName, text, type = 'text', rightIcon, register, error }, ref) => {
+  ({ placeholder, status, iconName, text, type = 'text', rightIcon, register, error }) => {
     const [currentStatus, setCurrentStatus] = useState<'default' | 'active' | 'done' | 'error'>(status);
 
     useEffect(() => {
@@ -56,7 +56,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             placeholder={placeholder}
             className={`h-9 flex-grow bg-transparent text-sm font-normal text-[#004156] focus:outline-none ${currentStyle.textColor}`}
             {...register}
-            ref={ref}
+            // ref={ref}
             onChange={handleInputChange} // active 상태 반영
             onBlur={handleInputBlur}
           />
