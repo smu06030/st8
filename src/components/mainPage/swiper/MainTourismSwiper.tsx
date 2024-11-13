@@ -7,10 +7,11 @@ import { Tourism } from '@/types/tourism/tourism.type';
 import MainTourismCard from './MainTourismCard';
 import useMediaSize from '@/hooks/useMediaSize';
 
-import '@/styles/mainTourismSwiper.css';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+
+import '@/styles/mainTourismSwiper.css';
 
 interface MainTourismSwiperPropsType {
   tourismList: Tourism[];
@@ -21,9 +22,6 @@ const MainTourismSwiper = ({ tourismList, userId }: MainTourismSwiperPropsType) 
   const [activeIndex, setActiveIndex] = useState(0);
   const isDesktop = useMediaSize();
 
-  // pagination 보이게 하기
-
-  console.log(activeIndex);
   return (
     <>
       {isDesktop ? (

@@ -16,7 +16,7 @@ const MainRecommendSection = () => {
   }
 
   return (
-    <section className="mb-10 mt-[58px] lg:mt-[76px] mo-only:px-6">
+    <section className="mb-[100px] mt-[58px] lg:mt-[76px] mo-only:px-6">
       <div className="flex flex-col items-start justify-start gap-1.5 lg:items-center lg:justify-center">
         <Link href={'/tourism'} className="lg:hidden">
           <div className="flex items-center justify-start gap-1">
