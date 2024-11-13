@@ -52,7 +52,7 @@ const SignupForm = () => {
   // };
 
   return (
-    <div className="mt-7 flex min-h-screen flex-col items-center">
+    <div className="mt-7 flex min-h-screen flex-col items-center justify-between">
       {step === 0 && <NicknameStep onNext={(nickname: string) => handleNext({ nickname })} />}
       {step === 1 && <EmailStep onNext={(email: string) => handleNext({ email })} />}
       {step === 2 && <PasswordStep onNext={(password: string) => handleNext({ password })} />}

@@ -33,12 +33,11 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center space-y-2">
       <span className="mb-6 w-full text-left font-bold text-4xl text-secondary-700">
         모아에게 비밀번호를 <br />
         알려주세요.
       </span>
-
       <InputField
         iconName="LockIcon"
         text="비밀번호"
@@ -60,15 +59,13 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
         })}
         error={errors.password}
       />
-
       {/* 유효성 검사 표시 */}
-      <div className="flex w-full items-center justify-end space-x-4 space-y-6 text-sm text-red-500">
+      <div className="flex w-full items-center justify-end space-x-2 space-y-6 text-xs text-red-500">
         <p className={hasNumber ? 'text-secondary-700' : ''}></p>
         <p className={hasNumber ? 'text-secondary-700' : ''}>숫자 포함 {hasNumber ? '✔' : '✖'}</p>
         <p className={hasLetter ? 'text-secondary-700' : ''}>영문 포함 {hasLetter ? '✔' : '✖'}</p>
         <p className={hasMinLength ? 'text-secondary-700' : ''}>8자리 이상 {hasMinLength ? '✔' : '✖'}</p>
       </div>
-
       <InputField
         iconName="LockIcon"
         text="비밀번호 확인"
@@ -86,8 +83,7 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
           </button>
         }
       />
-
-      <div className="flex w-full items-center justify-end space-y-6 text-sm">
+      <div className="flex w-full items-center justify-end space-y-6 text-xs">
         <div></div>
         {isPasswordMatching ? (
           <p className="text-secondary-700">비밀번호가 동일합니다. ✔</p>
@@ -96,7 +92,7 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
         )}
       </div>
 
-      <div className="mt-8">
+      <div className="!mt-[242px] lg:!mt-[205px]">
         <Button
           text="다음으로"
           variant={hasMinLength && hasNumber && hasLetter && isPasswordMatching ? 'blue' : 'gray'}

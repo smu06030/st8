@@ -38,7 +38,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     const currentStyle = InputFieldStyles[currentStatus];
 
     return (
-      <div className="relative flex h-16 w-full max-w-[327px] flex-col space-y-1">
+      <div className="flex h-16 w-full max-w-[327px] flex-col space-y-1">
         {text && <label className="text-base font-normal text-gray-900">{text}</label>}
         <span
           className={`flex items-center rounded-xl border ${currentStyle.border} w-full px-4 py-2.5 transition-colors duration-300 ease-in-out`}
@@ -47,7 +47,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           <input
             type={type}
             placeholder={placeholder}
-            className={`flex-grow bg-transparent text-sm font-normal text-[#004156] focus:outline-none ${currentStyle.textColor}`}
+            className={`h-9 flex-grow bg-transparent text-sm font-normal text-[#004156] focus:outline-none ${currentStyle.textColor}`}
             {...register}
             // ref={ref}
             onChange={handleInputChange} // active 상태 반영

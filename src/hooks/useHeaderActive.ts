@@ -25,8 +25,8 @@ const useHeaderActive = () => {
       setPageTitle(PAGE_NAMES.LOGIN.page);
     } else if (currentPath.startsWith(PAGE_NAMES.SIGNUP.link)) {
       setPageTitle(PAGE_NAMES.SIGNUP.page);
-    } else if (currentPath.startsWith(PAGE_NAMES.FORGOT_PASSWORD.link)) {
-      setPageTitle(PAGE_NAMES.FORGOT_PASSWORD.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.RESET_PASSWORD.link)) {
+      setPageTitle(PAGE_NAMES.RESET_PASSWORD.page);
     } else if (currentPath === PAGE_NAMES.HOME.link) {
       setPageTitle(PAGE_NAMES.HOME.page);
     } else if (currentPath.startsWith(PAGE_NAMES.MAP.link)) {
@@ -35,8 +35,14 @@ const useHeaderActive = () => {
       setPageTitle(PAGE_NAMES.STAMP_TRACKING.page);
     } else if (currentPath.startsWith(PAGE_NAMES.BOOKMARK.link)) {
       setPageTitle(PAGE_NAMES.BOOKMARK.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.UPDATE_PASSWORD.link)) {
+      setPageTitle(PAGE_NAMES.UPDATE_PASSWORD.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.RESET_PASSWORD.link)) {
+      setPageTitle(PAGE_NAMES.RESET_PASSWORD.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.UPDATE_SUCCESS.link)) {
+      setPageTitle(PAGE_NAMES.UPDATE_SUCCESS.page);
     } else {
-      setPageTitle(''); // 정의되지 않은 페이지는 빈 제목
+      setPageTitle('');
     }
   }, [params]);
 
