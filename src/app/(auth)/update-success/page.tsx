@@ -8,7 +8,12 @@ export const metadata: Metadata = {
 };
 
 const UpdateSuccessPage = () => {
-  return <UpdateSuccess />;
+  return (
+    <div>
+      <div className="mt-20"></div>
+      <UpdateSuccess />
+    </div>
+  );
 };
 
 export default UpdateSuccessPage;
