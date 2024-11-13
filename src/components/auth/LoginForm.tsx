@@ -77,7 +77,7 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onHandleLogin)} className="mt-7 flex flex-col items-center space-y-12">
+    <form onSubmit={handleSubmit(onHandleLogin)} className="mt-7 flex min-h-screen flex-col items-center space-y-12">
       <InputField
         iconName="MailIcon"
         text="이메일"
@@ -116,16 +116,16 @@ const LoginForm = () => {
           아이디/비밀번호 찾기
         </a>
       </div>
-
-      <Button text="로그인" variant={isValid ? 'blue' : 'gray'} disabled={!isValid} type="submit" />
-
+      <div className="!mt-3">
+        <Button text="로그인" variant={isValid ? 'blue' : 'gray'} disabled={!isValid} type="submit" />
+      </div>
       <div className="mt-6 flex justify-center space-x-4">
         <SocialLoginButton provider="apple" onClick={(e) => handleSocialLogin('apple', e)} />
         <SocialLoginButton provider="google" onClick={(e) => handleSocialLogin('google', e)} />
         <SocialLoginButton provider="kakao" onClick={(e) => handleSocialLogin('kakao', e)} />
       </div>
 
-      <div className="mt-16 text-center">
+      <div className="!mt-[180px] text-center lg:!mt-14">
         <span className="mr-1 text-sm text-gray-600">아직 회원이 아니신가요?</span>
         <LinkButton text="회원가입" href="/signup" />
       </div>
