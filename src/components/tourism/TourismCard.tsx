@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useBookmarkMutation } from '@/queries/mutation/useBookmarkMutation';
 import { useRouter } from 'next/navigation';
 
-interface PlaceCardPropsType {
+interface TourismCardPropsType {
   userId: string | undefined;
   firstimage: string | null;
   description: string;
@@ -16,14 +16,14 @@ interface PlaceCardPropsType {
   isBookmarked: boolean;
 }
 
-const PlaceCard = ({
+const TourismCard = ({
   userId,
   firstimage,
   description,
   contentId,
   title,
   isBookmarked: initialBookmarked // 초기 북마크 상태로 설정
-}: PlaceCardPropsType) => {
+}: TourismCardPropsType) => {
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState<boolean>(initialBookmarked);
   const { mutate: bookmarkMutate } = useBookmarkMutation();
@@ -53,9 +53,10 @@ const PlaceCard = ({
       <Link href={`/tourism/${contentId}`}>
         <Image
           src={firstimage ? firstimage : '/placeholder.png'}
+          alt={description || '이미지 설명 없음'}
           fill
           priority
-          alt={description || '이미지 설명 없음'}
+          sizes="(min-width: 640px) 50vw, 30vw"
           style={{ objectFit: 'cover' }}
         />
         <div className="absolute inset-0 rounded-3xl bg-[#1d1d1d]/70"></div>
@@ -75,4 +76,4 @@ const PlaceCard = ({
   );
 };
 
-export default PlaceCard;
+export default TourismCard;

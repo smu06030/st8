@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const MainHomePage = () => {
   return (
-    <main className="relative px-6">
+    <main className="relative">
       <MainMapSection />
       <MainStampSection />
       <MainRecommendSection />

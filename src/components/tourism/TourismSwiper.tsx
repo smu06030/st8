@@ -2,18 +2,18 @@
 
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import PlaceCard from '@/components/tourism/PlaceCard';
+import TourismCard from '@/components/tourism/TourismCard';
 import { Tourism } from '@/types/tourism/tourism.type';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-interface TourlistSwiperPropsType {
+interface TourismSwiperPropsType {
   tourismList: Tourism[];
   userId: string | undefined;
 }
 
-const TourlistSwiper = ({ tourismList, userId }: TourlistSwiperPropsType) => {
+const TourismSwiper = ({ tourismList, userId }: TourismSwiperPropsType) => {
   return (
     <Swiper
       slidesPerView={1.1}
@@ -38,7 +38,7 @@ const TourlistSwiper = ({ tourismList, userId }: TourlistSwiperPropsType) => {
         .filter((_, index) => index < 6)
         .map((tourism) => (
           <SwiperSlide key={tourism.contentid}>
-            <PlaceCard
+            <TourismCard
               key={tourism.contentid}
               userId={userId}
               contentId={tourism.contentid || '등록되지 않는 여행지'}
@@ -53,4 +53,4 @@ const TourlistSwiper = ({ tourismList, userId }: TourlistSwiperPropsType) => {
   );
 };
 
-export default TourlistSwiper;
+export default TourismSwiper;

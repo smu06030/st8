@@ -12,7 +12,8 @@ const Icon = ({ name, size = 28, color = 'black', bgColor, rx }: IconProprType) 
   const icon = ICONS[name];
 
   // 사이즈 동적 조절
-  const scale = size >= 28 ? size / 28 : 1;
+  // const scale = size >= 28 ? size / 28 : 1;
+  const scale = size / 28;
 
   return (
     <svg
