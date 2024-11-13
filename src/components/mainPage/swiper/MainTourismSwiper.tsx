@@ -11,7 +11,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-import '@/styles/mainTourismSwiper.css';
+import '@/styles/mainSwiper.css';
 
 interface MainTourismSwiperPropsType {
   tourismList: Tourism[];
