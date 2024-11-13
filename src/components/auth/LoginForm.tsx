@@ -11,6 +11,8 @@ import Icon from '@/components/common/Icons/Icon';
 import browserClient from '@/utils/supabase/client';
 import InputField from '../common/InputField/InputField';
 import { useSocialLogin } from '@/hooks/useSocialLogin';
+import SmailCheckIcon from '../common/Icons/SmailCheckIcon';
+import SmailXIcon from '../common/Icons/SmailXIcon';
 
 interface LoginFormInputs {
   email: string;
@@ -89,6 +91,8 @@ const LoginForm = () => {
         })}
         error={errors.email}
       />
+      {/* <SmailCheckIcon />
+      <SmailXIcon /> */}
 
       <InputField
         iconName="LockIcon"

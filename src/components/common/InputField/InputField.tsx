@@ -2,6 +2,8 @@ import React, { ReactNode, useEffect, useState, forwardRef, ChangeEvent } from '
 import Icon from '@/components/common/Icons/Icon';
 import { InputFieldStyles } from '@/components/common/InputField/InputFieldStyles';
 import { UseFormRegisterReturn } from 'react-hook-form';
+import SmailCheckIcon from '../Icons/SmailCheckIcon';
+import SmailXIcon from '../Icons/SmailXIcon';
 
 interface InputFieldProps {
   placeholder: string;
@@ -27,8 +29,8 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     }, [status, error?.message]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setCurrentStatus('active'); // 입력 중일 때 active 상태로 설정
-      register?.onChange?.(e); // react-hook-form에서 전달된 onChange 호출
+      setCurrentStatus('active');
+      register?.onChange?.(e);
     };
 
     const handleInputBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +57,16 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           />
           {rightIcon && <div className="ml-2">{rightIcon}</div>}
         </span>
-        {error?.message && <p className="absolute bottom-[-35px] right-[-5px] text-xs text-red-500">{error.message}</p>}
+        {error?.message && (
+          <p className="bottom-[-35px] mt-1 flex items-center justify-end text-right text-xs text-red-700">
+            <span className="mr-1">{error.message}</span>
+            <SmailXIcon />
+          </p>
+        )}
+
+        {/* {error?.message && (
+          <p className="bottom-[-35px] right-[-5px] mt-1 text-right text-xs text-red-700">{error.message}</p>
+        )} */}
       </div>
     );
   }

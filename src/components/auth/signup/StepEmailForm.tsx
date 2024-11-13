@@ -58,10 +58,10 @@ const EmailStep = ({ onNext }: EmailStepProps) => {
         text="이메일"
         placeholder="이메일을 입력해주세요."
         register={register('email', {
-          required: '이메일을 입력해주세요. ✖',
+          required: '이메일을 입력해주세요.',
           pattern: {
             value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-            message: '유효한 이메일 주소를 입력해주세요. ✖'
+            message: '유효한 이메일 주소를 입력해주세요. '
           },
           onBlur: (e) => handleEmailBlur(e.target.value), // 이메일 중복 확인 함수 호출
           onChange: () => clearErrors('email')

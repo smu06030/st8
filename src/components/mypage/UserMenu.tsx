@@ -114,7 +114,7 @@ const UserMenu = ({ initialNickname }: UserMenuType) => {
             <button onClick={handleOpenModal} className="block w-full px-4 py-2 text-left text-gray-700">
               닉네임 변경하기
             </button>
-            <button onClick={handleLogout} className="block w-full px-4 py-2 text-left text-red-500">
+            <button onClick={handleLogout} className="block w-full px-4 py-2 text-left text-red-700">
               로그아웃
             </button>
           </div>
