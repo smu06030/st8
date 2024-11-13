@@ -79,7 +79,7 @@ const NicknameEditor = () => {
 
   return (
     <div className="flex items-center justify-between">
-      <h1 className="mr-[8px] mt-[34px] text-2xl font-semibold">{nickname}님</h1>
+      <h1 className="mr-[8px] mt-[34px] text-2xl font-semibold text-gray-900">{nickname}님</h1>
       <div>
         <button onClick={openModal} className="mt-[34px] text-sm text-gray-500">
           수정하기
