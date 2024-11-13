@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import useModal from '@/hooks/useModal';
 import browserClient from '@/utils/supabase/client';
 import useUserId from '@/hooks/useUserId';
@@ -43,7 +44,6 @@ const UserMenu = ({ initialNickname }: UserMenuType) => {
       checkUserStatus();
     });
 
-    // 컴포넌트 언마운트시 리스너 제거
     return () => {
       // authListener?.unsubscribe();
     };
@@ -99,18 +99,18 @@ const UserMenu = ({ initialNickname }: UserMenuType) => {
         </button>
         {isDropdownOpen && (
           <div className="shadow-md absolute right-0 mt-2 w-48 rounded-md bg-white py-3">
-            <a href="/stamp-all" className="block px-4 py-2 text-gray-700">
+            <Link href="/stamp-all" className="block px-4 py-2 text-gray-700">
               지금까지 모은 스탬프
-            </a>
-            <a href="/stamp-map" className="block px-4 py-2 text-gray-700">
+            </Link>
+            <Link href="/stamp-map" className="block px-4 py-2 text-gray-700">
               나의 발자취
-            </a>
-            <a href="/photo-album" className="block px-4 py-2 font-bold text-gray-700">
+            </Link>
+            <Link href="/photo-album" className="block px-4 py-2 text-gray-700">
               나의 추억들
-            </a>
-            <a href="/book-mark" className="block px-4 py-2 text-gray-700">
+            </Link>
+            <Link href="/book-mark" className="block px-4 py-2 text-gray-700">
               내가 찜한 여행지
-            </a>
+            </Link>
             <button onClick={handleOpenModal} className="block w-full px-4 py-2 text-left text-gray-700">
               닉네임 변경하기
             </button>
@@ -155,9 +155,9 @@ const UserMenu = ({ initialNickname }: UserMenuType) => {
     );
   } else {
     return (
-      <a href="/login" className="text-sm font-normal text-gray-700 hover:font-semibold hover:text-gray-900">
+      <Link href="/login" className="text-sm font-normal text-gray-700 hover:font-semibold hover:text-gray-900">
         로그인
-      </a>
+      </Link>
     );
   }
 };

@@ -7,6 +7,7 @@ import MoaLogo from '../common/Icons/MoaLogo';
 import { usePathname } from 'next/navigation';
 import UserMenu from '../mypage/UserMenu';
 import browserClient from '@/utils/supabase/client';
+import Link from 'next/link';
 
 const Header = () => {
   const { pageTitle, goBack } = useHeaderActive();
@@ -60,28 +61,28 @@ const Header = () => {
         <div className="mx-12 mt-2 flex items-center justify-between">
           <div className="flex items-center">
             <div className="p-[12px]">
-              <a href="/">
+              <Link href="/">
                 <MoaLogo />
-              </a>
+              </Link>
             </div>
           </div>
 
           <nav className="flex flex-1 justify-center space-x-8 text-sm font-normal text-gray-700">
-            <a href="/" className={getLinkStyle('/')}>
+            <Link href="/" className={getLinkStyle('/')}>
               서비스 소개
-            </a>
-            <a href="/stamp-map" className={getLinkStyle('/stamp-map')}>
+            </Link>
+            <Link href="/stamp-map" className={getLinkStyle('/stamp-map')}>
               지도
-            </a>
-            <a href="/tourism" className={getLinkStyle('/tourism')}>
+            </Link>
+            <Link href="/tourism" className={getLinkStyle('/tourism')}>
               추천여행지
-            </a>
-            <a href="/photo-album" className={getLinkStyle('/photo-album')}>
+            </Link>
+            <Link href="/photo-album" className={getLinkStyle('/photo-album')}>
               앨범
-            </a>
-            <a href="/stamp-all" className={getLinkStyle('/stamp-all')}>
+            </Link>
+            <Link href="/stamp-all" className={getLinkStyle('/stamp-all')}>
               스탬프
-            </a>
+            </Link>
           </nav>
           <UserMenu isLoggedIn={isLoggedIn} nickname={nickname} initialNickname={nickname} tempNickname={nickname} />
         </div>

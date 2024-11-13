@@ -2,7 +2,6 @@
 import { useEffect, useState, MouseEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-
 import Button from '@/components/common/Buttons/Button';
 import LinkButton from '@/components/common/Buttons/LinkButton';
 import SocialLoginButton from '@/components/common/Buttons/SocialLoginButton';
@@ -11,8 +10,7 @@ import Icon from '@/components/common/Icons/Icon';
 import browserClient from '@/utils/supabase/client';
 import InputField from '../common/InputField/InputField';
 import { useSocialLogin } from '@/hooks/useSocialLogin';
-import SmailCheckIcon from '../common/Icons/SmailCheckIcon';
-import SmailXIcon from '../common/Icons/SmailXIcon';
+import Link from 'next/link';
 
 interface LoginFormInputs {
   email: string;
@@ -63,12 +61,25 @@ const LoginForm = () => {
   };
 
   const onHandleLogin = async (data: LoginFormInputs) => {
+    const emailExists = await checkEmailExists(data.email);
+    if (!emailExists) {
+      setError('email', {
+        type: 'manual',
+        message: '등록되지 않은 이메일입니다.'
+      });
+      return;
+    }
+
     const result = await loginWithEmailAndPassword(data.email, data.password);
 
     if (result.success) {
       router.push('/');
     } else {
       if (result.type === 'password') {
+        setError('password', {
+          type: 'manual',
+          message: '비밀번호가 틀렸습니다.'
+        });
       }
     }
   };
@@ -91,8 +102,6 @@ const LoginForm = () => {
         })}
         error={errors.email}
       />
-      {/* <SmailCheckIcon />
-      <SmailXIcon /> */}
 
       <InputField
         iconName="LockIcon"
@@ -116,9 +125,9 @@ const LoginForm = () => {
           <input type="checkbox" className="mr-1" />
           <span className="text-sm font-normal text-[#4e4e4e]">자동 로그인</span>
         </div>
-        <a href="/reset-password" className="text-right text-sm font-normal text-[#4e4e4e]">
+        <Link href="/reset-password" className="text-right text-sm font-normal text-[#4e4e4e]">
           아이디/비밀번호 찾기
-        </a>
+        </Link>
       </div>
       <div className="!mt-3">
         <Button text="로그인" variant={isValid ? 'blue' : 'gray'} disabled={!isValid} type="submit" />

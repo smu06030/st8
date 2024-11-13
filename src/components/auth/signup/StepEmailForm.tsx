@@ -29,13 +29,13 @@ const EmailStep = ({ onNext }: EmailStepProps) => {
       const exists = await checkEmailExists(email);
 
       if (exists) {
-        setError('email', { type: 'manual', message: '이미 사용 중인 이메일입니다. ✖' });
+        setError('email', { type: 'manual', message: '이미 사용 중인 이메일입니다.' });
       } else {
         clearErrors('email');
       }
     } catch (error) {
       console.error('Error checking email:', error);
-      setError('email', { type: 'manual', message: '이메일 확인 중 오류가 발생했습니다. ✖' });
+      setError('email', { type: 'manual', message: '이메일 확인 중 오류가 발생했습니다.' });
     }
   };
 
