@@ -91,7 +91,13 @@ const Header = () => {
               스탬프
             </Link>
           </nav>
-          <UserMenu isLoggedIn={isLoggedIn} nickname={nickname} initialNickname={nickname} tempNickname={nickname} />
+          <UserMenu
+            isLoggedIn={isLoggedIn}
+            nickname={nickname}
+            initialNickname={nickname}
+            tempNickname={nickname}
+            checkUserStatus={nickname}
+          />
         </div>
       </header>
     </>

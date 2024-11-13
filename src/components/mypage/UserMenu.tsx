@@ -11,6 +11,7 @@ interface UserMenuType {
   isLoggedIn: boolean;
   nickname: string;
   tempNickname: string;
+  checkUserStatus: string;
 }
 
 const UserMenu = ({ initialNickname }: UserMenuType) => {
