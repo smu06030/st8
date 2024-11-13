@@ -23,11 +23,6 @@ const geistMono = localFont({
   weight: '100 900'
 });
 
-// export const metadata: Metadata = {
-//   title: '모아 메인 페이지',
-//   description: '모아 메인 페이지 입니다.'
-// };
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [showSplash, setShowSplash] = useState(true);
 
@@ -36,16 +31,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`bg-no-repeat font-regular lg:bg-[#F5F5F7] mo-only:bg-backgroundGradient ${geistSans.variable} ${geistMono.variable} ${!showSplash ? 'body-padding' : ''} antialiased`}
       >
-        <>
-          <Header />
-          <KakaoMapLoader />
-          <RQProviders>
-            {children}
-            <div id="overlays"></div> {/* 모달창 */}
-          </RQProviders>
-          <Nav />
-          <Footer />
-        </>
+        <Header />
+        <KakaoMapLoader />
+        <RQProviders>
+          {children}
+          <div id="overlays"></div> {/* 모달창 */}
+        </RQProviders>
+        <Nav />
+        <Footer />
       </body>
     </html>
   );

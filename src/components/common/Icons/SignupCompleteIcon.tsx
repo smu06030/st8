@@ -1,6 +1,6 @@
 const SignupCompleteIcon = () => {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex !h-[80%] flex-col items-center justify-center">
       <svg
         width="160"
         height="160"

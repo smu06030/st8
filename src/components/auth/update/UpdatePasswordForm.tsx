@@ -72,7 +72,7 @@ const UpdatePasswordForm = () => {
         />
 
         {/* 유효성 검사 표시 */}
-        <div className="flex w-full items-center justify-end space-x-2 space-y-6 text-xs text-red-500">
+        <div className="flex w-full items-center justify-end space-x-2 space-y-6 text-xs text-red-700">
           <p className={hasNumber ? 'text-secondary-700' : ''}></p>
           <p className={hasNumber ? 'text-secondary-700' : ''}>숫자 포함 {hasNumber ? '✔' : '✖'}</p>
           <p className={hasLetter ? 'text-secondary-700' : ''}>영문 포함 {hasLetter ? '✔' : '✖'}</p>
@@ -99,7 +99,7 @@ const UpdatePasswordForm = () => {
           {isPasswordMatching ? (
             <p className="text-secondary-700">비밀번호가 동일합니다. ✔</p>
           ) : (
-            <p className="text-red-500">비밀번호가 동일하지 않습니다. ✖</p>
+            <p className="text-red-700">비밀번호가 동일하지 않습니다. ✖</p>
           )}
         </div>
 
