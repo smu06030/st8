@@ -66,7 +66,7 @@ const Header = () => {
             </div>
           </div>
 
-          <nav className="flex flex-1 justify-center space-x-6 text-sm font-normal text-gray-700">
+          <nav className="flex flex-1 justify-center space-x-8 text-sm font-normal text-gray-700">
             <a href="/" className={getLinkStyle('/')}>
               서비스 소개
             </a>

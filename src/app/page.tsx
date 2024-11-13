@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const MainHomePage = () => {
   return (
-    <main className="relative">
+    <main className="lg:mt-18 relative mt-20">
       <MainMapSection />
       <MainStampSection />
       <MainRecommendSection />

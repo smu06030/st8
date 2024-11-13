@@ -18,7 +18,7 @@ const TourismPage = () => {
   const groupedPlaces = tourismList ? groupTourismByCity(tourismList) : [];
 
   return (
-    <div className="min-h-screen pt-[36px] lg:pt-[74px] mo-only:px-6">
+    <div className="mt-12 min-h-screen pt-[36px] lg:mt-0 lg:pt-[74px] mo-only:px-6">
       <header className="pc-inner-width mb-[48px]">
         <h1 className="font-bold text-2xl leading-tight text-secondary-900">
           <span className="sm:inline block text-[32px] leading-[41px]">

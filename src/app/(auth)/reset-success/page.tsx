@@ -8,7 +8,12 @@ export const metadata: Metadata = {
 };
 
 const ResetSuccessPage = () => {
-  return <ResetSuccess />;
+  return (
+    <div>
+      <div className="mt-20"></div>
+      <ResetSuccess />;
+    </div>
+  );
 };
 
 export default ResetSuccessPage;
