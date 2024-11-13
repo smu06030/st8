@@ -98,7 +98,7 @@ const UserMenu = ({ initialNickname }: UserMenuType) => {
           </span>
         </button>
         {isDropdownOpen && (
-          <div className="shadow-md absolute right-0 mt-2 w-48 rounded-md bg-white">
+          <div className="shadow-md absolute right-0 mt-2 w-48 rounded-md bg-white py-3">
             <a href="/stamp-all" className="block px-4 py-2 text-gray-700">
               지금까지 모은 스탬프
             </a>
