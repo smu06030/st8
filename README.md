@@ -2,25 +2,40 @@
 
 ## 프로젝트 소개
 
-온라인으로 개인 여행을 기록하고, 그에 대한 스템프를 찍으면서 추억을 남기는 플랫폼입니다.
+사용자가 국내 여행을 기록하고 방문한 장소별로 스탬프를 찍어 추억을 남길 수 있는 디지털 플랫폼입니다.
 
-#### 📅 프로젝트 기간 : 2024.10.21 ~ 2024.11.07
+#### 📅 프로젝트 기간 : 2024.10.21 ~ 2024.11.21
 
 #### 💻 배포 링크 : [MOA 바로가기](https://st8-dev.vercel.app/)
 
 #### 🏠 팀 노션 : [팀 노션 바로가기](https://www.notion.so/teamsparta/8-bf17275ec94f4ac988eb0362363e3df6)
 
+---
+
 ### 선정 배경
 
-이전에는 YOLO라며 해외여행, 오마카세등을 즐기는 추세였다면 최근에는 YO NO로 해외여행이 줄어들고 있는 추세입니다. 이런 시기에 해외여행을 대체할 수 있는 가성비 국내여행을 하는 사람들에게 내가 갔었던 여행에 대한 기록을 남겨 추억하게 하는 플랫폼을 제작하는것을 목표로 생각하였습니다.
+최근 통계에 따르면, 전 세계적 팬데믹 상황과 경제적 불안정성으로 인해 해외여행 수요가 급감하고 있으며, 이에 따라 가성비 좋은 국내 여행에 대한 관심이 높아지고 있습니다. 특히 ‘YOLO’(You Only Live Once) 트렌드에서 'YO NO’(해외여행을 자제하는 경향)로 변화하는 사회적 흐름이 이를 뒷받침합니다.  
+
+이러한 흐름 속에서 모아 Project는 사용자가 국내 숨은 명소와 다양한 관광지를 찾아 나서는 여정을 돕고, 이를 기록으로 남기며 공유할 수 있는 공간을 제공합니다. 사용자들은 지역별 스탬프를 모으고, 방문한 장소에 대한 사진을 포토 앨범에 업로드하여 여행의 추억을 한곳에 모을 수 있습니다. 이 과정을 통해 사용자들은 단순한 여행 기록을 넘어, 자신만의 여행 컬렉션을 구축하는 재미를 느낄 수 있습니다.
+
+모아 Project는 이러한 디지털 여행 기록 방식을 통해 사용자가 국내여행을 새롭고 의미 있게 즐길 수 있도록 돕고자 합니다.
+
+---
 
 ### 기획 의도
 
-- 특화 포인트<br/>
-  : 국내 여행 활성화를 위해 국내의 숨은 명소와 다양한 관광지를 소개하면 사용자들의 국내여행 소비를 촉진시킬 수 있다.
+- **특화 포인트**  
+  국내 여행 활성화를 위해 전국의 숨은 명소와 지역 특색이 담긴 다양한 관광지를 소개하며, 사용자들의 여행 의욕을 북돋고 국내 여행 소비를 촉진합니다.
 
-- 차별화된 내용<br/>
-  : 스탬프 투어를 모바일 기기로 쉽게 할 수 있으면 다양한 스탬프 투어 경험을 제공 할 수 있다.
+- **차별화된 내용**  
+  스탬프 투어 기능을 모바일 기기로 손쉽게 이용할 수 있으며, 사용자는 방문한 각 지역마다 스탬프를 수집할 수 있어 여행 기록이 하나의 컬렉션으로 남습니다. 여행 도중 스탬프를 찍는 경험 자체가 또 다른 재미 요소로 작용하여 사용자들이 자연스럽게 여행을 기록하고 공유할 수 있습니다.
+
+---
+
+## 🏗️ 아키텍쳐
+![Moa Architecture](https://github.com/user-attachments/assets/70d8cbe6-7466-4347-aac7-81d3bcf93fb3)
+
+---
 
 ## 📚 기술 스택
 ![Next.js](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
@@ -34,8 +49,20 @@
 ![CSS3](https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
+---
 
+## **기술적 의사결정**
 
+| 기술 스택             | 선택 이유                                                                                                                                                                                                                       |
+|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Next.js** 🚀       | 서버 사이드 렌더링(SSR)과 정적 사이트 생성(SSG)을 지원하여 초기 로딩 속도와 SEO에 유리하며, 파일 기반 라우팅으로 별도의 설정 없이도 직관적인 페이지 관리를 제공하여 선택하였습니다.                                                        |
+| **Supabase** 🛠️     | 백엔드 인프라를 직접 구축하지 않고도 API 생성, 인증, 파일 스토리지, 실시간 데이터 동기화 등의 기능을 제공하여 빠르게 애플리케이션을 개발할 수 있어 선택하였습니다.                                                                       |
+| **Zustand** 🌐      | 전역 상태를 간편하게 관리하며, 보일러 플레이트가 단순하여 빠르게 환경 설정이 가능하고 컴포넌트 간 데이터 흐름을 최적화하여 효율적인 데이터 관리가 가능해 선택하였습니다.                                                              |
+| **TanStack Query** 🔄 | 자동 캐싱과 동기화를 통해 네트워크 요청을 줄이고 성능을 향상시키며, 로딩과 에러 상태 관리가 용이하고 자동으로 재시도 및 업데이트를 처리하여 편리하게 로직을 작성할 수 있어 선택하였습니다.                                               |
+| **Vercel** ⚙️        | GitHub와 연동하여 코드 푸시 시 자동으로 빌드와 배포가 이루어져 CI/CD 프로세스를 간편하게 설정할 수 있어 선택하였습니다.                                                                                                          |
+| **Tailwind CSS** 🎨  | 유틸리티 우선 접근 방식으로 미리 정의된 클래스를 활용하여 일관된 스타일링이 가능하며, CSS 파일 없이도 빠르고 유연하게 디자인을 적용할 수 있어 개발 생산성이 높아 선택하였습니다.                                                       |
+
+---
 
 ## 🪖 팀원
 
@@ -60,156 +87,81 @@
   </tr>
 </table>
 
-## ⚔️ 역할
+---
 
-### 혜인
+## 🏠 역할 소개
 
-추천 여행지 : 북마크
+### 전국팔도 8조
 
-- 관광지 목록 페이지: Supabase에서 자료를 불러와 사용자에게 다양한 관광지를 표시하는 페이지를 구성하였습니다. 데이터는 Tanstack Query를 사용하여 비동기적으로 불러오고, 사용자 경험을 향상시키기 위해 React Query의 캐싱 기능을 활용하여 페이지 로딩 속도를 최적화했습니다.
+| 이름      | 역할      | 담당 기능                                                                                                                                                 |
+|---------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **송혜인** | 리더      | 관광지 목록, 관광지 상세, 공공API, 카카오맵 API                                                                                                       |
+| **임보라** | 부리더   | Geolocation API, 스탬프 목록, 스탬프 상세 페이지, 앨범 목록, 앨범 상세페이지, 지역별 필터링, 레이아웃, CRUD                                  |
+| **유인철** | 팀원      | 카카오맵 API, 메인페이지, 추천여행지 목록, 추천여행지 상세페이지, CRUD                                                                               |
+| **박규리** | 팀원      | 회원가입, 로그인(소셜로그인), 마이페이지, 레이아웃                                                                                                   |
+| **김재범** | 디자이너  | 웹/모바일 디자인, 배너, 아이콘, 로고, 브로셔 디자인                                                                                                 |
 
-- 관광지 디테일 페이지: 공공 API를 이용해 각 관광지의 상세 정보를 불러와 세부 정보를 제공하는 페이지를 구현하였습니다. Kakao Map API를 통합하여 사용자가 지도 상에서 해당 관광지의 위치를 시각적으로 확인할 수 있도록 하였으며, 북마크 기능을 추가하여 사용자가 관심 있는 관광지를 쉽게 저장하고 관리할 수 있도록 했습니다.
+---
 
-- 찜한 목록(북마크) 페이지: 사용자가 북마크한 관광지를 관리하는 페이지를 제작하였습니다. Supabase를 통해 사용자별 북마크 데이터를 저장하고 불러오며, 사용자가 북마크 상태를 실시간으로 업데이트할 수 있도록 Tanstack Query의 invalidateQueries를 사용하여 최신 상태를 유지하도록 구성하였습니다.
+## 📚 주요 기능
 
-### 보라
+### 🗺️ 스탬프 서비스
 
-스탬프 추가삭제, 스탬프목록, 앨범목록
+#### **스탬프 지도 페이지**
+- 지역별 카테고리를 슬라이드하여 특정 지역을 선택할 수 있습니다.
+- 찍은 스탬프의 위치를 표시하여 지역별 스탬프 현황을 확인하고, 클릭 시 해당 장소의 정보를 제공합니다.
+- **전체 스탬프 목록 페이지**로 이동할 수 있습니다.
 
-- Geolocation API와 Kakao map을 사용하여 사용자의 현재위치를 기준으로 지역별 카테고리로 나눈 스탬프가 활성화되게하고, 사용자 본인의 스탬프 현황을 알 수 있는 목록화면을 구성하였습니다. 
-- 사용자의 기준의 데이터를 TanstackQuery로 불러와 사용자가 업로드한 사진을 시각화하였고, useMutations으로 이미지를 올릴 수 있는 input과 데이터를 연결하여 파일리더가 로드되었을때 데이터가 저장되어 추가되는 기능과 사용자의 아이디를 기준으로 삭제할 수 있는 기능으로 사용자의 경험을 향상시켰습니다. 
-또한 TanstackQuery에서 제공하는 invalidateQueries로 항상 최신상태를 유지하도록 구현하였습니다.
+#### **스탬프 찍는 페이지**
+- 사용자의 현재 위치를 기반으로 해당 지역의 스탬프를 찍을 수 있습니다.
+- 찍은 스탬프는 사용자가 별명을 지정하여 쉽게 추억할 수 있습니다.
 
-### 인철
+#### **스탬프 목록 페이지**
+- 17개의 지역별 스탬프가 활성화/비활성화 상태로 표시되어 사용자 소유 스탬프 현황을 한눈에 파악할 수 있습니다.
+- 비활성화된 스탬프가 활성화되며 모으는 재미를 더했습니다.
+- 활성화된 스탬프를 누르면 **상세 페이지**로 이동합니다.
 
-메인 페이지, 지도 : 지도 불러오기, 스탬프 , 추천여행지
+#### **지역별 스탬프 상세 페이지**
+- 활성화된 스탬프의 이미지와 처음 찍은 일시, 주소, 총 개수를 제공합니다.
+- 히스토리 드롭다운에서 해당 지역에서 찍은 스탬프의 장소 정보를 확인할 수 있습니다.
 
-- 카카오맵 행정구역 데이터를 json 형태로 받아와 필터링 과정을 거쳐서 폴리곤을 렌더링 했습니다. 근데 json 데이터에 폴리곤과 멀티폴리곤 형태로 나눠져 있어 필터링 과정을 거치고 폴리곤을 렌더링 할 수 있게 로직을 수정했습니다!
+---
 
-```ts
-import { CoordinatesType } from '@/types/stampMap/CoordRegionCode.types';
-import coordRegionCode from '../../../coordregioncode.json';
+### 🚎 지역별 관광지 소개
 
-// 행정구역 PathList 가져오기
-export const pathListFormatter = () => {
-  const { features } = coordRegionCode;
+#### **관광지 목록 페이지**
+- 전국의 관광지 정보를 키워드별, 지역별로 확인할 수 있습니다.
+- 각 관광지별 **북마크 기능**을 제공하며, 저장한 관광지는 마이페이지에서 확인할 수 있습니다.
 
-  const data = features.map((item) => {
-    const { geometry, properties } = item;
-    const { CTP_KOR_NM } = properties;
-    const { coordinates, type } = geometry;
+#### **관광지 상세 페이지**
+- 해당 관광지의 운영 시간, 주차 여부, 휴일 등 주요 정보를 확인할 수 있습니다.
+- 위치와 상세 정보도 함께 제공하여 여행 계획을 쉽게 세울 수 있습니다.
 
-    const pathList =
-      type === 'Polygon'
-        ? getPolygonPathList(coordinates)
-        : type === 'MultiPolygon'
-          ? getMultiPolygonPathList(coordinates)
-          : [];
+---
 
-    return {
-      name: CTP_KOR_NM,
-      path: pathList,
-      isHover: false,
-      key: Math.random()
-    };
-  });
+### 🌉 포토앨범 기록
 
-  return data;
-};
+#### **포토앨범 페이지**
+- 사용자가 특정 지역의 사진을 업로드해 여행의 추억을 앨범으로 모을 수 있습니다.
+- 이미지를 확대하거나 슬라이드 방식으로 앨범을 감상할 수 있어 추억을 쉽게 돌아볼 수 있습니다.
 
-// Polygon pathList 포멧 (3차원 배열)
-const getPolygonPathList = (coordinates: CoordinatesType) => {
-  return coordinates.map((areaList) => areaList.map(([lng, lat]) => ({ lng: Number(lng), lat: Number(lat) })));
-};
+---
 
-// MultiPolygon pathList 포멧 (4차원 배열)
-const getMultiPolygonPathList = (coordinates: CoordinatesType) => {
-  return coordinates.flatMap((polygon) =>
-    polygon.map(
-      (areaList) =>
-        areaList
-          .map((area) => {
-            if (Array.isArray(area)) {
-              const [lng, lat] = area;
-              return { lng: Number(lng), lat: Number(lat) };
-            }
-            return null; // null을 반환하는 대신 에러를 방지
-          })
-          .filter((item): item is { lng: number; lat: number } => item !== null) // null 제거
-    )
-  );
-};
-```
+### 👣 마이페이지
 
-### 규리
+#### **마이페이지 기능**
+- 사용자 닉네임을 변경할 수 있으며, 찜한 여행지, 모은 스탬프 현황, 업로드한 사진 갯수를 한눈에 확인할 수 있습니다.
+- **최근 여행지**와 **과거의 오늘**을 슬라이드 형식으로 볼 수 있어 개인화된 여행 기록을 제공합니다.
 
-로그인, 회원가입, 마이페이지 : Supabase를 활용한 로그인, 로그아웃, 회원 가입과 마이 페이지
-- 인풋창을 분리하여 재사용이 가능하도록 구현하였고, 동작에 따라 창의 색을 달리하여 유저가 시각적으로 액티브상태를 볼 수 있도록 하였습니다.
-```ts
- const styles = {
-    default: {
-      border: 'border-gray-300',
-      iconColor: '#9C9C9C',
-      textColor: 'text-gray-400'
-    },
-    active: {
-      border: 'border-secondary-800',
-      iconColor: '#00688A',
-      textColor: 'text-secondary-800'
-    },
-    done: {
-      border: 'border-green-900',
-      iconColor: '#1D1D1D',
-      textColor: 'text-green-900'
-    }
-  };
+---
 
-useEffect(() => {
-    if (!value) {
-      setCurrentStatus('default');
-    } else if (status === 'done') {
-      setCurrentStatus('done');
-    } else {
-      setCurrentStatus('active');
-    }
-  }, [value, status]);
+### 😀 로그인/회원가입
 
-   <Icon name={iconName} color={currentStyle.iconColor} />
-        <input
-          type={type}
-          placeholder={placeholder}
-          className={`flex-grow bg-transparent text-sm font-normal text-[#004156] focus:outline-none ${currentStyle.textColor}`}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-        />
+- 구글, 카카오 계정으로 **소셜 로그인**이 가능합니다.
+- 이메일과 비밀번호 유효성 검사를 통해 가입 여부를 체크합니다.
+- 아이디/비밀번호 찾기 기능을 제공하며, **자동 로그인**으로 편리한 사용 경험을 제공합니다.
 
-```
-
-
-- 보다 재미있고 친근하게 회원가입을 할 수 있도록 스텝 페이지 작업을 하였습니다.
-
-```ts
-import NicknameStep from './signup/StepNicknameForm';
-import EmailStep from './signup/StepEmailForm';
-import PasswordStep from './signup/StepPasswordForm';
-import GoMainStep from './signup/StepMainForm';
-
-  return (
-    <div className="flex min-h-screen flex-col items-center justify-center">
-      {step === 0 && <NicknameStep onNext={(nickname: string) => handleNext({ nickname })} />}
-      {step === 1 && <EmailStep onNext={(email: string) => handleNext({ email })} />}
-      {step === 2 && <PasswordStep onNext={(password: string) => handleNext({ password })} />}
-      {step === 3 && <GoMainStep onNext={() => handleSignup()} />}
-    </div>
-  );
-```
-
-<img width="180" alt="스크린샷 2024-11-07 오전 12 20 28" src="https://github.com/user-attachments/assets/862aec71-9576-4b2d-8c5c-736ea25f2832">
-
-<img width="180" alt="스크린샷 2024-11-07 오전 12 20 38" src="https://github.com/user-attachments/assets/b3c94b75-5570-4cce-abb3-b8e691a9dc31">
-
-<img width="180" alt="스크린샷 2024-11-07 오전 12 20 12" src="https://github.com/user-attachments/assets/a43aa871-818a-4b3a-818e-8cec57b5fa08">
+---
 
 ## 기술적 의사결정
 
@@ -223,6 +175,8 @@ import GoMainStep from './signup/StepMainForm';
   - 카카오지도 Api
   - Geolocation Api
   - 한국 관광공사 Api
+
+---
 
 ## MVP
 
@@ -265,12 +219,14 @@ import GoMainStep from './signup/StepMainForm';
 - [x] **`mypage` 페이지**
   - [x] 내 정보 수정(닉네임)
   - [x] 내가 찜한 여행지
-  - [ ] 나의 추억들
-  - [ ] 나의 발자취
+  - [x] 나의 추억들
+  - [x] 나의 발자취
   - [x] 로그아웃
 - [x] 공통
   - [x] tailwind
   - [x] supabase
+
+---
 
 ## 모아 미리보기
 
@@ -282,8 +238,7 @@ import GoMainStep from './signup/StepMainForm';
 <img width="180" alt="스크린샷 2024-11-07 오전 9 29 23" src="https://github.com/user-attachments/assets/027b4b5a-d61b-458d-aff7-e5f3bf51f13b">
 <img width="180" alt="스크린샷 2024-11-07 오전 9 29 34" src="https://github.com/user-attachments/assets/bf770b57-8a11-47ff-bdad-45dff341e47e">
 <img width="180" alt="스크린샷 2024-11-07 오전 9 29 43" src="https://github.com/user-attachments/assets/51007137-283c-47c8-954a-c3f656025b8f">
-
-
+---
 
 ## 🔥 트러블슈팅
 
@@ -403,4 +358,4 @@ export default useModal;
 
 ## 추후 개발 방향
 
-저희는 코드리팩토링을 중점으로, UT를 반영하여 개선사항위주로 추가 진행을 하면서 필요에따라 기능추가를 할 예정입니다.
+3주동안 프로젝트를 진행하면서 기능을 넣는것에 집중하느라 , 폴더와 파일들이 많아지는데도 리팩토링이 아직 부족해서 최종 발표까지는 진도를 빼는것만이 아닌 개개인의 코드리뷰와 피드백을 반영하며, 리팩토링을 중점으로 차근차근 진행하고,  UT를 반영하여 개선사항위주로 추가 진행을 하면서 필요에따라 기능추가를 할 예정입니다

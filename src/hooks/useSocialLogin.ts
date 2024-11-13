@@ -12,7 +12,7 @@ export const useSocialLogin = () => {
     return process.env.NEXT_PUBLIC_REDIRECT_URL_PRODUCTION || 'https://st8-dev.vercel.app/';
   }, []);
 
-  const loginWithProvider = async (provider: 'kakao' | 'google') => {
+  const loginWithProvider = async (provider: 'kakao' | 'google' | 'apple') => {
     console.log(redirectUrl);
     try {
       const { data, error } = await browserClient.auth.signInWithOAuth({

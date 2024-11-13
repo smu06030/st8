@@ -20,7 +20,7 @@ const KakaoMap = () => {
         id="map"
         center={location.center}
         isPanto={location.isPanto}
-        className="relative h-[100vh] w-[100vw]"
+        className="relative h-[100vh] w-[100vw] overflow-hidden"
         level={12}
       >
         {activeIndex === 0 ? (
