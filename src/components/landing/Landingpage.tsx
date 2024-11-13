@@ -25,15 +25,10 @@ const debounce = (func: (...args: any[]) => void, wait: number) => {
 const LandingPage = () => {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState<number | null>(null);
   const [position, setPosition] = useState(0);
 
-  const [textfadeUp, setTextFadeUp] = useState('');
-  const [fadeUp, setFadeUp] = useState('');
-  const [fadeUpPhone, setFadeUpPhone] = useState('');
-  const [fadeDownPhone, setFadeDownPhone] = useState('');
-
-  const [isVisible, setIsVisible] = useState(false);
+  const [isMainSectionVisible, setIsMainSectionVisible] = useState(false);
   const mainsectionRef = useRef(null);
   const [isStampSectionVisible, setIsStampSectionVisible] = useState(false);
   const stampSectionRef = useRef(null);
@@ -41,14 +36,19 @@ const LandingPage = () => {
   const tourSectionRef = useRef(null);
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setWindowWidth(window.innerWidth);
+    }
+
     const mainSectionObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          setIsVisible(entry.isIntersecting);
+          setIsMainSectionVisible(entry.isIntersecting);
         });
       },
       { threshold: 0.4 } // 요소의 40%가 뷰포트에 들어왔을 때
     );
+
     const stampSectionObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -57,6 +57,7 @@ const LandingPage = () => {
       },
       { threshold: 0.5 } // 요소의 50%가 뷰포트에 들어왔을 때
     );
+
     const tourSectionObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -81,47 +82,14 @@ const LandingPage = () => {
         mainSectionObserver.unobserve(mainsectionRef.current);
       }
       if (stampSectionRef.current) {
-        stampSectionObserver.observe(stampSectionRef.current);
+        stampSectionObserver.unobserve(stampSectionRef.current);
       }
       if (tourSectionRef.current) {
-        tourSectionObserver.observe(tourSectionRef.current);
+        tourSectionObserver.unobserve(tourSectionRef.current);
       }
     };
   }, []);
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const newWidth = window.innerWidth;
-  //     setWindowWidth(newWidth);
-  //     const scrollPosition = window.scrollY;
-  //     setPosition(scrollPosition);
-
-  //     if (scrollPosition >= 5600) {
-  //       setTextFadeUp('fadeUp');
-  //     } else {
-  //       setTextFadeUp('');
-  //     }
-  //     if (scrollPosition >= 2200) {
-  //       setFadeUp('fadeUp');
-  //     } else {
-  //       setFadeUp('');
-  //     }
-  //     if (scrollPosition >= 1700) {
-  //       setFadeUpPhone('phone-fadeUp');
-  //       setFadeDownPhone('phone-fadeDown');
-  //     } else {
-  //       setFadeUpPhone('');
-  //       setFadeDownPhone('');
-  //     }
-  //   };
-
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, [windowWidth]);
-
-  console.log('window.scrollY', window.scrollY);
   const goToLogin = () => {
     router.push('/login');
   };
@@ -204,15 +172,15 @@ const LandingPage = () => {
         </section>
         <section className="h-full bg-white pt-[220px]" ref={mainsectionRef}>
           <div className="pc-inner-width main-section-bg">
-            <h2 className={`sectionTitle-Navy opacity-0 ${isVisible ? 'main-section-fade1' : ''}`}>
+            <h2 className={`sectionTitle-Navy opacity-0 ${isMainSectionVisible ? 'main-section-fade1' : ''}`}>
               여행, 그리고 기록
             </h2>
-            <h3 className={`sectionTitle-Black opacity-0 ${isVisible ? 'main-section-fade2' : ''}`}>
+            <h3 className={`sectionTitle-Black opacity-0 ${isMainSectionVisible ? 'main-section-fade2' : ''}`}>
               여행기록부터
               <br />
               스탬프 수집까지 모아랑 함께.
             </h3>
-            <div className={`flex ${windowWidth >= 1920 ? 'h-[80vh]' : 'h-[100vh]'} `}>
+            <div className={`flex ${windowWidth && windowWidth >= 1920 ? 'h-[80vh]' : 'h-[100vh]'} `}>
               <ul className="relative flex h-full flex-1 justify-between">
                 <Image
                   src={`/images/landing/section2-phoneL.png`}
@@ -220,7 +188,7 @@ const LandingPage = () => {
                   layout="responsive"
                   width={100}
                   height={100}
-                  className={`main-section-phone main-section-phone-R opacity-0 ${isVisible ? 'phone-fadeUp' : ''}`}
+                  className={`main-section-phone main-section-phone-R opacity-0 ${isMainSectionVisible ? 'phone-fadeUp' : ''}`}
                 />
                 <Image
                   src={`/images/landing/section2-phoneR.png`}
@@ -228,7 +196,7 @@ const LandingPage = () => {
                   layout="responsive"
                   width={100}
                   height={100}
-                  className={`main-section-phone main-section-phone-L opacity-0 ${isVisible ? 'phone-fadeDown' : ''}`}
+                  className={`main-section-phone main-section-phone-L opacity-0 ${isMainSectionVisible ? 'phone-fadeDown' : ''}`}
                   style={{
                     opacity: (position - 1700) / 200
                   }}
@@ -247,7 +215,7 @@ const LandingPage = () => {
               <br />
               아기자기한 스탬프들
             </h3>
-            <div className={`flex ${windowWidth >= 1920 ? 'h-[80vh]' : 'h-[100vh]'}`}>
+            <div className={`flex ${windowWidth && windowWidth >= 1920 ? 'h-[80vh]' : 'h-[100vh]'}`}>
               <ul className="flex h-full w-full items-center justify-center">
                 <Image
                   src={`/images/landing/section3-phone.png`}
@@ -349,7 +317,7 @@ const LandingPage = () => {
             </div>
           </div>
           <div className="flex flex-col items-center gap-[16px]">
-            <h2 className={`sectionTitle-Black ${textfadeUp}`}>
+            <h2 className={`sectionTitle-Black`}>
               모아는 당신을 위한 <strong className="text-[#008EBD]">단 하나의 여행기</strong> 입니다.
             </h2>
             <span>내 손안에 여행기 모아와 함께 여행을 떠나요.</span>
