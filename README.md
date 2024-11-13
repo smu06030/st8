@@ -16,7 +16,7 @@
 
 최근 통계에 따르면, 전 세계적 팬데믹 상황과 경제적 불안정성으로 인해 해외여행 수요가 급감하고 있으며, 이에 따라 가성비 좋은 국내 여행에 대한 관심이 높아지고 있습니다. 특히 ‘YOLO’(You Only Live Once) 트렌드에서 'YO NO’(해외여행을 자제하는 경향)로 변화하는 사회적 흐름이 이를 뒷받침합니다.  
 
-이러한 흐름 속에서 모아 Project는 사용자가 국내 숨은 명소와 다양한 관광지를 찾아 나서는 여정을 돕고, 이를 기록으로 남기며 공유할 수 있는 공간을 제공합니다. 사용자들은 지역별 스탬프를 모으고, 방문한 장소에 대한 사진을 포토 앨범에 업로드하여 여행의 추억을 한곳에 모을 수 있습니다. 이 과정을 통해 사용자들은 단순한 여행 기록을 넘어, 자신만의 여행 컬렉션을 구축하며, 나아가 다른 사용자들과 경험을 나누는 재미를 느낄 수 있습니다.
+이러한 흐름 속에서 모아 Project는 사용자가 국내 숨은 명소와 다양한 관광지를 찾아 나서는 여정을 돕고, 이를 기록으로 남기며 공유할 수 있는 공간을 제공합니다. 사용자들은 지역별 스탬프를 모으고, 방문한 장소에 대한 사진을 포토 앨범에 업로드하여 여행의 추억을 한곳에 모을 수 있습니다. 이 과정을 통해 사용자들은 단순한 여행 기록을 넘어, 자신만의 여행 컬렉션을 구축하는 재미를 느낄 수 있습니다.
 
 모아 Project는 이러한 디지털 여행 기록 방식을 통해 사용자가 국내여행을 새롭고 의미 있게 즐길 수 있도록 돕고자 합니다.
 
@@ -93,8 +93,8 @@
 
 ### 전국팔도 8조
 
-| 이름   | 역할      | 담당 기능                                                                                                                                                 |
-|--------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 이름      | 역할      | 담당 기능                                                                                                                                                 |
+|---------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **송혜인** | 리더      | 관광지 목록, 관광지 상세, 공공API, 카카오맵 API                                                                                                       |
 | **임보라** | 부리더   | Geolocation API, 스탬프 목록, 스탬프 상세 페이지, 앨범 목록, 앨범 상세페이지, 지역별 필터링, 레이아웃, CRUD                                  |
 | **유인철** | 팀원      | 카카오맵 API, 메인페이지, 추천여행지 목록, 추천여행지 상세페이지, CRUD                                                                               |
@@ -230,15 +230,14 @@
 
 ## 모아 미리보기
 
-![Moa Preview 1](https://github.com/user-attachments/assets/90b8ec8c-24d3-4240-9354-937682725a14)
-![Moa Preview 2](https://github.com/user-attachments/assets/0a327fbd-3f1a-4fcb-98a1-1afda8eb0559)
-![Moa Preview 3](https://github.com/user-attachments/assets/0b6f0c2a-3542-4532-b445-b01e9e8a4477)
-![Moa Preview 4](https://github.com/user-attachments/assets/ba6d6c2a-006c-4814-873b-bb1b7bed0ab0)
-![Moa Preview 5](https://github.com/user-attachments/assets/c359b6aa-eb7c-46ed-b53f-a9805eac929c)
-![Moa Preview 6](https://github.com/user-attachments/assets/027b4b5a-d61b-458d-aff7-e5f3bf51f13b)
-![Moa Preview 7](https://github.com/user-attachments/assets/bf770b57-8a11-47ff-bdad-45dff341e47e)
-![Moa Preview 8](https://github.com/user-attachments/assets/51007137-283c-47c8-954a-c3f656025b8f)
-
+<img width="180" alt="스크린샷 2024-11-07 오전 9 30 01" src="https://github.com/user-attachments/assets/90b8ec8c-24d3-4240-9354-937682725a14">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 28 05" src="https://github.com/user-attachments/assets/0a327fbd-3f1a-4fcb-98a1-1afda8eb0559">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 28 49" src="https://github.com/user-attachments/assets/0b6f0c2a-3542-4532-b445-b01e9e8a4477">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 28 58" src="https://github.com/user-attachments/assets/ba6d6c2a-006c-4814-873b-bb1b7bed0ab0">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 29 16" src="https://github.com/user-attachments/assets/c359b6aa-eb7c-46ed-b53f-a9805eac929c">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 29 23" src="https://github.com/user-attachments/assets/027b4b5a-d61b-458d-aff7-e5f3bf51f13b">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 29 34" src="https://github.com/user-attachments/assets/bf770b57-8a11-47ff-bdad-45dff341e47e">
+<img width="180" alt="스크린샷 2024-11-07 오전 9 29 43" src="https://github.com/user-attachments/assets/51007137-283c-47c8-954a-c3f656025b8f">
 ---
 
 ## 🔥 트러블슈팅
