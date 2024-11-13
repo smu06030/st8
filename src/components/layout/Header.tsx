@@ -51,7 +51,7 @@ const Header = () => {
           <button onClick={goBack} className="text-gray-900">
             <Icon name="BackIcon" />
           </button>
-          <h1 className="text-center font-semiBold text-[18px]">{pageTitle}</h1>
+          <h1 className="text-center font-semiBold text-[18px] text-gray-900">{pageTitle}</h1>
           <span className="w-6" />
         </div>
       </header>
