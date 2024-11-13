@@ -3,12 +3,12 @@
 import React, { useEffect, useRef } from 'react';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import useKakaoMap from '@/hooks/useKakaoMap';
+import Icon from '../common/Icons/Icon';
 
 import '@/styles/swiper.css';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import useKakaoMap from '@/hooks/useKakaoMap';
-import Icon from '../common/Icons/Icon';
 
 const MapButtonSwiper = () => {
   const { activeIndex, siDoName, onSlideChangeHandler } = useKakaoMap();
@@ -23,9 +23,10 @@ const MapButtonSwiper = () => {
   return (
     <div className="swiperWrapper">
       <div className="flex items-center justify-center">
-        <Icon name="PolygonIcon" size={16} color="#008EBD" />
+        <Icon name="PolygonIcon" size={28} color="#008EBD" />
       </div>
       <Swiper
+        key="kakaomap-button-swiper"
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         slidesPerView={5}
         centeredSlides={true}

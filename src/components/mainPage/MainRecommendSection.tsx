@@ -16,7 +16,7 @@ const MainRecommendSection = () => {
   }
 
   return (
-    <section className="mt-[58px] mo-only:px-6">
+    <section className="mb-[100px] mt-[58px] lg:mt-[76px] mo-only:px-6">
       <div className="flex flex-col items-start justify-start gap-1.5 lg:items-center lg:justify-center">
         <Link href={'/tourism'} className="lg:hidden">
           <div className="flex items-center justify-start gap-1">
@@ -36,7 +36,7 @@ const MainRecommendSection = () => {
       {tourismList && tourismList.length > 0 ? (
         <MainTourismSwiper tourismList={tourismList} userId={userId} />
       ) : (
-        <p className="text-sm text-alert">텅</p>
+        <p className="text-sm text-alert lg:mt-7 lg:flex lg:items-center lg:justify-center">텅</p>
       )}
     </section>
   );

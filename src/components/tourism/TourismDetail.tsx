@@ -52,7 +52,7 @@ const TourismDetail = ({ tourismDetail, contentId }: TourismDetailPropsType) => 
         </button>
       </div>
       <div className="flex items-center space-x-2 border-b border-gray-400 px-6 py-6 text-left">
-        <h1 className="w-[60vw] text-2xl font-semibold text-black">{tourismDetail?.text}</h1>
+        <h1 className="w-[60vw] font-semiBold text-2xl text-black">{tourismDetail?.title}</h1>
       </div>
       <div className="lg:flex">
         <div className="lg:w-[65vw]">
@@ -102,7 +102,7 @@ const TourismDetail = ({ tourismDetail, contentId }: TourismDetailPropsType) => 
         </div>
 
         <div className="mb-14 px-6 pb-[56px] pt-[38px] lg:w-[35vw]">
-          <h2 className="text-2xl font-semibold text-gray-800">이곳이 위치예요</h2>
+          <h2 className="font-semiBold text-2xl text-gray-800">이곳이 위치예요</h2>
           {tourismDetail?.address && <p className="mt-2 text-sm text-gray-600">{tourismDetail.address}</p>}
           <Map
             center={{ lat: tourismDetail?.mapY, lng: tourismDetail?.mapX }}
