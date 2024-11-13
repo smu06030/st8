@@ -1,4 +1,5 @@
 'use client';
+import { useEffect } from 'react';
 import Link from 'next/link';
 import LogoutButton from '../auth/LogoutButton';
 import NicknameEditor from './NicknameEditor';
@@ -6,6 +7,18 @@ import StampCount from './StampCount';
 import PhotoCount from './PhotoCount';
 
 const MyPageLayout = () => {
+  useEffect(() => {
+    // 마운트될 때 스크롤 위치를 맨 위로 이동
+    window.scrollTo(0, 0);
+    // 스크롤을 없앰
+    document.body.style.overflow = 'hidden';
+
+    // 컴포넌트 언마운트될 때 스크롤 복원
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   return (
     <div className="items-left flex min-h-[100vh] flex-col bg-white px-6">
       <div className="flex w-full items-center justify-between">
@@ -35,7 +48,7 @@ const MyPageLayout = () => {
 
           <div className="row-span-2 flex h-[327px] items-center justify-center rounded-2xl bg-gray-300 p-6">
             <Link href="/book-mark" className="relative flex h-full w-full items-end justify-end">
-              <p className="text-[20px]leading-tight mb-4 text-right font-bold text-white">
+              <p className="mb-4 text-right font-bold text-[20px] leading-tight text-white">
                 내가 찜한 <br />
                 여행지
               </p>
