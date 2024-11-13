@@ -7,7 +7,7 @@ import Icon from '@/components/common/Icons/Icon';
 import { useBookmarkMutation } from '@/queries/mutation/useBookmarkMutation';
 import { useRouter } from 'next/navigation';
 
-import '@/styles/mainTourismSwiper.css';
+import '@/styles/mainSwiper.css';
 
 interface MainTourismCardPropsType {
   userId: string | undefined;

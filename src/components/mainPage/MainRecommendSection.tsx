@@ -9,9 +9,9 @@ import { useGetTourismListQuery } from '@/queries/query/useTourismQuery';
 
 const MainRecommendSection = () => {
   const userId = useUserId();
-  const { data: tourismList, isLoading } = useGetTourismListQuery(userId);
+  const { data: tourismList, isPending } = useGetTourismListQuery(userId);
 
-  if (isLoading) {
+  if (isPending) {
     return <LoadingBounce />;
   }
 
