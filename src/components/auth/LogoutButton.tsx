@@ -13,7 +13,7 @@ const LogoutButton = () => {
     try {
       await logout();
       closeModal();
-      router.push('/landing');
+      router.push('/login');
     } catch (error) {}
   };
 

@@ -1,12 +1,14 @@
 import browserClient from '@/utils/supabase/client';
 
 export const checkEmailExists = async (email: string) => {
-  const { data: profileData, error } = await browserClient.from('profile').select('email').eq('email', email);
+  const { data, error } = await browserClient.from('profile').select('email').eq('email', email);
+
   if (error) {
     console.error('Supabase 요청 오류:', error.message);
     return false;
   }
-  return !!profileData;
+
+  return data && data.length > 0;
 };
 
 export const loginWithEmailAndPassword = async (email: string, password: string) => {

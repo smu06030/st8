@@ -2,7 +2,6 @@
 import { useEffect, useState, MouseEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-
 import Button from '@/components/common/Buttons/Button';
 import LinkButton from '@/components/common/Buttons/LinkButton';
 import SocialLoginButton from '@/components/common/Buttons/SocialLoginButton';
@@ -11,6 +10,7 @@ import Icon from '@/components/common/Icons/Icon';
 import browserClient from '@/utils/supabase/client';
 import InputField from '../common/InputField/InputField';
 import { useSocialLogin } from '@/hooks/useSocialLogin';
+import Link from 'next/link';
 
 interface LoginFormInputs {
   email: string;
@@ -61,12 +61,25 @@ const LoginForm = () => {
   };
 
   const onHandleLogin = async (data: LoginFormInputs) => {
+    const emailExists = await checkEmailExists(data.email);
+    if (!emailExists) {
+      setError('email', {
+        type: 'manual',
+        message: '등록되지 않은 이메일입니다.'
+      });
+      return;
+    }
+
     const result = await loginWithEmailAndPassword(data.email, data.password);
 
     if (result.success) {
       router.push('/');
     } else {
       if (result.type === 'password') {
+        setError('password', {
+          type: 'manual',
+          message: '비밀번호가 틀렸습니다.'
+        });
       }
     }
   };
@@ -77,7 +90,7 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onHandleLogin)} className="mt-7 flex flex-col items-center space-y-12">
+    <form onSubmit={handleSubmit(onHandleLogin)} className="mt-7 flex min-h-screen flex-col items-center space-y-12">
       <InputField
         iconName="MailIcon"
         text="이메일"
@@ -112,20 +125,20 @@ const LoginForm = () => {
           <input type="checkbox" className="mr-1" />
           <span className="text-sm font-normal text-[#4e4e4e]">자동 로그인</span>
         </div>
-        <a href="/reset-password" className="text-right text-sm font-normal text-[#4e4e4e]">
+        <Link href="/reset-password" className="text-right text-sm font-normal text-[#4e4e4e]">
           아이디/비밀번호 찾기
-        </a>
+        </Link>
       </div>
-
-      <Button text="로그인" variant={isValid ? 'blue' : 'gray'} disabled={!isValid} type="submit" />
-
+      <div className="!mt-3">
+        <Button text="로그인" variant={isValid ? 'blue' : 'gray'} disabled={!isValid} type="submit" />
+      </div>
       <div className="mt-6 flex justify-center space-x-4">
         <SocialLoginButton provider="apple" onClick={(e) => handleSocialLogin('apple', e)} />
         <SocialLoginButton provider="google" onClick={(e) => handleSocialLogin('google', e)} />
         <SocialLoginButton provider="kakao" onClick={(e) => handleSocialLogin('kakao', e)} />
       </div>
 
-      <div className="mt-16 text-center">
+      <div className="!mt-[180px] text-center lg:!mt-14">
         <span className="mr-1 text-sm text-gray-600">아직 회원이 아니신가요?</span>
         <LinkButton text="회원가입" href="/signup" />
       </div>

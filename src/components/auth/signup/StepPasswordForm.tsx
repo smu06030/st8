@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField/InputField';
 import Icon from '@/components/common/Icons/Icon';
+import SmailCheckIcon from '@/components/common/Icons/SmailCheckIcon';
+import SmailXIcon from '@/components/common/Icons/SmailXIcon';
 
 interface PasswordStepProps {
   onNext: (password: string) => void;
@@ -49,33 +51,33 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
             {showPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
           </button>
         }
-        register={register('password', {
-          // required: '비밀번호를 입력해주세요. ✖',
-          // validate: {
-          //   hasMinLength: (value) => value.length >= 8 || '8자리 이상이어야 합니다. ✖',
-          //   hasNumber: (value) => /\d/.test(value) || '숫자를 포함해야 합니다. ✖',
-          //   hasLetter: (value) => /[A-Za-z]/.test(value) || '영문자를 포함해야 합니다. ✖'
-          // }
-        })}
-        error={errors.password}
+        register={register('password')}
       />
-      {/* 유효성 검사 표시 */}
-      <div className="flex w-full items-center justify-end space-x-2 space-y-6 text-xs text-red-500">
-        <p className={hasNumber ? 'text-secondary-700' : ''}></p>
-        <p className={hasNumber ? 'text-secondary-700' : ''}>숫자 포함 {hasNumber ? '✔' : '✖'}</p>
-        <p className={hasLetter ? 'text-secondary-700' : ''}>영문 포함 {hasLetter ? '✔' : '✖'}</p>
-        <p className={hasMinLength ? 'text-secondary-700' : ''}>8자리 이상 {hasMinLength ? '✔' : '✖'}</p>
+
+      <div className="!mt-8 flex w-full justify-end gap-2 text-xs">
+        <div className="flex items-center space-x-1">
+          <span className={hasNumber ? 'text-secondary-700' : 'text-red-700'}>숫자 포함</span>
+          {hasNumber ? <SmailCheckIcon /> : <SmailXIcon />}
+        </div>
+
+        <div className="flex items-center space-x-1">
+          <span className={hasLetter ? 'text-secondary-700' : 'text-red-700'}>영문 포함</span>
+          {hasLetter ? <SmailCheckIcon /> : <SmailXIcon />}
+        </div>
+
+        <div className="flex items-center space-x-1">
+          <span className={hasMinLength ? 'text-secondary-700' : 'text-red-700'}>8자리 이상 16자리 이하</span>
+          {hasMinLength ? <SmailCheckIcon /> : <SmailXIcon />}
+        </div>
       </div>
+
       <InputField
         iconName="LockIcon"
         text="비밀번호 확인"
         placeholder="비밀번호를 다시 입력해주세요."
         type={showConfirmPassword ? 'text' : 'password'}
         status={errors.confirmPassword ? 'error' : 'default'}
-        register={register('confirmPassword', {
-          //   required: '비밀번호를 다시 입력해주세요. ✖',
-          //   validate: (value) => value === passwordValue || '비밀번호가 일치하지 않습니다. ✖'
-        })}
+        register={register('confirmPassword')}
         error={errors.confirmPassword}
         rightIcon={
           <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
@@ -83,13 +85,21 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
           </button>
         }
       />
-      <div className="flex w-full items-center justify-end space-y-6 text-xs">
-        <div></div>
-        {isPasswordMatching ? (
-          <p className="text-secondary-700">비밀번호가 동일합니다. ✔</p>
-        ) : (
-          <p className="text-red-500">비밀번호가 동일하지 않습니다. ✖</p>
-        )}
+
+      <div className="!mt-8 flex w-full items-center justify-end space-y-6 text-xs">
+        <div className="flex items-center">
+          {isPasswordMatching ? (
+            <>
+              <p className="mr-1 text-secondary-700">비밀번호가 동일합니다.</p>
+              <SmailCheckIcon />
+            </>
+          ) : (
+            <>
+              <p className="mr-1 text-red-700">비밀번호가 동일하지 않습니다.</p>
+              <SmailXIcon />
+            </>
+          )}
+        </div>
       </div>
 
       <div className="!mt-[242px] lg:!mt-[205px]">

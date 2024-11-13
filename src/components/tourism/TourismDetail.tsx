@@ -38,7 +38,7 @@ const TourismDetail = ({ tourismDetail, contentId }: TourismDetailPropsType) => 
   };
 
   return (
-    <div className="pc-inner-width min-h-screen pb-[76px] mo-only:bg-white">
+    <div className="pc-inner-width mt-[64px] min-h-screen pb-[76px] mo-only:bg-white">
       <div className="relative">
         <div className="relative h-[375px] w-[full] overflow-hidden rounded-bl-3xl rounded-br-3xl lg:h-[450px]">
           <Image src={tourismDetail?.firstImage} alt="장소 사진" fill priority style={{ objectFit: 'cover' }} />

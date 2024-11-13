@@ -15,8 +15,8 @@ export const InputFieldStyles = {
     textColor: 'text-secondary-900'
   },
   error: {
-    border: 'border-red-500',
-    iconColor: '#FF0000',
-    textColor: 'text-red-500'
+    border: 'border-red-700',
+    iconColor: '#D22730',
+    textColor: 'text-red-700'
   }
 };
