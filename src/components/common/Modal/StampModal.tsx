@@ -23,9 +23,9 @@ const StampModal = ({ Modal }: StampModalPropsType) => {
     <Modal>
       <div
         onClick={(e) => e.stopPropagation()}
-        className="absolute bottom-0 left-0 z-[1000] flex h-[342px] w-full animate-slideDownModal flex-col items-center justify-center rounded-tl-[32px] rounded-tr-[32px] bg-white p-6 shadow-overlayShadow"
+        className="absolute bottom-0 left-0 z-[1000] flex h-[342px] w-full flex-col items-center justify-center rounded-tl-[32px] rounded-tr-[32px] bg-white p-6 shadow-overlayShadow lg:bottom-1/2 lg:left-1/2 lg:h-auto lg:w-[375px] lg:-translate-x-1/2 lg:translate-y-1/2 lg:transform lg:rounded-[32px] mo-only:animate-slideDownModal"
       >
-        <div className="-mt-[50px] mb-[18px] h-[152px] w-[152px] rounded-full border-4 border-white bg-white">
+        <div className="-mt-[50px] mb-[18px] h-[152px] w-[152px] rounded-full border-4 border-white bg-white lg:-mt-[80px]">
           <Image src={stamp.stampimg} alt={stamp.region} width={146} height={146} priority />
         </div>
         <div className="mb-7 font-semiBold text-2xl leading-[31.20px]">{stamp.region} 스탬프</div>
@@ -45,7 +45,7 @@ const StampModal = ({ Modal }: StampModalPropsType) => {
         </div>
         <Link
           href={`/stamp-all/${regionLink}`}
-          className="my-9 cursor-pointer text-sm leading-tight text-gray-500 underline"
+          className="mb-3 mt-9 cursor-pointer text-sm leading-tight text-gray-500 underline"
         >
           스탬프 보러가기
         </Link>

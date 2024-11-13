@@ -31,7 +31,7 @@
 }
 
 .swiper-slide {
-  @apply flex w-full shrink-0 items-center justify-center transition-transform duration-1000 ease-in-out;
+  @apply flex w-full shrink-0 items-center justify-center;
 }
 
 .swiper-slide-active {

@@ -22,7 +22,7 @@ const MapButtonSwiper = () => {
 
   return (
     <div className="swiperWrapper">
-      <div className="flex items-center justify-center">
+      <div className="ml-[10px] flex items-center justify-center">
         <Icon name="PolygonIcon" size={28} color="#008EBD" />
       </div>
       <Swiper
