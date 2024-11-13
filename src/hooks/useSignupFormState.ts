@@ -12,7 +12,6 @@ export const useSignupFormState = () => {
 
   const handleNext = (data: Partial<FormData>) => {
     setFormData((prev) => ({ ...prev, ...data }));
-    // console.log(formData);
     setStep((prevStep) => prevStep + 1);
   };
 

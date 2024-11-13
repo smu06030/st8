@@ -61,7 +61,6 @@ const LoginForm = () => {
   // };
 
   const onHandleLogin = async (data: LoginFormInputs) => {
-    console.log(data);
     const emailExists = await checkEmailExists(data.email);
     if (!emailExists) {
       setError('email', {
