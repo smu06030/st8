@@ -3,11 +3,11 @@ import Image from 'next/image';
 
 const Footer = () => {
   const techTeam = [
-    { name: '송혜인', job: 'Front-end Developer', img: '/images/logo.png' },
-    { name: '임보라', job: 'Front-end Developer', img: '/images/logo.png' },
-    { name: '유인철', job: 'Front-end Developer', img: '/images/logo.png' },
-    { name: '박규리', job: 'Front-end Developer', img: '/images/logo.png' },
-    { name: '김재범', job: 'Product Designer', img: '/images/logo.png' }
+    { name: '유인철', job: 'Frontend Developer', img: '/images/footer/team01.png' },
+    { name: '임보라', job: 'Frontend Developer', img: '/images/footer/team02.png' },
+    { name: '박규리', job: 'Frontend Developer', img: '/images/footer/team03.png' },
+    { name: '송혜인', job: 'Frontend Developer', img: '/images/footer/team04.png' },
+    { name: '김재범', job: 'Product Designer', img: '/images/footer/team05.png' }
   ];
   const footerText = ['이용약관', '개인정보처리방침', 'Notion', 'Github', '내일배움캠프'];
 

@@ -61,7 +61,7 @@ const StampItemDetail = () => {
         </h2>
         <div className="lg:flex lg:gap-[50px]">
           <div className="relative block w-full lg:h-full lg:w-[50%] mo-only:mb-[82px] mo-only:h-[145px] mo-only:bg-[#fff] mo-only:shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)]">
-            <span className="absolute left-1/2 top-[16px] block hidden h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full bg-white shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)] mo-only:block"></span>
+            <span className="absolute left-1/2 top-[16px] block h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full bg-white shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)] lg:hidden mo-only:block"></span>
             <div className="absolute h-full w-full bg-[#fff] lg:hidden"></div>
             <span className="absolute left-1/2 top-[16px] block h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full bg-white p-[24px] lg:relative lg:h-full lg:max-h-[500px] lg:w-[100%] lg:max-w-[500px] lg:bg-[#F5F5F7] lg:p-[50px] mo-only:border-[6px] mo-only:border-secondary-300">
               <div className="h-full w-full rounded-full bg-white">

@@ -5,6 +5,7 @@
 @import '@/styles/stamp.css';
 @import '@/styles/album.css';
 @import '@/styles/tourism.css';
+@import '@/styles/landing.css';
 
 :root {
   --background: #ffffff;
