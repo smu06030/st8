@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { Map, Polygon } from 'react-kakao-maps-sdk';
 import { MAP_COLOR, MAP_COLOR_INDEX } from '@/constants/mapColor';
 import ReSetttingMapBounds from '@/components/stampMap/ReSetttingMapBounds';
@@ -10,25 +8,12 @@ import KakaoMapMarker from './KakaoMapMarker';
 import useKakaoMap from '@/hooks/useKakaoMap';
 import StampModal from '../common/Modal/StampModal';
 import useModal from '@/hooks/useModal';
+import KakaoMapMaxLevel from './KakaoMapMaxLevel';
 
 const KakaoMap = () => {
   const { geoList, location, activeIndex, selectedPath, filteredStamps, updateHoverState, updatePolygonPath } =
     useKakaoMap();
   const { openModal, Modal } = useModal();
-  // const searchParams = useSearchParams();
-  // const activeId = searchParams.get('activeSlide');
-  // const [activeItem, setActiveItem] = useState(null);
-
-  // useEffect(() => {
-  //   if (activeId) {
-  //     const activeItem = filteredStamps?.find((item) => item.id === parseInt(activeId, 10));
-  //     if (activeItem) {
-  //       console.log('activeItem', activeItem);
-  //       setActiveItem(activeItem);
-  //       openModal();
-  //     }
-  //   }
-  // }, [activeId, filteredStamps, openModal]);
 
   return (
     <>
@@ -75,6 +60,7 @@ const KakaoMap = () => {
 
         {filteredStamps?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} openModal={openModal} />)}
         <ReSetttingMapBounds paths={selectedPath} activeIndex={activeIndex} />
+        <KakaoMapMaxLevel />
       </Map>
       <StampModal Modal={Modal} />
       <MapButtonSwiper />
