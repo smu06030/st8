@@ -39,7 +39,7 @@ const LoginForm = () => {
         } = await browserClient.auth.getUser();
 
         if (user) {
-          router.push('/');
+          window.location.href = '/';
         }
       }
     });
@@ -49,19 +49,18 @@ const LoginForm = () => {
     };
   }, [router]);
 
-  const handleEmailBlur = async (email: string) => {
-    clearErrors('email');
-    const exists = await checkEmailExists(email);
-    if (!exists) {
-      setError('email', {
-        type: 'manual',
-        message: '등록되지 않은 이메일입니다.'
-      });
-    }
-  };
+  // const handleEmailBlur = async (email: string) => {
+  //   clearErrors('email');
+  //   const exists = await checkEmailExists(email);
+  //   if (!exists) {
+  //     setError('email', {
+  //       type: 'manual',
+  //       message: '등록되지 않은 이메일입니다.'
+  //     });
+  //   }
+  // };
 
   const onHandleLogin = async (data: LoginFormInputs) => {
-    console.log(data);
     const emailExists = await checkEmailExists(data.email);
     if (!emailExists) {
       setError('email', {
@@ -74,7 +73,7 @@ const LoginForm = () => {
     const result = await loginWithEmailAndPassword(data.email, data.password);
 
     if (result.success) {
-      router.push('/');
+      window.location.href = '/';
     } else {
       if (result.type === 'password') {
         setError('password', {

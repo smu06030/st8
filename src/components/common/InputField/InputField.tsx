@@ -28,11 +28,6 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       setCurrentStatus(error?.message ? 'error' : status);
     }, [status, error?.message]);
 
-    // useEffect(() => {
-    //   console.log('Input status:', status);
-    //   console.log('Errors:', error);
-    // }, [status, error]);
-
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setCurrentStatus('active');
       register?.onChange?.(e);
