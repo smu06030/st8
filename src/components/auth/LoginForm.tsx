@@ -72,9 +72,8 @@ const LoginForm = () => {
     }
 
     const result = await loginWithEmailAndPassword(data.email, data.password);
-
     if (result.success) {
-      window.location.href = '/';
+      window.location.href = '/home';
     } else {
       if (result.type === 'password') {
         setError('password', {
