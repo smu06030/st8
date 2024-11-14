@@ -36,7 +36,7 @@ const MapButtonSwiper = () => {
         grabCursor={true}
         onSlideChange={onSlideChangeHandler}
         modules={[Pagination]}
-        className="swiper"
+        className="swiper map-region-swiper"
         style={{ overflow: 'visible' }}
       >
         <SwiperSlide>

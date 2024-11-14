@@ -6,14 +6,14 @@
   @apply fixed bottom-16 left-2/4 z-[99] flex h-[140px] w-[100vw] -translate-x-1/2 transform flex-col items-center justify-end bg-scrollButtonGradient leading-[27px] lg:bottom-0;
 }
 
-.swiper {
-  @apply bottom-0 mb-7 flex w-full items-end justify-end bg-transparent lg:w-full;
+.map-region-swiper.swiper {
+  @apply bottom-0 mb-7 flex w-full items-end justify-end bg-transparent lg:w-[600px];
 }
 
-.swiper-slide {
+.map-region-swiper .swiper-slide {
   @apply flex items-end justify-center text-center text-sm leading-[27px] text-gray-300 lg:w-[120px];
 }
 
-.swiper-slide-active {
+.map-region-swiper .swiper-slide-active {
   @apply cursor-pointer font-semiBold text-lg text-secondary-900;
 }
