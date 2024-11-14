@@ -21,8 +21,6 @@ const MapButtonSwiper = () => {
     }
   }, [activeIndex]);
 
-  console.log(siDoName);
-
   return (
     <div className="swiperWrapper">
       <div className="ml-[10px] flex items-center justify-center">
