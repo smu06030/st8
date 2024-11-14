@@ -200,7 +200,7 @@ const LandingPage = () => {
               <br />
               스탬프 수집까지 모아랑 함께.
             </h3>
-            <div className={`flex ${windowWidth && windowWidth >= 1920 ? 'h-[80vh]' : 'h-[100vh]'} `}>
+            <div className={`flex ${windowWidth && windowWidth >= 1920 ? 'h-[80vh]' : 'h-[100vh]'} min-h-[1100px]`}>
               <ul className="relative flex h-full flex-1 justify-between">
                 <Image
                   src={`/images/landing/section2-phoneL.png`}
@@ -232,7 +232,7 @@ const LandingPage = () => {
               <br />
               아기자기한 스탬프들
             </h3>
-            <div className={`flex ${windowWidth && windowWidth >= 1920 ? 'h-[80vh]' : 'h-[100vh]'}`}>
+            <div className={`flex ${windowWidth && windowWidth >= 1920 ? 'h-[80vh]' : 'h-[100vh]'} min-h-[1000px]`}>
               <ul className="flex h-full w-full items-center justify-center">
                 <Image
                   src={`/images/landing/section3-phone.png`}
@@ -257,7 +257,7 @@ const LandingPage = () => {
           </div>
         </section>
         <section className="bg-white pt-[220px]" ref={tourSectionRef}>
-          <div className="relative h-[80vh]">
+          <div className="relative h-[80vh] min-h-[1100px]">
             <h2
               className={`sectionTitle-Navy pc-inner-width opacity-0 ${isTourSectionVisible ? 'main-section-fade1' : ''}`}
             >
@@ -310,7 +310,7 @@ const LandingPage = () => {
                     height={100}
                     className="tour-section-phone"
                   />
-                  <span className="mb-9 flex w-full items-end whitespace-pre-line text-right text-2xl font-semibold leading-[41px] text-[#1d1d1d]">
+                  <span className="mb-9 flex items-end whitespace-pre-line text-right text-2xl font-semibold leading-[41px] text-[#1d1d1d]">
                     모아가 고른 국내
                     <br />
                     여행지를 탐색해 보세요

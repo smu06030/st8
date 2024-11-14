@@ -19,7 +19,7 @@ const StampItemDetail = () => {
   const region = REGION_NAME_MAP_EN[decodeURIComponent((params.id as string[]).toString())];
   const [oldestAddress, setOldestAddress] = useState('');
   const [stampData, setStampData] = useState<Stamp[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const dropdownRef = useRef(null);
   const { data: stampList, isLoading, isPending, isError } = useGetStampListQuery(userId);
 
