@@ -7,7 +7,7 @@
 }
 
 .swiper {
-  @apply bottom-0 mb-7 flex w-full items-end justify-end bg-transparent;
+  @apply bottom-0 mb-7 flex w-full items-end justify-end bg-transparent lg:w-full;
 }
 
 .swiper-slide {

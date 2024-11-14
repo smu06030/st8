@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Tourism } from '@/types/tourism/tourism.type';
@@ -20,13 +20,21 @@ interface MainTourismSwiperPropsType {
 
 const MainTourismSwiper = ({ tourismList, userId }: MainTourismSwiperPropsType) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const swiperRef = useRef<any>(null); // Swiper 인스턴스 참조
   const isDesktop = useMediaSize();
+
+  useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef.current.init();
+    }
+  }, []);
 
   return (
     <>
       {isDesktop ? (
         <Swiper
           key="desktop-swiper"
+          onSwiper={(swiper) => (swiperRef.current = swiper)}
           slidesPerView={3.7}
           spaceBetween={10}
           centeredSlides={true}

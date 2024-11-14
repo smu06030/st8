@@ -31,15 +31,15 @@
 }
 
 .swiper-slide {
-  @apply flex w-full shrink-0 items-center justify-center lg:w-[600px];
+  @apply flex w-full shrink-0 items-center justify-center;
 }
 
 .swiper-slide-active {
   @apply lg:z-10 lg:h-[368px];
 }
 
-@media (min-width: 1024px) {
+/* @media (min-width: 1024px) {
   .swiper {
     width: 100% !important;
   }
-}
+} */
