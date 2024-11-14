@@ -38,8 +38,9 @@
   @apply lg:z-10 lg:h-[368px] lg:w-[100%];
 }
 
+/* 
 @media (min-width: 1024px) {
   .mainTourism-swiper .swiper {
     width: auto !important;
   }
-}
+} */
