@@ -82,10 +82,14 @@ const config: Config = {
       fadeUpBtn: 'fadeUp 1.2s ease-in-out',
       dropdownList: 'slideDropdown .5s ease-in-out',
       slideDownModal: 'slideDown .4s linear',
-      bounceLoading: 'bounceLoading 1s ease-in-out infinite'
+      bounceLoading: 'bounceLoading 1s ease-in-out infinite',
+      spin: 'spin 1s linear infinite'
     },
 
     keyframes: {
+      spin: {
+        to: { transform: 'rotate(360deg)' }
+      },
       stampActive: {
         from: {
           position: 'absolute',

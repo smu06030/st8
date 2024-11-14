@@ -2,7 +2,7 @@
 
 import TourismCard from '@/components/tourism/TourismCard';
 import useUserId from '@/hooks/useUserId';
-import LoadingBounce from '@/components/common/Loading/Loading';
+import Loading from '@/app/(root)/(stamp)/loading';
 import { useGetBookmarkListQuery } from '@/queries/query/useBookmarkQuery';
 
 const BookmarkPage = () => {
@@ -10,7 +10,7 @@ const BookmarkPage = () => {
   const { data: bookmarkList, isPending } = useGetBookmarkListQuery(userId);
 
   if (isPending || !Array.isArray(bookmarkList)) {
-    return <LoadingBounce />;
+    return <Loading />;
   }
 
   if (!bookmarkList || bookmarkList?.length === 0) {
