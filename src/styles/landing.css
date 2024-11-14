@@ -137,3 +137,28 @@
     opacity 0.5s ease-out;
   opacity: 1 !important   ;
 }
+@keyframes textBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.bounce {
+  display: inline-block;
+  animation: textBounce 0.8s ease infinite;
+}
+
+.bounce2 {
+  animation-delay: 0.1s;
+}
+/* .bounce:nth-child(3) {
+  animation-delay: 0.1s;
+} */
+/* .bounce:nth-child(1),
+.bounce:nth-child(4) {
+  animation-delay: 0.2s;
+} */

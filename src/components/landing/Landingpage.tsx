@@ -129,6 +129,20 @@ const LandingPage = () => {
     };
   }, [containerRef, windowWidth]);
 
+  //pc - 단하나 텍스트 통통 애니메이션
+  const text1 = '단';
+  const text2 = '하나의';
+  const animatedText1 = text1.split('').map((char, index) => (
+    <span key={index} className="bounce">
+      {char}
+    </span>
+  ));
+  const animatedText2 = text2.split('').map((char, index) => (
+    <span key={index} className="bounce bounce2">
+      {char}
+    </span>
+  ));
+
   const StampImgUrl = [
     { region: '울산', url: '/images/landing/section3-icon1.png' },
     { region: '대구', url: '/images/landing/section3-icon2.png' },
@@ -335,7 +349,11 @@ const LandingPage = () => {
           </div>
           <div className="flex flex-col items-center gap-[16px]">
             <h2 className={`sectionTitle-Black`}>
-              모아는 당신을 위한 <strong className="text-[#008EBD]">단 하나의 여행기</strong> 입니다.
+              모아는 당신을 위한{' '}
+              <strong className="text-[#008EBD]">
+                {animatedText1} {animatedText2} 여행기
+              </strong>{' '}
+              입니다.
             </h2>
             <span className="text-gray-900">내 손안에 여행기 모아와 함께 여행을 떠나요.</span>
           </div>
