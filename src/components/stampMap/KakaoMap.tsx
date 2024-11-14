@@ -15,20 +15,6 @@ const KakaoMap = () => {
   const { geoList, location, activeIndex, selectedPath, filteredStamps, updateHoverState, updatePolygonPath } =
     useKakaoMap();
   const { openModal, Modal } = useModal();
-  // const searchParams = useSearchParams();
-  // const activeId = searchParams.get('activeSlide');
-  // const [activeItem, setActiveItem] = useState(null);
-
-  // useEffect(() => {
-  //   if (activeId) {
-  //     const activeItem = filteredStamps?.find((item) => item.id === parseInt(activeId, 10));
-  //     if (activeItem) {
-  //       console.log('activeItem', activeItem);
-  //       setActiveItem(activeItem);
-  //       openModal();
-  //     }
-  //   }
-  // }, [activeId, filteredStamps, openModal]);
 
   return (
     <>

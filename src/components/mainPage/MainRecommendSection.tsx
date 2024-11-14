@@ -8,7 +8,12 @@ import { useGetTourismListQuery } from '@/queries/query/useTourismQuery';
 
 const MainRecommendSection = () => {
   const userId = useUserId();
-  const { data: tourismList } = useGetTourismListQuery(userId);
+  const { data: tourismList, isError } = useGetTourismListQuery(userId);
+
+  if (isError) {
+    const errorMessage = '추천 여행지 정보를 가져오는 중 오류가 발생했습니다.';
+    throw new Error(errorMessage);
+  }
 
   return (
     <section className="mb-[100px] mt-[58px] lg:mt-[76px] mo-only:px-6">

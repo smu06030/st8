@@ -9,16 +9,14 @@ export const getStampList = async (userId: string): Promise<Stamp[] | Response> 
 
   const { data, error } = await serverClient.from('stamp').select('*').eq('user_id', userId).eq('visited', true);
 
-  return Response.json({
-    message: '스탬프 데이터를 가져오는 중 오류가 발생했습니다.',
-    error: error
-  });
+  if (error) {
+    return Response.json({
+      message: '스탬프 데이터를 가져오는 중 오류가 발생했습니다.',
+      error: error
+    });
+  }
 
-  // if (error) {
-  //   console.error('스탬프 정보 가져오기 오류 :', error.message);
-  // }
-
-  // return data;
+  return data;
 };
 
 // 로그인유저가 찍은 스탬프의 별칭만 업데이트
@@ -30,6 +28,13 @@ export const patchLocationAlias = async (alias: string, userId: string, address:
     .update({ aliasLocation: alias })
     .eq('user_id', userId)
     .eq('address', address);
-  if (error) console.log('error', error);
+
+  if (error) {
+    return Response.json({
+      message: '스탬프 별칭을 업데이트 하는 중 오류가 발생했습니다.',
+      error: error
+    });
+  }
+
   return data;
 };
