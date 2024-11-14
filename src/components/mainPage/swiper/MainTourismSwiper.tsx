@@ -43,7 +43,7 @@ const MainTourismSwiper = ({ tourismList, userId }: MainTourismSwiperPropsType) 
           navigation={true}
           modules={[Pagination, Navigation, Autoplay]}
           onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-          className="mt-5 lg:mt-[26px]"
+          className="mainTourism-swiper mt-5 h-full lg:mt-[26px]"
           style={{ overflow: 'visible', overflowX: 'clip' }}
         >
           {tourismList

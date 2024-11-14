@@ -75,17 +75,15 @@ const Nav = () => {
     <div className="border-top fixed bottom-0 left-0 z-[100] box-border w-full border-t border-[#B5B5B5] bg-white lg:hidden">
       <ul className="grid grid-cols-5">
         {navCategory.map((navItem) => (
-          <li
-            key={navItem.page}
-            className="cursor-pointer py-[8px] text-center"
-            onClick={() => handleClick(navItem.link)}
-          >
+          <li key={navItem.page} className="cursor-pointer py-[8px] text-center">
             <Link
               href={navItem.link}
               className={`flex flex-col items-center gap-[2px] ${activePage === navItem.link ? 'text-[#00688A]' : 'text-gray-300'}`}
             >
               {navItem.icon}
-              <span className="font-semiBold text-[12px]">{navItem.page}</span>
+              <span className="font-semiBold text-[12px]" onClick={() => handleClick(navItem.link)}>
+                {navItem.page}
+              </span>
             </Link>
           </li>
         ))}

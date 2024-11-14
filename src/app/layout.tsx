@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
@@ -10,6 +11,7 @@ import Nav from '@/components/layout/Nav';
 import Header from '@/components/layout/Header';
 import SplashPage from './splash/page';
 import Footer from '@/components/layout/Footer';
+import { PAGE_NAMES } from '@/constants/pageName';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -25,6 +27,12 @@ const geistMono = localFont({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [showSplash, setShowSplash] = useState(true);
+  const pathname = usePathname();
+
+  // mo 랜딩페이지에서 네비 히든
+  const hideNavPaths = [PAGE_NAMES.LANDING.link];
+  // pc 맵페이지에서 푸터 히든
+  const hideFooterPaths = [PAGE_NAMES.MAP.link];
 
   return (
     <html lang="ko">
@@ -37,8 +45,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <div id="overlays"></div> {/* 모달창 */}
         </RQProviders>
-        <Nav />
-        <Footer />
+        {!hideNavPaths.includes(pathname) && <Nav />}
+        {!hideFooterPaths.includes(pathname) && <Footer />}
       </body>
     </html>
   );

@@ -197,9 +197,6 @@ const LandingPage = () => {
                   width={100}
                   height={100}
                   className={`main-section-phone main-section-phone-L opacity-0 ${isMainSectionVisible ? 'phone-fadeDown' : ''}`}
-                  style={{
-                    opacity: (position - 1700) / 200
-                  }}
                 />
               </ul>
             </div>
