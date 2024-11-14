@@ -13,7 +13,9 @@ const StepMainForm = ({ onNext }: StepMainFormProps) => {
         <div className="absolute flex h-[90%] justify-center">
           <SignupCompleteIcon />
         </div>
-        <span className="mt-24 flex flex-col items-center font-semiBold text-2xl">회원가입을 완료했어요!</span>
+        <span className="mt-24 flex flex-col items-center font-semiBold text-2xl text-gray-900">
+          회원가입을 완료했어요!
+        </span>
       </div>
 
       <div className="mb-[50px] flex w-full flex-col items-center justify-center">

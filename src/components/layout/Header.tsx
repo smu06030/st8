@@ -68,15 +68,18 @@ const Header = () => {
         <div className="mx-12 mt-2 flex items-center justify-between">
           <div className="flex items-center">
             <div className="p-[12px]">
-              <Link href="/">
+              <Link href="/home">
                 <MoaLogo />
               </Link>
             </div>
           </div>
 
           <nav className="flex flex-1 justify-center space-x-8 text-sm font-normal text-gray-700">
-            <Link href="/landing" className={getLinkStyle('/landing')}>
+            <Link href="/" className={getLinkStyle('/')}>
               서비스 소개
+            </Link>
+            <Link href="/home" className={getLinkStyle('/home')}>
+              홈
             </Link>
             <Link href="/stamp-map" className={getLinkStyle('/stamp-map')}>
               지도

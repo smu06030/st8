@@ -12,6 +12,7 @@ import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 import 'swiper/css/navigation';
 import Image from 'next/image';
+import browserClient from '@/utils/supabase/client';
 
 //성능개선
 const debounce = (func: (...args: any[]) => void, wait: number) => {
@@ -26,7 +27,6 @@ const LandingPage = () => {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
-  const [position, setPosition] = useState(0);
 
   const [isMainSectionVisible, setIsMainSectionVisible] = useState(false);
   const mainsectionRef = useRef(null);
@@ -34,6 +34,7 @@ const LandingPage = () => {
   const stampSectionRef = useRef(null);
   const [isTourSectionVisible, setIsTourSectionVisible] = useState(false);
   const tourSectionRef = useRef(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -90,9 +91,28 @@ const LandingPage = () => {
     };
   }, []);
 
-  const goToLogin = () => {
-    router.push('/login');
+  useEffect(() => {
+    const checkAuth = async () => {
+      const {
+        data: { user }
+      } = await browserClient.auth.getUser(); // 유저 정보 확인
+      setIsLoggedIn(!!user); // 유저가 존재하면 로그인 상태로 설정
+    };
+
+    checkAuth();
+  }, []);
+
+  const goToLoginOrHome = () => {
+    if (isLoggedIn) {
+      router.push('/home'); // 로그인 상태일 때 홈으로 이동
+    } else {
+      router.push('/login'); // 비로그인 상태일 때 로그인 페이지로 이동
+    }
   };
+
+  // const goToLogin = () => {
+  //   router.push('/login');
+  // };
 
   useEffect(() => {
     const handleResize = debounce(() => {
@@ -317,10 +337,10 @@ const LandingPage = () => {
             <h2 className={`sectionTitle-Black`}>
               모아는 당신을 위한 <strong className="text-[#008EBD]">단 하나의 여행기</strong> 입니다.
             </h2>
-            <span>내 손안에 여행기 모아와 함께 여행을 떠나요.</span>
+            <span className="text-gray-900">내 손안에 여행기 모아와 함께 여행을 떠나요.</span>
           </div>
           <div className="mb-[50px] flex w-full flex-col items-center justify-center px-6">
-            <Button text="여행 떠나기" variant="blue" onClick={goToLogin} />
+            <Button text="여행 떠나기" variant="blue" onClick={goToLoginOrHome} />
           </div>
         </section>
       </div>
@@ -342,7 +362,7 @@ const LandingPage = () => {
 
         {/* 여행 떠나기 버튼 */}
         <div className="mb-[50px] flex w-full flex-col items-center justify-center px-6">
-          <Button text="여행 떠나기" variant="blue" onClick={goToLogin} />
+          <Button text="여행 떠나기" variant="blue" onClick={goToLoginOrHome} />
         </div>
       </div>
     </>

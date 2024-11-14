@@ -40,7 +40,7 @@ const LoginForm = () => {
         } = await browserClient.auth.getUser();
 
         if (user) {
-          window.location.href = '/';
+          window.location.href = '/home';
         }
       }
     });
@@ -91,63 +91,72 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onHandleLogin)} className="mt-7 flex min-h-screen flex-col items-center space-y-12">
-      <InputField
-        iconName="MailIcon"
-        text="이메일"
-        placeholder="이메일을 입력해주세요."
-        status={errors.email ? 'error' : 'default'}
-        register={{
-          ...register('email', {
-            required: true
-            // onBlur: (e) => handleEmailBlur(e.target.value)
-          })
-        }}
-        error={errors.email}
-      />
+    <div className="flex flex-col items-center">
+      <div className="mr-[185px] mt-3 flex flex-col">
+        <p className="mb-2 hidden text-2xl font-semibold text-secondary-900 lg:block">로그인</p>
+        <p className="mb-2 hidden text-gray-700 lg:block">모아랑 여행을 떠나요.</p>
+      </div>
+      <form
+        onSubmit={handleSubmit(onHandleLogin)}
+        className="flex min-h-screen flex-col items-center space-y-12 lg:mt-7"
+      >
+        <InputField
+          iconName="MailIcon"
+          text="이메일"
+          placeholder="이메일을 입력해주세요."
+          status={errors.email ? 'error' : 'default'}
+          register={{
+            ...register('email', {
+              required: true
+              // onBlur: (e) => handleEmailBlur(e.target.value)
+            })
+          }}
+          error={errors.email}
+        />
 
-      <InputField
-        iconName="LockIcon"
-        text="비밀번호"
-        placeholder="비밀번호를 입력해주세요."
-        type={showConfirmPassword ? 'text' : 'password'}
-        status={errors.password ? 'error' : 'default'}
-        register={{
-          ...register('password', {
-            required: true
-          })
-        }}
-        error={errors.password}
-        rightIcon={
-          <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-            {showConfirmPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
-          </button>
-        }
-      />
+        <InputField
+          iconName="LockIcon"
+          text="비밀번호"
+          placeholder="비밀번호를 입력해주세요."
+          type={showConfirmPassword ? 'text' : 'password'}
+          status={errors.password ? 'error' : 'default'}
+          register={{
+            ...register('password', {
+              required: true
+            })
+          }}
+          error={errors.password}
+          rightIcon={
+            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+              {showConfirmPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
+            </button>
+          }
+        />
 
-      <div className="flex w-full max-w-sm justify-between px-8 pt-14">
-        <div>
-          <input type="checkbox" className="mr-1" />
-          <span className="text-sm font-normal text-[#4e4e4e]">자동 로그인</span>
+        <div className="flex w-full max-w-sm justify-between px-8 pt-8">
+          <div>
+            <input type="checkbox" className="mr-1" />
+            <span className="text-sm font-normal text-[#4e4e4e]">자동 로그인</span>
+          </div>
+          <Link href="/reset-password" className="text-right text-sm font-normal text-[#4e4e4e]">
+            아이디/비밀번호 찾기
+          </Link>
         </div>
-        <Link href="/reset-password" className="text-right text-sm font-normal text-[#4e4e4e]">
-          아이디/비밀번호 찾기
-        </Link>
-      </div>
-      <div className="!mt-3">
-        <Button text="로그인" variant={isValid ? 'blue' : 'gray'} disabled={!isValid} type="submit" />
-      </div>
-      <div className="mt-6 flex justify-center space-x-4">
-        <SocialLoginButton provider="apple" onClick={(e) => handleSocialLogin('apple', e)} />
-        <SocialLoginButton provider="google" onClick={(e) => handleSocialLogin('google', e)} />
-        <SocialLoginButton provider="kakao" onClick={(e) => handleSocialLogin('kakao', e)} />
-      </div>
+        <div className="!mt-3">
+          <Button text="로그인" variant={isValid ? 'blue' : 'gray'} disabled={!isValid} type="submit" />
+        </div>
+        <div className="mt-6 flex justify-center space-x-4">
+          <SocialLoginButton provider="apple" onClick={(e) => handleSocialLogin('apple', e)} />
+          <SocialLoginButton provider="google" onClick={(e) => handleSocialLogin('google', e)} />
+          <SocialLoginButton provider="kakao" onClick={(e) => handleSocialLogin('kakao', e)} />
+        </div>
 
-      <div className="!mt-[180px] text-center lg:!mt-14">
-        <span className="mr-1 text-sm text-gray-600">아직 회원이 아니신가요?</span>
-        <LinkButton text="회원가입" href="/signup" />
-      </div>
-    </form>
+        <div className="!mt-[180px] text-center lg:!mt-14">
+          <span className="mr-1 text-sm text-gray-600">아직 회원이 아니신가요?</span>
+          <LinkButton text="회원가입" href="/signup" />
+        </div>
+      </form>
+    </div>
   );
 };
 
