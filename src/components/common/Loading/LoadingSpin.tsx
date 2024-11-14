@@ -6,7 +6,7 @@ const LoadingSpin = ({ absolute = false, fixed = false }) => (
     x="0px"
     y="0px"
     viewBox="0 0 50 50"
-    className={`animate-spin z-[100] h-12 w-12 text-black ${absolute ? 'absolute' : ''} ${fixed ? 'fixed' : ''}`}
+    className={`animate-spin z-[100] h-12 w-12 text-black ${absolute ? 'absolute' : ''} ${fixed ? 'fixed' : ''} inset-0 m-auto`}
   >
     <path
       fill="currentColor"
