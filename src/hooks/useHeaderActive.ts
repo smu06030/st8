@@ -43,6 +43,8 @@ const useHeaderActive = () => {
       setPageTitle(PAGE_NAMES.UPDATE_SUCCESS.page);
     } else if (currentPath.startsWith(PAGE_NAMES.LANDING.link)) {
       setPageTitle(PAGE_NAMES.LANDING.page);
+    } else if (currentPath.startsWith(PAGE_NAMES.HOME.link)) {
+      setPageTitle(PAGE_NAMES.HOME.page);
     } else {
       setPageTitle('');
     }

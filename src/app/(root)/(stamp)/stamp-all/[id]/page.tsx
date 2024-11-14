@@ -21,7 +21,7 @@ const StampItemDetail = () => {
   const [stampData, setStampData] = useState<Stamp[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const { data: stampList, isLoading, isPending } = useGetStampListQuery(userId);
+  const { data: stampList, isLoading, isPending, isError } = useGetStampListQuery(userId);
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
@@ -56,6 +56,11 @@ const StampItemDetail = () => {
       </div>
     );
 
+  if (isError) {
+    const errorMessage = '스탬프 데이터를 가져오는 중 오류가 발생했습니다.';
+    throw new Error(errorMessage);
+  }
+
   // // 첫 번째 스탬프 주소
   // useEffect(() => {
   //   if (oldestDate) {
@@ -68,7 +73,7 @@ const StampItemDetail = () => {
 
   return (
     <div className="min-h-[80vh] lg:bg-white">
-      <div className="pc-inner-width flex h-[100%] flex-col bg-no-repeat pb-[200px]">
+      <div className="pc-inner-width mt-14 flex h-[100%] flex-col bg-no-repeat pb-[200px]">
         <h2 className="mb-[102px] hidden font-bold text-[64px] text-secondary-900 lg:block lg:pt-[74px]">
           {region} 스탬프
         </h2>

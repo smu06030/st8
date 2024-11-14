@@ -13,7 +13,7 @@ import { promptLogin } from '@/utils/promptLogin';
 
 const StampList = () => {
   const userId = useUserId();
-  const { data: stampList = [], isLoading, isPending } = useGetStampListQuery(userId);
+  const { data: stampList = [], isLoading, isPending, isError } = useGetStampListQuery(userId);
 
   if (isLoading || isPending)
     return (
@@ -21,6 +21,11 @@ const StampList = () => {
         <Loading />
       </div>
     );
+
+  if (isError) {
+    const errorMessage = '스탬프 데이터를 가져오는 중 오류가 발생했습니다.';
+    throw new Error(errorMessage);
+  }
 
   const loginRequiredRegions = Object.entries(STAMPIMG_REGION_IMG).map(([region, img]) => ({ region, img })); //비활성화지역이름(로그인안한상태)
   const ActiveRegionList = [...new Set(stampList?.map((item) => item.region))]; //갖고있는스탬프 지역이름

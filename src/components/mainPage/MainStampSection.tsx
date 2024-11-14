@@ -6,13 +6,17 @@ import { getUser } from '@/serverActions/user';
 import { REGION_NAME_MAP_KO } from '@/utils/region/RegionNames';
 
 const MainStampSection = async () => {
-  // 커스텀 훅을 사용 안하고 스탬프 정보 가져오기
   const user = await getUser();
 
-  console.log(user);
   let stampList = null;
   if (user) {
     stampList = await getStampList(user.id);
+  }
+
+  if (stampList instanceof Response) {
+    const error: any = await stampList.json();
+    console.log(error);
+    throw new Error(error.message);
   }
 
   return (
@@ -41,7 +45,7 @@ const MainStampSection = async () => {
               <Link
                 href={`/stamp-all/${REGION_NAME_MAP_KO[stamp.region]}`}
                 key={stamp.id}
-                className="flex h-40 w-full items-center justify-center rounded-3xl bg-white lg:h-[200px] lg:w-[200px]"
+                className="stamp-item relative flex h-40 w-full items-center justify-center overflow-hidden rounded-3xl bg-white lg:h-[200px] lg:w-[200px]"
               >
                 <Image src={stamp.stampimg} width={146} height={146} priority alt={stamp.region} />
               </Link>

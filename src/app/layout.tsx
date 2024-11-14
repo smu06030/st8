@@ -1,15 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import type { Metadata } from 'next';
+import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import localFont from 'next/font/local';
 import './globals.css';
 import RQProviders from '@/providers/RQRovider';
 import KakaoMapLoader from '@/components/stampMap/KakaoMapLoader';
 import Nav from '@/components/layout/Nav';
 import Header from '@/components/layout/Header';
-import SplashPage from './splash/page';
 import Footer from '@/components/layout/Footer';
 import { PAGE_NAMES } from '@/constants/pageName';
 

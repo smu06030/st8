@@ -8,6 +8,7 @@ import KakaoMapMarker from './KakaoMapMarker';
 import useKakaoMap from '@/hooks/useKakaoMap';
 import StampModal from '../common/Modal/StampModal';
 import useModal from '@/hooks/useModal';
+import KakaoMapMaxLevel from './KakaoMapMaxLevel';
 
 const KakaoMap = () => {
   const { geoList, location, activeIndex, selectedPath, filteredStamps, updateHoverState, updatePolygonPath } =
@@ -59,6 +60,7 @@ const KakaoMap = () => {
 
         {filteredStamps?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} openModal={openModal} />)}
         <ReSetttingMapBounds paths={selectedPath} activeIndex={activeIndex} />
+        <KakaoMapMaxLevel />
       </Map>
       <StampModal Modal={Modal} />
       <MapButtonSwiper />
