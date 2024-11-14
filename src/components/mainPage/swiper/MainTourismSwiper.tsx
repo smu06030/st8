@@ -35,15 +35,15 @@ const MainTourismSwiper = ({ tourismList, userId }: MainTourismSwiperPropsType) 
         <Swiper
           key="desktop-swiper"
           loop={true}
-          slidesPerView={3.5}
+          slidesPerView={3.6}
           spaceBetween={10}
           centeredSlides={true}
           initialSlide={2}
           grabCursor={true}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false
-          }}
+          // autoplay={{
+          //   delay: 2500,
+          //   disableOnInteraction: false
+          // }}
           pagination={{
             clickable: true,
             dynamicBullets: true

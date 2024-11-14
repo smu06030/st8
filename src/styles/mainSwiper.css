@@ -29,6 +29,7 @@
 .mainTourism-swiper .swiper-wrapper {
   @apply flex items-center;
   transition-timing-function: linear;
+  margin-left: -3%;
 }
 
 .mainTourism-swiper .swiper-wrapper > .swiper-slide {
@@ -39,7 +40,10 @@
   @apply h-full;
 }
 .mainTourism-swiper .swiper-wrapper > .swiper-slide.swiper-slide-active {
-  @apply !h-[480px] lg:z-10 lg:w-[100%];
+  @apply !h-[480px] lg:z-10;
+  width: 35% !important;
+  /* width: 40vw; */
+  /* margin-left: -10%; */
 }
 .mainTourism-swiper .swiper-wrapper > .swiper-slide.swiper-slide-active > div {
   @apply h-full;
