@@ -31,8 +31,6 @@ export const useSocialLogin = () => {
         alert('로그인에 실패했습니다. 다시 시도해주세요.');
         return;
       }
-      // console.log('>>>> 구글 로그인 성공');
-      // console.log(data);
 
       router.push('/mypage');
       return data;

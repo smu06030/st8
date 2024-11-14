@@ -13,7 +13,7 @@ const LogoutButton = () => {
     try {
       await logout();
       closeModal();
-      router.push('/login');
+      window.location.href = '/login';
     } catch (error) {}
   };
 
