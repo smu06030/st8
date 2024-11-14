@@ -4,16 +4,11 @@ import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
 import useUserId from '@/hooks/useUserId';
 import MainTourismSwiper from './swiper/MainTourismSwiper';
-import LoadingBounce from '../common/Loading/Loading';
 import { useGetTourismListQuery } from '@/queries/query/useTourismQuery';
 
 const MainRecommendSection = () => {
   const userId = useUserId();
-  const { data: tourismList, isPending } = useGetTourismListQuery(userId);
-
-  if (isPending) {
-    return <LoadingBounce />;
-  }
+  const { data: tourismList } = useGetTourismListQuery(userId);
 
   return (
     <section className="mb-[100px] mt-[58px] lg:mt-[76px] mo-only:px-6">

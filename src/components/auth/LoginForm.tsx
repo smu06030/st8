@@ -11,6 +11,7 @@ import browserClient from '@/utils/supabase/client';
 import InputField from '../common/InputField/InputField';
 import { useSocialLogin } from '@/hooks/useSocialLogin';
 import Link from 'next/link';
+import { revalidatePath } from 'next/cache';
 
 interface LoginFormInputs {
   email: string;
