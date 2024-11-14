@@ -1,7 +1,7 @@
 @media (min-width: 1024px) {
-  .swiper {
+  /* .swiper {
     width: auto;
-  }
+  } */
   .tourism-swiper {
     padding-right: calc((100vw - 1080px) / 2) !important;
   }

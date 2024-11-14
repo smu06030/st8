@@ -9,6 +9,7 @@ const MainStampSection = async () => {
   // 커스텀 훅을 사용 안하고 스탬프 정보 가져오기
   const user = await getUser();
 
+  console.log(user);
   let stampList = null;
   if (user) {
     stampList = await getStampList(user.id);

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import LoadingSpin from '@/components/common/Loading/LoadingSpin';
 import ModalAlbumImg from '@/components/photoalbum/ModalAlbumImg';
 import AddPhotoBtn from '@/components/photoalbum/AddPhotoBtn';
 import Toptitle from '@/components/photoalbum/AlbumTitleTab';
@@ -93,34 +94,40 @@ const AlbumList = () => {
             activeTab={activeTab}
             item=""
           />
-          {albumListData?.map((item, index) => (
-            <li
-              onClick={() => {
-                if (!edit) {
-                  onClickImgModal(item.photoImg, item.id, index);
-                  openModal();
-                } else {
-                  deleteId.includes(item.id);
-                  selectPhotoList(item.id);
-                }
-              }}
-              key={item.id}
-              className={`${edit && deleteId.includes(item.id) && 'border-2 border-[#D22730]'} relative aspect-square overflow-hidden border`}
-            >
-              {item.photoImg && (
-                <>
-                  <Image
-                    src={item.photoImg}
-                    alt=""
-                    width={200}
-                    height={200}
-                    priority
-                    className="h-full w-full object-cover"
-                  />
-                </>
-              )}
-            </li>
-          ))}
+          {isLoading ? (
+            <LoadingSpin absolute={true} />
+          ) : (
+            <>
+              {albumListData?.map((item, index) => (
+                <li
+                  onClick={() => {
+                    if (!edit) {
+                      onClickImgModal(item.photoImg, item.id, index);
+                      openModal();
+                    } else {
+                      deleteId.includes(item.id);
+                      selectPhotoList(item.id);
+                    }
+                  }}
+                  key={item.id}
+                  className={`${edit && deleteId.includes(item.id) && 'border-2 border-[#D22730]'} relative aspect-square overflow-hidden border`}
+                >
+                  {item.photoImg && (
+                    <>
+                      <Image
+                        src={item.photoImg}
+                        alt=""
+                        width={200}
+                        height={200}
+                        priority
+                        className="h-full w-full object-cover"
+                      />
+                    </>
+                  )}
+                </li>
+              ))}
+            </>
+          )}
         </ul>
       ) : (
         <section className="my-[18px] flex flex-col mo-only:mx-[24px]">
