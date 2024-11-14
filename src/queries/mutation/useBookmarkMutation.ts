@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateBookmarkStatus } from '@/apis/bookmark';
-import { QUERY_KEY } from '../query.keys';
+import { QUERY_KEY } from '@/queries/query.keys';
 
 // 좋아요 상태 업데이트
 export const useBookmarkMutation = () => {

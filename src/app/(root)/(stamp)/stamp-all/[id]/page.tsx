@@ -135,33 +135,34 @@ const StampItemDetail = () => {
           {isOpen && (
             <ul className="flex w-full animate-dropdownList flex-col gap-[12px] transition-all duration-300">
               {stampData.map((list) => (
-                <Link href={`/stamp-map?activeSlide=${list.id}`} key={list.id}>
-                  <li className="flex w-full items-center justify-between rounded-[24px] bg-white px-[28px] py-[24px] lg:border lg:border-[#4F4F4F]">
-                    <ul className="flex w-full flex-col gap-[14px]">
-                      <li className="flex items-center gap-[8px]">
-                        <Icon name="TimeIcon" size={28} color="white" bgColor="#00688A" rx="16" />
-                        <span className="ellipsis-multiline flex-1 text-[#4F4F4F] lg:max-w-[40vw]">
-                          {list.aliasLocation !== null ? list.aliasLocation : list.address}
-                        </span>
-                      </li>
-                      <li className="flex items-center gap-[8px]">
-                        <Icon name="ComPassIcon" size={28} color="white" bgColor="#00688A" rx="16" />
-                        <span className="text-[#4F4F4F]">
-                          {list.created_at
-                            ? new Date(list.created_at).toLocaleDateString('ko-KR', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                              })
-                            : 'N/A'}
-                        </span>
-                        <span className="text-[#4F4F4F]">
-                          {list.created_at ? new Date(list.created_at).getHours() : 'N/A'}시
-                        </span>
-                      </li>
-                    </ul>
-                  </li>
-                </Link>
+                <li
+                  key={list.id}
+                  className="flex w-full items-center justify-between rounded-[24px] bg-white px-[28px] py-[24px] lg:border lg:border-[#4F4F4F]"
+                >
+                  <ul className="flex w-full flex-col gap-[14px]">
+                    <li className="flex items-center gap-[8px]">
+                      <Icon name="TimeIcon" size={28} color="white" bgColor="#00688A" rx="16" />
+                      <span className="ellipsis-multiline flex-1 text-[#4F4F4F] lg:max-w-[40vw]">
+                        {list.aliasLocation !== null ? list.aliasLocation : list.address}
+                      </span>
+                    </li>
+                    <li className="flex items-center gap-[8px]">
+                      <Icon name="ComPassIcon" size={28} color="white" bgColor="#00688A" rx="16" />
+                      <span className="text-[#4F4F4F]">
+                        {list.created_at
+                          ? new Date(list.created_at).toLocaleDateString('ko-KR', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            })
+                          : 'N/A'}
+                      </span>
+                      <span className="text-[#4F4F4F]">
+                        {list.created_at ? new Date(list.created_at).getHours() : 'N/A'}시
+                      </span>
+                    </li>
+                  </ul>
+                </li>
               ))}
             </ul>
           )}

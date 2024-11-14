@@ -17,7 +17,7 @@ const GetUserAddress = () => {
   // 카카오맵 주소값 가져오기   ${lng}&y=${lat}
   const getAddress = async (lat: number, lng: number) => {
     try {
-      const res = await fetch(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=126.9882&y=37.55129`, {
+      const res = await fetch(`https://dapi.kakao.com/v2/local/geo/coord2address.json?${lng}&y=${lat}`, {
         headers: {
           Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`
         }
