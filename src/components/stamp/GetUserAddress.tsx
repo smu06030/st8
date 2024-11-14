@@ -14,10 +14,10 @@ const GetUserAddress = () => {
   const [location, setLocation] = useState<LocationType>({ lat: 0, lng: 0 });
   const [error, setError] = useState<string | null>(null); //에러상태
 
-  // 카카오맵 주소값 가져오기
+  // 카카오맵 주소값 가져오기   ${lng}&y=${lat}
   const getAddress = async (lat: number, lng: number) => {
     try {
-      const res = await fetch(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}`, {
+      const res = await fetch(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=126.9882&y=37.55129`, {
         headers: {
           Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`
         }

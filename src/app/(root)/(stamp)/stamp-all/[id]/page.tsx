@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import useUserId from '@/hooks/useUserId';
 import { useGetStampListQuery } from '@/queries/query/useStampQuery';
@@ -14,6 +15,7 @@ const StampItemDetail = () => {
   const userId = useUserId();
   const params = useParams();
   const region = REGION_NAME_MAP_EN[decodeURIComponent((params.id as string[]).toString())];
+  const [oldestAddress, setOldestAddress] = useState('');
   const [stampData, setStampData] = useState<Stamp[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -29,7 +31,6 @@ const StampItemDetail = () => {
         try {
           const res = stampList;
           const stampFilterList = res?.filter((item) => item.region === region) || [];
-          console.log('stampFilterList', stampFilterList);
           setStampData(stampFilterList);
         } catch (error) {
           console.error(error);
@@ -39,7 +40,7 @@ const StampItemDetail = () => {
     }
   }, [params.id, userId, stampList]);
 
-  // 가장 오래된 날짜 구하기
+  // 첫 번째 스탬프 날짜
   const oldestDate = stampData.reduce((oldest, current) => {
     const oldestDate = oldest.created_at ? new Date(oldest.created_at) : new Date();
     const currentDate = current.created_at ? new Date(current.created_at) : new Date();
@@ -52,6 +53,16 @@ const StampItemDetail = () => {
         <Loading />
       </div>
     );
+
+  // 첫 번째 스탬프 주소
+  useEffect(() => {
+    if (oldestDate) {
+      const oldestAddress = stampData
+        .filter((old) => old.created_at === oldestDate?.created_at)
+        .map((item) => item.address);
+    }
+    setOldestAddress(oldestAddress);
+  }, [oldestDate]);
 
   return (
     <div className="lg:bg-white">
@@ -122,34 +133,33 @@ const StampItemDetail = () => {
           {isOpen && (
             <ul className="flex w-full animate-dropdownList flex-col gap-[12px] transition-all duration-300">
               {stampData.map((list) => (
-                <li
-                  key={list.id}
-                  className="flex w-full items-center justify-between rounded-[24px] bg-white px-[28px] py-[24px] lg:border lg:border-[#4F4F4F]"
-                >
-                  <ul className="flex w-full flex-col gap-[14px]">
-                    <li className="flex items-center gap-[8px]">
-                      <Icon name="TimeIcon" size={28} color="white" bgColor="#00688A" rx="16" />
-                      <span className="ellipsis-multiline flex-1 text-[#4F4F4F] lg:max-w-[40vw]">
-                        {list.aliasLocation !== null ? list.aliasLocation : list.address}
-                      </span>
-                    </li>
-                    <li className="flex items-center gap-[8px]">
-                      <Icon name="ComPassIcon" size={28} color="white" bgColor="#00688A" rx="16" />
-                      <span className="text-[#4F4F4F]">
-                        {list.created_at
-                          ? new Date(list.created_at).toLocaleDateString('ko-KR', {
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric'
-                            })
-                          : 'N/A'}
-                      </span>
-                      <span className="text-[#4F4F4F]">
-                        {list.created_at ? new Date(list.created_at).getHours() : 'N/A'}시
-                      </span>
-                    </li>
-                  </ul>
-                </li>
+                <Link href={`/stamp-map?activeSlide=${list.id}`} key={list.id}>
+                  <li className="flex w-full items-center justify-between rounded-[24px] bg-white px-[28px] py-[24px] lg:border lg:border-[#4F4F4F]">
+                    <ul className="flex w-full flex-col gap-[14px]">
+                      <li className="flex items-center gap-[8px]">
+                        <Icon name="TimeIcon" size={28} color="white" bgColor="#00688A" rx="16" />
+                        <span className="ellipsis-multiline flex-1 text-[#4F4F4F] lg:max-w-[40vw]">
+                          {list.aliasLocation !== null ? list.aliasLocation : list.address}
+                        </span>
+                      </li>
+                      <li className="flex items-center gap-[8px]">
+                        <Icon name="ComPassIcon" size={28} color="white" bgColor="#00688A" rx="16" />
+                        <span className="text-[#4F4F4F]">
+                          {list.created_at
+                            ? new Date(list.created_at).toLocaleDateString('ko-KR', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                              })
+                            : 'N/A'}
+                        </span>
+                        <span className="text-[#4F4F4F]">
+                          {list.created_at ? new Date(list.created_at).getHours() : 'N/A'}시
+                        </span>
+                      </li>
+                    </ul>
+                  </li>
+                </Link>
               ))}
             </ul>
           )}
