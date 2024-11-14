@@ -6,8 +6,34 @@ import StampCount from './StampCount';
 import PhotoCount from './PhotoCount';
 import Image from 'next/image';
 import RecentPhoto from './RecentPhoto';
+import { useEffect, useState } from 'react';
+import Loading from '@/app/(root)/(stamp)/loading';
 
 const MyPageLayout = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await Promise.all([new Promise((resolve) => setTimeout(resolve, 1000))]);
+      } catch (error) {
+        console.error('데이터를 가져오는 중 오류가 발생했습니다:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
+
   return (
     <div className="items-left mx-auto flex h-full max-w-[600px] flex-col bg-white px-6 pb-24">
       <div className="flex w-full items-center justify-between">
