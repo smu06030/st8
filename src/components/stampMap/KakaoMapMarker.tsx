@@ -1,14 +1,15 @@
-import { useMapStore } from '@/providers/mapStoreProvider';
-import { StampType } from '@/types/stampMap/Stamp.types';
 import React from 'react';
+import { Stamp } from '@/types/supabase/table.type';
+import { useMapStore } from '@/providers/mapStoreProvider';
 import { MapMarker, useMap } from 'react-kakao-maps-sdk';
+import { FORMAT_REGION_NAME_KO } from '@/constants/regions';
 
 interface KakaoMapMarkerPropsType {
-  stamp: StampType;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  stamp: Stamp;
+  openModal: () => void;
 }
 
-const KakaoMapMarker = ({ stamp, setIsOpen }: KakaoMapMarkerPropsType) => {
+const KakaoMapMarker = ({ stamp, openModal }: KakaoMapMarkerPropsType) => {
   const map = useMap();
   const setStampInfo = useMapStore((state) => state.setStampInfo);
 
@@ -18,12 +19,11 @@ const KakaoMapMarker = ({ stamp, setIsOpen }: KakaoMapMarkerPropsType) => {
       position={{ lat: stamp.lat, lng: stamp.lng }}
       onClick={(marker) => {
         map.panTo(marker.getPosition());
-        setIsOpen((prev) => !prev);
         setStampInfo(stamp);
-        // markerClickHandler(camp)
+        openModal();
       }}
       image={{
-        src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+        src: `/images/marker/${FORMAT_REGION_NAME_KO[stamp.region]}.png`,
         size: {
           width: 24,
           height: 35

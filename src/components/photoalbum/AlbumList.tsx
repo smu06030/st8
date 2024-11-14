@@ -1,88 +1,70 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
-import AddPhotoBtn from './AddPhotoBtn';
-import { fetchAlbum, addAlbumList, deleteAlbumList } from '@/apis/fetchAlbumList';
-import ImgModal from './ImgModal';
+import Link from 'next/link';
+
+import LoadingSpin from '@/components/common/Loading/LoadingSpin';
+import ModalAlbumImg from '@/components/photoalbum/ModalAlbumImg';
+import AddPhotoBtn from '@/components/photoalbum/AddPhotoBtn';
+import Toptitle from '@/components/photoalbum/AlbumTitleTab';
+import EditAlbumImg from '@/components/photoalbum/EditAlbumImg';
+import useModal from '@/hooks/useModal';
+import useAlbumDelete from '@/hooks/useAlbumDelete';
+import useImgModal from '@/hooks/useImgModal';
+import Loading from '@/app/(root)/(stamp)/loading';
+import useUserId from '@/hooks/useUserId';
+import { useGetAlbumListQuery } from '@/queries/query/useAlbumQuery';
+import { usePostAlbumMutation } from '@/queries/mutation/useAlbumMutation';
 
 const AlbumList = () => {
-  const queryClient = useQueryClient();
-  const [imgSrc, setImgSrc] = useState<string[]>([]); //이미지url
-  const [activeTab, setActiveTab] = useState('allTab'); //탭상태
-  const [imgModal, setImgModal] = useState(false);
-  const [selectedImgUrl, setSelectedImgUrl] = useState('');
-  const [edit, setEdit] = useState(false);
-  const [deleteId, setDeleteId] = useState<number[]>([]);
+  const userId = useUserId();
+  const { data: albumListData, isLoading, isError } = useGetAlbumListQuery(userId);
+  const { closeModal, openModal, Modal, isOpen } = useModal();
+  const { mutate: postAlbumMutate } = usePostAlbumMutation();
 
-  const onClickImgModal = (url: string) => {
-    setSelectedImgUrl(url);
-    setImgModal(true);
-  };
+  const {
+    selectedImgUrl,
+    imgModal,
+    onClickImgModal,
+    setImgModal,
+    activeImgId,
+    setActiveImgId,
+    currentIndex,
+    setCurrentIndex
+  } = useImgModal();
+  const { edit, setEdit, deleteId, setDeleteId, selectPhotoList, onHandleDelete } = useAlbumDelete();
 
-  //탭엑션
+  const [imgSrc, setImgSrc] = useState<string[]>([]);
+  const [activeTab, setActiveTab] = useState('allTab');
+
+  //이미지팝업에 전달할 앨범전체이미지
+  const regionPhoto = albumListData;
+
+  useEffect(() => {
+    if (regionPhoto) {
+      const index = regionPhoto.findIndex((photo) => photo.id === activeImgId); //클릭한 이미지의 인덱스
+      setCurrentIndex(index);
+    }
+  }, [activeImgId, regionPhoto, setCurrentIndex]);
+
+  //편집안할땐 체크 다 풀기
+  useEffect(() => {
+    if (!edit) setDeleteId([]);
+  }, [edit, setDeleteId]);
+
+  //탭 액션
   const onClickTab = (tab: string) => {
     setActiveTab(tab);
   };
 
-  //useMutation(추가)
-  const AlbumAddMutation = useMutation({
-    mutationFn: addAlbumList,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['photo'] });
-      // queryClient.refetchQueries(['photo']);
-    },
-    onError: (error) => {
-      console.error('MutationError:', error);
-    }
-  });
-
-  //useMutation(삭제)
-  const deleteAlbumListmutation = useMutation({
-    mutationFn: deleteAlbumList,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['photo'] });
-    },
-    onError: (error) => {
-      console.error('삭제 중 오류 발생:', error);
-    }
-  });
-
-  const handleCheckboxChange = (id: number) => {
-    setDeleteId((prev) => {
-      if (prev.includes(id)) {
-        //선택한아이디들에 아이디가 포함되어있으면
-        return prev.filter((item) => item !== id); //아이디중복제거
-      } else {
-        return [...prev, id];
-      }
-    });
-  };
-
-  const onHandleDelete = async () => {
-    if (deleteId.length === 0) {
-      alert('선택된 앨범이 없습니다.');
-      return;
-    } else if (window.confirm('앨범에서 삭제하시겠습니까?')) {
-      await deleteAlbumListmutation.mutate(deleteId);
-      alert('삭제되었습니다.');
-    }
-  };
-
-  //useQuery : 앨범전체테이블 = albumListData
-  const {
-    data: albumListData,
-    isPending,
-    isError
-  } = useQuery({
-    queryKey: ['photo'],
-    queryFn: fetchAlbum
-    // refetchOnWindowFocus: true
-  });
-  //   console.log('albumListData', albumListData);
-  if (isPending) return <div>Loading...</div>;
-  if (isError) return <div>Error loading data</div>;
+  if (isLoading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  if (isError) return <div>데이터를 가져오지 못하였습니다.</div>;
 
   //유저가 등록한 지역이름들(중복_지역이름제거)
   const filterRigionTitle = albumListData ? [...new Set(albumListData?.map((item) => item.region))] : [];
@@ -91,119 +73,111 @@ const AlbumList = () => {
     (title) => albumListData?.filter((item) => item.region === title) || []
   );
 
+  // console.log('filterRigionTitle', filterRigionTitle);
   return (
-    <div>
-      <h2 className="m-[24px] border-b border-black pb-[10px] font-bold text-[24px]">나의 추억들</h2>
-
-      {/* 전체보기-지역별 탭버튼 */}
-      <ul className="mx-[24px] flex gap-[10px]">
-        <li
-          className={`albumTab cursor-pointer ${activeTab === 'allTab' ? 'active' : ''}`}
-          onClick={() => onClickTab('allTab')}
-        >
-          전체보기
-        </li>
-        <li
-          className={`albumTab cursor-pointer ${activeTab === 'rigionTab' ? 'active' : ''}`}
-          onClick={() => onClickTab('rigionTab')}
-        >
-          지역별
-        </li>
-        <button className={`text-${edit ? 'red-500' : 'black'}`} onClick={() => setEdit((prev) => !prev)}>
-          편집
-        </button>
-        {edit && (
-          <button className={`text-${edit ? 'red-500' : 'black'}`} onClick={onHandleDelete}>
-            삭제
-          </button>
-        )}
-      </ul>
+    <div className="pc-inner-width mt-16 pb-[200px] lg:pb-[535px]">
+      <Toptitle
+        activeTab={activeTab}
+        edit={edit}
+        onClickTab={onClickTab}
+        setEdit={setEdit}
+        onHandleDelete={onHandleDelete}
+        deleteId={deleteId}
+      />
       {/* 전체보기 */}
       {activeTab === 'allTab' ? (
-        <ul className="mt-4 grid grid-cols-3 gap-[5px]">
+        <ul className="mt-[32px] grid grid-cols-3 gap-[6px] lg:grid-cols-7">
           <AddPhotoBtn
             imgSrc={imgSrc}
             setImgSrc={setImgSrc}
-            AlbumAddMutation={AlbumAddMutation}
+            postAlbumMutate={postAlbumMutate}
             activeTab={activeTab}
             item=""
           />
-          {albumListData?.map((item, index) => (
-            <li key={item.id} className="h-[200px] overflow-hidden border border-black">
-              {item.photoImg && (
-                <div>
-                  <Image
-                    onClick={() => onClickImgModal(item.photoImg)}
-                    src={item.photoImg}
-                    alt=""
-                    width={200}
-                    height={150}
-                    priority
-                    className="h-full"
-                  />
-                  {edit && (
-                    <input
-                      type="checkbox"
-                      className="mr-2"
-                      checked={deleteId.includes(item.id)} //배열에 들은 아이디가 있어? 트루펄스
-                      onChange={() => handleCheckboxChange(item.id)}
-                    />
+          {isLoading ? (
+            <LoadingSpin absolute={true} />
+          ) : (
+            <>
+              {albumListData?.map((item, index) => (
+                <li
+                  onClick={() => {
+                    if (!edit) {
+                      onClickImgModal(item.photoImg, item.id, index);
+                      openModal();
+                    } else {
+                      deleteId.includes(item.id);
+                      selectPhotoList(item.id);
+                    }
+                  }}
+                  key={item.id}
+                  className={`${edit && deleteId.includes(item.id) && 'border-2 border-[#D22730]'} relative aspect-square overflow-hidden border`}
+                >
+                  {item.photoImg && (
+                    <>
+                      <Image
+                        src={item.photoImg}
+                        alt=""
+                        width={200}
+                        height={200}
+                        priority
+                        className="h-full w-full object-cover"
+                      />
+                    </>
                   )}
-                </div>
-              )}
-            </li>
-          ))}
+                </li>
+              ))}
+            </>
+          )}
         </ul>
       ) : (
-        <section className="m-[24px] flex flex-col">
-          <div className="flex flex-col gap-[50px]">
+        <section className="my-[18px] flex flex-col mo-only:mx-[24px]">
+          <div className="flex flex-col gap-[34px]">
             {filterRigionTitle.map((item, index) => (
               <div key={item}>
-                <div className="flex items-center border-b border-black">
-                  <h2 className="pb-[10px] font-bold text-[24px]">{item}</h2>
-                  <span>{filterRigionPhoto[index]?.length}</span>
+                <div className="flex items-center border-b border-[#9C9C9C]">
+                  <h2 className="py-[14px] font-bold text-[24px]">{item}</h2>
                 </div>
-                <ul className="mt-4 grid grid-cols-3 gap-[5px]">
+                <ul
+                  className={`relative mt-[16px] grid grid-cols-2 gap-[6px] pr-[20%] lg:pr-[70%] ${item === '미설정 지역' && 'row-start-1'}`}
+                >
                   <AddPhotoBtn
                     imgSrc={imgSrc}
                     setImgSrc={setImgSrc}
-                    AlbumAddMutation={AlbumAddMutation}
+                    postAlbumMutate={postAlbumMutate}
                     activeTab={activeTab}
                     item={item}
                   />
-                  {filterRigionPhoto[index]?.map((item) => (
-                    <li key={item.id} className="h-[200px] overflow-hidden border border-black">
-                      {item.photoImg && (
-                        <div>
-                          <Image
-                            onClick={() => onClickImgModal(item.photoImg)}
-                            src={item.photoImg}
-                            alt=""
-                            width={200}
-                            height={150}
-                            priority
-                            className="h-full"
-                          />
-                          {edit && (
-                            <input
-                              type="checkbox"
-                              className="mr-2"
-                              checked={deleteId.includes(item.id)} //배열에 들은 아이디가 있어?
-                              onChange={() => handleCheckboxChange(item.id)}
-                            />
-                          )}
-                          {/* {imgModal && <ImgModal setImgModal={setImgModal} imgUrl={item.photoImg} />} */}
-                        </div>
-                      )}
+
+                  <Link href={`/photo-album/${item}`} className={`${item === '미설정 지역' && 'row-start-1'}`}>
+                    <li
+                      className="relative h-full w-full bg-cover bg-center"
+                      style={{
+                        backgroundImage: `url(${filterRigionPhoto[index]?.[0]?.photoImg})`
+                      }}
+                    >
+                      <span className={`absolute bottom-[-26px] right-0 text-[14px] text-[#4F4F4F]`}>
+                        {filterRigionPhoto[index]?.length}장
+                      </span>
                     </li>
-                  ))}
+                  </Link>
                 </ul>
               </div>
             ))}
           </div>
         </section>
       )}
-      {imgModal && <ImgModal setImgModal={setImgModal} selectedImgUrl={selectedImgUrl} />}
+      {isOpen && (
+        <ModalAlbumImg
+          Modal={Modal}
+          setImgModal={setImgModal}
+          selectedImgUrl={selectedImgUrl}
+          regionPhoto={regionPhoto}
+          activeImgId={activeImgId}
+          setCurrentIndex={setCurrentIndex}
+          currentIndex={currentIndex}
+        />
+      )}
+      {edit && <EditAlbumImg deleteId={deleteId} onHandleDelete={onHandleDelete} />}
     </div>
   );
 };

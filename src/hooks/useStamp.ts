@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
-import useUser from './useUser';
-import useQuerys from '@/queries/useQuerys';
+import useUserId from './useUserId';
+import { useGetStampListQuery } from '@/queries/query/useStampQuery';
 import { stampSiDoFormatter } from '@/utils/region/siDoFormatter';
 
 const useStamp = () => {
-  const userId = useUser();
+  const userId = useUserId();
 
-  const { data, isPending } = useQuerys.useGetStampActive(userId);
+  const { data, isPending } = useGetStampListQuery(userId);
 
   const stampList = useMemo(() => stampSiDoFormatter(data), [data]);
 

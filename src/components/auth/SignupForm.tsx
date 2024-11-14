@@ -1,68 +1,66 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-
-interface SignupFormInputs {
-  email: string;
-  password: string;
-  nickname: string;
-}
+import NicknameStep from '@/components/auth/signup/StepNicknameForm';
+import EmailStep from '@/components/auth/signup/StepEmailForm';
+import PasswordStep from '@/components/auth/signup/StepPasswordForm';
+import GoMainStep from '@/components/auth/signup/StepMainForm';
+import { useSignupFormState } from '@/hooks/useSignupFormState';
+import { signUpWithEmail } from '@/app/api/auth/authService';
 
 const SignupForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<SignupFormInputs>();
+  const { step, formData, handleNext } = useSignupFormState();
   const router = useRouter();
 
-  const onHandleSignup = async (data: SignupFormInputs) => {
+  const handleSignup = async () => {
     try {
-      const response = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-
-      const result = await response.json();
-
-      if (result.error) {
-        alert(result.error);
-      } else {
-        alert('회원가입 성공!');
-        router.push('/login');
-      }
-    } catch (err) {
+      const response = await signUpWithEmail(formData.nickname, formData.email, formData.password);
+      router.push('/');
+    } catch (error: any) {
       alert('회원가입 중 오류가 발생했습니다.');
     }
   };
 
+  // const handleSignup = async () => {
+  //   try {
+  //     const response = await fetch('/api/auth/signup', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(formData)
+  //     });
+  //     const result = await response.json();
+
+  //     if (result.error) {
+  //       if (result.error.message.includes('already registered')) {
+  //         alert('이미 등록된 이메일입니다. 로그인 페이지로 이동합니다.');
+  //         {
+  //           router.push('/login');
+  //         }
+  //       } else {
+  //         throw new Error(result.error.message);
+  //       }
+  //     }
+
+  //     if (result.error) {
+  //       alert(result.error);
+  //     } else {
+  //       router.push('/');
+  //     }
+  //   } catch (err) {
+  //     alert('회원가입 중 오류가 발생했습니다.');
+  //   }
+  // };
+
   return (
-    <div className="min-h-screen flex-col items-center justify-center bg-[#DDF3FC]">
-      <form onSubmit={handleSubmit(onHandleSignup)} className="flex flex-col items-center space-y-4">
-        <h1 className="mb-4 text-center font-bold">회원가입</h1>
-        <input
-          {...register('email', { required: '이메일을 입력해주세요' })}
-          placeholder="이메일"
-          className="h-auto w-[326px] border border-defaultcolor p-3"
-        />
-        <input
-          {...register('password', { required: '비밀번호를 입력해주세요' })}
-          placeholder="비밀번호"
-          className="h-auto w-[326px] border border-defaultcolor p-3"
-        />
-        <input
-          {...register('nickname', { required: '닉네임을 입력해주세요' })}
-          placeholder="닉네임"
-          className="h-auto w-[326px] border border-defaultcolor p-3"
-        />
-        <button type="submit" className="h-auto w-[326px] bg-defaultcolor p-3 font-bold text-gray-500">
-          회원가입
-        </button>
-      </form>
+    <div className="mt-7 flex min-h-screen flex-col items-center justify-between">
+      {step === 0 && <NicknameStep onNext={(nickname: string) => handleNext({ nickname })} />}
+      {step === 1 && <EmailStep onNext={(email: string) => handleNext({ email })} />}
+      {step === 2 && <PasswordStep onNext={(password: string) => handleNext({ password })} />}
+      {step === 3 && <GoMainStep onNext={handleSignup} />}
     </div>
   );
 };
 
 export default SignupForm;
+
+//회원가입 폼의 다단계 입력 프로세스를 구현한 곳

@@ -1,0 +1,63 @@
+.albumTab {
+  @apply text-[#9C9C9C];
+}
+.albumTab.active {
+  @apply font-semiBold text-[#004157];
+}
+.add-photo-btn::before {
+  content: '사진 추가하기';
+  position: absolute;
+  bottom: -26px;
+  right: 0;
+  font-size: 14px;
+  color: #4f4f4f;
+}
+
+.modal-swiper .swiper-slide {
+  transition: opacity 0.3s;
+  color: #b5b5b5;
+}
+.modal-swiper .swiper-slide-prev,
+.modal-swiper .swiper-slide-next {
+  font-size: 14px;
+  color: #b5b5b5;
+}
+
+.modal-swiper .swiper-slide-active {
+  color: #004157;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.modal-slide {
+  height: 20% !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.ellipsis-multiline {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.modal-box {
+  width: calc(100% - 48px);
+  border-radius: 24px;
+  padding: 38px 34px;
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+}

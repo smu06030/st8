@@ -1,18 +1,34 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Map, Polygon } from 'react-kakao-maps-sdk';
-import { MAP_COLOR } from '@/constants/mapColor';
+import { MAP_COLOR, MAP_COLOR_INDEX } from '@/constants/mapColor';
 import ReSetttingMapBounds from '@/components/stampMap/ReSetttingMapBounds';
-import ScrollButtonSwiper from '@/components/stampMap/ScrollButtonSwiper';
+import MapButtonSwiper from '@/components/stampMap/MapButtonSwiper';
 import KakaoMapMarker from './KakaoMapMarker';
-import KakaoMapOverlay from './KakaoMapOverlay';
 import useKakaoMap from '@/hooks/useKakaoMap';
-import { useState } from 'react';
+import StampModal from '../common/Modal/StampModal';
+import useModal from '@/hooks/useModal';
 
 const KakaoMap = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const { geoList, location, activeIndex, selectedPath, filteredStamps, updateHoverState, updatePolygonPath } =
     useKakaoMap();
+  const { openModal, Modal } = useModal();
+  // const searchParams = useSearchParams();
+  // const activeId = searchParams.get('activeSlide');
+  // const [activeItem, setActiveItem] = useState(null);
+
+  // useEffect(() => {
+  //   if (activeId) {
+  //     const activeItem = filteredStamps?.find((item) => item.id === parseInt(activeId, 10));
+  //     if (activeItem) {
+  //       console.log('activeItem', activeItem);
+  //       setActiveItem(activeItem);
+  //       openModal();
+  //     }
+  //   }
+  // }, [activeId, filteredStamps, openModal]);
 
   return (
     <>
@@ -20,13 +36,13 @@ const KakaoMap = () => {
         id="map"
         center={location.center}
         isPanto={location.isPanto}
-        className="relative h-[100vh] w-[100vw]"
+        className="relative h-[100vh] w-full overflow-hidden"
         level={12}
       >
         {activeIndex === 0 ? (
           geoList.map((item, index) => {
-            const { key, path, isHover } = item;
-            const color = MAP_COLOR[index];
+            const { key, path, isHover, name } = item;
+            const color = MAP_COLOR[name];
 
             return (
               <Polygon
@@ -49,19 +65,19 @@ const KakaoMap = () => {
             key={activeIndex}
             path={selectedPath}
             strokeWeight={2}
-            strokeColor={MAP_COLOR[activeIndex - 1]}
+            strokeColor={MAP_COLOR[MAP_COLOR_INDEX[activeIndex - 1]]}
             strokeOpacity={0.7}
             strokeStyle="solid"
-            fillColor={MAP_COLOR[activeIndex - 1]}
+            fillColor={MAP_COLOR[MAP_COLOR_INDEX[activeIndex - 1]]}
             fillOpacity={0.1}
           />
         )}
 
-        {filteredStamps?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} setIsOpen={setIsOpen} />)}
-        {isOpen && <KakaoMapOverlay setIsOpen={setIsOpen} />}
-        <ReSetttingMapBounds paths={selectedPath} />
+        {filteredStamps?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} openModal={openModal} />)}
+        <ReSetttingMapBounds paths={selectedPath} activeIndex={activeIndex} />
       </Map>
-      <ScrollButtonSwiper />
+      <StampModal Modal={Modal} />
+      <MapButtonSwiper />
     </>
   );
 };

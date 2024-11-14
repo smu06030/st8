@@ -1,43 +1,50 @@
 'use client';
 import Link from 'next/link';
-
-import StampNum from './StampNum';
-import useUserNickname from '@/hooks/useUserNickname';
+import LogoutButton from '../auth/LogoutButton';
+import NicknameEditor from './NicknameEditor';
+import StampCount from './StampCount';
+import PhotoCount from './PhotoCount';
+import Image from 'next/image';
+import RecentPhoto from './RecentPhoto';
 
 const MyPageLayout = () => {
-  const { nickname, error } = useUserNickname();
-
   return (
-    <div className="flex flex-col items-start justify-center p-6">
-      <div className="flex items-start space-x-4">
-        <h1 className="font-bold text-xl"> {nickname ? nickname : 'guest'}님</h1>
-        <Link href="/profile">
-          <h6 className="cursor-pointer text-gray-500">수정하기</h6>
-        </Link>
+    <div className="items-left mx-auto flex h-full max-w-[600px] flex-col bg-white px-6 pb-24">
+      <div className="flex w-full items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <NicknameEditor />
+        </div>
+        <LogoutButton />
       </div>
-      <div className="my-4 flex items-start space-x-4">
-        <p>최근 여행지</p>
-        <p>과거의 오늘</p>
-      </div>
+      <RecentPhoto />
       <div>
-        <h6 className="mt-2">내 정보</h6>
-        <StampNum />
+        <h6 className="mb-[18px] mt-[20px] font-bold text-[20px] text-gray-900">내 정보</h6>
+        <StampCount />
         <div className="grid grid-cols-2 gap-4">
-          <div className="flex h-24 items-center justify-center rounded-2xl bg-gray-300 p-6">
-            <Link href="/stamp-map" className="flex h-full w-full items-center justify-center">
-              <p>나의 발자취</p>
+          <div className="relative flex h-[156px] flex-col justify-center rounded-2xl bg-primary-400 p-6 text-black">
+            <Link href="/stamp-map" className="flex h-full w-full flex-col">
+              <p className="text-[12px] font-semibold">지도로 보는 나의 여정</p>
+              <p className="mt-1 text-xs">
+                내 여정을
+                <br />
+                지도로 한눈에
+              </p>
+              <p className="mt-4 font-bold text-lg">나의 발자취</p>
             </Link>
           </div>
-          <div className="row-span-2 flex h-52 items-center justify-center rounded-2xl bg-gray-300 p-6">
-            <Link href="/tourism" className="flex h-full w-full items-center justify-center">
-              <p>내가 찜한 여행지</p>
+
+          <div className="relative row-span-2 flex h-[327px] items-center justify-center overflow-hidden rounded-2xl">
+            <Image src="/images/mypage_img2.png" alt="배경 이미지" fill style={{ objectFit: 'cover' }} priority />
+            <div className="absolute inset-0 bg-[#081425]/70"></div>
+            <Link href="/book-mark" className="relative flex h-full w-full flex-col items-end justify-end p-6">
+              <p className="text-xs font-semibold text-white">지도로 보는 나의 여정</p>
+              <p className="mb-4 text-right font-bold text-[20px] leading-tight text-white">
+                내가 찜한 <br />
+                여행지
+              </p>
             </Link>
           </div>
-          <div className="flex h-24 items-center justify-center rounded-2xl bg-gray-300 p-6">
-            <Link href="/photo-album" className="flex h-full w-full items-center justify-center">
-              <p>나의 추억들</p>
-            </Link>
-          </div>
+          <PhotoCount />
         </div>
       </div>
     </div>
