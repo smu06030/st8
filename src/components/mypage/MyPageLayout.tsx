@@ -8,18 +8,6 @@ import Image from 'next/image';
 import RecentPhoto from './RecentPhoto';
 
 const MyPageLayout = () => {
-  // useEffect(() => {
-  //   // 마운트될 때 스크롤 위치를 맨 위로 이동
-  //   window.scrollTo(0, 0);
-  //   // 스크롤을 없앰
-  //   document.body.style.overflow = 'hidden';
-
-  //   // 컴포넌트 언마운트될 때 스크롤 복원
-  //   return () => {
-  //     document.body.style.overflow = 'auto';
-  //   };
-  // }, []);
-
   return (
     <div className="items-left mx-auto flex h-full max-w-[600px] flex-col bg-white px-6 pb-24">
       <div className="flex w-full items-center justify-between">
