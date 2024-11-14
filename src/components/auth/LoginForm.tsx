@@ -40,7 +40,7 @@ const LoginForm = () => {
         } = await browserClient.auth.getUser();
 
         if (user) {
-          window.location.href = '/';
+          window.location.href = '/home';
         }
       }
     });
