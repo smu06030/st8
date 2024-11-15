@@ -168,3 +168,18 @@
   animation: moveImg 1.8s ease-in-out forwards;
   animation-delay: 0.5s;
 }
+
+.section1 > .top {
+  background-image: url('/images/landing/section1-1.png');
+  background-size: cover;
+  background-position: center;
+  height: 80vh;
+  min-width: 600px;
+  max-height: 80vh;
+}
+
+@media (min-width: 1024px) {
+  .section1 > .top {
+    height: 70vh;
+  }
+}
