@@ -33,8 +33,7 @@ const ResetPasswordForm = () => {
 
     try {
       await browserClient.auth.resetPasswordForEmail(profile.email, {
-        // redirectTo: redirectUrl + '/updatePassword'
-        redirectTo: `${redirectUrl}/auth/callback`
+        redirectTo: redirectUrl + '/updatePassword'
       });
 
       router.push('/reset-success');

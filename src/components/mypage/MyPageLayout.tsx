@@ -6,7 +6,6 @@ import StampCount from './StampCount';
 import PhotoCount from './PhotoCount';
 import Image from 'next/image';
 import RecentPhoto from './RecentPhoto';
-import { useEffect } from 'react';
 
 const MyPageLayout = () => {
   // useEffect(() => {

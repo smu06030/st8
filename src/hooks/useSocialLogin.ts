@@ -23,8 +23,7 @@ export const useSocialLogin = () => {
             access_type: 'offline',
             prompt: 'consent'
           },
-          // redirectTo: redirectUrl + '/auth/callback'
-          redirectTo: `${redirectUrl}/auth/callback`
+          redirectTo: redirectUrl + '/auth/callback'
         }
       });
       if (error) {
