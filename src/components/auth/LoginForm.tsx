@@ -50,17 +50,6 @@ const LoginForm = () => {
     };
   }, [router]);
 
-  // const handleEmailBlur = async (email: string) => {
-  //   clearErrors('email');
-  //   const exists = await checkEmailExists(email);
-  //   if (!exists) {
-  //     setError('email', {
-  //       type: 'manual',
-  //       message: '등록되지 않은 이메일입니다.'
-  //     });
-  //   }
-  // };
-
   const onHandleLogin = async (data: LoginFormInputs) => {
     const emailExists = await checkEmailExists(data.email);
     if (!emailExists) {
