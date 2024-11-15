@@ -1,52 +1,25 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import Link from 'next/link';
+import MoaLogo from '../common/Icons/MoaLogo';
 import Icon from '@/components/common/Icons/Icon';
 import useHeaderActive from '@/hooks/useHeaderActive';
-import MoaLogo from '../common/Icons/MoaLogo';
 import { usePathname } from 'next/navigation';
-import UserMenu from '../mypage/UserMenu';
-import browserClient from '@/utils/supabase/client';
-import Link from 'next/link';
+import ClientHeaderMenu from './ClientHeaderMenu';
 
 const Header = () => {
   const { pageTitle, goBack } = useHeaderActive();
   const pathname = usePathname();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [nickname, setNickname] = useState('');
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const {
-        data: { user }
-      } = await browserClient.auth.getUser();
-      if (user) {
-        setIsLoggedIn(true);
-        const { data } = await browserClient.from('profile').select('nickname').eq('id', user.id).single();
-
-        if (data && data.nickname) {
-          setNickname(data.nickname);
-        } else {
-          setNickname(''); // 기본값 또는 닉네임이 없을 때 처리
-        }
-      } else {
-        setIsLoggedIn(false);
-      }
-    };
-
-    fetchUserData();
-  }, []);
-  if (!pageTitle) return null;
+  //헤더 안나오는 페이지
+  const hiddenHeaderPaths = ['/'];
+  const shouldHideMobileHeader = hiddenHeaderPaths.includes(pathname);
 
   const getLinkStyle = (path: string) => {
     const isActive = pathname === path;
-    return isActive ? 'text-gray-900 font-semiBold' : ' hover:font-regular';
+    return isActive ? 'text-gray-900 font-semiBold' : 'hover:font-regular';
   };
 
-  // 헤더를 숨기고 싶은 페이지 경로 리스트
-  const hiddenHeaderPaths = ['/landing'];
-  // 현재 페이지가 hiddenHeaderPaths에 포함되어 있는지 확인
-  const shouldHideMobileHeader = hiddenHeaderPaths.includes(pathname);
+  if (!pageTitle) return null;
 
   return (
     <>
@@ -94,13 +67,8 @@ const Header = () => {
               스탬프
             </Link>
           </nav>
-          <UserMenu
-            isLoggedIn={isLoggedIn}
-            nickname={nickname}
-            initialNickname={nickname}
-            tempNickname={nickname}
-            checkUserStatus={nickname}
-          />
+
+          <ClientHeaderMenu />
         </div>
       </header>
     </>
