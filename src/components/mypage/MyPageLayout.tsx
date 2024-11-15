@@ -5,11 +5,8 @@ import Image from 'next/image';
 import StampCount from './StampCount';
 import PhotoCount from './PhotoCount';
 import RecentPhoto from './RecentPhoto';
-<<<<<<< HEAD
-=======
 import LogoutButton from '../auth/LogoutButton';
 import NicknameEditor from './NicknameEditor';
->>>>>>> 95bc91edf7e308185a2e874729485f8acd62a585
 
 const MyPageLayout = () => {
   // useEffect(() => {
