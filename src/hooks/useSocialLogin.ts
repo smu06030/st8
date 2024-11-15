@@ -23,7 +23,8 @@ export const useSocialLogin = () => {
             access_type: 'offline',
             prompt: 'consent'
           },
-          redirectTo: redirectUrl + '/auth/callback'
+          // redirectTo: redirectUrl + '/auth/callback'
+          redirectTo: `${redirectUrl}/auth/callback`
         }
       });
       if (error) {
@@ -33,7 +34,7 @@ export const useSocialLogin = () => {
         return;
       }
 
-      router.push('/mypage');
+      router.push('/home');
       return data;
     } catch (err) {
       console.error('social login error:', err);
