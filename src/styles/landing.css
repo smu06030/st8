@@ -177,3 +177,9 @@
   min-width: 600px;
   max-height: 80vh;
 }
+
+@media (min-width: 1024px) {
+  .section1 > .top {
+    height: 70vh;
+  }
+}
