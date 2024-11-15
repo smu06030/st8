@@ -3,7 +3,7 @@ export const QUERY_KEY = {
   USER: (userId: string) => ['user', userId],
   USER_LOCATION_STAMP: ['userLocationStamp'],
   STAMP_LIST: (userId: string) => ['stampList', userId],
-  TOURISM_LIST: ['tourismList'],
+  TOURISM_LIST: (userId: string) => ['tourismList', userId],
   RECOMMENDED_PLACES: (userId: string) => ['recommendedPlaces', userId],
   REVIEWS: (placeId: string) => ['reviews', placeId],
   BOOKMARK: (userId: string) => ['bookmark', userId],

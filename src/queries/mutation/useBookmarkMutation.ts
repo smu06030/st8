@@ -37,10 +37,10 @@ export const useBookmarkMutation = () => {
     onSettled: (data, error, variables, context) => {
       if (context?.userId) {
         queryClient.invalidateQueries({ queryKey: QUERY_KEY.BOOKMARK(context.userId) });
-        queryClient.invalidateQueries({ queryKey: QUERY_KEY.TOURISM_LIST });
+        queryClient.invalidateQueries({ queryKey: QUERY_KEY.TOURISM_LIST(context.userId) });
 
         queryClient.refetchQueries({ queryKey: QUERY_KEY.BOOKMARK(context.userId) });
-        queryClient.refetchQueries({ queryKey: QUERY_KEY.TOURISM_LIST });
+        queryClient.refetchQueries({ queryKey: QUERY_KEY.TOURISM_LIST(context.userId) });
       }
     }
   });
