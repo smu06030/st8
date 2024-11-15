@@ -6,8 +6,13 @@ import StampCount from './StampCount';
 import PhotoCount from './PhotoCount';
 import Image from 'next/image';
 import RecentPhoto from './RecentPhoto';
+import { useEffect } from 'react';
 
 const MyPageLayout = () => {
+  // useEffect(() => {
+  //   throw new Error('에러');
+  // }, []);
+
   return (
     <div className="items-left mx-auto flex h-full max-w-[600px] flex-col bg-white px-6 pb-24">
       <div className="flex w-full items-center justify-between">

@@ -13,5 +13,7 @@ export const PAGE_NAMES = {
   RESET_PASSWORD: { page: '비밀번호 찾기', link: '/reset-password' },
   RESET_SUCCESS: { page: '비밀번호 찾기', link: '/reset-success' },
   UPDATE_SUCCESS: { page: '비밀번호 변경', link: '/update-success' },
-  LANDING: { page: '소개페이지', link: '/' }
+  LANDING: { page: '소개페이지', link: '/' },
+  ERROR: { page: '이런, 오류가 났어요', link: '/error' },
+  NOT_FOUND: { page: '페이지를 찾을 수 없어요', link: '/not-found' }
 };
