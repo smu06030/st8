@@ -33,7 +33,7 @@ const GetUserAddress = () => {
         });
       }
     } catch (error) {
-      console.log('주소를 가져오는 중 오류가 발생했습니다.', error);
+      throw new Error('주소를 가져오는 중 오류가 발생했습니다.');
     }
   };
 
