@@ -20,14 +20,10 @@ const ResetPasswordForm = () => {
   const router = useRouter();
 
   const redirectUrl = useMemo(() => {
-    if (typeof window !== 'undefined') {
-      const baseUrl = window.location.origin;
-
-      if (process.env.NODE_ENV === 'development') {
-        return process.env.NEXT_PUBLIC_REDIRECT_URL_LOCAL || baseUrl;
-      }
-
-      return process.env.NEXT_PUBLIC_REDIRECT_URL_PRODUCTION || process.env.NEXT_PUBLIC_REDIRECT_URL_BETA || baseUrl;
+    if (process.env.NODE_ENV === 'development') {
+      return process.env.NEXT_PUBLIC_REDIRECT_URL_LOCAL;
+    } else if (process.env.NODE_ENV === 'production') {
+      return process.env.NEXT_PUBLIC_REDIRECT_URL_BETA;
     }
   }, []);
 
