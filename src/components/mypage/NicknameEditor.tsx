@@ -79,7 +79,7 @@ const NicknameEditor = () => {
 
   return (
     <div className="flex items-center justify-between">
-      <h1 className="mr-[8px] mt-[34px] text-2xl font-semibold text-gray-900">{nickname}님</h1>
+      <h1 className="mr-[8px] mt-[34px] font-semiBold text-2xl text-gray-900">{nickname}님</h1>
       <div>
         <button onClick={openModal} className="mt-[34px] text-sm text-gray-500">
           수정하기
@@ -89,7 +89,7 @@ const NicknameEditor = () => {
       <Modal>
         <div className="fixed inset-0 m-[18px] flex items-center justify-center">
           <div className="w-[327px] max-w-md rounded-3xl bg-white p-[32px]" onClick={(e) => e.stopPropagation()}>
-            <h3 className="text-xl font-semibold text-gray-900">이름을 변경하시겠습니까?</h3>
+            <h3 className="font-semiBold text-xl text-gray-900">이름을 변경하시겠습니까?</h3>
             <div className="mb-[28px] mt-4 w-full whitespace-nowrap">
               <InputField
                 iconName="UserIcon"

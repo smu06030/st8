@@ -28,8 +28,8 @@ const MyPageLayout = () => {
         <div className="grid grid-cols-2 gap-4">
           <div className="relative flex h-[156px] flex-col justify-center rounded-2xl bg-primary-400 p-6 text-black">
             <Link href="/stamp-map" className="flex h-full w-full flex-col">
-              <p className="text-[12px] font-semibold">지도로 보는 나의 여정</p>
-              <p className="mt-1 text-xs">
+              <p className="font-semiBold text-[12px]">지도로 보는 나의 여정</p>
+              <p className="mt-1 font-regular text-xs">
                 내 여정을
                 <br />
                 지도로 한눈에
@@ -42,7 +42,6 @@ const MyPageLayout = () => {
             <Image src="/images/mypage_img2.png" alt="배경 이미지" fill style={{ objectFit: 'cover' }} priority />
             <div className="absolute inset-0 bg-[#081425]/70"></div>
             <Link href="/book-mark" className="relative flex h-full w-full flex-col items-end justify-end p-6">
-              <p className="text-xs font-semibold text-white">지도로 보는 나의 여정</p>
               <p className="mb-4 text-right font-bold text-[20px] leading-tight text-white">
                 내가 찜한 <br />
                 여행지

@@ -29,7 +29,7 @@
 .mainTourism-swiper .swiper-wrapper {
   @apply flex items-center;
   transition-timing-function: linear;
-  margin-left: -3%;
+  margin-left: -4%;
 }
 
 .mainTourism-swiper .swiper-wrapper > .swiper-slide {

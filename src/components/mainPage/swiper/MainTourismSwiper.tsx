@@ -35,7 +35,7 @@ const MainTourismSwiper = ({ tourismList, userId }: MainTourismSwiperPropsType) 
         <Swiper
           key="desktop-swiper"
           loop={true}
-          slidesPerView={3.6}
+          slidesPerView={3.7}
           spaceBetween={10}
           centeredSlides={true}
           initialSlide={2}
