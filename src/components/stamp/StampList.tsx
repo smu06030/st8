@@ -1,15 +1,14 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import StampItem from '@/components/stamp/StampItem';
-// import { useQuery } from '@tanstack/react-query';
-import useUserId from '@/hooks/useUserId';
-import Image from 'next/image';
-import { DEFAULT_REGION_ITEM } from '@/constants/regions';
-import { useGetStampListQuery } from '@/queries/query/useStampQuery';
-import Loading from '@/app/(root)/(stamp)/loading';
-import { REGION_NAME_MAP_KO, STAMPIMG_REGION_IMG } from '@/utils/region/RegionNames';
 import { promptLogin } from '@/utils/promptLogin';
+import { DEFAULT_REGION_ITEM } from '@/constants/regions';
+import { useGetStampListQuery } from '@/hooks/queries/query/useStampQuery';
+import { REGION_NAME_MAP_KO, STAMPIMG_REGION_IMG } from '@/utils/region/RegionNames';
+
+import Image from 'next/image';
+import Loading from '@/app/(root)/(stamp)/loading';
+import StampItem from '@/components/stamp/StampItem';
+import useUserId from '@/hooks/auth/useUserId';
 
 const StampList = () => {
   const userId = useUserId();

@@ -2,13 +2,14 @@
 
 import { Map, Polygon } from 'react-kakao-maps-sdk';
 import { MAP_COLOR, MAP_COLOR_INDEX } from '@/constants/mapColor';
-import ReSetttingMapBounds from '@/components/stampMap/ReSetttingMapBounds';
-import MapButtonSwiper from '@/components/stampMap/MapButtonSwiper';
-import KakaoMapMarker from './KakaoMapMarker';
-import useKakaoMap from '@/hooks/useKakaoMap';
+
+import useModal from '@/hooks/modal/useModal';
 import StampModal from '../common/Modal/StampModal';
-import useModal from '@/hooks/useModal';
+import useKakaoMap from '@/hooks/map/useKakaoMap';
+import KakaoMapMarker from './KakaoMapMarker';
 import KakaoMapMaxLevel from './KakaoMapMaxLevel';
+import MapButtonSwiper from '@/components/stampMap/MapButtonSwiper';
+import ReSetttingMapBounds from '@/components/stampMap/ReSetttingMapBounds';
 
 const KakaoMap = () => {
   const { geoList, location, activeIndex, selectedPath, filteredStamps, updateHoverState, updatePolygonPath } =

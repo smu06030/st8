@@ -1,7 +1,7 @@
 'use server';
 
-import { createClient } from '@/utils/supabase/server';
 import { getUser } from './user';
+import { createClient } from '@/utils/supabase/server';
 
 // 추천 여행지 디테일 정보 가져오기
 export const getTourismDetail = async (id: string) => {

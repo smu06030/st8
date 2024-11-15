@@ -1,8 +1,8 @@
-import { getStampList } from '@/serverActions/stamp';
-import { UseQueryResult, useQuery } from '@tanstack/react-query';
-import { QUERY_KEY } from '../query.keys';
-import { getStampLocation } from '@/apis/stamp';
 import { Stamp } from '@/types/supabase/table.type';
+import { QUERY_KEY } from '../query.keys';
+import { getStampList } from '@/services/serverActions/stamp';
+import { getStampLocation } from '@/services/apis/stamp';
+import { UseQueryResult, useQuery } from '@tanstack/react-query';
 
 // 스탬프 리스트 쿼리
 export const useGetStampListQuery = (userId: string): UseQueryResult<Stamp[]> => {

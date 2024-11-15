@@ -1,11 +1,12 @@
 'use client';
 
-import React, { Dispatch, SetStateAction } from 'react';
-import Image from 'next/image';
-import useUserId from '@/hooks/useUserId';
-import { STAMPIMG_REGION_IMG, STAMPIMG_REGION_ACTIVE_IMG } from '@/utils/region/RegionNames';
 import { AddressType } from '@/types/stamp/addressProps.type';
-import { usePostStampMutation, useDeleteStampMutation } from '@/queries/mutation/useStampMutaion';
+import { Dispatch, SetStateAction } from 'react';
+import { usePostStampMutation, useDeleteStampMutation } from '@/hooks/queries/mutation/useStampMutaion';
+import { STAMPIMG_REGION_IMG, STAMPIMG_REGION_ACTIVE_IMG } from '@/utils/region/RegionNames';
+
+import Image from 'next/image';
+import useUserId from '@/hooks/auth/useUserId';
 
 interface StampActivePropsType {
   address: AddressType;

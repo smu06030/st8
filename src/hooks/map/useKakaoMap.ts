@@ -1,10 +1,11 @@
 'use client';
 
-import { useMapStore } from '@/providers/mapStoreProvider';
 import { PathType } from '@/types/stamp/coordRegionCode.type';
-import useGeoData from './useGeoData';
+import { useMapStore } from '@/providers/mapStoreProvider';
 import { Swiper as SwiperProps } from 'swiper/types';
 import { useCallback, useEffect } from 'react';
+
+import useGeoData from './useGeoData';
 import useStamp from './useStamp';
 
 const useKakaoMap = () => {

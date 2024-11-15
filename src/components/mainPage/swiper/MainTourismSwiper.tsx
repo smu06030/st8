@@ -1,11 +1,12 @@
 'use client';
 
+import { Tourism } from '@/types/tourism/tourism.type';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { useEffect, useRef, useState } from 'react';
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Tourism } from '@/types/tourism/tourism.type';
+
+import useMediaSize from '@/hooks/media/useMediaSize';
 import MainTourismCard from './MainTourismCard';
-import useMediaSize from '@/hooks/useMediaSize';
 
 import 'swiper/css';
 import 'swiper/css/pagination';

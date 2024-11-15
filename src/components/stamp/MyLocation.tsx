@@ -1,16 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import StampActive from './StampActive';
-import useUserId from '@/hooks/useUserId';
+import { usePostAliasMutation } from '@/hooks/queries/mutation/useStampMutaion';
+import { useGetStampLocationQuery } from '@/hooks/queries/query/useStampQuery';
+
 import Link from 'next/link';
 import Icon from '@/components/common/Icons/Icon';
 import Loading from '@/app/(root)/(stamp)/loading';
-import useModal from '@/hooks/useModal';
-import AliasCheckModal from '@/components/common/Modal/AliasCheckModal';
-import { useGetStampLocationQuery } from '@/queries/query/useStampQuery';
-import { usePostAliasMutation } from '@/queries/mutation/useStampMutaion';
+import useModal from '@/hooks/modal/useModal';
+import useUserId from '@/hooks/auth/useUserId';
+import StampActive from './StampActive';
 import GetUserAddress from '@/components/stamp/GetUserAddress';
+import AliasCheckModal from '@/components/common/Modal/AliasCheckModal';
 
 const MyLocation = () => {
   const userId = useUserId();

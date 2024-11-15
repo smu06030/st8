@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import Icon from '../common/Icons/Icon';
-import Link from 'next/link';
-import { useBookmarkMutation } from '@/queries/mutation/useBookmarkMutation';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useBookmarkMutation } from '@/hooks/queries/mutation/useBookmarkMutation';
+
+import Link from 'next/link';
+import Icon from '../common/Icons/Icon';
+import Image from 'next/image';
 
 interface TourismCardPropsType {
   userId: string | undefined;

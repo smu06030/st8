@@ -1,10 +1,11 @@
-import KakaoMap from '@/components/stampMap/KakaoMap';
-import { getStampList } from '@/serverActions/stamp';
-import { getUser } from '@/serverActions/user';
-import { MapProvider } from '@/providers/mapStoreProvider';
-import { QUERY_KEY } from '@/queries/query.keys';
-import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
+import { getUser } from '@/services/serverActions/user';
 import { Metadata } from 'next';
+import { QUERY_KEY } from '@/hooks/queries/query.keys';
+import { MapProvider } from '@/providers/mapStoreProvider';
+import { getStampList } from '@/services/serverActions/stamp';
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
+
+import KakaoMap from '@/components/stampMap/KakaoMap';
 
 export const metadata: Metadata = {
   title: '홈',

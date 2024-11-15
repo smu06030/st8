@@ -1,6 +1,6 @@
-import AlbumList from '@/components/photoalbum/AlbumList';
 import { Metadata } from 'next';
-import React from 'react';
+
+import AlbumList from '@/components/photoalbum/AlbumList';
 
 export const metadata: Metadata = {
   title: '앨범',

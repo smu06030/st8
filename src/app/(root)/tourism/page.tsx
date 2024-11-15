@@ -1,9 +1,10 @@
 'use client';
 
-import TourismSwiper from '@/components/tourism/TourismSwiper';
-import useUserId from '@/hooks/useUserId';
-import { useGetTourismListQuery } from '@/queries/query/useTourismQuery';
 import { groupTourismByCity } from '@/utils/tourism/tourismGroupFormatter';
+import { useGetTourismListQuery } from '@/hooks/queries/query/useTourismQuery';
+
+import useUserId from '@/hooks/auth/useUserId';
+import TourismSwiper from '@/components/tourism/TourismSwiper';
 
 const TourismPage = () => {
   const userId = useUserId();

@@ -1,8 +1,9 @@
-import MainMapSection from '@/components/mainPage/MainMapSection';
-import MainFooter from '@/components/mainPage/MainFooter';
-import MainRecommendSection from '@/components/mainPage/MainRecommendSection';
-import MainStampSection from '@/components/mainPage/MainStampSection';
 import { Metadata } from 'next';
+
+import MainFooter from '@/components/mainPage/MainFooter';
+import MainMapSection from '@/components/mainPage/MainMapSection';
+import MainStampSection from '@/components/mainPage/MainStampSection';
+import MainRecommendSection from '@/components/mainPage/MainRecommendSection';
 
 export const metadata: Metadata = {
   title: '홈',

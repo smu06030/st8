@@ -1,8 +1,8 @@
 'use client';
 
-import { useParams, useRouter, usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
 import { PAGE_NAMES } from '@/constants/pageName';
+import { useState, useEffect } from 'react';
+import { useParams, useRouter, usePathname } from 'next/navigation';
 
 const useHeaderActive = () => {
   const params = useParams();

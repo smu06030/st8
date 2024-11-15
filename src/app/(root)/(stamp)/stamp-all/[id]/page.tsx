@@ -1,17 +1,15 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { Stamp } from '@/types/supabase/table.type';
 import { useParams } from 'next/navigation';
-import useUserId from '@/hooks/useUserId';
-import { useGetStampListQuery } from '@/queries/query/useStampQuery';
-import Loading from '@/app/(root)/(stamp)/loading';
+import { REGION_NAME_MAP_EN } from '@/utils/region/RegionNames';
+import { useGetStampListQuery } from '@/hooks/queries/query/useStampQuery';
+import { useEffect, useState, useRef } from 'react';
 
 import Icon from '@/components/common/Icons/Icon';
-import { REGION_NAME_MAP_EN } from '@/utils/region/RegionNames';
-import { Stamp } from '@/types/supabase/table.type';
-import LoadingSpin from '@/components/common/Loading/LoadingSpin';
+import Image from 'next/image';
+import Loading from '@/app/(root)/(stamp)/loading';
+import useUserId from '@/hooks/auth/useUserId';
 
 const StampItemDetail = () => {
   const userId = useUserId();

@@ -1,4 +1,5 @@
 import { Tourism } from '@/types/tourism/tourism.type';
+
 import browserClient from '@/utils/supabase/client';
 
 // 추천 여행지 리스트 가져오기

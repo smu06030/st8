@@ -3,8 +3,9 @@
 import { Pagination } from 'swiper/modules';
 import { useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import useKakaoMap from '@/hooks/useKakaoMap';
+
 import Icon from '../common/Icons/Icon';
+import useKakaoMap from '@/hooks/map/useKakaoMap';
 
 import 'swiper/css';
 import 'swiper/css/pagination';

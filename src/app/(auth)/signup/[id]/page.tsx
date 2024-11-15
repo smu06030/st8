@@ -1,9 +1,11 @@
 'use client';
+
 import { useRouter, useParams } from 'next/navigation';
-import StepNicknameForm from '@/components/auth/signup/StepNicknameForm';
-import StepEmailForm from '@/components/auth/signup/StepEmailForm';
-import StepPasswordForm from '@/components/auth/signup/StepPasswordForm';
+
 import StepMainForm from '@/components/auth/signup/StepMainForm';
+import StepEmailForm from '@/components/auth/signup/StepEmailForm';
+import StepNicknameForm from '@/components/auth/signup/StepNicknameForm';
+import StepPasswordForm from '@/components/auth/signup/StepPasswordForm';
 
 const SignupStepPage = () => {
   const router = useRouter();

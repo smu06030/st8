@@ -1,9 +1,9 @@
-import React from 'react';
+import { usePathname } from 'next/navigation';
+
+import Icon from '@/components/common/Icons/Icon';
 import Link from 'next/link';
 import MoaLogo from '../common/Icons/MoaLogo';
-import Icon from '@/components/common/Icons/Icon';
-import useHeaderActive from '@/hooks/useHeaderActive';
-import { usePathname } from 'next/navigation';
+import useHeaderActive from '@/hooks/layout/useHeaderActive';
 import ClientHeaderMenu from './ClientHeaderMenu';
 
 const Header = () => {

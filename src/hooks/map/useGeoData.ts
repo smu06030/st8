@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
-import { pathListFormatter } from '@/utils/region/pathListFormatter';
 import { GeoData } from '@/types/stamp/coordRegionCode.type';
+import { pathListFormatter } from '@/utils/region/pathListFormatter';
 import { geoListSiDoFormatter } from '@/utils/region/siDoFormatter';
+import { useEffect, useMemo, useState } from 'react';
 
 const useGeoData = () => {
   const [geoList, setGeoList] = useState<GeoData[]>([]);

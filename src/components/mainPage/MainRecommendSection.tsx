@@ -1,10 +1,11 @@
 'use client';
 
+import { useGetTourismListQuery } from '@/hooks/queries/query/useTourismQuery';
+
 import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
-import useUserId from '@/hooks/useUserId';
+import useUserId from '@/hooks/auth/useUserId';
 import MainTourismSwiper from './swiper/MainTourismSwiper';
-import { useGetTourismListQuery } from '@/queries/query/useTourismQuery';
 
 const MainRecommendSection = () => {
   const userId = useUserId();

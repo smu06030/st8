@@ -1,21 +1,21 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { useGetAlbumListQuery } from '@/hooks/queries/query/useAlbumQuery';
+import { usePostAlbumMutation } from '@/hooks/queries/mutation/useAlbumMutation';
 
-import LoadingSpin from '@/components/common/Loading/LoadingSpin';
-import ModalAlbumImg from '@/components/photoalbum/ModalAlbumImg';
-import AddPhotoBtn from '@/components/photoalbum/AddPhotoBtn';
-import Toptitle from '@/components/photoalbum/AlbumTitleTab';
-import EditAlbumImg from '@/components/photoalbum/EditAlbumImg';
-import useModal from '@/hooks/useModal';
-import useAlbumDelete from '@/hooks/useAlbumDelete';
-import useImgModal from '@/hooks/useImgModal';
+import Link from 'next/link';
+import Image from 'next/image';
 import Loading from '@/app/(root)/(stamp)/loading';
-import useUserId from '@/hooks/useUserId';
-import { useGetAlbumListQuery } from '@/queries/query/useAlbumQuery';
-import { usePostAlbumMutation } from '@/queries/mutation/useAlbumMutation';
+import Toptitle from '@/components/photoalbum/AlbumTitleTab';
+import useModal from '@/hooks/modal/useModal';
+import useUserId from '@/hooks/auth/useUserId';
+import useImgModal from '@/hooks/album/useImgModal';
+import AddPhotoBtn from '@/components/photoalbum/AddPhotoBtn';
+import LoadingSpin from '@/components/common/Loading/LoadingSpin';
+import EditAlbumImg from '@/components/photoalbum/EditAlbumImg';
+import ModalAlbumImg from '@/components/photoalbum/ModalAlbumImg';
+import useAlbumDelete from '@/hooks/album/useAlbumDelete';
 
 const AlbumList = () => {
   const userId = useUserId();
