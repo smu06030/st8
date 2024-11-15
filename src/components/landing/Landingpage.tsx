@@ -379,7 +379,7 @@ const LandingPage = () => {
         </div>
 
         {/* 여행 떠나기 버튼 */}
-        <div className="mb-[50px] flex w-full flex-col items-center justify-center px-6">
+        <div className="flex w-full flex-col items-center justify-center px-6">
           <Button text="여행 떠나기" variant="blue" onClick={goToLoginOrHome} />
         </div>
       </div>
