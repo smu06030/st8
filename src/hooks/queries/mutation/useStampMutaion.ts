@@ -1,9 +1,8 @@
+import { QUERY_KEY } from '@/hooks/queries/query.keys';
+import { postStamp } from '@/services/apis/stamp';
+import { deleteStamp } from '@/services/apis/stamp';
+import { patchLocationAlias } from '@/services/serverActions/stamp';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-import { patchLocationAlias } from '@/serverActions/stamp';
-import { QUERY_KEY } from '@/queries/query.keys';
-import { postStamp } from '@/apis/stamp';
-import { deleteStamp } from '@/apis/stamp';
-import { Stamp } from '@/types/supabase/table.type';
 
 interface PatchAliasPropsType {
   alias: string;

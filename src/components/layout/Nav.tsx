@@ -1,9 +1,11 @@
 'use client';
-import React from 'react';
+
+import { PAGE_NAMES } from '@/constants/pageName';
+
 import Icon from '@/components/common/Icons/Icon';
 import Link from 'next/link';
-import useNavActive from '@/hooks/useNavActive';
-import { PAGE_NAMES } from '@/constants/pageName';
+import React from 'react';
+import useNavActive from '@/hooks/layout/useNavActive';
 
 const Nav = () => {
   const { activePage, handleClick } = useNavActive();

@@ -1,5 +1,5 @@
-import { PathType } from '@/types/stamp/coordRegionCode.type';
 import { Stamp } from '@/types/supabase/table.type';
+import { PathType } from '@/types/stamp/coordRegionCode.type';
 import { createStore } from 'zustand';
 
 export interface MapPropsType {

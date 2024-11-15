@@ -1,14 +1,15 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import InputField from '@/components/common/InputField/InputField';
-import Button from '@/components/common/Buttons/Button';
-import GoMainStep from '@/components/auth/signup/StepMainForm';
+import { useState } from 'react';
 import { signUpWithEmail } from '@/app/api/auth/authService';
+
 import Icon from '../common/Icons/Icon';
-import SmailCheckIcon from '../common/Icons/SmailCheckIcon';
+import Button from '@/components/common/Buttons/Button';
+import InputField from '@/components/common/InputField/InputField';
+import GoMainStep from '@/components/auth/signup/StepMainForm';
 import SmailXIcon from '../common/Icons/SmailXIcon';
+import SmailCheckIcon from '../common/Icons/SmailCheckIcon';
 
 interface SignupFormInputs {
   nickname: string;

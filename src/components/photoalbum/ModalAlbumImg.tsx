@@ -1,13 +1,16 @@
-import Image from 'next/image';
-import React, { ReactPortal, useRef, useState } from 'react';
-import { Dispatch, SetStateAction } from 'react';
+import { ReactPortal, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay, Pagination } from 'swiper/modules';
+import { Navigation, Autoplay } from 'swiper/modules';
+import { Swiper as SwiperClass } from 'swiper/types';
+import { Dispatch, SetStateAction } from 'react';
+
+import Image from 'next/image';
+import RoundedArrowButton from '@/components/photoalbum/RoundedArrowButton';
+
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 import 'swiper/css/navigation';
-import { Swiper as SwiperClass } from 'swiper/types';
-import RoundedArrowButton from '@/components/photoalbum/RoundedArrowButton';
+
 interface photoInfoType {
   created_at: string;
   id: number;

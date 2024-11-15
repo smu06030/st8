@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useCallback, useEffect, useState } from 'react';
 
 const useModal = () => {
   const [isOpen, setIsOpen] = useState(false);

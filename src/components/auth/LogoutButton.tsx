@@ -1,9 +1,10 @@
 'use client';
 
-import useModal from '@/hooks/useModal';
 import { logout } from '@/utils/supabase/auth';
 import { useRouter } from 'next/navigation';
+
 import Button from '@/components/common/Buttons/Button';
+import useModal from '@/hooks/modal/useModal';
 
 const LogoutButton = () => {
   const router = useRouter();

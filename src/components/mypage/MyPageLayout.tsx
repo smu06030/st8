@@ -1,12 +1,12 @@
 'use client';
+
 import Link from 'next/link';
-import LogoutButton from '../auth/LogoutButton';
-import NicknameEditor from './NicknameEditor';
+import Image from 'next/image';
 import StampCount from './StampCount';
 import PhotoCount from './PhotoCount';
-import Image from 'next/image';
 import RecentPhoto from './RecentPhoto';
-import { useEffect } from 'react';
+import LogoutButton from '../auth/LogoutButton';
+import NicknameEditor from './NicknameEditor';
 
 const MyPageLayout = () => {
   // useEffect(() => {

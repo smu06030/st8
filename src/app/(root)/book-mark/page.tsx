@@ -1,9 +1,10 @@
 'use client';
 
-import TourismCard from '@/components/tourism/TourismCard';
-import useUserId from '@/hooks/useUserId';
+import { useGetBookmarkListQuery } from '@/hooks/queries/query/useBookmarkQuery';
+
 import Loading from '@/app/(root)/(stamp)/loading';
-import { useGetBookmarkListQuery } from '@/queries/query/useBookmarkQuery';
+import useUserId from '@/hooks/auth/useUserId';
+import TourismCard from '@/components/tourism/TourismCard';
 
 const BookmarkPage = () => {
   const userId = useUserId();

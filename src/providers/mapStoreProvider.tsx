@@ -1,7 +1,8 @@
 'use client';
-import { MapPropsType, MapState, MapStore, createMapStore } from '@/store/mapStore';
-import { createContext, useContext, useRef } from 'react';
+
 import { useStore } from 'zustand';
+import { createContext, useContext, useRef } from 'react';
+import { MapPropsType, MapState, MapStore, createMapStore } from '@/store/mapStore';
 
 // context 생성
 export const MapStoreContext = createContext<MapStore | undefined>(undefined);

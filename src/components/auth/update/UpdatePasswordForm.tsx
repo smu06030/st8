@@ -1,11 +1,13 @@
 'use client';
-import React, { useState } from 'react';
+
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+import Icon from '@/components/common/Icons/Icon';
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField/InputField';
-import Icon from '@/components/common/Icons/Icon';
 import browserClient from '@/utils/supabase/client';
-import Router from 'next/router';
 
 interface FormValues {
   password: string;
@@ -20,6 +22,8 @@ const UpdatePasswordForm = () => {
   } = useForm<{ password: string; confirmPassword: string }>({
     mode: 'onChange'
   });
+
+  const router = useRouter();
 
   const passwordValue = watch('password') || '';
   const confirmPasswordValue = watch('confirmPassword') || '';
@@ -42,7 +46,7 @@ const UpdatePasswordForm = () => {
         })
       ]);
 
-      Router.push('/login');
+      router.push('/login');
     } catch (error) {
       console.log(error);
     }

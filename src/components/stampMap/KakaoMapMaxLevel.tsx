@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
 import { useMap } from 'react-kakao-maps-sdk';
+import { useEffect } from 'react';
 
 const KakaoMapMaxLevel = () => {
   const map = useMap();

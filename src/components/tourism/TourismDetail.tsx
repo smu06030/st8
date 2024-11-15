@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { useRouter } from 'next/navigation';
+import { useBookmarkMutation } from '@/hooks/queries/mutation/useBookmarkMutation';
+
 import Image from 'next/image';
 import Icon from '../common/Icons/Icon';
-import useUserId from '@/hooks/useUserId';
-import { useBookmarkMutation } from '@/queries/mutation/useBookmarkMutation';
-import { useRouter } from 'next/navigation';
+import useUserId from '@/hooks/auth/useUserId';
 
 interface TourismDetailPropsType {
   tourismDetail: any;

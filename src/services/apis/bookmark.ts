@@ -1,4 +1,5 @@
 import { bookmark } from '@/types/tourism/tourism.type';
+
 import browserClient from '@/utils/supabase/client';
 
 // 북마크 정보 가져오기

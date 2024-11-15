@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, Dispatch, SetStateAction, ChangeEvent, useEffect } from 'react';
-import RegionCategoryModal from '@/components/photoalbum/RegionCategoryModal';
+import { useState, Dispatch, ChangeEvent, useEffect } from 'react';
+
 import Icon from '@/components/common/Icons/Icon';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/modal/useModal';
+import RegionCategoryModal from '@/components/photoalbum/RegionCategoryModal';
 
 interface AddAlbumParamsType {
   setImgSrc: Dispatch<React.SetStateAction<string[]>>;

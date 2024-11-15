@@ -1,4 +1,5 @@
-import { getTourismDetail } from '@/serverActions/tourism';
+import { getTourismDetail } from '@/services/serverActions/tourism';
+
 import TourismDetail from '@/components/tourism/TourismDetail';
 
 interface TourismDetailPageProps {

@@ -1,13 +1,13 @@
 'use client';
-import React, { ReactPortal } from 'react';
-import { useState, Dispatch, SetStateAction } from 'react';
+
+import { ReactPortal } from 'react';
+import { useState, Dispatch } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Mousewheel } from 'swiper/modules';
+import { REGION_CATEGORY_NAMES } from '@/utils/region/RegionNames';
 
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 import 'swiper/css/mousewheel';
-import { REGION_CATEGORY_NAMES } from '@/utils/region/RegionNames';
 
 interface CategoryNodalType {
   Modal: ({ children }: { children: React.ReactNode }) => ReactPortal | null;

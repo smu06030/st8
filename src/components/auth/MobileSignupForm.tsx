@@ -1,11 +1,12 @@
 'use client';
 
-import NicknameStep from '@/components/auth/signup/StepNicknameForm';
-import EmailStep from '@/components/auth/signup/StepEmailForm';
-import PasswordStep from '@/components/auth/signup/StepPasswordForm';
-import GoMainStep from '@/components/auth/signup/StepMainForm';
-import { useSignupFormState } from '@/hooks/useSignupFormState';
 import { signUpWithEmail } from '@/app/api/auth/authService';
+import { useSignupFormState } from '@/hooks/auth/useSignupFormState';
+
+import EmailStep from '@/components/auth/signup/StepEmailForm';
+import GoMainStep from '@/components/auth/signup/StepMainForm';
+import NicknameStep from '@/components/auth/signup/StepNicknameForm';
+import PasswordStep from '@/components/auth/signup/StepPasswordForm';
 
 const MobileSignupForm = () => {
   const { step, formData, handleNext } = useSignupFormState();
