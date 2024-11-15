@@ -21,7 +21,7 @@ const ResetPasswordForm = () => {
 
   const redirectUrl = useMemo(() => {
     if (process.env.NODE_ENV === 'development') {
-      window.location.href;
+      window.location.origin;
     }
   }, []);
 
