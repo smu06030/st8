@@ -1,9 +1,12 @@
 'use client';
 
 import { useState, Dispatch, ChangeEvent, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
+import useModal from '@/hooks/modal/useModal';
+import useUserId from '@/hooks/auth/useUserId';
 
 import Icon from '@/components/common/Icons/Icon';
-import useModal from '@/hooks/modal/useModal';
 import RegionCategoryModal from '@/components/photoalbum/RegionCategoryModal';
 
 interface AddAlbumParamsType {
@@ -15,6 +18,9 @@ interface AddAlbumParamsType {
 }
 
 const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: AddAlbumParamsType) => {
+  const userId = useUserId();
+  const router = useRouter();
+
   const SelectRegion = activeTab === 'rigionTab' ? item : activeTab === 'allTab' ? '서울' : '';
   const [regionCate, setRegionCate] = useState(SelectRegion);
   const [currentRegion, setCurrentRegion] = useState(''); //지칭한값이 내가 준 지역이 맞는지 확인용
@@ -26,8 +32,27 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: Ad
     }
   }, [imgSrc, currentRegion]);
 
+  // 로그인유저 유무 확인
+  const onClickUserCheck = (e: any) => {
+    e.stopPropagation();
+    if (!userId) {
+      alert('로그인이 필요한 서비스 입니다.');
+      router.push('/login');
+      return true;
+    }
+    return false;
+  };
+  // 파일선택창 열리기 전 로그인여부 확인
+  const onClickFileInput = (e: React.MouseEvent<HTMLInputElement>) => {
+    if (onClickUserCheck(e)) {
+      e.preventDefault();
+    }
+  };
+
   // 파일 업로드 시 액션
   const OnChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
+    if (onClickUserCheck(e)) return;
+
     const files = e.target.files;
     setCurrentRegion(e.target.id.split('-')[1]);
     if (!files) return;
@@ -51,6 +76,7 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: Ad
     });
   };
 
+  // 파일 업로드 함수
   const onHandleUpload = (imgArr: string | string[]) => {
     const imgs = Array.isArray(imgArr) ? imgArr : imgSrc;
     if (imgs.length > 0) {
@@ -62,7 +88,6 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: Ad
       setCurrentRegion('');
       setImgSrc([]);
       if (activeTab === 'allTab') {
-        // setIsRigionModal(false);
         closeModal();
       }
     }
@@ -78,6 +103,7 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: Ad
         type="file"
         accept="image/*"
         multiple
+        onClick={onClickFileInput}
         onChange={OnChangePhoto}
       />
       <label

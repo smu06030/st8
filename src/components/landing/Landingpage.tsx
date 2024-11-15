@@ -49,7 +49,7 @@ const LandingPage = () => {
           setIsMainSectionVisible(entry.isIntersecting);
         });
       },
-      { threshold: 0.3 } // 요소의 40%가 뷰포트에 들어왔을 때
+      { threshold: 0.3 } // 요소의 30%가 뷰포트에 들어왔을 때
     );
 
     const stampSectionObserver = new IntersectionObserver(
@@ -58,7 +58,7 @@ const LandingPage = () => {
           setIsStampSectionVisible(entry.isIntersecting);
         });
       },
-      { threshold: 0.3 } // 요소의 50%가 뷰포트에 들어왔을 때
+      { threshold: 0.3 } // 요소의 30%가 뷰포트에 들어왔을 때
     );
 
     const tourSectionObserver = new IntersectionObserver(
@@ -67,7 +67,7 @@ const LandingPage = () => {
           setIsTourSectionVisible(entry.isIntersecting);
         });
       },
-      { threshold: 0.3 } // 요소의 50%가 뷰포트에 들어왔을 때
+      { threshold: 0.3 } // 요소의 30%가 뷰포트에 들어왔을 때
     );
 
     if (mainsectionRef.current) {
@@ -172,14 +172,6 @@ const LandingPage = () => {
       <div className="hidden lg:flex lg:flex-col" ref={containerRef}>
         <section className="section1 mt-[56px] bg-white">
           <div className="top">
-            {/* <Image
-                src={`/images/landing/section1-1.png`}
-                alt={''}
-                layout="responsive"
-                width={100}
-                height={100}
-                className="mainImg relative"
-              /> */}
             <div className="relative h-full w-[50%]">
               <Image
                 src={`/images/landing/logo-w.png`}
