@@ -19,7 +19,7 @@ const BookmarkPage = () => {
 
   return (
     <div className="lg:px-40">
-      <div className="mb-6 ml-6 mt-20 text-xl font-semibold leading-relaxed text-[#140f00]">
+      <div className="mb-6 ml-6 mt-20 font-semiBold text-xl leading-relaxed text-[#140f00]">
         찜한 여행지 ({bookmarkList?.length}개)
       </div>
       <div className="sm:grid-cols-1 md:grid-cols-2 grid gap-6 p-4 lg:grid-cols-3">

@@ -38,8 +38,8 @@ const PhotoCount = () => {
         <div className="absolute inset-0 bg-black opacity-50"></div>
 
         <div className="relative flex h-full w-full flex-col p-6">
-          <p className="text-[14px] font-semibold">나의 추억들</p>
-          <p className="mt-1 text-xs">
+          <p className="font-semiBold text-[14px]">나의 추억들</p>
+          <p className="mt-1 font-regular text-xs">
             내가 지나간곳
             <br />
             내가 남긴 사진들

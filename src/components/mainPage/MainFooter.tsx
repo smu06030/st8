@@ -5,7 +5,7 @@ import Icon from '../common/Icons/Icon';
 const MainFooter = () => {
   return (
     <>
-      <div className="relative -z-10 -mb-10 h-[373px] w-full lg:hidden">
+      <div className="relative -z-10 h-[373px] w-full overflow-hidden lg:hidden">
         <MainBackground />
       </div>
       <Link
