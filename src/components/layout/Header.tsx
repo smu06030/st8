@@ -11,7 +11,7 @@ const Header = () => {
   const pathname = usePathname();
 
   //헤더 안나오는 페이지
-  const hiddenHeaderPaths = ['/landing'];
+  const hiddenHeaderPaths = ['/'];
   const shouldHideMobileHeader = hiddenHeaderPaths.includes(pathname);
 
   const getLinkStyle = (path: string) => {
