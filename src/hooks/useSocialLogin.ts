@@ -13,14 +13,6 @@ export const useSocialLogin = () => {
     }
   }, []);
 
-  // const redirectUrl = useMemo(() => {
-  //   if (process.env.NODE_ENV === 'development') {
-  //     return `${window.location.origin}` || 'http://localhost:3000';
-  //   }
-
-  //   return `${window.location.origin}`;
-  // }, []);
-
   const loginWithProvider = async (provider: 'kakao' | 'google' | 'apple') => {
     console.log(redirectUrl);
     try {

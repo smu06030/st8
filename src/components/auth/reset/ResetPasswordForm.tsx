@@ -27,16 +27,6 @@ const ResetPasswordForm = () => {
     }
   }, []);
 
-  // const redirectUrl = useMemo(() => {
-  //   const baseUrl = window.location.origin;
-
-  //   if (process.env.NODE_ENV === 'development') {
-  //     return `${baseUrl}/login`;
-  //   }
-
-  //   return baseUrl;
-  // }, []);
-
   const onSubmit = async (profile: FormValues) => {
     if (isRequesting) return;
     setIsRequesting(true);
