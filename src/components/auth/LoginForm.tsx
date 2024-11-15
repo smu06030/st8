@@ -11,7 +11,6 @@ import browserClient from '@/utils/supabase/client';
 import InputField from '../common/InputField/InputField';
 import { useSocialLogin } from '@/hooks/useSocialLogin';
 import Link from 'next/link';
-import { revalidatePath } from 'next/cache';
 
 interface LoginFormInputs {
   email: string;
@@ -49,17 +48,6 @@ const LoginForm = () => {
       subscription?.unsubscribe();
     };
   }, [router]);
-
-  // const handleEmailBlur = async (email: string) => {
-  //   clearErrors('email');
-  //   const exists = await checkEmailExists(email);
-  //   if (!exists) {
-  //     setError('email', {
-  //       type: 'manual',
-  //       message: '등록되지 않은 이메일입니다.'
-  //     });
-  //   }
-  // };
 
   const onHandleLogin = async (data: LoginFormInputs) => {
     const emailExists = await checkEmailExists(data.email);

@@ -3,7 +3,7 @@ import Icon from '../common/Icons/Icon';
 import { getStampList } from '@/serverActions/stamp';
 import Image from 'next/image';
 import { getUser } from '@/serverActions/user';
-import { REGION_NAME_MAP_KO } from '@/utils/region/RegionNames';
+import { REGION_NAME_MAP_KO, STAMPIMG_REGION_IMG } from '@/utils/region/RegionNames';
 
 const MainStampSection = async () => {
   const user = await getUser();
@@ -40,18 +40,31 @@ const MainStampSection = async () => {
       <div className="mt-4 grid grid-cols-2 gap-[15px] lg:mt-7 lg:flex lg:justify-center lg:space-x-4">
         {stampList && stampList.length > 0 ? (
           stampList
-            .filter((_, index) => index < 5)
+            .filter((_, index) => index < 4)
             .map((stamp) => (
               <Link
                 href={`/stamp-all/${REGION_NAME_MAP_KO[stamp.region]}`}
                 key={stamp.id}
-                className="stamp-item relative flex h-40 w-full items-center justify-center overflow-hidden rounded-3xl bg-white lg:h-[200px] lg:w-[200px]"
+                className="stamp-item relative flex flex-col items-center justify-center overflow-hidden rounded-3xl bg-white p-[20px] lg:p-[25px]"
               >
-                <Image src={stamp.stampimg} width={146} height={146} priority alt={stamp.region} />
+                <Image src={stamp.stampimg} width={300} height={300} priority alt={stamp.region} />
               </Link>
             ))
         ) : (
-          <p className="text-sm text-alert">텅</p>
+          <>
+            {/* 비활성화 상태 */}
+            {Object.entries(STAMPIMG_REGION_IMG)
+              .map(([region, img]) => ({ region, img }))
+              .filter((_, index) => index < 4)
+              .map((stamp) => (
+                <div
+                  key={stamp.region}
+                  className="flex flex-col items-center justify-center rounded-[24px] bg-[#fff] p-[20px] lg:p-[25px]"
+                >
+                  <Image src={stamp.img} alt={stamp.region} width={300} height={300} />
+                </div>
+              ))}
+          </>
         )}
       </div>
     </section>

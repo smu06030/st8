@@ -6,11 +6,24 @@ export const useSocialLogin = () => {
   const router = useRouter();
 
   const redirectUrl = useMemo(() => {
-    if (process.env.NODE_ENV === 'development') {
-      return process.env.NEXT_PUBLIC_REDIRECT_URL_LOCAL || 'http://localhost:3000';
+    if (typeof window !== 'undefined') {
+      const baseUrl = window.location.origin;
+
+      if (process.env.NODE_ENV === 'development') {
+        return process.env.NEXT_PUBLIC_REDIRECT_URL_LOCAL || baseUrl;
+      }
+
+      return process.env.NEXT_PUBLIC_REDIRECT_URL_PRODUCTION || process.env.NEXT_PUBLIC_REDIRECT_URL_BETA || baseUrl;
     }
-    return process.env.NEXT_PUBLIC_REDIRECT_URL_PRODUCTION || 'https://st8-dev.vercel.app/';
   }, []);
+
+  // const redirectUrl = useMemo(() => {
+  //   if (process.env.NODE_ENV === 'development') {
+  //     return `${window.location.origin}` || 'http://localhost:3000';
+  //   }
+
+  //   return `${window.location.origin}`;
+  // }, []);
 
   const loginWithProvider = async (provider: 'kakao' | 'google' | 'apple') => {
     console.log(redirectUrl);

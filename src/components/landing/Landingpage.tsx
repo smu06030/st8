@@ -47,7 +47,7 @@ const LandingPage = () => {
           setIsMainSectionVisible(entry.isIntersecting);
         });
       },
-      { threshold: 0.4 } // 요소의 40%가 뷰포트에 들어왔을 때
+      { threshold: 0.3 } // 요소의 40%가 뷰포트에 들어왔을 때
     );
 
     const stampSectionObserver = new IntersectionObserver(
@@ -56,7 +56,7 @@ const LandingPage = () => {
           setIsStampSectionVisible(entry.isIntersecting);
         });
       },
-      { threshold: 0.5 } // 요소의 50%가 뷰포트에 들어왔을 때
+      { threshold: 0.3 } // 요소의 50%가 뷰포트에 들어왔을 때
     );
 
     const tourSectionObserver = new IntersectionObserver(
@@ -65,7 +65,7 @@ const LandingPage = () => {
           setIsTourSectionVisible(entry.isIntersecting);
         });
       },
-      { threshold: 0.5 } // 요소의 50%가 뷰포트에 들어왔을 때
+      { threshold: 0.3 } // 요소의 50%가 뷰포트에 들어왔을 때
     );
 
     if (mainsectionRef.current) {
@@ -168,8 +168,29 @@ const LandingPage = () => {
     <>
       {/* PC-랜딩화면 */}
       <div className="hidden lg:flex lg:flex-col" ref={containerRef}>
-        <section className="bg-white">
-          <Image src={`/images/landing/section1-1.png`} alt={''} layout="responsive" width={100} height={100} />
+        <section className="section1 mt-[56px] bg-white">
+          <div className="top">
+            {/* <Image
+                src={`/images/landing/section1-1.png`}
+                alt={''}
+                layout="responsive"
+                width={100}
+                height={100}
+                className="mainImg relative"
+              /> */}
+            <div className="relative h-full w-[50%]">
+              <Image
+                src={`/images/landing/logo-w.png`}
+                alt={''}
+                layout="responsive"
+                width={100}
+                height={100}
+                className="absolute left-[50%] top-[50%] !w-[159px] translate-x-[-50%] translate-y-[-50%]"
+              />
+            </div>
+            <div className="w-[50%]"></div>
+          </div>
+
           <div className="flex">
             <div className="flex w-[50%] flex-col items-center justify-center">
               <h2 className={`mb-[14px] font-bold text-[36px] text-[#00688A]`}>국내 여행 스탬프 서비스 모아</h2>
@@ -204,7 +225,7 @@ const LandingPage = () => {
             />
           </div>
         </section>
-        <section className="h-full bg-white pt-[220px]" ref={mainsectionRef}>
+        <section className="h-full bg-white px-[24px] pt-[220px]" ref={mainsectionRef}>
           <div className="pc-inner-width main-section-bg">
             <h2 className={`sectionTitle-Navy opacity-0 ${isMainSectionVisible ? 'main-section-fade1' : ''}`}>
               여행, 그리고 기록
@@ -236,7 +257,7 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
-        <section className="bg-white pt-[220px]" ref={stampSectionRef}>
+        <section className="bg-white px-[24px] pt-[220px]" ref={stampSectionRef}>
           <div className="pc-inner-width">
             <h2 className={`sectionTitle-Navy opacity-0 ${isStampSectionVisible ? 'main-section-fade1' : ''}`}>
               스탬프
@@ -273,12 +294,12 @@ const LandingPage = () => {
         <section className="bg-white pt-[220px]" ref={tourSectionRef}>
           <div className="relative h-[80vh] min-h-[1100px]">
             <h2
-              className={`sectionTitle-Navy pc-inner-width opacity-0 ${isTourSectionVisible ? 'main-section-fade1' : ''}`}
+              className={`sectionTitle-Navy pc-inner-width px-[24px] opacity-0 ${isTourSectionVisible ? 'main-section-fade1' : ''}`}
             >
               추천 여행지
             </h2>
             <h3
-              className={`sectionTitle-Black pc-inner-width opacity-0 ${isTourSectionVisible ? 'main-section-fade1' : ''}`}
+              className={`sectionTitle-Black pc-inner-width px-[24px] opacity-0 ${isTourSectionVisible ? 'main-section-fade1' : ''}`}
             >
               모아가 엄선한
               <br />
