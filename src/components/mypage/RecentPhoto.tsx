@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useGetAlbumListQuery } from '@/hooks/queries/query/useAlbumQuery';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import useUserId from '@/hooks/useUserId';
-import { useGetAlbumListQuery } from '@/queries/query/useAlbumQuery';
+import useUserId from '@/hooks/auth/useUserId';
 
 const RecentPhoto = () => {
   const userId = useUserId();

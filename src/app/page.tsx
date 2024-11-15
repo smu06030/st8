@@ -1,6 +1,6 @@
-import LandingPage from '@/components/landing/Landingpage';
-import React from 'react';
 import { Metadata } from 'next';
+
+import LandingPage from '@/components/landing/Landingpage';
 
 export const metadata: Metadata = {
   title: '국내 여행 스탬프 서비스 모아',

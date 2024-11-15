@@ -1,5 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
+
 import browserClient from '@/utils/supabase/client';
 
 export const useSocialLogin = () => {

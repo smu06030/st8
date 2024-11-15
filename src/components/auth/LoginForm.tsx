@@ -1,16 +1,18 @@
 'use client';
-import { useEffect, useState, MouseEvent } from 'react';
+
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import { useSocialLogin } from '@/hooks/auth/useSocialLogin';
+import { useEffect, useState, MouseEvent } from 'react';
+import { checkEmailExists, loginWithEmailAndPassword } from '@/app/api/auth/authService';
+
+import Icon from '@/components/common/Icons/Icon';
+import Link from 'next/link';
 import Button from '@/components/common/Buttons/Button';
 import LinkButton from '@/components/common/Buttons/LinkButton';
-import SocialLoginButton from '@/components/common/Buttons/SocialLoginButton';
-import { checkEmailExists, loginWithEmailAndPassword } from '@/app/api/auth/authService';
-import Icon from '@/components/common/Icons/Icon';
-import browserClient from '@/utils/supabase/client';
 import InputField from '../common/InputField/InputField';
-import { useSocialLogin } from '@/hooks/useSocialLogin';
-import Link from 'next/link';
+import browserClient from '@/utils/supabase/client';
+import SocialLoginButton from '@/components/common/Buttons/SocialLoginButton';
 
 interface LoginFormInputs {
   email: string;
@@ -23,7 +25,6 @@ const LoginForm = () => {
     register,
     handleSubmit,
     setError,
-    clearErrors,
     formState: { errors, isValid }
   } = useForm<LoginFormInputs>({ mode: 'onChange' });
   const router = useRouter();

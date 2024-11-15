@@ -1,5 +1,6 @@
-import Image from 'next/image';
 import { MouseEventHandler } from 'react';
+
+import Image from 'next/image';
 
 interface SocialLoginButtonProps {
   provider: 'google' | 'kakao' | 'apple';

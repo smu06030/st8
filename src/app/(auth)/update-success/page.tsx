@@ -1,5 +1,5 @@
-import React from 'react';
 import { Metadata } from 'next';
+
 import UpdateSuccess from '@/components/auth/update/UpdateSuccess';
 
 export const metadata: Metadata = {

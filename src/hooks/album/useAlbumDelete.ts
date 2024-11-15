@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDeleteAlbumMutation } from '@/queries/mutation/useAlbumMutation';
+import { useDeleteAlbumMutation } from '@/hooks/queries/mutation/useAlbumMutation';
 
 const useAlbumDelete = () => {
   const [edit, setEdit] = useState(false); //편집중이냐?

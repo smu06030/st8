@@ -1,6 +1,5 @@
-import React from 'react';
-
 import { Metadata } from 'next';
+
 import ResetPasswordForm from '@/components/auth/reset/ResetPasswordForm';
 
 export const metadata: Metadata = {

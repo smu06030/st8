@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+
 import Button from '../common/Buttons/Button';
-import useModal from '@/hooks/useModal';
-import browserClient from '@/utils/supabase/client';
+import useModal from '@/hooks/modal/useModal';
 import InputField from '../common/InputField/InputField';
+import browserClient from '@/utils/supabase/client';
 
 const NicknameEditor = () => {
   const { openModal, Modal, closeModal } = useModal();

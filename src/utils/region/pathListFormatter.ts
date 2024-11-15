@@ -1,4 +1,5 @@
 import { CoordinatesType } from '@/types/stamp/coordRegionCode.type';
+
 import coordRegionCode from '../../../coordregioncode.json';
 
 // 행정구역 PathList 가져오기

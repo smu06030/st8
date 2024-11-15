@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import MainBackground from '../common/Icons/MainBackgroundIcon';
 import Icon from '../common/Icons/Icon';
+import MainBackground from '../common/Icons/MainBackgroundIcon';
 
 const MainFooter = () => {
   return (

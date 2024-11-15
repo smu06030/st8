@@ -1,7 +1,7 @@
+import { QUERY_KEY } from '@/hooks/queries/query.keys';
+import { postAlbum } from '@/services/apis/photoAlbum';
+import { deleteAlbum } from '@/services/apis/photoAlbum';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-import { QUERY_KEY } from '@/queries/query.keys';
-import { deleteAlbum } from '@/apis/photoAlbum';
-import { postAlbum } from '@/apis/photoAlbum';
 
 // 앨범 추가
 export const usePostAlbumMutation = () => {

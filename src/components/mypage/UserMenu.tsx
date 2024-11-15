@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { useState, useEffect, useRef } from 'react';
+
 import Link from 'next/link';
-import browserClient from '@/utils/supabase/client';
-import useUserId from '@/hooks/useUserId';
 import Icon from '../common/Icons/Icon';
+import useUserId from '@/hooks/auth/useUserId';
+import browserClient from '@/utils/supabase/client';
 
 interface UserMenuType {
   initialNickname: string;

@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import Icon from '@/components/common/Icons/Icon';
-import { useBookmarkMutation } from '@/queries/mutation/useBookmarkMutation';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useBookmarkMutation } from '@/hooks/queries/mutation/useBookmarkMutation';
+
+import Icon from '@/components/common/Icons/Icon';
+import Link from 'next/link';
+import Image from 'next/image';
 
 import '@/styles/mainSwiper.css';
 

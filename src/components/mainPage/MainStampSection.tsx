@@ -1,9 +1,10 @@
+import { getUser } from '@/services/serverActions/user';
+import { getStampList } from '@/services/serverActions/stamp';
+import { REGION_NAME_MAP_KO, STAMPIMG_REGION_IMG } from '@/utils/region/RegionNames';
+
 import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
-import { getStampList } from '@/serverActions/stamp';
 import Image from 'next/image';
-import { getUser } from '@/serverActions/user';
-import { REGION_NAME_MAP_KO, STAMPIMG_REGION_IMG } from '@/utils/region/RegionNames';
 
 const MainStampSection = async () => {
   const user = await getUser();

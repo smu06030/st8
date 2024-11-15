@@ -1,10 +1,11 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/hooks/queries/query.keys';
+import { getStampCount } from '@/services/apis/stampCount';
+
 import Link from 'next/link';
-import useUserId from '@/hooks/useUserId';
-import { QUERY_KEY } from '@/queries/query.keys';
-import { getStampCount } from '@/apis/stampCount';
+import useUserId from '@/hooks/auth/useUserId';
 
 const StampCount = () => {
   const userId = useUserId();

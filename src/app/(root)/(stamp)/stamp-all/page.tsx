@@ -1,7 +1,7 @@
-import React from 'react';
-import StampList from '@/components/stamp/StampList';
 import { Metadata } from 'next';
+
 import Image from 'next/image';
+import StampList from '@/components/stamp/StampList';
 
 export const metadata: Metadata = {
   title: '스탬프',

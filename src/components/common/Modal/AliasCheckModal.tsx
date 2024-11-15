@@ -1,5 +1,7 @@
-import React, { ReactPortal } from 'react';
+import { ReactPortal } from 'react';
+
 import Link from 'next/link';
+
 interface AliasCheckModalPropsType {
   Modal: ({ children }: { children: React.ReactNode }) => ReactPortal | null;
 }

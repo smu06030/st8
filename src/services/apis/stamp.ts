@@ -1,6 +1,7 @@
-import browserClient from '@/utils/supabase/client';
-import { STAMPIMG_REGION_ACTIVE_IMG } from '@/utils/region/RegionNames';
 import { Stamp } from '@/types/supabase/table.type';
+import { STAMPIMG_REGION_ACTIVE_IMG } from '@/utils/region/RegionNames';
+
+import browserClient from '@/utils/supabase/client';
 
 // 현재위치기반 스탬프 가져오기
 export const getStampLocation = async (address: string, userId: string): Promise<Stamp[]> => {

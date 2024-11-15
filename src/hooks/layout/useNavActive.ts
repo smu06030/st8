@@ -1,6 +1,6 @@
 import { useParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
 import { PAGE_NAMES } from '@/constants/pageName';
+import { useState, useEffect } from 'react';
 
 export const useNavActive = () => {
   const params = useParams();

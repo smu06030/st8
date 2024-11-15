@@ -1,4 +1,3 @@
-import React from 'react';
 import { Stamp } from '@/types/supabase/table.type';
 import { useMapStore } from '@/providers/mapStoreProvider';
 import { MapMarker, useMap } from 'react-kakao-maps-sdk';

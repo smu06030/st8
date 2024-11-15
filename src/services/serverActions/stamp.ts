@@ -1,7 +1,7 @@
 'use server';
 
-import { createClient } from '@/utils/supabase/server';
 import { Stamp } from '@/types/supabase/table.type';
+import { createClient } from '@/utils/supabase/server';
 
 // 로그인유저의 스템프 항목 전부 + 스탬프 활성화된 데이터만
 export const getStampList = async (userId: string): Promise<Stamp[] | Response> => {

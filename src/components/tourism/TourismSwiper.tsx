@@ -1,9 +1,10 @@
 'use client';
 
+import { Tourism } from '@/types/tourism/tourism.type';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
 import TourismCard from '@/components/tourism/TourismCard';
-import { Tourism } from '@/types/tourism/tourism.type';
 
 import 'swiper/css';
 import 'swiper/css/pagination';

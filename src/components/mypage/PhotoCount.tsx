@@ -1,10 +1,11 @@
 'use client';
 
-import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
-import useUserId from '@/hooks/useUserId';
-import { getPhotoCount } from '@/apis/photoCount';
+import { getPhotoCount } from '@/services/apis/photoCount';
+
+import Link from 'next/link';
 import Image from 'next/image';
+import useUserId from '@/hooks/auth/useUserId';
 
 const PhotoCount = () => {
   const userId = useUserId();

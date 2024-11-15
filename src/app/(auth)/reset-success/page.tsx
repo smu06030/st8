@@ -1,5 +1,5 @@
-import React from 'react';
 import { Metadata } from 'next';
+
 import ResetSuccess from '@/components/auth/reset/ResetSuccess';
 
 export const metadata: Metadata = {
