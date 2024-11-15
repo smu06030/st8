@@ -32,7 +32,7 @@ export const REGION_NAME_MAP_KO: { [key: string]: string } = {
   세종특별자치시: 'sejong',
   충북: 'chungcheongbuk',
   충남: 'chungcheongnam',
-  제주특별자치시: 'jeju',
+  제주특별자치도: 'jeju',
   경북: 'gyeongsangbuk',
   전남: 'jeollanam',
   경남: 'gyeongsangnam'
@@ -52,7 +52,7 @@ export const REGION_NAME_MAP_EN: { [key: string]: string } = {
   sejong: '세종특별자치시',
   chungcheongbuk: '충북',
   chungcheongnam: '충남',
-  jeju: '제주특별자치시',
+  jeju: '제주특별자치도',
   gyeongsangbuk: '경북',
   jeollanam: '전남',
   gyeongsangnam: '경남'
@@ -73,7 +73,7 @@ export const STAMPIMG_REGION_IMG: { [key: string]: string } = {
   세종특별자치시: '/images/stamp/sejong.png',
   충북: '/images/stamp/chungcheongbuk.png',
   충남: '/images/stamp/chungcheongnam.png',
-  제주특별자치시: '/images/stamp/jeju.png',
+  제주특별자치도: '/images/stamp/jeju.png',
   경북: '/images/stamp/gyeongsangbuk.png',
   전남: '/images/stamp/jeollanam.png',
   경남: '/images/stamp/gyeongsangnam.png'
@@ -85,7 +85,7 @@ export const STAMPIMG_REGION_ACTIVE_IMG: { [key: string]: string } = {
   경기: '/images/stamp/gyeonggi-active.png',
   광주: '/images/stamp/gwangju-active.png',
   대전: '/images/stamp/daejeon-active.png',
-  인천: '/images/incheon-active.png',
+  인천: '/images/stamp/incheon-active.png',
   전북특별자치도: '/images/stamp/jeollabuk-active.png',
   강원특별자치도: '/images/stamp/gangwon-active.png',
   부산: '/images/stamp/busan-active.png',
@@ -94,7 +94,7 @@ export const STAMPIMG_REGION_ACTIVE_IMG: { [key: string]: string } = {
   세종특별자치시: '/images/stamp/sejong-active.png',
   충북: '/images/stamp/chungcheongbuk-active.png',
   충남: '/images/stamp/chungcheongnam-active.png',
-  제주특별자치시: '/images/stamp/jeju-active.png',
+  제주특별자치도: '/images/stamp/jeju-active.png',
   경북: '/images/stamp/gyeongsangbuk-active.png',
   전남: '/images/stamp/jeollanam-active.png',
   경남: '/images/stamp/gyeongsangnam-active.png'

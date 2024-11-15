@@ -7,7 +7,7 @@ import { Tourism } from '@/types/tourism/tourism.type';
 export const useGetTourismListQuery = (userId: string): UseQueryResult<Tourism[]> => {
   return useQuery({
     queryKey: QUERY_KEY.TOURISM_LIST,
-    queryFn: () => getTourismList(userId),
-    enabled: !!userId
+    queryFn: () => getTourismList(userId)
+    // enabled: !!userId
   });
 };

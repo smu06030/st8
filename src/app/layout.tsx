@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const pathname = usePathname();
 
   // mo 랜딩페이지에서 네비 히든
-  const hideNavPaths = [PAGE_NAMES.LANDING.link];
+  const hideNavPaths = [PAGE_NAMES.LANDING.link, PAGE_NAMES.MAP.link];
   // pc 맵페이지에서 푸터 히든
   const hideFooterPaths = [PAGE_NAMES.MAP.link];
 
