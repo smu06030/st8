@@ -7,9 +7,8 @@ export const useSocialLogin = () => {
 
   const redirectUrl = useMemo(() => {
     if (process.env.NODE_ENV === 'development') {
-      return process.env.NEXT_PUBLIC_REDIRECT_URL_LOCAL || 'http://localhost:3000';
+      window.location.origin;
     }
-    return process.env.NEXT_PUBLIC_REDIRECT_URL_PRODUCTION || 'https://st8-dev.vercel.app/';
   }, []);
 
   const loginWithProvider = async (provider: 'kakao' | 'google' | 'apple') => {
