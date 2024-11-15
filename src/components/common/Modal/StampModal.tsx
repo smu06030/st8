@@ -23,7 +23,7 @@ const StampModal = ({ Modal }: StampModalPropsType) => {
     <Modal>
       <div
         onClick={(e) => e.stopPropagation()}
-        className="absolute bottom-0 left-0 z-[1000] flex h-[342px] w-full flex-col items-center justify-center rounded-tl-[32px] rounded-tr-[32px] bg-white p-6 shadow-overlayShadow lg:bottom-1/2 lg:left-1/2 lg:h-auto lg:w-[375px] lg:-translate-x-1/2 lg:translate-y-1/2 lg:transform lg:rounded-[32px] mo-only:animate-slideDownModal"
+        className="absolute bottom-0 left-0 z-[1001] flex h-[342px] w-full flex-col items-center justify-center rounded-tl-[32px] rounded-tr-[32px] bg-white p-6 shadow-overlayShadow lg:bottom-1/2 lg:left-1/2 lg:h-auto lg:w-[375px] lg:-translate-x-1/2 lg:translate-y-1/2 lg:transform lg:rounded-[32px] mo-only:animate-slideDownModal"
       >
         <div className="-mt-[50px] mb-[18px] h-[152px] w-[152px] rounded-full border-4 border-white bg-white lg:-mt-[80px]">
           <Image src={stamp.stampimg} alt={stamp.region} width={146} height={146} priority />

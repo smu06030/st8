@@ -18,6 +18,7 @@
   position: absolute;
   z-index: 10;
   max-width: 40%;
+  min-width: 500px;
 }
 .main-section-phone-L {
   bottom: 0px;
@@ -135,4 +136,35 @@
     transform 1s ease-out,
     opacity 0.5s ease-out;
   opacity: 1 !important   ;
+}
+@keyframes textBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.bounce {
+  display: inline-block;
+  animation: textBounce 0.8s ease infinite;
+}
+
+.bounce2 {
+  animation-delay: 0.1s;
+}
+
+@keyframes moveImg {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+.move-img {
+  animation: moveImg 1.8s ease-in-out forwards;
+  animation-delay: 0.5s;
 }

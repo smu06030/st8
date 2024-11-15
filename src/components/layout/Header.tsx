@@ -52,7 +52,7 @@ const Header = () => {
     <>
       {/* 모바일 */}
       {!shouldHideMobileHeader && (
-        <header className="fixed top-0 z-[100] block h-[56px] w-full bg-white shadow-headerShadow lg:hidden">
+        <header className="fixed top-0 z-[1000] block h-[56px] w-full bg-white shadow-headerShadow lg:hidden">
           <div className="flex items-center justify-between p-[12px]">
             <button onClick={goBack} className="text-gray-900">
               <Icon name="BackIcon" />
