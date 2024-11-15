@@ -57,7 +57,7 @@ const useHeaderActive = () => {
           setPageTitle(PAGE_NAMES.UPDATE_SUCCESS.page);
           break;
         default:
-          setPageTitle(PAGE_NAMES.LANDING.page); // 기본값으로 "모아" 설정
+          setPageTitle(PAGE_NAMES.LANDING.page);
       }
     }
   }, [pathname, params]);
