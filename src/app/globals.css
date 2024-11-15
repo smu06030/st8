@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '@/styles/stamp.css';
+@import '@/styles/album.css';
+@import '@/styles/tourism.css';
+@import '@/styles/landing.css';
+/* @import '@/styles/mainRecommend.css'; */
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -17,11 +23,87 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Pretendard-Regular', sans-serif;
+  line-height: normal;
+  min-height: 100vh;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* 프리텐다드 폰트 */
+@font-face {
+  font-family: 'Pretendard-Thin';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Thin.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Pretendard-ExtraLight';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraLight.woff') format('woff');
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Pretendard-Light';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Pretendard-Medium';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Pretendard-SemiBold';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Pretendard-Bold';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Pretendard-ExtraBold';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraBold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Pretendard-Black';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+}
+.font-pretendard {
+  font-family: 'Pretendard-Regular', sans-serif;
+}
+
+.body-padding {
+  @apply pb-16 pt-[56px];
+}
+
+@media (min-width: 1024px) {
+  .pc-inner-width {
+    /* pc innerSection 공통클래스 */
+    @apply mx-auto w-full max-w-[1080px];
+  }
+}
+
+.mainTourism-swiper{
+  
 }
