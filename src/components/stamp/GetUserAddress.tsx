@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
 import { AddressType } from '@/types/stamp/addressProps.type';
+import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
+import { useEffect, useState } from 'react';
 
 interface LocationType {
   lat: number;
