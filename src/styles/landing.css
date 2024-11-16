@@ -62,7 +62,7 @@
 }
 
 .landing-tour-slide .swiper-wrapper {
-  transition-timing-function: linear;
+  transition-timing-function: linear !important;
 }
 
 .tour-section-phone {
@@ -127,14 +127,14 @@
   transform: translateY(10px);
   transition:
     transform 0.5s ease-out,
-    opacity 0.5s ease-out;
+    opacity 1s ease-out;
   opacity: 1 !important   ;
 }
 .main-section-fade2 {
   transform: translateY(10px);
   transition:
-    transform 1s ease-out,
-    opacity 0.5s ease-out;
+    transform 0.5s ease-out,
+    opacity 2s ease-out;
   opacity: 1 !important   ;
 }
 @keyframes textBounce {

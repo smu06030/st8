@@ -264,7 +264,7 @@ const LandingPage = () => {
             <div className={`flex ${windowWidth && windowWidth >= 1920 ? 'h-[80vh]' : 'h-[100vh]'} min-h-[1000px]`}>
               <ul className="flex h-full w-full items-center justify-center">
                 <Image
-                  src={`/images/landing/section3-phone.png`}
+                  src={`/images/landing/section3-phone-1.png`}
                   alt={''}
                   layout="responsive"
                   width={100}

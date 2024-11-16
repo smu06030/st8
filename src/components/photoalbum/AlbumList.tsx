@@ -75,7 +75,7 @@ const AlbumList = () => {
 
   // console.log('filterRigionTitle', filterRigionTitle);
   return (
-    <div className="pc-inner-width mt-16 pb-[200px] lg:pb-[535px]">
+    <div className="pc-inner-width mt-16 pb-[200px] lg:mt-[64px] lg:pb-[535px]">
       <Toptitle
         activeTab={activeTab}
         edit={edit}
