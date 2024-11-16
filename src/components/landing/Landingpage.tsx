@@ -6,10 +6,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { useState, useEffect, useRef } from 'react';
 
 import Image from 'next/image';
-import Button from '../common/Buttons/Button';
-import ArrowIcon from '../common/Icons/LandingIcons/ArrowIcon';
-import CameraIcon from '../common/Icons/LandingIcons/CameraIcon';
-import CompassIcon from '../common/Icons/LandingIcons/CompassIcon';
+import Button from '@/components/common/Buttons/Button';
+import ArrowIcon from '@/components/common/Icons/LandingIcons/ArrowIcon';
+import CameraIcon from '@/components/common/Icons/LandingIcons/CameraIcon';
+import CompassIcon from '@/components/common/Icons/LandingIcons/CompassIcon';
 import browserClient from '@/utils/supabase/client';
 
 import 'swiper/css';

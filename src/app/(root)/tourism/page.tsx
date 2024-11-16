@@ -2,9 +2,9 @@
 
 import { groupTourismByCity } from '@/utils/tourism/tourismGroupFormatter';
 import { useGetTourismListQuery } from '@/hooks/queries/query/useTourismQuery';
+import { useState, useEffect } from 'react';
 import { Tourism } from '@/types/tourism/tourism.type';
 
-import React, { useState, useEffect } from 'react';
 import Loading from '@/app/(root)/(stamp)/loading';
 import useUserId from '@/hooks/auth/useUserId';
 import TourismSwiper from '@/components/tourism/TourismSwiper';
