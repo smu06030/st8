@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { showErrorMsg } from '@/components/stamp/LocationErrorMsg';
+import { showErrorMsg } from '@/components/stamp/StampLocationErrorMsg';
 import { AddressType } from '@/types/stamp/addressProps.type';
 
 interface LocationType {

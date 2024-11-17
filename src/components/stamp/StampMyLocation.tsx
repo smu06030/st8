@@ -10,7 +10,7 @@ import Loading from '@/app/(root)/(stamp)/loading';
 import useModal from '@/hooks/modal/useModal';
 import useUserId from '@/hooks/auth/useUserId';
 import StampActive from './StampActive';
-import GetUserAddress from '@/components/stamp/GetUserAddress';
+import GetUserAddress from '@/components/stamp/StampGetUserAddress';
 import AliasCheckModal from '@/components/common/Modal/AliasCheckModal';
 
 const MyLocation = () => {

@@ -5,7 +5,7 @@ import { Swiper as SwiperClass } from 'swiper/types';
 import { Dispatch, SetStateAction } from 'react';
 
 import Image from 'next/image';
-import RoundedArrowButton from '@/components/photoalbum/RoundedArrowButton';
+import RoundedArrowButton from '@/components/photoalbum/AlbumImgArrowBtn';
 
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
