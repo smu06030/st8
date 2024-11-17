@@ -3,6 +3,7 @@
 import { FreeMode, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useState, useEffect, useRef } from 'react';
+import { LandingStart } from '@/components/landing/LandingStart';
 
 import Image from 'next/image';
 import browserClient from '@/utils/supabase/client';
@@ -10,29 +11,20 @@ import browserClient from '@/utils/supabase/client';
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 import 'swiper/css/navigation';
-import { LandingStart } from './LandingStart';
-
-//성능개선
-const debounce = (func: (...args: any[]) => void, wait: number) => {
-  let timeout: NodeJS.Timeout; // 타이머 ID를 저장할 변수
-  return (...args: any[]) => {
-    clearTimeout(timeout); // 이전 타이머를 취소
-    timeout = setTimeout(() => func(...args), wait); //새로운 타이머를 설정->wait지나고 실행
-  };
-};
 
 const LandingPage = () => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [isMainSectionVisible, setIsMainSectionVisible] = useState(false);
   const mainsectionRef = useRef(null);
   const [isStampSectionVisible, setIsStampSectionVisible] = useState(false);
   const stampSectionRef = useRef(null);
   const [isTourSectionVisible, setIsTourSectionVisible] = useState(false);
   const tourSectionRef = useRef(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // 옵저버 인터렉션
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setWindowWidth(window.innerWidth);
@@ -52,29 +44,34 @@ const LandingPage = () => {
     const stampSectionObserver = createObserver(setIsStampSectionVisible);
     const tourSectionObserver = createObserver(setIsTourSectionVisible);
 
-    if (mainsectionRef.current) {
-      mainSectionObserver.observe(mainsectionRef.current);
-    }
-    if (stampSectionRef.current) {
-      stampSectionObserver.observe(stampSectionRef.current);
-    }
-    if (tourSectionRef.current) {
-      tourSectionObserver.observe(tourSectionRef.current);
-    }
+    const mainSectionNode = mainsectionRef.current;
+    const stampSectionNode = stampSectionRef.current;
+    const tourSectionNode = tourSectionRef.current;
+
+    const observeSection = (observer: IntersectionObserver, node: HTMLElement | null) => {
+      if (node) {
+        observer.observe(node);
+      }
+    };
+
+    observeSection(mainSectionObserver, mainSectionNode);
+    observeSection(stampSectionObserver, stampSectionNode);
+    observeSection(tourSectionObserver, tourSectionNode);
 
     return () => {
-      if (mainsectionRef.current) {
-        mainSectionObserver.unobserve(mainsectionRef.current);
-      }
-      if (stampSectionRef.current) {
-        stampSectionObserver.unobserve(stampSectionRef.current);
-      }
-      if (tourSectionRef.current) {
-        tourSectionObserver.unobserve(tourSectionRef.current);
-      }
+      const observeSection = (observer: IntersectionObserver, node: HTMLElement | null) => {
+        if (node) {
+          observer.observe(node);
+        }
+      };
+
+      observeSection(mainSectionObserver, mainSectionNode);
+      observeSection(stampSectionObserver, stampSectionNode);
+      observeSection(tourSectionObserver, tourSectionNode);
     };
   }, []);
 
+  // 유저유무에 따른 정보확인
   useEffect(() => {
     const checkAuth = async () => {
       const {
@@ -86,6 +83,16 @@ const LandingPage = () => {
     checkAuth();
   }, []);
 
+  // 성능개선
+  const debounce = (func: (...args: any[]) => void, wait: number) => {
+    let timeout: NodeJS.Timeout; // 타이머 ID를 저장할 변수
+    return (...args: any[]) => {
+      clearTimeout(timeout); // 이전 타이머를 취소
+      timeout = setTimeout(() => func(...args), wait); //새로운 타이머를 설정->wait지나고 실행
+    };
+  };
+
+  // 반응형 사이즈조정 : 디바운스 함수
   useEffect(() => {
     const handleResize = debounce(() => {
       const newWidth = window.innerWidth;

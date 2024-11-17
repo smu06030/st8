@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation';
+import { PAGE_NAMES } from '@/constants/pageName';
 
 import Button from '@/components/common/Buttons/Button';
 import ArrowIcon from '@/components/common/Icons/LandingIcons/ArrowIcon';
@@ -26,11 +27,12 @@ export const LandingStart = ({ isLoggedIn }: LandingPageProps) => {
     </span>
   ));
 
+  // 리다이렉트 버튼
   const goToLoginOrHome = () => {
     if (isLoggedIn) {
-      router.push('/home'); // 로그인 상태일 때 홈으로 이동
+      router.push(PAGE_NAMES.HOME.link); // 로그인 상태일 때 홈으로 이동
     } else {
-      router.push('/login'); // 비로그인 상태일 때 로그인 페이지로 이동
+      router.push(PAGE_NAMES.LOGIN.link); // 비로그인 상태일 때 로그인 페이지로 이동
     }
   };
 
