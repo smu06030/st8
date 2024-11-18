@@ -89,7 +89,7 @@ const StampItemDetail = () => {
           <div className="relative block w-full lg:h-full lg:w-[50%] mo-only:mb-[82px] mo-only:h-[145px] mo-only:bg-[#fff] mo-only:shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)]">
             <span className="absolute left-1/2 top-[16px] block h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full bg-white shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)] lg:hidden mo-only:block"></span>
             <div className="absolute h-full w-full bg-[#fff] lg:hidden"></div>
-            <span className="absolute left-1/2 top-[16px] block h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full bg-white p-[24px] lg:relative lg:h-full lg:max-h-[500px] lg:w-[100%] lg:max-w-[500px] lg:bg-[#F5F5F7] lg:p-[50px] mo-only:border-[6px] mo-only:border-secondary-300">
+            <span className="absolute left-1/2 top-[16px] block h-[180px] w-[180px] -translate-x-1/2 overflow-hidden rounded-full bg-white p-[16px] lg:relative lg:h-full lg:max-h-[500px] lg:w-[100%] lg:max-w-[500px] lg:bg-[#F5F5F7] lg:p-[50px] mo-only:border-[6px] mo-only:border-secondary-300">
               <div className="h-full w-full rounded-full bg-white">
                 <Image
                   src={`/images/stamp/${params.id}-active.png`}
@@ -133,18 +133,21 @@ const StampItemDetail = () => {
           </div>
         </div>
         <li
-          className="mt-[55px] flex flex-col gap-[24px] px-[28px] lg:mx-auto lg:w-full lg:max-w-[70vw]"
+          className="mt-[55px] flex flex-col gap-[14px] px-[28px] lg:mx-auto lg:w-full lg:max-w-[70vw]"
           ref={dropdownRef}
         >
-          <div
-            className="flex items-center justify-start gap-[10px] border-b border-[#4F4F4F] py-[10px]"
-            onClick={toggleDropdown}
-          >
-            <h2 className="font-semiBold text-[24px]">히스토리</h2>
-            <button className={`transform transition-transform duration-500 ${isOpen ? 'rotate-90' : '-rotate-90'}`}>
-              <Icon name="ArrowIcon" size={28} />
-            </button>
+          <div onClick={toggleDropdown}>
+            <div
+              className={`flex items-center justify-start gap-[10px] py-[10px] ${!isOpen && 'border-b border-[#4F4F4F]'}`}
+            >
+              <h2 className="font-semiBold text-[24px]">히스토리</h2>
+              <button className={`transform transition-transform duration-500 ${isOpen ? 'rotate-90' : '-rotate-90'}`}>
+                <Icon name="ArrowIcon" size={28} />
+              </button>
+            </div>
+            {isOpen && <span className="text-[14px] text-gray-500">히스토리를 선택하시면 지도로 이동합니다.</span>}
           </div>
+
           {isOpen && (
             <ul className="flex w-full animate-dropdownList flex-col gap-[12px] transition-all duration-300">
               {stampData.map((list) => (

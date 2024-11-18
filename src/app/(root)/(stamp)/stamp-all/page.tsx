@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const StampAll = () => {
   return (
-    <div className="relative mt-12 overflow-hidden lg:mt-0 mo-only:px-[24px] mo-only:py-[34px]">
+    <div className="relative overflow-hidden pt-[88px] lg:mt-0 mo-only:px-[24px] mo-only:pb-[34px]">
       <div className="pc-inner-width lg:pb-[192px] lg:pt-[165px]">
         <h3 className="text-left font-semiBold text-[32px] leading-[41.6px] text-[#008EBD] lg:text-center lg:text-[48px] lg:text-gray-900">
           모아와 함께

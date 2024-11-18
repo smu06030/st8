@@ -12,7 +12,7 @@ interface AlbumTopParamsType {
 const Toptitle = ({ activeTab, edit, onClickTab, setEdit, deleteId, onHandleDelete }: AlbumTopParamsType) => {
   return (
     <div>
-      <h2 className="mt-[38px] border-b border-[#9C9C9C] py-[14px] font-semiBold text-[24px] text-[#004157] mo-only:mx-[24px]">
+      <h2 className="border-b border-[#9C9C9C] pb-[14px] pt-[40px] font-semiBold text-[24px] text-[#004157] mo-only:mx-[24px]">
         나의 추억들
       </h2>
 

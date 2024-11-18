@@ -115,7 +115,7 @@ const config: Config = {
       slideDropdown: {
         from: {
           opacity: '0',
-          transform: 'translateY(-20px)'
+          transform: 'translateY(-10px)'
         },
         to: {
           opacity: '1',
