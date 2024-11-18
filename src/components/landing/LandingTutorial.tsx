@@ -12,7 +12,7 @@ const LandingTutorial = () => {
 
   return (
     <div className="tutorial-container animate-tutoriaslide z-1 top-0 h-full w-full bg-backgroundGradient">
-      <div className="h-[25%] w-full px-[24px] pt-[94px]">
+      <div className="h-[25%] w-full px-[24px] pt-[10vh]">
         <h2 className="tutorialTitle">
           모아가 알려주는
           <br />
@@ -25,7 +25,7 @@ const LandingTutorial = () => {
           style={{ transform: `translateX(-${(position * 100) / 5}%)`, transition: 'transform 0.5s' }}
         >
           <li className="slide flex w-[100%] flex-col">
-            <div className="mb-[46px] px-[24px]">
+            <div className="px-[24px]">
               <Image src={`/images/landing/mo-landing-01.png`} alt={''} width={500} height={500} />
             </div>
             <button className="button" onClick={handleClick}>
@@ -33,7 +33,7 @@ const LandingTutorial = () => {
             </button>
           </li>
           <li className="slide flex w-[100%] flex-col">
-            <div className="mb-[46px] px-[24px]">
+            <div className="px-[24px]">
               <Image src={`/images/landing/mo-landing-02.png`} alt={''} width={500} height={500} />
             </div>
             <button className="button" onClick={handleClick}>
@@ -41,7 +41,7 @@ const LandingTutorial = () => {
             </button>
           </li>
           <li className="slide flex w-[100%] flex-col">
-            <div className="mb-[46px] px-[24px]">
+            <div className="px-[24px]">
               <Image src={`/images/landing/mo-landing-03.png`} alt={''} width={500} height={500} />
             </div>
             <button className="button" onClick={handleClick}>
@@ -49,7 +49,7 @@ const LandingTutorial = () => {
             </button>
           </li>
           <li className="slide flex w-[100%] flex-col">
-            <div className="mb-[46px] px-[24px]">
+            <div className="px-[24px]">
               <Image src={`/images/landing/mo-landing-04.png`} alt={''} width={500} height={500} className="" />
             </div>
             <button className="button" onClick={handleClick}>
@@ -57,7 +57,7 @@ const LandingTutorial = () => {
             </button>
           </li>
           <li className="slide flex w-[100%] flex-col">
-            <div className="mb-[46px] px-[24px]">
+            <div className="px-[24px]">
               <Image src={`/images/landing/mo-landing-05.png`} alt={''} width={500} height={500} className="" />
             </div>
             <button className="button">
