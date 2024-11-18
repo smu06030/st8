@@ -20,7 +20,7 @@ const AliasCheckModal = ({ Modal }: AliasCheckModalPropsType) => {
           현재 주소로 등록됩니다.
         </span>
         <Link href={'/stamp-all'}>
-          <p className="w-full rounded-[12px] bg-secondary-500 py-[21px] text-center font-semiBold text-[#004157]">
+          <p className="w-full rounded-[12px] bg-secondary-500 py-[21px] text-center font-semiBold text-[#004157] hover:bg-[#BDEFFF]">
             알겠어요!
           </p>
         </Link>
