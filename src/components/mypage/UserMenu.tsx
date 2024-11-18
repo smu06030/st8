@@ -1,6 +1,5 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
-
 import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
 import useUserId from '@/hooks/auth/useUserId';
@@ -24,7 +23,8 @@ const UserMenu = ({ initialNickname }: UserMenuType) => {
   const [isEditingNickname, setIsEditingNickname] = useState(false);
   const userId = useUserId();
 
-  const nicknameEditRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null); // 드롭다운 감지용
+  const nicknameEditRef = useRef<HTMLDivElement>(null); // 닉네임 변경창 감지용
 
   useEffect(() => {
     const checkUserStatus = async () => {
@@ -86,20 +86,25 @@ const UserMenu = ({ initialNickname }: UserMenuType) => {
   // 외부 클릭 감지
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (nicknameEditRef.current && !nicknameEditRef.current.contains(event.target as Node)) {
-        setIsEditingNickname(false);
+      const target = event.target as Node;
+
+      if (
+        (dropdownRef.current && dropdownRef.current.contains(target)) ||
+        (nicknameEditRef.current && nicknameEditRef.current.contains(target))
+      ) {
+        return;
       }
+
+      // 배경 클릭 시 드롭다운과 모달 닫기
+      setIsDropdownOpen(false);
+      setIsEditingNickname(false);
     };
 
-    if (isEditingNickname) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isEditingNickname]);
+  }, []);
 
   if (isLoggedIn) {
     return (
@@ -112,7 +117,10 @@ const UserMenu = ({ initialNickname }: UserMenuType) => {
         </button>
 
         {isDropdownOpen && (
-          <div className="shadow-md absolute right-0 mt-12 w-48 rounded-2xl bg-white py-4">
+          <div
+            ref={dropdownRef}
+            className="shadow-md absolute right-0 mt-12 w-48 rounded-2xl bg-white py-4 shadow-headerShadow"
+          >
             <Link href="/stamp-all" className="block px-4 py-2 text-gray-700">
               지금까지 모은 스탬프
             </Link>
@@ -137,7 +145,7 @@ const UserMenu = ({ initialNickname }: UserMenuType) => {
         {isEditingNickname && (
           <div
             ref={nicknameEditRef}
-            className="shadow-md absolute right-[194px] top-0 mt-12 w-80 rounded-2xl bg-white p-6"
+            className="absolute right-[194px] top-0 mt-12 w-80 rounded-2xl bg-white p-6 shadow-headerShadow"
           >
             <p className="mb-1 text-xl font-semibold text-gray-900">이름을 변경하시겠습니까?</p>
             <p className="text-base text-gray-900">변경할 이름을 입력해주세요.</p>

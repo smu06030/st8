@@ -139,7 +139,7 @@ const LoginForm = () => {
           <SocialLoginButton provider="kakao" onClick={(e) => handleSocialLogin('kakao', e)} />
         </div>
 
-        <div className="!mt-[180px] text-center lg:!mt-14">
+        <div className="text-center lg:!mt-14">
           <span className="mr-1 text-sm text-gray-600">아직 회원이 아니신가요?</span>
           <LinkButton text="회원가입" href="/signup" />
         </div>

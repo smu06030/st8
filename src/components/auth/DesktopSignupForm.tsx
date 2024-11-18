@@ -8,8 +8,8 @@ import Icon from '../common/Icons/Icon';
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField/InputField';
 import GoMainStep from '@/components/auth/signup/StepMainForm';
-import SmailXIcon from '../common/Icons/SmailXIcon';
-import SmailCheckIcon from '../common/Icons/SmailCheckIcon';
+import SmailXIcon from '../common/Icons/Auth/SmailXIcon';
+import SmailCheckIcon from '../common/Icons/Auth/SmailCheckIcon';
 
 interface SignupFormInputs {
   nickname: string;

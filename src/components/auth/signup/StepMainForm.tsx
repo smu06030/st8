@@ -1,5 +1,5 @@
 import Button from '@/components/common/Buttons/Button';
-import SignupCompleteIcon from '@/components/common/Icons/SignupCompleteIcon';
+import SignupCompleteIcon from '@/components/common/Icons/Auth/SignupCompleteIcon';
 
 interface StepMainFormProps {
   onNext: () => void;

@@ -34,7 +34,7 @@ export const useSocialLogin = () => {
         return;
       }
 
-      router.push('/mypage');
+      router.push('/home');
       return data;
     } catch (err) {
       console.error('social login error:', err);
