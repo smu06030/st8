@@ -7,6 +7,10 @@ import browserClient from '@/utils/supabase/client';
 
 interface UserMenuType {
   initialNickname: string;
+  isLoggedIn: boolean;
+  nickname: string;
+  tempNickname: string;
+  checkUserStatus: string;
 }
 
 const UserMenu = ({ initialNickname }: UserMenuType) => {
