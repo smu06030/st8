@@ -2,10 +2,12 @@
 
 import { Stamp } from '@/types/supabase/table.type';
 import { useParams } from 'next/navigation';
+import { useMapStore } from '@/providers/mapStoreProvider';
 import { REGION_NAME_MAP_EN } from '@/utils/region/RegionNames';
 import { useGetStampListQuery } from '@/hooks/queries/query/useStampQuery';
 import { useEffect, useState, useRef } from 'react';
 
+import Link from 'next/link';
 import Icon from '@/components/common/Icons/Icon';
 import Image from 'next/image';
 import Loading from '@/app/(root)/(stamp)/loading';
@@ -19,6 +21,7 @@ const StampItemDetail = () => {
   const [stampData, setStampData] = useState<Stamp[]>([]);
   const [isOpen, setIsOpen] = useState(true);
   const dropdownRef = useRef(null);
+  const setLocation = useMapStore((state) => state.setLocation);
   const { data: stampList, isLoading, isPending, isError } = useGetStampListQuery(userId);
 
   const toggleDropdown = () => {
@@ -68,6 +71,13 @@ const StampItemDetail = () => {
   //   }
   //   setOldestAddress(oldestAddress);
   // }, [oldestDate]);
+
+  // 히스토리 클릭 이벤트 (해당 지도 마커로 이동)
+  const onClickHistory = (lat: number, lng: number) => {
+    setLocation({ lat, lng }, 3);
+  };
+
+  console.log(stampData);
 
   return (
     <div className="min-h-[80vh] lg:bg-white">
@@ -138,34 +148,33 @@ const StampItemDetail = () => {
           {isOpen && (
             <ul className="flex w-full animate-dropdownList flex-col gap-[12px] transition-all duration-300">
               {stampData.map((list) => (
-                <li
-                  key={list.id}
-                  className="flex w-full items-center justify-between rounded-[24px] bg-white px-[28px] py-[24px] lg:border lg:border-[#4F4F4F]"
-                >
-                  <ul className="flex w-full flex-col gap-[14px]">
-                    <li className="flex items-center gap-[8px]">
-                      <Icon name="TimeIcon" size={28} color="white" bgColor="#00688A" rx="16" />
-                      <span className="ellipsis-multiline flex-1 text-[#4F4F4F] lg:max-w-[40vw]">
-                        {list.aliasLocation !== null ? list.aliasLocation : list.address}
-                      </span>
-                    </li>
-                    <li className="flex items-center gap-[8px]">
-                      <Icon name="ComPassIcon" size={28} color="white" bgColor="#00688A" rx="16" />
-                      <span className="text-[#4F4F4F]">
-                        {list.created_at
-                          ? new Date(list.created_at).toLocaleDateString('ko-KR', {
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric'
-                            })
-                          : 'N/A'}
-                      </span>
-                      <span className="text-[#4F4F4F]">
-                        {list.created_at ? new Date(list.created_at).getHours() : 'N/A'}시
-                      </span>
-                    </li>
-                  </ul>
-                </li>
+                <Link key={list.id} href={'/stamp-map'} onClick={() => onClickHistory(list.lat, list.lng)}>
+                  <li className="flex w-full items-center justify-between rounded-[24px] bg-white px-[28px] py-[24px] lg:border lg:border-[#4F4F4F]">
+                    <ul className="flex w-full flex-col gap-[14px]">
+                      <li className="flex items-center gap-[8px]">
+                        <Icon name="TimeIcon" size={28} color="white" bgColor="#00688A" rx="16" />
+                        <span className="ellipsis-multiline flex-1 text-[#4F4F4F] lg:max-w-[40vw]">
+                          {list.aliasLocation !== null ? list.aliasLocation : list.address}
+                        </span>
+                      </li>
+                      <li className="flex items-center gap-[8px]">
+                        <Icon name="ComPassIcon" size={28} color="white" bgColor="#00688A" rx="16" />
+                        <span className="text-[#4F4F4F]">
+                          {list.created_at
+                            ? new Date(list.created_at).toLocaleDateString('ko-KR', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                              })
+                            : 'N/A'}
+                        </span>
+                        <span className="text-[#4F4F4F]">
+                          {list.created_at ? new Date(list.created_at).getHours() : 'N/A'}시
+                        </span>
+                      </li>
+                    </ul>
+                  </li>
+                </Link>
               ))}
             </ul>
           )}

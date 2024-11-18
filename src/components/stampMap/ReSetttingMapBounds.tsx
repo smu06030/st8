@@ -4,7 +4,15 @@ import { useMap } from 'react-kakao-maps-sdk';
 import { PathType } from '@/types/stamp/coordRegionCode.type';
 import { useEffect, useMemo } from 'react';
 
-const ReSetttingMapBounds = ({ paths, activeIndex }: { paths: PathType; activeIndex: number }) => {
+const ReSetttingMapBounds = ({
+  paths,
+  activeIndex,
+  level
+}: {
+  paths: PathType;
+  activeIndex: number;
+  level: number;
+}) => {
   const map = useMap();
   const bounds = useMemo(() => {
     const bounds = new kakao.maps.LatLngBounds();
@@ -17,13 +25,15 @@ const ReSetttingMapBounds = ({ paths, activeIndex }: { paths: PathType; activeIn
   }, [paths]);
 
   useEffect(() => {
-    if (paths.length > 0) {
-      map.setBounds(bounds);
+    if (level === 13) {
+      if (paths.length > 0) {
+        map.setBounds(bounds);
+      }
+      if (activeIndex === 0) {
+        map.setLevel(13);
+      }
     }
-    if (activeIndex === 0) {
-      map.setLevel(13);
-    }
-  }, [paths]);
+  }, [paths, level]);
 
   return null;
 };

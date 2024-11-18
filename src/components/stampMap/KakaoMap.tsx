@@ -1,5 +1,6 @@
 'use client';
 
+import { useRef } from 'react';
 import { Map, Polygon } from 'react-kakao-maps-sdk';
 import { MAP_COLOR, MAP_COLOR_INDEX } from '@/constants/mapColor';
 
@@ -23,7 +24,7 @@ const KakaoMap = () => {
         center={location.center}
         isPanto={location.isPanto}
         className="relative h-[100vh] w-full overflow-hidden"
-        level={12}
+        level={location.level}
       >
         {activeIndex === 0 ? (
           geoList.map((item, index) => {
@@ -60,7 +61,7 @@ const KakaoMap = () => {
         )}
 
         {filteredStamps?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} openModal={openModal} />)}
-        <ReSetttingMapBounds paths={selectedPath} activeIndex={activeIndex} />
+        <ReSetttingMapBounds paths={selectedPath} activeIndex={activeIndex} level={location.level} />
         <KakaoMapMaxLevel />
       </Map>
       <StampModal Modal={Modal} />
