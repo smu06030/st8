@@ -2,12 +2,12 @@ import { useRouter } from 'next/navigation';
 import { PAGE_NAMES } from '@/constants/pageName';
 import React, { useState } from 'react';
 
+import Link from 'next/link';
 import Button from '@/components/common/Buttons/Button';
 import ArrowIcon from '@/components/common/Icons/LandingIcons/ArrowIcon';
 import CameraIcon from '@/components/common/Icons/LandingIcons/CameraIcon';
 import CompassIcon from '@/components/common/Icons/LandingIcons/CompassIcon';
 import LandingTutorial from '@/components/landing/LandingTutorial';
-import Link from 'next/link';
 
 interface LandingPageProps {
   isLoggedIn: boolean;

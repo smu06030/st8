@@ -1,13 +1,9 @@
-import { useRouter } from 'next/navigation';
-import { PAGE_NAMES } from '@/constants/pageName';
 import React, { useState } from 'react';
 
-import Button from '@/components/common/Buttons/Button';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const LandingTutorial = () => {
-  const router = useRouter();
   const [position, setPosition] = useState(0);
 
   const handleClick = () => {
