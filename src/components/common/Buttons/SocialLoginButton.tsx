@@ -10,10 +10,10 @@ interface SocialLoginButtonProps {
 const SocialLoginButton = ({ provider, onClick }: SocialLoginButtonProps) => {
   const imageUrl =
     provider === 'google'
-      ? '/images/google-icon.png'
+      ? '/images/auth/google-icon.png'
       : provider === 'kakao'
-        ? '/images/kakao-icon.png'
-        : '/images/apple-icon2.png';
+        ? '/images/auth/kakao-icon.png'
+        : '/images/auth/apple-icon2.png';
   const altText = provider === 'google' ? 'Google Login' : provider === 'kakao' ? 'Kakao Login' : 'Apple Login';
 
   const buttonClassName =
