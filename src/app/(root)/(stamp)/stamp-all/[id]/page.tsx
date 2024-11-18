@@ -104,7 +104,7 @@ const StampItemDetail = () => {
           <div className="mx-[24px] mt-[31px] rounded-[24px] bg-white px-[28px] py-[34px] lg:m-0 lg:flex lg:w-[50%] lg:items-center lg:justify-start">
             <h2 className="mb-[24px] font-semiBold text-[20px] lg:hidden">{region} 스탬프</h2>
             <ul className="flex flex-col gap-[14px]">
-              <li className="flex items-center justify-start gap-[8px]">
+              <li className="lg:TimeIcon-pc flex items-center justify-start gap-[8px]">
                 <Icon name="TimeIcon" size={28} color="white" bgColor="#00688A" rx="16" />
                 <p className="text-[#4F4F4F] lg:text-[24px]">
                   {oldestDate?.created_at

@@ -27,8 +27,8 @@ const Footer = () => {
               <li key={info.name} className="isInfo relative cursor-pointer overflow-hidden rounded-[24px] bg-[#eee]">
                 <Image src={info.img} alt={info.name} width={300} height={300} />
                 <div className="absolute bottom-0 left-0 hidden h-[40%] w-full flex-col gap-[4px] bg-[#1D1D1D] p-[10px] px-[18px] py-[24px] text-[#fff] opacity-[.8]">
-                  <p className="text-[14px]">{info.name}</p>
-                  <p>{info.job}</p>
+                  <p className="pb-[4px] text-[14px]">{info.job}</p>
+                  <p className="font-semiBold">{info.name}</p>
                 </div>
               </li>
             ))}
