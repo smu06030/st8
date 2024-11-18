@@ -14,7 +14,8 @@ const LogoutModal = ({ closeModal }: LogoutModalProps) => {
       closeModal();
       window.location.href = '/login';
     } catch (error) {
-      console.error('로그아웃 중 오류 발생:', error);
+      const errorMessage = '로그아웃 중 오류 발생';
+      throw new Error(errorMessage);
     }
   };
 

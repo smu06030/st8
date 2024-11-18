@@ -21,8 +21,14 @@ const RecentPhoto = () => {
     }
   }, [albumListData]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <p>데이터를 가져오는 데 문제가 발생했습니다.</p>;
+  if (isLoading) {
+    return <div className="flex min-h-screen items-center justify-center">로딩 중...</div>;
+  }
+
+  if (isError) {
+    const errorMessage = '데이터를 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.';
+    throw new Error(errorMessage);
+  }
 
   //사진이 3개이하면 안보여줌
   if (recentPhotos.length < 3) return null;
