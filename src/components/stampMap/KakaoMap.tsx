@@ -9,7 +9,7 @@ import StampModal from '../common/Modal/StampModal';
 import useKakaoMap from '@/hooks/map/useKakaoMap';
 import KakaoMapMarker from './KakaoMapMarker';
 import KakaoMapMaxLevel from './KakaoMapMaxLevel';
-import MapButtonSwiper from '@/components/stampMap/MapButtonSwiper';
+import KakaoMapSwiper from '@/components/stampMap/swiper/KakaoMapSwiper';
 import ReSetttingMapBounds from '@/components/stampMap/ReSetttingMapBounds';
 
 const KakaoMap = () => {
@@ -65,7 +65,7 @@ const KakaoMap = () => {
         <KakaoMapMaxLevel />
       </Map>
       <StampModal Modal={Modal} />
-      <MapButtonSwiper />
+      <KakaoMapSwiper />
     </>
   );
 };

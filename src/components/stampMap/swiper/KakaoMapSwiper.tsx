@@ -4,7 +4,7 @@ import { Pagination } from 'swiper/modules';
 import { useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import Icon from '../common/Icons/Icon';
+import Icon from '@/components/common/Icons/Icon';
 import useKakaoMap from '@/hooks/map/useKakaoMap';
 
 import 'swiper/css';
@@ -12,15 +12,21 @@ import 'swiper/css/pagination';
 
 import '@/styles/mapSwiper.css';
 
-const MapButtonSwiper = () => {
-  const { activeIndex, siDoName, onSlideChangeHandler } = useKakaoMap();
+const KakaoMapSwiper = () => {
+  const { activeIndex, siDoName, setActiveIndex, onSlideChangeHandler } = useKakaoMap();
   const swiperRef = useRef<any>(null); // Swiper 인스턴스 참조
 
+  // activeIndex 변경 시 slide 이동
   useEffect(() => {
     if (swiperRef.current) {
-      swiperRef.current.slideTo(activeIndex); // activeIndex 변경 시 slide 이동
+      swiperRef.current.slideTo(activeIndex);
     }
   }, [activeIndex]);
+
+  // 스와이퍼 버튼 클릭 이벤트
+  const onClickSwiper = (activeIndex: number) => {
+    setActiveIndex(activeIndex);
+  };
 
   return (
     <div className="swiperWrapper">
@@ -39,11 +45,19 @@ const MapButtonSwiper = () => {
         style={{ overflow: 'visible' }}
       >
         <SwiperSlide>
-          <div className={`swiper-slide px-4 py-3 ${activeIndex === 0 ? 'swiper-slide-active' : ''}`}>전체</div>
+          <div
+            onClick={() => onClickSwiper(0)}
+            className={`swiper-slide cursor-pointer px-4 py-3 ${activeIndex === 0 ? 'swiper-slide-active' : ''}`}
+          >
+            전체
+          </div>
         </SwiperSlide>
         {siDoName.map((sido, index) => (
           <SwiperSlide key={sido.key}>
-            <div className={`swiper-slide px-4 py-3 ${activeIndex === index + 1 ? 'swiper-slide-active' : ''}`}>
+            <div
+              onClick={() => onClickSwiper(index + 1)}
+              className={`swiper-slide cursor-pointer px-4 py-3 ${activeIndex === index + 1 ? 'swiper-slide-active' : ''}`}
+            >
               {sido.name}
             </div>
           </SwiperSlide>
@@ -53,4 +67,4 @@ const MapButtonSwiper = () => {
   );
 };
 
-export default MapButtonSwiper;
+export default KakaoMapSwiper;
