@@ -5,14 +5,22 @@ import { useMapStore } from '@/providers/mapStoreProvider';
 import { Swiper as SwiperProps } from 'swiper/types';
 import { useCallback, useEffect } from 'react';
 
-import useGeoData from './useGeoData';
 import useStamp from './useStamp';
+import useGeoData from './useGeoData';
 
 const useKakaoMap = () => {
   const { stampList } = useStamp();
   const { geoList, siDoName, setGeoList } = useGeoData();
-  const { location, activeIndex, selectedPath, filteredStamps, setActiveIndex, setSelectedPath, setFilteredStamps } =
-    useMapStore((state) => state);
+  const {
+    location,
+    activeIndex,
+    selectedPath,
+    filteredStamps,
+    setActiveIndex,
+    setSelectedPath,
+    setLocationLevel,
+    setFilteredStamps
+  } = useMapStore((state) => state);
 
   useEffect(() => {
     if (stampList) {
@@ -32,6 +40,7 @@ const useKakaoMap = () => {
   const updatePolygonPath = (path: PathType, index: number) => {
     setActiveIndex(index + 1); // 클릭한 폴리곤 index 저장
     setSelectedPath(path); // 클릭한 폴리곤의 path를 상태에 저장
+    setLocationLevel(13);
 
     const selectedArea = siDoName[index].name;
     const filtered = stampList?.filter((stamp) => stamp.region === selectedArea);
@@ -44,6 +53,7 @@ const useKakaoMap = () => {
     const activeIndex = swiper.activeIndex;
     setActiveIndex(activeIndex);
     setSelectedPath(activeIndex === 0 ? siDoName.flatMap((sido) => sido.path) : siDoName[activeIndex - 1].path);
+    setLocationLevel(13);
 
     const filtered =
       activeIndex === 0 ? stampList : stampList?.filter((stamp) => stamp.region === siDoName[activeIndex - 1].name);
