@@ -96,7 +96,6 @@ const LoginForm = () => {
           register={{
             ...register('email', {
               required: true
-              // onBlur: (e) => handleEmailBlur(e.target.value)
             })
           }}
           error={errors.email}

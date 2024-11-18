@@ -23,22 +23,6 @@ const EmailStep = ({ onNext }: EmailStepProps) => {
     mode: 'onChange' // 입력 시점에서 유효성 검사
   });
 
-  // 이메일 중복 확인 함수
-  const handleEmailBlur = async (email: string) => {
-    try {
-      const exists = await checkEmailExists(email);
-
-      if (exists) {
-        setError('email', { type: 'manual', message: '이미 사용 중인 이메일입니다.' });
-      } else {
-        clearErrors('email');
-      }
-    } catch (error) {
-      console.error('Error checking email:', error);
-      setError('email', { type: 'manual', message: '이메일 확인 중 오류가 발생했습니다.' });
-    }
-  };
-
   const onSubmit = (data: FormValues) => {
     if (isValid) {
       onNext(data.email);
@@ -61,10 +45,16 @@ const EmailStep = ({ onNext }: EmailStepProps) => {
           required: '이메일을 입력해주세요.',
           pattern: {
             value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-            message: '유효한 이메일 주소를 입력해주세요. '
+            message: '유효한 이메일 주소를 입력해주세요.'
           },
-          onBlur: (e) => handleEmailBlur(e.target.value), // 이메일 중복 확인 함수 호출
-          onChange: () => clearErrors('email')
+          validate: async (email) => {
+            try {
+              const exists = await checkEmailExists(email);
+              return exists ? '이미 사용 중인 이메일입니다.' : true;
+            } catch {
+              return '이메일 확인 중 오류가 발생했습니다.';
+            }
+          }
         })}
         status={errors.email ? 'error' : 'default'}
         error={errors.email}
