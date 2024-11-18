@@ -2,22 +2,25 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
 import StampCount from './StampCount';
 import PhotoCount from './PhotoCount';
 import RecentPhoto from './RecentPhoto';
 import LogoutButton from '../auth/LogoutButton';
 import NicknameEditor from './NicknameEditor';
 
+import useModal from '@/hooks/modal/useModal';
+import NicknameEditorModal from '../common/Modal/NicknameEditorModal';
+
 const MyPageLayout = () => {
-  // useEffect(() => {
-  //   throw new Error('에러');
-  // }, []);
+  const { Modal, openModal, closeModal } = useModal();
+  const [nickname, setNickname] = useState<string | null>(null);
 
   return (
     <div className="items-left mx-auto flex h-full max-w-[600px] flex-col bg-white px-6 pb-24">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-4">
-          <NicknameEditor />
+          <NicknameEditor nickname={nickname} setNickname={setNickname} openModal={openModal} />
         </div>
         <LogoutButton />
       </div>
@@ -57,6 +60,7 @@ const MyPageLayout = () => {
           <PhotoCount />
         </div>
       </div>
+      <NicknameEditorModal Modal={Modal} closeModal={closeModal} nickname={nickname} setNickname={setNickname} />
     </div>
   );
 };

@@ -19,7 +19,7 @@ const Header = () => {
       const previousPage = history[history.length - 2]; // 바로 직전 페이지
       router.push(previousPage);
     } else {
-      router.back(); // 히스토리가 없을 경우 기본 뒤로 가기
+      router.back();
     }
   };
 
