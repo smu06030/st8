@@ -10,15 +10,16 @@ const Header = () => {
   const { pageTitle, goBack } = useHeaderActive();
   const pathname = usePathname();
 
-  //헤더 안나오는 페이지
+  //헤더 안나오는 페이지(모바일)
   const hiddenHeaderPaths = ['/'];
   const shouldHideMobileHeader = hiddenHeaderPaths.includes(pathname);
 
+  //디테일 부분도 헤더 볼드처리
   const getLinkStyle = (path: string) => {
-    const isActive = pathname === path;
+    const isActive = path === '/' ? pathname === '/' : pathname.startsWith(path);
+
     return isActive ? 'text-gray-900 font-semiBold' : 'hover:font-regular';
   };
-
   if (!pageTitle) return null;
 
   return (
@@ -54,12 +55,7 @@ const Header = () => {
             >
               서비스 소개
             </Link>
-            <Link
-              href="/home"
-              className={`${getLinkStyle('/home')} rounded-md px-4 py-2 transition duration-300 hover:bg-gray-200`}
-            >
-              홈
-            </Link>
+
             <Link
               href="/stamp-map"
               className={`${getLinkStyle('/stamp-map')} rounded-md px-4 py-2 transition duration-300 hover:bg-gray-200`}
