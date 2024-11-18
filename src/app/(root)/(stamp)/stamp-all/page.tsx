@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 
-import Image from 'next/image';
+import StampTrackingLinkButton from '@/components/common/Buttons/StampTrackingLinkButton';
 import StampList from '@/components/stamp/StampList';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: '스탬프',
@@ -28,6 +29,7 @@ const StampAll = () => {
         height={300}
         className="absolute bottom-[-100px] right-[-100px] -z-10 w-[365px] lg:fixed lg:bottom-[-50px] lg:right-0 lg:w-[395px]"
       />
+      <StampTrackingLinkButton />
     </div>
   );
 };
