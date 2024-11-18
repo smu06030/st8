@@ -5,10 +5,23 @@ import Link from 'next/link';
 import MoaLogo from '../common/Icons/MoaLogo';
 import useHeaderActive from '@/hooks/layout/useHeaderActive';
 import ClientHeaderMenu from './ClientHeaderMenu';
+import { useHistory } from '@/providers/HistoryProvider';
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
-  const { pageTitle, goBack } = useHeaderActive();
+  const { pageTitle } = useHeaderActive();
   const pathname = usePathname();
+  const { history } = useHistory();
+  const router = useRouter();
+
+  const goBack = () => {
+    if (history.length > 1) {
+      const previousPage = history[history.length - 2]; // 바로 직전 페이지
+      router.push(previousPage);
+    } else {
+      router.back(); // 히스토리가 없을 경우 기본 뒤로 가기
+    }
+  };
 
   //헤더 안나오는 페이지(모바일)
   const hiddenHeaderPaths = ['/'];

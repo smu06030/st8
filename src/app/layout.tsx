@@ -12,6 +12,7 @@ import RQProviders from '@/providers/RQRovider';
 import KakaoMapLoader from '@/components/stampMap/KakaoMapLoader';
 
 import './globals.css';
+import { HistoryProvider } from '@/providers/HistoryProvider';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -39,14 +40,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`bg-no-repeat font-regular lg:bg-[#F5F5F7] mo-only:bg-backgroundGradient ${geistSans.variable} ${geistMono.variable} ${!showSplash ? 'body-padding' : ''} antialiased`}
       >
-        <Header />
-        <KakaoMapLoader />
-        <RQProviders>
-          {children}
-          <div id="overlays"></div> {/* 모달창 */}
-        </RQProviders>
-        {!hideNavPaths.includes(pathname) && <Nav />}
-        {!hideFooterPaths.includes(pathname) && <Footer />}
+        <HistoryProvider>
+          <Header />
+          <KakaoMapLoader />
+          <RQProviders>
+            {children}
+            <div id="overlays"></div> {/* 모달창 */}
+          </RQProviders>
+          {!hideNavPaths.includes(pathname) && <Nav />}
+          {!hideFooterPaths.includes(pathname) && <Footer />}
+        </HistoryProvider>
       </body>
     </html>
   );

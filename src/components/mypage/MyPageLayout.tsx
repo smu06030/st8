@@ -39,7 +39,13 @@ const MyPageLayout = () => {
           </div>
 
           <div className="relative row-span-2 flex h-[327px] items-center justify-center overflow-hidden rounded-2xl">
-            <Image src="/images/mypage_img2.png" alt="배경 이미지" fill style={{ objectFit: 'cover' }} priority />
+            <Image
+              src="/images/mypage/mypage_img2.png"
+              alt="배경 이미지"
+              fill
+              style={{ objectFit: 'cover' }}
+              priority
+            />
             <div className="absolute inset-0 bg-[#081425]/70"></div>
             <Link href="/book-mark" className="relative flex h-full w-full flex-col items-end justify-end p-6">
               <p className="mb-4 text-right font-bold text-[20px] leading-tight text-white">
