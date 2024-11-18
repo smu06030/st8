@@ -4,8 +4,8 @@ import { useState } from 'react';
 import Icon from '@/components/common/Icons/Icon';
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField/InputField';
-import SmailXIcon from '@/components/common/Icons/SmailXIcon';
-import SmailCheckIcon from '@/components/common/Icons/SmailCheckIcon';
+import SmailXIcon from '@/components/common/Icons/Auth/SmailXIcon';
+import SmailCheckIcon from '@/components/common/Icons/Auth/SmailCheckIcon';
 
 interface PasswordStepProps {
   onNext: (password: string) => void;
