@@ -1,7 +1,7 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
-import Button from '@/components/common/Buttons/Button';
 import { checkEmailExists } from '@/app/api/auth/authService';
+
+import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField/InputField';
 
 interface EmailStepProps {

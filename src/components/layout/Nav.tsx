@@ -1,9 +1,11 @@
 'use client';
-import React from 'react';
+
+import { PAGE_NAMES } from '@/constants/pageName';
+
 import Icon from '@/components/common/Icons/Icon';
 import Link from 'next/link';
-import useNavActive from '@/hooks/useNavActive';
-import { PAGE_NAMES } from '@/constants/pageName';
+import React from 'react';
+import useNavActive from '@/hooks/layout/useNavActive';
 
 const Nav = () => {
   const { activePage, handleClick } = useNavActive();
@@ -52,7 +54,7 @@ const Nav = () => {
       link: PAGE_NAMES.TOURISM.link,
       icon: (() => {
         let color = '#B5B5B5';
-        if (activePage === PAGE_NAMES.TOURISM.link || activePage === '/tourism-detail') {
+        if (/^\/tourism(\/.*)?$/.test(activePage)) {
           color = '#00688A';
         }
         return React.cloneElement(<Icon name="MapIcon" size={28} color={color} bgColor="transparent" />);
@@ -78,7 +80,7 @@ const Nav = () => {
           <li key={navItem.page} className="cursor-pointer py-[8px] text-center">
             <Link
               href={navItem.link}
-              className={`flex flex-col items-center gap-[2px] ${activePage === navItem.link ? 'text-[#00688A]' : 'text-gray-300'}`}
+              className={`flex flex-col items-center gap-[2px] ${activePage === navItem.link || activePage.includes(navItem.link) ? 'text-[#00688A]' : 'text-gray-300'}`}
             >
               {navItem.icon}
               <span className="font-semiBold text-[12px]" onClick={() => handleClick(navItem.link)}>

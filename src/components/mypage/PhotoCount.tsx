@@ -1,10 +1,11 @@
 'use client';
 
-import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
-import useUserId from '@/hooks/useUserId';
-import { getPhotoCount } from '@/apis/photoCount';
+import { getPhotoCount } from '@/services/apis/photoCount';
+
+import Link from 'next/link';
 import Image from 'next/image';
+import useUserId from '@/hooks/auth/useUserId';
 
 const PhotoCount = () => {
   const userId = useUserId();
@@ -34,7 +35,7 @@ const PhotoCount = () => {
   return (
     <Link href="/photo-album">
       <div className="relative flex h-[156px] flex-col justify-center overflow-hidden rounded-2xl bg-[#081425]/70 text-white">
-        <Image src="/images/mypage_img.png" alt="배경 이미지" fill style={{ objectFit: 'cover' }} priority />
+        <Image src="/images/mypage/mypage_img.png" alt="배경 이미지" fill style={{ objectFit: 'cover' }} priority />
         <div className="absolute inset-0 bg-black opacity-50"></div>
 
         <div className="relative flex h-full w-full flex-col p-6">

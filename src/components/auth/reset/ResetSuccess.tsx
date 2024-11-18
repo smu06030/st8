@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
 import { useRouter } from 'next/navigation';
-import CompassIcon from '@/components/common/Icons/LandingIcons/CompassIcon';
+
 import Button from '@/components/common/Buttons/Button';
+import CompassIcon from '@/components/common/Icons/LandingIcons/CompassIcon';
 
 const ResetSuccess = () => {
   const router = useRouter();

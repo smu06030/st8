@@ -1,23 +1,31 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import StampItem from '@/components/stamp/StampItem';
-// import { useQuery } from '@tanstack/react-query';
-import useUserId from '@/hooks/useUserId';
-import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { DEFAULT_REGION_ITEM } from '@/constants/regions';
-import { useGetStampListQuery } from '@/queries/query/useStampQuery';
-import Loading from '@/app/(root)/(stamp)/loading';
+import { useGetStampListQuery } from '@/hooks/queries/query/useStampQuery';
 import { REGION_NAME_MAP_KO, STAMPIMG_REGION_IMG } from '@/utils/region/RegionNames';
-import { promptLogin } from '@/utils/promptLogin';
+
+import Image from 'next/image';
+import Loading from '@/app/(root)/(stamp)/loading';
+import StampItem from '@/components/stamp/StampItem';
+import useUserId from '@/hooks/auth/useUserId';
+// import usePromptLogin from '@/utils/promptLogin';
 
 const StampList = () => {
   const userId = useUserId();
+  const router = useRouter();
   const { data: stampList = [], isLoading, isPending, isError } = useGetStampListQuery(userId);
+
+  const promptLogin = () => {
+    if (!userId) {
+      alert('로그인이 필요한 서비스 입니다.');
+      router.push('/login');
+    }
+  };
 
   if (!userId) {
     const loginRequiredRegions = Object.entries(STAMPIMG_REGION_IMG).map(([region, img]) => ({ region, img })); //비활성화지역이름(로그인안한상태)
-
+    console.log('loginRequiredRegions', loginRequiredRegions);
     return (
       <ul className="grid grid-cols-2 gap-[15px] lg:grid-cols-5 lg:gap-[16px] lg:pt-[64px] mo-only:py-[42px]">
         {loginRequiredRegions.map((stamp) => (
@@ -25,7 +33,14 @@ const StampList = () => {
             key={stamp.region}
             className="flex flex-col items-center justify-center rounded-[24px] bg-[#fff] p-[20px] lg:p-[25px]"
           >
-            <Image src={stamp.img} alt={stamp.region} width={300} height={300} onClick={promptLogin} />
+            <Image
+              src={stamp.img}
+              alt={stamp.region}
+              width={300}
+              height={300}
+              onClick={promptLogin}
+              className="opacity-50"
+            />
           </li>
         ))}
       </ul>

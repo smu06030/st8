@@ -1,9 +1,10 @@
+import { ReactPortal } from 'react';
 import { useMapStore } from '@/providers/mapStoreProvider';
-import Image from 'next/image';
-import React, { ReactPortal } from 'react';
-import Link from 'next/link';
-import Icon from '../Icons/Icon';
 import { REGION_NAME_MAP_KO } from '@/utils/region/RegionNames';
+
+import Icon from '../Icons/Icon';
+import Link from 'next/link';
+import Image from 'next/image';
 
 interface StampModalPropsType {
   Modal: ({ children }: { children: React.ReactNode }) => ReactPortal | null;

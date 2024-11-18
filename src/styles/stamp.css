@@ -23,3 +23,9 @@
     opacity: 0.8;
   }
 }
+.TimeIcon-pc svg rect {
+  fill: white !important;
+}
+.TimeIcon-pc svg path {
+  fill: #363636 !important;
+}

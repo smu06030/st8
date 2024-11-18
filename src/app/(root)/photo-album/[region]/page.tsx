@@ -1,16 +1,16 @@
 'use client';
 
-import React from 'react';
-import Image from 'next/image';
 import { useParams } from 'next/navigation';
+import { useGetAlbumListQuery } from '@/hooks/queries/query/useAlbumQuery';
+
+import Image from 'next/image';
 import Loading from '@/app/(root)/(stamp)/loading';
-import ModalAlbumImg from '@/components/photoalbum/ModalAlbumImg';
-import useImgModal from '@/hooks/useImgModal';
-import AlbumImgEdit from '@/components/photoalbum/EditAlbumImg';
-import useAlbumDelete from '@/hooks/useAlbumDelete';
-import useUserId from '@/hooks/useUserId';
-import { useGetAlbumListQuery } from '@/queries/query/useAlbumQuery';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/modal/useModal';
+import useUserId from '@/hooks/auth/useUserId';
+import useImgModal from '@/hooks/album/useImgModal';
+import AlbumImgEdit from '@/components/photoalbum/AlbumEditImg';
+import AlbumImgModal from '@/components/photoalbum/AlbumImgModal';
+import useAlbumDelete from '@/hooks/album/useAlbumDelete';
 
 const RegionDetail = () => {
   const userId = useUserId();
@@ -90,7 +90,7 @@ const RegionDetail = () => {
         ))}
       </ul>
       {isOpen && (
-        <ModalAlbumImg
+        <AlbumImgModal
           Modal={Modal}
           setImgModal={setImgModal}
           selectedImgUrl={selectedImgUrl}

@@ -1,7 +1,9 @@
 'use client';
-import React, { useMemo, useState } from 'react';
+
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import React, { useMemo, useState } from 'react';
+
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField/InputField';
 import browserClient from '@/utils/supabase/client';
@@ -35,7 +37,6 @@ const ResetPasswordForm = () => {
       await browserClient.auth.resetPasswordForEmail(profile.email, {
         redirectTo: redirectUrl + '/updatePassword'
       });
-
       router.push('/reset-success');
     } catch (error) {
       console.error('비밀번호 재설정 이메일 전송 중 오류:', error);

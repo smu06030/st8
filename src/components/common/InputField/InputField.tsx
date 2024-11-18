@@ -1,9 +1,9 @@
-import React, { ReactNode, useEffect, useState, forwardRef, ChangeEvent } from 'react';
-import Icon from '@/components/common/Icons/Icon';
 import { InputFieldStyles } from '@/components/common/InputField/InputFieldStyles';
 import { UseFormRegisterReturn } from 'react-hook-form';
-import SmailCheckIcon from '../Icons/SmailCheckIcon';
-import SmailXIcon from '../Icons/SmailXIcon';
+import { ReactNode, useEffect, useState, forwardRef, ChangeEvent } from 'react';
+
+import Icon from '@/components/common/Icons/Icon';
+import SmailXIcon from '../Icons/Auth/SmailXIcon';
 
 interface InputFieldProps {
   placeholder: string;

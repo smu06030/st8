@@ -1,14 +1,16 @@
 'use client';
 
+import { useRef } from 'react';
 import { Map, Polygon } from 'react-kakao-maps-sdk';
 import { MAP_COLOR, MAP_COLOR_INDEX } from '@/constants/mapColor';
-import ReSetttingMapBounds from '@/components/stampMap/ReSetttingMapBounds';
-import MapButtonSwiper from '@/components/stampMap/MapButtonSwiper';
-import KakaoMapMarker from './KakaoMapMarker';
-import useKakaoMap from '@/hooks/useKakaoMap';
+
+import useModal from '@/hooks/modal/useModal';
 import StampModal from '../common/Modal/StampModal';
-import useModal from '@/hooks/useModal';
+import useKakaoMap from '@/hooks/map/useKakaoMap';
+import KakaoMapMarker from './KakaoMapMarker';
 import KakaoMapMaxLevel from './KakaoMapMaxLevel';
+import KakaoMapSwiper from '@/components/stampMap/swiper/KakaoMapSwiper';
+import ReSetttingMapBounds from '@/components/stampMap/ReSetttingMapBounds';
 
 const KakaoMap = () => {
   const { geoList, location, activeIndex, selectedPath, filteredStamps, updateHoverState, updatePolygonPath } =
@@ -22,7 +24,7 @@ const KakaoMap = () => {
         center={location.center}
         isPanto={location.isPanto}
         className="relative h-[100vh] w-full overflow-hidden"
-        level={12}
+        level={location.level}
       >
         {activeIndex === 0 ? (
           geoList.map((item, index) => {
@@ -59,11 +61,11 @@ const KakaoMap = () => {
         )}
 
         {filteredStamps?.map((stamp) => <KakaoMapMarker key={stamp.id} stamp={stamp} openModal={openModal} />)}
-        <ReSetttingMapBounds paths={selectedPath} activeIndex={activeIndex} />
+        <ReSetttingMapBounds paths={selectedPath} activeIndex={activeIndex} level={location.level} />
         <KakaoMapMaxLevel />
       </Map>
       <StampModal Modal={Modal} />
-      <MapButtonSwiper />
+      <KakaoMapSwiper />
     </>
   );
 };

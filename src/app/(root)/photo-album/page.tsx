@@ -1,6 +1,6 @@
-import AlbumList from '@/components/photoalbum/AlbumList';
 import { Metadata } from 'next';
-import React from 'react';
+
+import AlbumList from '@/components/photoalbum/AlbumList';
 
 export const metadata: Metadata = {
   title: '앨범',
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const Album = () => {
   return (
-    <div>
+    <div className="lg:pt-[64px]">
       <AlbumList />
     </div>
   );

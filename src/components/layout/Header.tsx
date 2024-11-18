@@ -1,24 +1,38 @@
-import React from 'react';
+import { usePathname } from 'next/navigation';
+
+import Icon from '@/components/common/Icons/Icon';
 import Link from 'next/link';
 import MoaLogo from '../common/Icons/MoaLogo';
-import Icon from '@/components/common/Icons/Icon';
-import useHeaderActive from '@/hooks/useHeaderActive';
-import { usePathname } from 'next/navigation';
+import useHeaderActive from '@/hooks/layout/useHeaderActive';
 import ClientHeaderMenu from './ClientHeaderMenu';
+import { useHistory } from '@/providers/HistoryProvider';
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
-  const { pageTitle, goBack } = useHeaderActive();
+  const { pageTitle } = useHeaderActive();
   const pathname = usePathname();
+  const { history } = useHistory();
+  const router = useRouter();
 
-  //헤더 안나오는 페이지
+  const goBack = () => {
+    if (history.length > 1) {
+      const previousPage = history[history.length - 2]; // 바로 직전 페이지
+      router.push(previousPage);
+    } else {
+      router.back(); // 히스토리가 없을 경우 기본 뒤로 가기
+    }
+  };
+
+  //헤더 안나오는 페이지(모바일)
   const hiddenHeaderPaths = ['/'];
   const shouldHideMobileHeader = hiddenHeaderPaths.includes(pathname);
 
+  //디테일 부분도 헤더 볼드처리
   const getLinkStyle = (path: string) => {
-    const isActive = pathname === path;
+    const isActive = path === '/' ? pathname === '/' : pathname.startsWith(path);
+
     return isActive ? 'text-gray-900 font-semiBold' : 'hover:font-regular';
   };
-
   if (!pageTitle) return null;
 
   return (
@@ -48,22 +62,35 @@ const Header = () => {
           </div>
 
           <nav className="flex flex-1 justify-center space-x-8 text-sm font-normal text-gray-700">
-            <Link href="/" className={getLinkStyle('/')}>
+            <Link
+              href="/"
+              className={`${getLinkStyle('/')} rounded-md px-4 py-2 transition duration-300 hover:bg-gray-200`}
+            >
               서비스 소개
             </Link>
-            <Link href="/home" className={getLinkStyle('/home')}>
-              홈
-            </Link>
-            <Link href="/stamp-map" className={getLinkStyle('/stamp-map')}>
+
+            <Link
+              href="/stamp-map"
+              className={`${getLinkStyle('/stamp-map')} rounded-md px-4 py-2 transition duration-300 hover:bg-gray-200`}
+            >
               지도
             </Link>
-            <Link href="/tourism" className={getLinkStyle('/tourism')}>
+            <Link
+              href="/tourism"
+              className={`${getLinkStyle('/tourism')} rounded-md px-4 py-2 transition duration-300 hover:bg-gray-200`}
+            >
               추천여행지
             </Link>
-            <Link href="/photo-album" className={getLinkStyle('/photo-album')}>
+            <Link
+              href="/photo-album"
+              className={`${getLinkStyle('/photo-album')} rounded-md px-4 py-2 transition duration-300 hover:bg-gray-200`}
+            >
               앨범
             </Link>
-            <Link href="/stamp-all" className={getLinkStyle('/stamp-all')}>
+            <Link
+              href="/stamp-all"
+              className={`${getLinkStyle('/stamp-all')} rounded-md px-4 py-2 transition duration-300 hover:bg-gray-200`}
+            >
               스탬프
             </Link>
           </nav>

@@ -1,96 +1,77 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import Button from '../common/Buttons/Button';
-import CameraIcon from '../common/Icons/LandingIcons/CameraIcon';
-import CompassIcon from '../common/Icons/LandingIcons/CompassIcon';
-import ArrowIcon from '../common/Icons/LandingIcons/ArrowIcon';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Autoplay } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/swiper-bundle.css';
-import 'swiper/css/navigation';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { useState, useEffect, useRef } from 'react';
+import { LandingStart } from '@/components/landing/LandingStart';
+
 import Image from 'next/image';
 import browserClient from '@/utils/supabase/client';
 
-//성능개선
-const debounce = (func: (...args: any[]) => void, wait: number) => {
-  let timeout: NodeJS.Timeout; // 타이머 ID를 저장할 변수
-  return (...args: any[]) => {
-    clearTimeout(timeout); // 이전 타이머를 취소
-    timeout = setTimeout(() => func(...args), wait); //새로운 타이머를 설정->wait지나고 실행
-  };
-};
+import 'swiper/css';
+import 'swiper/swiper-bundle.css';
+import 'swiper/css/navigation';
 
 const LandingPage = () => {
-  const router = useRouter();
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [isMainSectionVisible, setIsMainSectionVisible] = useState(false);
   const mainsectionRef = useRef(null);
   const [isStampSectionVisible, setIsStampSectionVisible] = useState(false);
   const stampSectionRef = useRef(null);
   const [isTourSectionVisible, setIsTourSectionVisible] = useState(false);
   const tourSectionRef = useRef(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // 옵저버 인터렉션
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setWindowWidth(window.innerWidth);
     }
 
-    const mainSectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          setIsMainSectionVisible(entry.isIntersecting);
-        });
-      },
-      { threshold: 0.3 } // 요소의 40%가 뷰포트에 들어왔을 때
-    );
+    const createObserver = (setVisible: (isVisible: boolean) => void) => {
+      return new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            setVisible(entry.isIntersecting);
+          });
+        },
+        { threshold: 0.3 } // 요소의 30%가 뷰포트에 들어왔을 때
+      );
+    };
+    const mainSectionObserver = createObserver(setIsMainSectionVisible);
+    const stampSectionObserver = createObserver(setIsStampSectionVisible);
+    const tourSectionObserver = createObserver(setIsTourSectionVisible);
 
-    const stampSectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          setIsStampSectionVisible(entry.isIntersecting);
-        });
-      },
-      { threshold: 0.3 } // 요소의 50%가 뷰포트에 들어왔을 때
-    );
+    const mainSectionNode = mainsectionRef.current;
+    const stampSectionNode = stampSectionRef.current;
+    const tourSectionNode = tourSectionRef.current;
 
-    const tourSectionObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          setIsTourSectionVisible(entry.isIntersecting);
-        });
-      },
-      { threshold: 0.3 } // 요소의 50%가 뷰포트에 들어왔을 때
-    );
+    const observeSection = (observer: IntersectionObserver, node: HTMLElement | null) => {
+      if (node) {
+        observer.observe(node);
+      }
+    };
 
-    if (mainsectionRef.current) {
-      mainSectionObserver.observe(mainsectionRef.current);
-    }
-    if (stampSectionRef.current) {
-      stampSectionObserver.observe(stampSectionRef.current);
-    }
-    if (tourSectionRef.current) {
-      tourSectionObserver.observe(tourSectionRef.current);
-    }
+    observeSection(mainSectionObserver, mainSectionNode);
+    observeSection(stampSectionObserver, stampSectionNode);
+    observeSection(tourSectionObserver, tourSectionNode);
 
     return () => {
-      if (mainsectionRef.current) {
-        mainSectionObserver.unobserve(mainsectionRef.current);
-      }
-      if (stampSectionRef.current) {
-        stampSectionObserver.unobserve(stampSectionRef.current);
-      }
-      if (tourSectionRef.current) {
-        tourSectionObserver.unobserve(tourSectionRef.current);
-      }
+      const observeSection = (observer: IntersectionObserver, node: HTMLElement | null) => {
+        if (node) {
+          observer.observe(node);
+        }
+      };
+
+      observeSection(mainSectionObserver, mainSectionNode);
+      observeSection(stampSectionObserver, stampSectionNode);
+      observeSection(tourSectionObserver, tourSectionNode);
     };
   }, []);
 
+  // 유저유무에 따른 정보확인
   useEffect(() => {
     const checkAuth = async () => {
       const {
@@ -102,18 +83,16 @@ const LandingPage = () => {
     checkAuth();
   }, []);
 
-  const goToLoginOrHome = () => {
-    if (isLoggedIn) {
-      router.push('/home'); // 로그인 상태일 때 홈으로 이동
-    } else {
-      router.push('/login'); // 비로그인 상태일 때 로그인 페이지로 이동
-    }
+  // 성능개선
+  const debounce = (func: (...args: any[]) => void, wait: number) => {
+    let timeout: NodeJS.Timeout; // 타이머 ID를 저장할 변수
+    return (...args: any[]) => {
+      clearTimeout(timeout); // 이전 타이머를 취소
+      timeout = setTimeout(() => func(...args), wait); //새로운 타이머를 설정->wait지나고 실행
+    };
   };
 
-  // const goToLogin = () => {
-  //   router.push('/login');
-  // };
-
+  // 반응형 사이즈조정 : 디바운스 함수
   useEffect(() => {
     const handleResize = debounce(() => {
       const newWidth = window.innerWidth;
@@ -129,20 +108,7 @@ const LandingPage = () => {
     };
   }, [containerRef, windowWidth]);
 
-  //pc - 단하나 텍스트 통통 애니메이션
-  const text1 = '단';
-  const text2 = '하나의';
-  const animatedText1 = text1.split('').map((char, index) => (
-    <span key={index} className="bounce">
-      {char}
-    </span>
-  ));
-  const animatedText2 = text2.split('').map((char, index) => (
-    <span key={index} className="bounce bounce2">
-      {char}
-    </span>
-  ));
-
+  // section3 : 스탬프 이미지
   const StampImgUrl = [
     { region: '울산', url: '/images/landing/section3-icon1.png' },
     { region: '대구', url: '/images/landing/section3-icon2.png' },
@@ -151,6 +117,7 @@ const LandingPage = () => {
     { region: '부산', url: '/images/landing/section3-icon5.png' }
   ];
 
+  // section4 : 추천여행지 슬라이드 이미지
   const TourSlideImgUrl = [
     { tour: 'Slide1', url: '/images/landing/section4-slide1.png' },
     { tour: 'Slide2', url: '/images/landing/section4-slide2.png' },
@@ -166,18 +133,9 @@ const LandingPage = () => {
 
   return (
     <>
-      {/* PC-랜딩화면 */}
-      <div className="hidden lg:flex lg:flex-col" ref={containerRef}>
-        <section className="section1 mt-[56px] bg-white">
+      <div className="lg:flex lg:flex-col" ref={containerRef}>
+        <section className="section1 mt-[56px] hidden bg-white lg:block">
           <div className="top">
-            {/* <Image
-                src={`/images/landing/section1-1.png`}
-                alt={''}
-                layout="responsive"
-                width={100}
-                height={100}
-                className="mainImg relative"
-              /> */}
             <div className="relative h-full w-[50%]">
               <Image
                 src={`/images/landing/logo-w.png`}
@@ -221,11 +179,11 @@ const LandingPage = () => {
               layout="responsive"
               width={100}
               height={100}
-              className="move-img !w-[50%]"
+              className="!w-[50%]"
             />
           </div>
         </section>
-        <section className="h-full bg-white px-[24px] pt-[220px]" ref={mainsectionRef}>
+        <section className="hidden h-full bg-white px-[24px] pt-[220px] lg:block" ref={mainsectionRef}>
           <div className="pc-inner-width main-section-bg">
             <h2 className={`sectionTitle-Navy opacity-0 ${isMainSectionVisible ? 'main-section-fade1' : ''}`}>
               여행, 그리고 기록
@@ -257,7 +215,7 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
-        <section className="bg-white px-[24px] pt-[220px]" ref={stampSectionRef}>
+        <section className="hidden bg-white px-[24px] pt-[220px] lg:block" ref={stampSectionRef}>
           <div className="pc-inner-width">
             <h2 className={`sectionTitle-Navy opacity-0 ${isStampSectionVisible ? 'main-section-fade1' : ''}`}>
               스탬프
@@ -270,7 +228,7 @@ const LandingPage = () => {
             <div className={`flex ${windowWidth && windowWidth >= 1920 ? 'h-[80vh]' : 'h-[100vh]'} min-h-[1000px]`}>
               <ul className="flex h-full w-full items-center justify-center">
                 <Image
-                  src={`/images/landing/section3-phone.png`}
+                  src={`/images/landing/section3-phone-1.png`}
                   alt={''}
                   layout="responsive"
                   width={100}
@@ -291,7 +249,7 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
-        <section className="bg-white pt-[220px]" ref={tourSectionRef}>
+        <section className="hidden bg-white pt-[220px] lg:block" ref={tourSectionRef}>
           <div className="relative h-[80vh] min-h-[1100px]">
             <h2
               className={`sectionTitle-Navy pc-inner-width px-[24px] opacity-0 ${isTourSectionVisible ? 'main-section-fade1' : ''}`}
@@ -355,54 +313,7 @@ const LandingPage = () => {
             </ul>
           </div>
         </section>
-
-        <section className="flex h-full flex-col items-center justify-between gap-[38px] overflow-hidden border-b border-[#828282] bg-white pb-[15%] pt-[10%]">
-          <div className="relative flex min-h-[70vh] w-full flex-grow items-center justify-center">
-            <div className="absolute h-[30%]">
-              <CameraIcon />
-            </div>
-            <div className="absolute h-[50%]">
-              <CompassIcon />
-            </div>
-            <div className="absolute h-[60%]">
-              <ArrowIcon />
-            </div>
-          </div>
-          <div className="flex flex-col items-center gap-[16px]">
-            <h2 className={`sectionTitle-Black`}>
-              모아는 당신을 위한{' '}
-              <strong className="text-[#008EBD]">
-                {animatedText1} {animatedText2} 여행기
-              </strong>{' '}
-              입니다.
-            </h2>
-            <span className="text-gray-900">내 손안에 여행기 모아와 함께 여행을 떠나요.</span>
-          </div>
-          <div className="mb-[50px] flex w-full flex-col items-center justify-center px-6">
-            <Button text="여행 떠나기" variant="blue" onClick={goToLoginOrHome} />
-          </div>
-        </section>
-      </div>
-
-      {/*****  MO-랜딩화면 *****/}
-      <div className="relative flex min-h-[calc(100vh-8rem)] flex-col items-center justify-between overflow-hidden lg:hidden">
-        {/* 아이콘 영역 */}
-        <div className="flex w-full flex-grow items-center justify-center">
-          <div className="absolute h-[30%]">
-            <CameraIcon />
-          </div>
-          <div className="absolute h-[50%]">
-            <CompassIcon />
-          </div>
-          <div className="absolute h-[60%]">
-            <ArrowIcon />
-          </div>
-        </div>
-
-        {/* 여행 떠나기 버튼 */}
-        <div className="flex w-full flex-col items-center justify-center px-6">
-          <Button text="여행 떠나기" variant="blue" onClick={goToLoginOrHome} />
-        </div>
+        <LandingStart isLoggedIn={isLoggedIn} />
       </div>
     </>
   );

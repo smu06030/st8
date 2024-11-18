@@ -1,7 +1,9 @@
 'use client';
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+import Image from 'next/image';
 
 const SplashPage = () => {
   const [isVisible, setIsVisible] = useState(true);

@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import DesktopSignupForm from './DesktopSignupForm';
+import { useEffect, useState } from 'react';
+
 import MobileSignupForm from './MobileSignupForm';
+import DesktopSignupForm from './DesktopSignupForm';
 
 const SignupForm = () => {
   const [isDesktop, setIsDesktop] = useState(false);

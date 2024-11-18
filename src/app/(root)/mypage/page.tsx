@@ -1,5 +1,6 @@
-import MyPageLayout from '@/components/mypage/MyPageLayout';
 import { Metadata } from 'next';
+
+import MyPageLayout from '@/components/mypage/MyPageLayout';
 
 export const metadata: Metadata = {
   title: '마이페이지',

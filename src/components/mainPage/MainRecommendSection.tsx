@@ -1,14 +1,24 @@
 'use client';
 
+import { Tourism } from '@/types/tourism/tourism.type';
+import { useState, useEffect } from 'react';
+import { useGetTourismListQuery } from '@/hooks/queries/query/useTourismQuery';
+
 import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
-import useUserId from '@/hooks/useUserId';
+import useUserId from '@/hooks/auth/useUserId';
 import MainTourismSwiper from './swiper/MainTourismSwiper';
-import { useGetTourismListQuery } from '@/queries/query/useTourismQuery';
 
 const MainRecommendSection = () => {
   const userId = useUserId();
   const { data: tourismList, isError } = useGetTourismListQuery(userId);
+  const [tourismListData, setTourismListData] = useState<Tourism[]>([]);
+
+  useEffect(() => {
+    if (userId && tourismList) {
+      setTourismListData(tourismList);
+    }
+  }, [userId, tourismList]);
 
   if (isError) {
     const errorMessage = '추천 여행지 정보를 가져오는 중 오류가 발생했습니다.';
@@ -33,7 +43,13 @@ const MainRecommendSection = () => {
           </div>
         </Link>
       </div>
-      {tourismList && tourismList.length > 0 ? (
+      {userId ? (
+        tourismListData && tourismListData.length > 0 ? (
+          <MainTourismSwiper tourismList={tourismListData} userId={userId} />
+        ) : (
+          <p className="text-sm text-alert lg:mt-7 lg:flex lg:items-center lg:justify-center">텅</p>
+        )
+      ) : tourismList && tourismList.length > 0 ? (
         <MainTourismSwiper tourismList={tourismList} userId={userId} />
       ) : (
         <p className="text-sm text-alert lg:mt-7 lg:flex lg:items-center lg:justify-center">텅</p>

@@ -1,5 +1,4 @@
-import MyLocation from '@/components/stamp/MyLocation';
-import React from 'react';
+import MyLocation from '@/components/stamp/StampMyLocation';
 
 const StampTracking = () => {
   return (

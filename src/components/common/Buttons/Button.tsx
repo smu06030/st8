@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface ButtonProps {
   text: string;
   onClick?: () => void;
@@ -21,7 +19,7 @@ const Button = ({ text, onClick, variant = 'gray', disabled = false, type = 'but
   return (
     <button
       type={type}
-      className={`${baseStyles} ${variantStyles[variant]}`}
+      className={`${baseStyles} ${variantStyles[variant]} hover:bg-[#BDEFFF]`}
       onClick={onClick}
       disabled={variant === 'gray' || disabled}
     >

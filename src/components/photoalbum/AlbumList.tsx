@@ -1,21 +1,21 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { useGetAlbumListQuery } from '@/hooks/queries/query/useAlbumQuery';
+import { usePostAlbumMutation } from '@/hooks/queries/mutation/useAlbumMutation';
 
-import LoadingSpin from '@/components/common/Loading/LoadingSpin';
-import ModalAlbumImg from '@/components/photoalbum/ModalAlbumImg';
-import AddPhotoBtn from '@/components/photoalbum/AddPhotoBtn';
-import Toptitle from '@/components/photoalbum/AlbumTitleTab';
-import EditAlbumImg from '@/components/photoalbum/EditAlbumImg';
-import useModal from '@/hooks/useModal';
-import useAlbumDelete from '@/hooks/useAlbumDelete';
-import useImgModal from '@/hooks/useImgModal';
+import Link from 'next/link';
+import Image from 'next/image';
 import Loading from '@/app/(root)/(stamp)/loading';
-import useUserId from '@/hooks/useUserId';
-import { useGetAlbumListQuery } from '@/queries/query/useAlbumQuery';
-import { usePostAlbumMutation } from '@/queries/mutation/useAlbumMutation';
+import Toptitle from '@/components/photoalbum/AlbumTitleTab';
+import useModal from '@/hooks/modal/useModal';
+import useUserId from '@/hooks/auth/useUserId';
+import useImgModal from '@/hooks/album/useImgModal';
+import AlbumAddBtn from '@/components/photoalbum/AlbumAddBtn';
+import LoadingSpin from '@/components/common/Loading/LoadingSpin';
+import AlbumEditImg from '@/components/photoalbum/AlbumEditImg';
+import AlbumImgModal from '@/components/photoalbum/AlbumImgModal';
+import useAlbumDelete from '@/hooks/album/useAlbumDelete';
 
 const AlbumList = () => {
   const userId = useUserId();
@@ -75,7 +75,7 @@ const AlbumList = () => {
 
   // console.log('filterRigionTitle', filterRigionTitle);
   return (
-    <div className="pc-inner-width mt-16 pb-[200px] lg:pb-[535px]">
+    <div className="pc-inner-width mt-16 pb-[200px] lg:mt-[64px] lg:pb-[535px]">
       <Toptitle
         activeTab={activeTab}
         edit={edit}
@@ -87,7 +87,7 @@ const AlbumList = () => {
       {/* 전체보기 */}
       {activeTab === 'allTab' ? (
         <ul className="mt-[32px] grid grid-cols-3 gap-[6px] lg:grid-cols-7">
-          <AddPhotoBtn
+          <AlbumAddBtn
             imgSrc={imgSrc}
             setImgSrc={setImgSrc}
             postAlbumMutate={postAlbumMutate}
@@ -140,7 +140,7 @@ const AlbumList = () => {
                 <ul
                   className={`relative mt-[16px] grid grid-cols-2 gap-[6px] pr-[20%] lg:pr-[70%] ${item === '미설정 지역' && 'row-start-1'}`}
                 >
-                  <AddPhotoBtn
+                  <AlbumAddBtn
                     imgSrc={imgSrc}
                     setImgSrc={setImgSrc}
                     postAlbumMutate={postAlbumMutate}
@@ -167,7 +167,7 @@ const AlbumList = () => {
         </section>
       )}
       {isOpen && (
-        <ModalAlbumImg
+        <AlbumImgModal
           Modal={Modal}
           setImgModal={setImgModal}
           selectedImgUrl={selectedImgUrl}
@@ -177,7 +177,7 @@ const AlbumList = () => {
           currentIndex={currentIndex}
         />
       )}
-      {edit && <EditAlbumImg deleteId={deleteId} onHandleDelete={onHandleDelete} />}
+      {edit && <AlbumEditImg deleteId={deleteId} onHandleDelete={onHandleDelete} />}
     </div>
   );
 };
