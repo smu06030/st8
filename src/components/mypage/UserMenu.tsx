@@ -1,12 +1,16 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect } from 'react';
 import Link from 'next/link';
-import Icon from '../common/Icons/Icon';
-import LogoutModal from '../common/Modal/LogoutModal';
+import Icon from '@/components/common/Icons/Icon';
+import LogoutModal from '@/components/common/Modal/LogoutModal';
 import useModal from '@/hooks/modal/useModal';
 import useUserMenuState from '@/hooks/useUserMenuState';
 
 interface UserMenuType {
   initialNickname: string;
+  isLoggedIn: boolean;
+  nickname: string;
+  tempNickname: string;
+  checkUserStatus: string;
 }
 
 const UserMenu = ({ initialNickname }: UserMenuType) => {

@@ -3,14 +3,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import StampCount from './StampCount';
-import PhotoCount from './PhotoCount';
-import RecentPhoto from './RecentPhoto';
-import LogoutButton from '../auth/LogoutButton';
-import NicknameEditor from './NicknameEditor';
+import StampCount from '@/components/mypage/MyPageStampCount';
+import PhotoCount from '@/components/mypage/MyPagePhotoCount';
+import RecentPhoto from '@/components/mypage/MyPageRecentPhoto';
+import LogoutButton from '@/components/auth/LogoutButton';
 
 import useModal from '@/hooks/modal/useModal';
-import NicknameEditorModal from '../common/Modal/NicknameEditorModal';
+import NicknameEditorModal from '@/components/common/Modal/NicknameEditorModal';
+import NicknameEditor from '@/components/mypage/MyPageNicknameEditor';
 
 const MyPageLayout = () => {
   const { Modal, openModal, closeModal } = useModal();
