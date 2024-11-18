@@ -8,7 +8,7 @@ interface ButtonProps {
 
 const Button = ({ text, onClick, variant = 'gray', disabled = false, type = 'button' }: ButtonProps) => {
   const baseStyles =
-    'h-16 w-[327px] rounded-xl p-2.5 font-semiBold text-base transition-colors duration-300 ease-in-out ';
+    'h-16 w-[327px] rounded-xl p-2.5 font-semiBold text-base transition-colors duration-300 ease-in-out';
 
   const variantStyles = {
     gray: 'bg-gray-100 text-gray-300 cursor-not-allowed',

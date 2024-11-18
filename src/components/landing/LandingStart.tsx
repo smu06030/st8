@@ -7,6 +7,7 @@ import ArrowIcon from '@/components/common/Icons/LandingIcons/ArrowIcon';
 import CameraIcon from '@/components/common/Icons/LandingIcons/CameraIcon';
 import CompassIcon from '@/components/common/Icons/LandingIcons/CompassIcon';
 import LandingTutorial from '@/components/landing/LandingTutorial';
+import Link from 'next/link';
 
 interface LandingPageProps {
   isLoggedIn: boolean;
@@ -43,15 +44,15 @@ export const LandingStart = ({ isLoggedIn }: LandingPageProps) => {
   };
 
   return (
-    <section className="flex flex-col items-center justify-between overflow-hidden lg:h-full lg:gap-[38px] lg:border-b lg:border-[#828282] lg:bg-white lg:pb-[15%] lg:pt-[10%] mo-only:relative mo-only:min-h-[calc(100vh-8rem)]">
-      <div className="flex w-full flex-grow items-center justify-center lg:relative lg:min-h-[70vh]">
-        <div className="absolute h-[30%]">
+    <section className="flex flex-col items-center justify-between overflow-hidden lg:h-full lg:gap-[38px] lg:border-b lg:border-[#828282] lg:bg-white lg:pb-[15%] lg:pt-[10%] mo-only:relative mo-only:min-h-[100vh]">
+      <div className="flex h-[70vh] w-full flex-grow items-center justify-center lg:relative lg:min-h-[70vh]">
+        <div className="absolute h-[0%]">
           <CameraIcon />
         </div>
-        <div className="absolute h-[50%]">
+        <div className="absolute h-[30%]">
           <CompassIcon />
         </div>
-        <div className="absolute h-[60%]">
+        <div className="absolute h-[40%]">
           <ArrowIcon />
         </div>
       </div>
@@ -65,10 +66,19 @@ export const LandingStart = ({ isLoggedIn }: LandingPageProps) => {
         </h2>
         <span className="text-gray-900">내 손안에 여행기 모아와 함께 여행을 떠나요.</span>
       </div>
-      <span onClick={handelTutorialStart} className="cursor-pointer">
-        click
-      </span>
-      <div className="flex w-full flex-col items-center justify-center px-6 lg:mb-[50px]">
+      <div className="flex h-[30vh] w-full flex-col items-center justify-center lg:mb-[50px] lg:hidden">
+        {/* <Buttom text="모아 알아보기" variant="blue" onClick={handelTutorialStart} /> */}
+        <button onClick={handelTutorialStart} className="button w-[calc(100%-48px)]">
+          모아 알아보기
+        </button>
+        <span className="flex gap-[6px] pt-[24px] text-[14px] text-[#696969]">
+          이미 회원이신가요?
+          <Link href={PAGE_NAMES.LOGIN.link} className="border-b border-[#00688A] font-bold text-[#00688A]">
+            로그인
+          </Link>
+        </span>
+      </div>
+      <div className="hidden w-full flex-col items-center justify-center px-6 lg:mb-[50px] lg:flex">
         <Button text="여행 떠나기" variant="blue" onClick={goToLoginOrHome} />
       </div>
       {isTutorialVisible && <LandingTutorial />}
