@@ -26,6 +26,7 @@ body {
   font-family: 'Pretendard-Regular', sans-serif;
   line-height: normal;
   min-height: 100vh;
+  color: #171717;
 }
 
 @layer utilities {
@@ -104,6 +105,5 @@ body {
   }
 }
 
-.mainTourism-swiper{
-  
+.mainTourism-swiper {
 }

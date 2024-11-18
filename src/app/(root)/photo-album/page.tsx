@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const Album = () => {
   return (
-    <div>
+    <div className="lg:pt-[64px]">
       <AlbumList />
     </div>
   );

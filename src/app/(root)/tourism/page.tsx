@@ -2,19 +2,33 @@
 
 import { groupTourismByCity } from '@/utils/tourism/tourismGroupFormatter';
 import { useGetTourismListQuery } from '@/hooks/queries/query/useTourismQuery';
+import { useState, useEffect } from 'react';
+import { Tourism } from '@/types/tourism/tourism.type';
 
+import Loading from '@/app/(root)/(stamp)/loading';
 import useUserId from '@/hooks/auth/useUserId';
 import TourismSwiper from '@/components/tourism/TourismSwiper';
 
 const TourismPage = () => {
   const userId = useUserId();
-  const { data: tourismList } = useGetTourismListQuery(userId);
+  const { data: tourismList, isLoading } = useGetTourismListQuery(userId);
+  const [tourismListData, setTourismListData] = useState<Tourism[]>([]); //로그인했을때 북마크된 투어리스트상태들 담을 state
 
-  // 도시별 데이터 그룹화
-  const groupedPlaces = tourismList ? groupTourismByCity(tourismList) : [];
+  useEffect(() => {
+    if (userId && tourismList) {
+      //유저아이디와 투어리스트가 있으면 tourismListData 상태에 저장
+      setTourismListData(tourismList);
+    }
+  }, [userId, tourismList]); //유저아이디, 쿼리로 불러온 투어리스트가 변경될때마다
+
+  if (isLoading) {
+    return <Loading />;
+  }
+  // 도시별 데이터 그룹화 : 유저아이디 유무에 따라 할당값 다르게
+  const groupedPlaces = userId ? groupTourismByCity(tourismListData) : groupTourismByCity(tourismList || []);
 
   return (
-    <div className="mt-12 min-h-screen pt-[36px] lg:mt-0 lg:pt-[74px] mo-only:px-6">
+    <div className="mt-12 min-h-screen pt-[36px] lg:mt-[56px] lg:mt-[74px] mo-only:px-6">
       <header className="pc-inner-width mb-[48px]">
         <h1 className="font-bold text-2xl leading-tight text-secondary-900">
           <span className="sm:inline block text-[32px] leading-[41px]">
@@ -26,7 +40,7 @@ const TourismPage = () => {
       </header>
 
       <main className="mb-[93px] flex flex-col gap-[46px]">
-        {groupedPlaces.length !== 0 ? (
+        {Object.keys(groupedPlaces).length !== 0 ? ( //groupedPlaces객체라 length사용불가, -> 객체의 키 개수를 확인하는걸로 대체
           Object.entries(groupedPlaces).map(([city, tourismList]) => (
             <section key={city}>
               <div className="pc-inner-width mb-[6px] flex items-center justify-between">

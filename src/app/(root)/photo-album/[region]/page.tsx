@@ -8,8 +8,8 @@ import Loading from '@/app/(root)/(stamp)/loading';
 import useModal from '@/hooks/modal/useModal';
 import useUserId from '@/hooks/auth/useUserId';
 import useImgModal from '@/hooks/album/useImgModal';
-import AlbumImgEdit from '@/components/photoalbum/EditAlbumImg';
-import ModalAlbumImg from '@/components/photoalbum/ModalAlbumImg';
+import AlbumImgEdit from '@/components/photoalbum/AlbumEditImg';
+import ModalAlbumImg from '@/components/photoalbum/AlbumImgModal';
 import useAlbumDelete from '@/hooks/album/useAlbumDelete';
 
 const RegionDetail = () => {
