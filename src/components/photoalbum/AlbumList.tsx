@@ -11,10 +11,10 @@ import Toptitle from '@/components/photoalbum/AlbumTitleTab';
 import useModal from '@/hooks/modal/useModal';
 import useUserId from '@/hooks/auth/useUserId';
 import useImgModal from '@/hooks/album/useImgModal';
-import AddPhotoBtn from '@/components/photoalbum/AlbumAddBtn';
+import AlbumAddBtn from '@/components/photoalbum/AlbumAddBtn';
 import LoadingSpin from '@/components/common/Loading/LoadingSpin';
-import EditAlbumImg from '@/components/photoalbum/AlbumEditImg';
-import ModalAlbumImg from '@/components/photoalbum/AlbumImgModal';
+import AlbumEditImg from '@/components/photoalbum/AlbumEditImg';
+import AlbumImgModal from '@/components/photoalbum/AlbumImgModal';
 import useAlbumDelete from '@/hooks/album/useAlbumDelete';
 
 const AlbumList = () => {
@@ -87,7 +87,7 @@ const AlbumList = () => {
       {/* 전체보기 */}
       {activeTab === 'allTab' ? (
         <ul className="mt-[32px] grid grid-cols-3 gap-[6px] lg:grid-cols-7">
-          <AddPhotoBtn
+          <AlbumAddBtn
             imgSrc={imgSrc}
             setImgSrc={setImgSrc}
             postAlbumMutate={postAlbumMutate}
@@ -140,7 +140,7 @@ const AlbumList = () => {
                 <ul
                   className={`relative mt-[16px] grid grid-cols-2 gap-[6px] pr-[20%] lg:pr-[70%] ${item === '미설정 지역' && 'row-start-1'}`}
                 >
-                  <AddPhotoBtn
+                  <AlbumAddBtn
                     imgSrc={imgSrc}
                     setImgSrc={setImgSrc}
                     postAlbumMutate={postAlbumMutate}
@@ -167,7 +167,7 @@ const AlbumList = () => {
         </section>
       )}
       {isOpen && (
-        <ModalAlbumImg
+        <AlbumImgModal
           Modal={Modal}
           setImgModal={setImgModal}
           selectedImgUrl={selectedImgUrl}
@@ -177,7 +177,7 @@ const AlbumList = () => {
           currentIndex={currentIndex}
         />
       )}
-      {edit && <EditAlbumImg deleteId={deleteId} onHandleDelete={onHandleDelete} />}
+      {edit && <AlbumEditImg deleteId={deleteId} onHandleDelete={onHandleDelete} />}
     </div>
   );
 };

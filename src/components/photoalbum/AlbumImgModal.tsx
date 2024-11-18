@@ -28,7 +28,7 @@ interface ImageModalType {
   Modal: ({ children }: { children: React.ReactNode }) => ReactPortal | null;
 }
 
-const ImgModal = ({
+const AlbumImgModal = ({
   setImgModal,
   selectedImgUrl,
   regionPhoto,
@@ -92,4 +92,4 @@ const ImgModal = ({
   );
 };
 
-export default ImgModal;
+export default AlbumImgModal;
