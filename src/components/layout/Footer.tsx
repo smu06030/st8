@@ -10,8 +10,8 @@ const Footer = () => {
     { name: '김재범', job: 'Product Designer', img: '/images/footer/team05.png' }
   ];
   const footerText = [
-    { title: '이용약관', link: '' },
-    { title: '개인정보처리방침', link: '' },
+    { title: '이용약관', link: 'https://forest-act-835.notion.site/1422d534ecca800b93d1dafa00037e7f?pvs=4' },
+    { title: '개인정보처리방침', link: 'https://forest-act-835.notion.site/1422d534ecca804e8750e2658afb0bd5?pvs=4' },
     { title: 'Notion', link: 'https://www.notion.so/teamsparta/8-bf17275ec94f4ac988eb0362363e3df6' },
     { title: 'Github', link: 'https://github.com/smu06030/st8' },
     { title: '내일배움캠프', link: 'https://nbcamp.spartacodingclub.kr/frontend' }
