@@ -1,9 +1,9 @@
 'use client';
 
-import { useGetTourismListQuery } from '@/hooks/queries/query/useTourismQuery';
 import { Tourism } from '@/types/tourism/tourism.type';
+import { useState, useEffect } from 'react';
+import { useGetTourismListQuery } from '@/hooks/queries/query/useTourismQuery';
 
-import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Icon from '../common/Icons/Icon';
 import useUserId from '@/hooks/auth/useUserId';
