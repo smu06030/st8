@@ -71,7 +71,7 @@ const RegionCategoryModal = ({ Modal, onHandleUpload, setRegionCate, regionCate 
         <div>
           <button
             onClick={() => onHandleUpload('')}
-            className="w-full rounded-[12px] bg-secondary-500 py-[20px] font-semiBold text-[#473700]"
+            className="w-full rounded-[12px] bg-secondary-500 py-[20px] font-semiBold text-[#473700] hover:bg-[#BDEFFF]"
           >
             업로드
           </button>

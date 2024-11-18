@@ -17,7 +17,7 @@ interface AddAlbumParamsType {
   item: string;
 }
 
-const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: AddAlbumParamsType) => {
+const AlbumAddBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: AddAlbumParamsType) => {
   const userId = useUserId();
   const router = useRouter();
 
@@ -108,7 +108,7 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: Ad
       />
       <label
         htmlFor={`fileInput-${item}`}
-        className="flex aspect-square cursor-pointer items-center justify-center bg-[#004157] text-[50px] text-white hover:bg-[#1b4755]"
+        className="plus-hover flex aspect-square cursor-pointer items-center justify-center bg-[#004157] text-[50px] text-white hover:bg-[#8AE2FF]"
       >
         <Icon name="PlusIcon" size={47} color="white" bgColor="transparent" />
       </label>
@@ -126,4 +126,4 @@ const AddPhotoBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: Ad
   );
 };
 
-export default AddPhotoBtn;
+export default AlbumAddBtn;
