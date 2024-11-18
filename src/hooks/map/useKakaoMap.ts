@@ -68,6 +68,7 @@ const useKakaoMap = () => {
     stampList,
     activeIndex,
     selectedPath,
+    setActiveIndex,
     filteredStamps,
     updateHoverState,
     updatePolygonPath,
