@@ -73,7 +73,7 @@ const LoginForm = () => {
     }
   };
 
-  const handleSocialLogin = (type: 'kakao' | 'google' | 'apple', e: MouseEvent<HTMLButtonElement>) => {
+  const handleSocialLogin = (type: 'kakao' | 'google' | 'github', e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     loginWithProvider(type);
   };
@@ -133,7 +133,7 @@ const LoginForm = () => {
           <Button text="로그인" variant={isValid ? 'blue' : 'gray'} disabled={!isValid} type="submit" />
         </div>
         <div className="mt-6 flex justify-center space-x-4">
-          {/* <SocialLoginButton provider="apple" onClick={(e) => handleSocialLogin('apple', e)} /> */}
+          {/* <SocialLoginButton provider="github" onClick={(e) => handleSocialLogin('github', e)} /> */}
           <SocialLoginButton provider="google" onClick={(e) => handleSocialLogin('google', e)} />
           <SocialLoginButton provider="kakao" onClick={(e) => handleSocialLogin('kakao', e)} />
         </div>
