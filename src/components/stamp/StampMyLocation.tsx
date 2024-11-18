@@ -106,14 +106,14 @@ const MyLocation = () => {
           {aliasLocation === null && !saveAlias ? (
             <button
               onClick={openModal}
-              className={`w-full rounded-[12px] bg-secondary-500 py-[21px] font-semiBold text-[20px] text-[#004157] ${visit && 'animate-fadeUpBtn'}`}
+              className={`w-full rounded-[12px] bg-secondary-500 py-[21px] font-semiBold text-[20px] text-[#004157] hover:bg-[#BDEFFF] ${visit && 'animate-fadeUpBtn'}`}
             >
               스탬프 확인하러 가기
             </button>
           ) : (
             <Link href={'/stamp-all'}>
               <button
-                className={`w-full rounded-[12px] bg-secondary-500 py-[21px] font-semiBold text-[20px] text-[#004157] ${visit && 'animate-fadeUpBtn'}`}
+                className={`w-full rounded-[12px] bg-secondary-500 py-[21px] font-semiBold text-[20px] text-[#004157] hover:bg-[#BDEFFF] ${visit && 'animate-fadeUpBtn'}`}
               >
                 스탬프 확인하러 가기
               </button>

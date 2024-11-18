@@ -58,6 +58,8 @@
 .swiper-button-prev::after {
   display: none;
 }
-
+.plus-hover:hover path {
+  fill: #004157 !important;
+}
 @media (min-width: 1024px) {
 }

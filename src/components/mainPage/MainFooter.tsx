@@ -1,6 +1,5 @@
-import Link from 'next/link';
-import Icon from '../common/Icons/Icon';
-import MainBackground from '../common/Icons/MainBackgroundIcon';
+import MainBackground from '@/components/common/Icons/MainBackgroundIcon';
+import StampTrackingLinkButton from '@/components/common/Buttons/StampTrackingLinkButton';
 
 const MainFooter = () => {
   return (
@@ -8,12 +7,7 @@ const MainFooter = () => {
       <div className="relative -z-10 h-[373px] w-full overflow-hidden lg:hidden">
         <MainBackground />
       </div>
-      <Link
-        href={'/stamp-tracking'}
-        className="fixed bottom-[100px] right-6 z-[99] cursor-pointer rounded-full shadow-mainStampShadow lg:hidden"
-      >
-        <Icon name="StampIcon" size={86} color="#23C9FF" bgColor="white" rx="43" />
-      </Link>
+      <StampTrackingLinkButton />
     </>
   );
 };

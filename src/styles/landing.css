@@ -179,24 +179,29 @@
   height: 100vh;
   position: absolute;
   display: flex;
+  align-items: center;
   flex-direction: column;
 }
 
 .tutorial-container .slides {
   display: flex;
   transition: transform 0.5s ease-in-out;
-  width: 300%; /* 슬라이드 개수 */
-  height: 90%;
+  width: 500%; /* 슬라이드 개수 */
+  left: 0;
+  position: absolute;
+
+  /* bottom: 0; */
 }
 
 .tutorial-container .slide {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: white;
   color: black;
 }
 .tutorialTitle {
-  @apply mb-[12px] font-bold text-[28px] text-[#00688A];
+  @apply mb-[60px] font-semiBold text-[32px] leading-[41px] text-[#008EBD];
+}
+.button {
+  @apply h-[64px] w-[calc(100%-48px)] rounded-xl bg-secondary-500 p-2.5 font-semiBold text-base text-secondary-900 transition-colors duration-300 ease-in-out;
 }

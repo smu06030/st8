@@ -9,7 +9,7 @@ import useModal from '@/hooks/modal/useModal';
 import useUserId from '@/hooks/auth/useUserId';
 import useImgModal from '@/hooks/album/useImgModal';
 import AlbumImgEdit from '@/components/photoalbum/AlbumEditImg';
-import ModalAlbumImg from '@/components/photoalbum/AlbumImgModal';
+import AlbumImgModal from '@/components/photoalbum/AlbumImgModal';
 import useAlbumDelete from '@/hooks/album/useAlbumDelete';
 
 const RegionDetail = () => {
@@ -90,7 +90,7 @@ const RegionDetail = () => {
         ))}
       </ul>
       {isOpen && (
-        <ModalAlbumImg
+        <AlbumImgModal
           Modal={Modal}
           setImgModal={setImgModal}
           selectedImgUrl={selectedImgUrl}

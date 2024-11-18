@@ -10,8 +10,8 @@ const Footer = () => {
     { name: '김재범', job: 'Product Designer', img: '/images/footer/team05.png' }
   ];
   const footerText = [
-    { title: '이용약관', link: '' },
-    { title: '개인정보처리방침', link: '' },
+    { title: '이용약관', link: 'https://forest-act-835.notion.site/1422d534ecca800b93d1dafa00037e7f?pvs=4' },
+    { title: '개인정보처리방침', link: 'https://forest-act-835.notion.site/1422d534ecca804e8750e2658afb0bd5?pvs=4' },
     { title: 'Notion', link: 'https://www.notion.so/teamsparta/8-bf17275ec94f4ac988eb0362363e3df6' },
     { title: 'Github', link: 'https://github.com/smu06030/st8' },
     { title: '내일배움캠프', link: 'https://nbcamp.spartacodingclub.kr/frontend' }
@@ -20,15 +20,15 @@ const Footer = () => {
   return (
     <div className="hidden w-full bg-[#fff] py-[58px] lg:block">
       <div className="pc-inner-width">
-        <h2 className="text-semiBold mb-[18px] text-[24px] text-gray-500">모아를 만든 사람들</h2>
+        <h2 className="mb-[18px] font-semiBold text-[24px] text-gray-500">모아를 만든 사람들</h2>
         <div className="flex flex-col items-end gap-[124px]">
           <ul className="grid grid-cols-5 gap-[12px]">
             {techTeam.map((info) => (
               <li key={info.name} className="isInfo relative cursor-pointer overflow-hidden rounded-[24px] bg-[#eee]">
                 <Image src={info.img} alt={info.name} width={300} height={300} />
                 <div className="absolute bottom-0 left-0 hidden h-[40%] w-full flex-col gap-[4px] bg-[#1D1D1D] p-[10px] px-[18px] py-[24px] text-[#fff] opacity-[.8]">
-                  <p className="text-[14px]">{info.name}</p>
-                  <p>{info.job}</p>
+                  <p className="pb-[4px] text-[14px]">{info.job}</p>
+                  <p className="font-semiBold">{info.name}</p>
                 </div>
               </li>
             ))}
