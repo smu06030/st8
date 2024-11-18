@@ -1,10 +1,12 @@
 import { useRouter } from 'next/navigation';
 import { PAGE_NAMES } from '@/constants/pageName';
+import React, { useState } from 'react';
 
 import Button from '@/components/common/Buttons/Button';
 import ArrowIcon from '@/components/common/Icons/LandingIcons/ArrowIcon';
 import CameraIcon from '@/components/common/Icons/LandingIcons/CameraIcon';
 import CompassIcon from '@/components/common/Icons/LandingIcons/CompassIcon';
+import LandingTutorial from '@/components/landing/LandingTutorial';
 
 interface LandingPageProps {
   isLoggedIn: boolean;
@@ -12,6 +14,7 @@ interface LandingPageProps {
 
 export const LandingStart = ({ isLoggedIn }: LandingPageProps) => {
   const router = useRouter();
+  const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
   //pc - 단하나 텍스트 통통 애니메이션
   const text1 = '단';
@@ -34,6 +37,9 @@ export const LandingStart = ({ isLoggedIn }: LandingPageProps) => {
     } else {
       router.push(PAGE_NAMES.LOGIN.link); // 비로그인 상태일 때 로그인 페이지로 이동
     }
+  };
+  const handelTutorialStart = () => {
+    setIsTutorialVisible(true);
   };
 
   return (
@@ -59,9 +65,13 @@ export const LandingStart = ({ isLoggedIn }: LandingPageProps) => {
         </h2>
         <span className="text-gray-900">내 손안에 여행기 모아와 함께 여행을 떠나요.</span>
       </div>
+      <span onClick={handelTutorialStart} className="cursor-pointer">
+        click
+      </span>
       <div className="flex w-full flex-col items-center justify-center px-6 lg:mb-[50px]">
         <Button text="여행 떠나기" variant="blue" onClick={goToLoginOrHome} />
       </div>
+      {isTutorialVisible && <LandingTutorial />}
     </section>
   );
 };

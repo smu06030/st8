@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Footer = () => {
   const techTeam = [
@@ -8,7 +9,13 @@ const Footer = () => {
     { name: '송혜인', job: 'Frontend Developer', img: '/images/footer/team04.png' },
     { name: '김재범', job: 'Product Designer', img: '/images/footer/team05.png' }
   ];
-  const footerText = ['이용약관', '개인정보처리방침', 'Notion', 'Github', '내일배움캠프'];
+  const footerText = [
+    { title: '이용약관', link: '' },
+    { title: '개인정보처리방침', link: '' },
+    { title: 'Notion', link: 'https://www.notion.so/teamsparta/8-bf17275ec94f4ac988eb0362363e3df6' },
+    { title: 'Github', link: 'https://github.com/smu06030/st8' },
+    { title: '내일배움캠프', link: 'https://nbcamp.spartacodingclub.kr/frontend' }
+  ];
 
   return (
     <div className="hidden w-full bg-[#fff] py-[58px] lg:block">
@@ -28,8 +35,12 @@ const Footer = () => {
           </ul>
           <ul className="flex">
             {footerText.map((footer) => (
-              <li key={footer} className="px-[16px] py-[12px] text-gray-500">
-                {footer}
+              <li key={footer.title} className="px-[16px] py-[12px] text-gray-500">
+                <Link href={footer.link} legacyBehavior>
+                  <a target="_blank" rel="noopener noreferrer">
+                    {footer.title}
+                  </a>
+                </Link>
               </li>
             ))}
           </ul>

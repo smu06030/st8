@@ -83,7 +83,8 @@ const config: Config = {
       dropdownList: 'slideDropdown .5s ease-in-out',
       slideDownModal: 'slideDown .4s linear',
       bounceLoading: 'bounceLoading 1s ease-in-out infinite',
-      spin: 'spin 1s linear infinite'
+      spin: 'spin 1s linear infinite',
+      tutoriaslide: 'slideIn 0.5s ease-out forwards'
     },
 
     keyframes: {
@@ -132,6 +133,16 @@ const config: Config = {
       bounceLoading: {
         '0%, 100%': { transform: 'translateY(0)' },
         '50%': { transform: 'translateY(-20px)' }
+      },
+      slideIn: {
+        from: {
+          transform: 'translateX(100%)',
+          opacity: '0'
+        },
+        to: {
+          transform: 'translateX(0)',
+          opacity: '1'
+        }
       }
     }
   }
