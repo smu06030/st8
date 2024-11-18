@@ -13,7 +13,6 @@ const StampItem = ({ list, stampList }: RegionStampPropsType) => {
   const stampImg = [...new Set(stampList.filter((item) => item.region === list).map((item) => item.stampimg))].join(
     ', '
   );
-
   return (
     <>
       <Link href={`/stamp-all/${region}`} className="flex flex-col items-center">
