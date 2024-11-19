@@ -14,9 +14,10 @@ const RecentPhoto = () => {
 
   useEffect(() => {
     if (albumListData) {
-      const sortedPhotos = [...albumListData].sort(
-        (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
-      );
+      const sortedPhotos = [...albumListData]
+        .sort
+        // (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
+        ();
       setRecentPhotos(sortedPhotos.slice(0, 3));
     }
   }, [albumListData]);

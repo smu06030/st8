@@ -9,7 +9,7 @@ import useModal from '@/hooks/modal/useModal';
 import useUserId from '@/hooks/auth/useUserId';
 import useImgModal from '@/hooks/album/useImgModal';
 import AlbumImgEdit from '@/components/photoalbum/AlbumEditImg';
-import AlbumImgModal from '@/components/photoalbum/AlbumImgModal';
+import AlbumImgModal from '@/components/common/Modal/AlbumImgModal';
 import useAlbumDelete from '@/hooks/album/useAlbumDelete';
 
 const RegionDetail = () => {
@@ -64,7 +64,7 @@ const RegionDetail = () => {
           <li
             onClick={() => {
               if (!edit) {
-                onClickImgModal(item.photoImg, item.id, index);
+                onClickImgModal(item.photoImg || '', item.id, index);
                 openModal();
               } else {
                 deleteId.includes(item.id);

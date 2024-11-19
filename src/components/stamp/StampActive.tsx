@@ -47,7 +47,7 @@ const StampActive = ({ address, stampList, setVisit, visit, location, aliasLocat
   const DefaultStamp = STAMPIMG_REGION_IMG[address.region_1depth_name];
   const ActiveStamp = STAMPIMG_REGION_ACTIVE_IMG[address.region_1depth_name];
   const SealStamp = stampList?.map((stamp) => stamp.region === address.region_1depth_name);
-
+  console.log('SealStamp', SealStamp);
   return (
     <div
       className={`flex ${!visit ? 'h-[100vh]' : 'h-[30%]'} items-center justify-center transition-transform duration-500 ${visit ? 'scale-75' : 'scale-100'}`}

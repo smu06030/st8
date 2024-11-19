@@ -5,16 +5,16 @@ interface AddAlbumListParams {
   regionCate: string;
 }
 
-//앨범전체데이터 가져오기
-export const getAlbumList = async (userId: string) => {
-  const { data, error } = await browserClient.from('album').select('*').eq('user_id', userId);
+// //앨범전체데이터 가져오기
+// export const getAlbumList = async (userId: string) => {
+//   const { data, error } = await browserClient.from('album').select('*').eq('user_id', userId);
 
-  if (error) {
-    console.error('포토앨범 리스트 가져오기 오류 :', error.message);
-    throw new Error('포토앨범 리스트 데이터를 가져오는 중 오류가 발생했습니다.' + error.message);
-  }
-  return data;
-};
+//   if (error) {
+//     console.error('포토앨범 리스트 가져오기 오류 :', error.message);
+//     throw new Error('포토앨범 리스트 데이터를 가져오는 중 오류가 발생했습니다.' + error.message);
+//   }
+//   return data;
+// };
 
 // 수파베이스에 값 추가(이미지url,지역이름)
 export const postAlbum = async ({ imgs, regionCate }: AddAlbumListParams) => {

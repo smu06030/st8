@@ -7,7 +7,7 @@ import useModal from '@/hooks/modal/useModal';
 import useUserId from '@/hooks/auth/useUserId';
 
 import Icon from '@/components/common/Icons/Icon';
-import RegionCategoryModal from '@/components/photoalbum/AlbumRegionCategoryModal';
+import RegionCategoryModal from '@/components/common/Modal/AlbumRegionCategoryModal';
 
 interface AddAlbumParamsType {
   setImgSrc: Dispatch<React.SetStateAction<string[]>>;

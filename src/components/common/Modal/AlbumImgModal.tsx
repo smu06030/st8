@@ -14,15 +14,15 @@ import 'swiper/css/navigation';
 interface photoInfoType {
   created_at: string;
   id: number;
-  photoImg: string;
-  region: string;
-  user_id: string;
+  photoImg: string | null;
+  region: string | null;
+  user_id: string | null;
 }
 interface ImageModalType {
   selectedImgUrl: string;
   setImgModal: Dispatch<SetStateAction<boolean>>;
   regionPhoto: photoInfoType[] | undefined | null;
-  activeImgId: number | string;
+  activeImgId: number | null;
   currentIndex: number;
   setCurrentIndex: Dispatch<SetStateAction<number>>;
   Modal: ({ children }: { children: React.ReactNode }) => ReactPortal | null;
@@ -73,7 +73,7 @@ const AlbumImgModal = ({
             regionPhoto.map((photo: photoInfoType, index: number) => (
               <SwiperSlide key={index} className="lg:bg-[#000]">
                 <Image
-                  src={photo.photoImg}
+                  src={photo.photoImg || ''}
                   alt={`Image ${index + 1}`}
                   layout="fill"
                   className="object-cover lg:bg-[#000] lg:object-contain"
