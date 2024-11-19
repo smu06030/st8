@@ -41,7 +41,7 @@ const DesktopSignupForm = () => {
   const handleSignup = async (data: SignupFormInputs) => {
     try {
       await signUpWithEmail(data.nickname, data.email, data.password);
-      window.location.href = '/';
+      window.location.href = '/home';
     } catch (error: any) {
       alert('회원가입 중 오류가 발생했습니다.');
     }
