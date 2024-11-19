@@ -1,6 +1,6 @@
 import { ReactPortal } from 'react';
 import { useMapStore } from '@/providers/mapStoreProvider';
-import { REGION_NAME_MAP_KO } from '@/utils/region/RegionNames';
+import { FORMAT_REGION_NAME_KO } from '@/constants/regions';
 
 import Icon from '../Icons/Icon';
 import Link from 'next/link';
@@ -18,7 +18,7 @@ const StampModal = ({ Modal }: StampModalPropsType) => {
   // 날짜 형식 변환
   const formattedDate = `${date.getUTCFullYear()}년 ${date.getUTCMonth() + 1}월 ${date.getUTCDate()}일 ${date.getUTCHours() + 9}시`;
   // 동적 라우트 경로
-  const regionLink = REGION_NAME_MAP_KO[stamp.region];
+  const regionLink = FORMAT_REGION_NAME_KO[stamp.region];
 
   return (
     <Modal>
