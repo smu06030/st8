@@ -73,7 +73,7 @@ const LoginForm = () => {
     }
   };
 
-  const handleSocialLogin = (type: 'kakao' | 'google' | 'apple', e: MouseEvent<HTMLButtonElement>) => {
+  const handleSocialLogin = (type: 'kakao' | 'google' | 'github', e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     loginWithProvider(type);
   };
@@ -96,7 +96,6 @@ const LoginForm = () => {
           register={{
             ...register('email', {
               required: true
-              // onBlur: (e) => handleEmailBlur(e.target.value)
             })
           }}
           error={errors.email}
@@ -123,8 +122,8 @@ const LoginForm = () => {
 
         <div className="flex w-full max-w-sm justify-between px-3 pt-8">
           <div>
-            <input type="checkbox" className="mr-1" />
-            <span className="text-sm font-normal text-[#4e4e4e]">자동 로그인</span>
+            {/* <input type="checkbox" className="mr-1" />
+            <span className="text-sm font-normal text-[#4e4e4e]">자동 로그인</span> */}
           </div>
           <Link href="/reset-password" className="text-right text-sm font-normal text-[#4e4e4e]">
             아이디/비밀번호 찾기
@@ -134,7 +133,7 @@ const LoginForm = () => {
           <Button text="로그인" variant={isValid ? 'blue' : 'gray'} disabled={!isValid} type="submit" />
         </div>
         <div className="mt-6 flex justify-center space-x-4">
-          <SocialLoginButton provider="apple" onClick={(e) => handleSocialLogin('apple', e)} />
+          {/* <SocialLoginButton provider="github" onClick={(e) => handleSocialLogin('github', e)} /> */}
           <SocialLoginButton provider="google" onClick={(e) => handleSocialLogin('google', e)} />
           <SocialLoginButton provider="kakao" onClick={(e) => handleSocialLogin('kakao', e)} />
         </div>

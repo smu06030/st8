@@ -14,7 +14,7 @@ export const useSocialLogin = () => {
     }
   }, []);
 
-  const loginWithProvider = async (provider: 'kakao' | 'google' | 'apple') => {
+  const loginWithProvider = async (provider: 'kakao' | 'google' | 'github') => {
     console.log(redirectUrl);
     try {
       const { data, error } = await browserClient.auth.signInWithOAuth({
