@@ -16,8 +16,6 @@ const EmailStep = ({ onNext }: EmailStepProps) => {
   const {
     register,
     handleSubmit,
-    setError,
-    clearErrors,
     formState: { errors, isValid }
   } = useForm<FormValues>({
     mode: 'onChange' // 입력 시점에서 유효성 검사
