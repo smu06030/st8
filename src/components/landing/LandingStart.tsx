@@ -46,7 +46,7 @@ export const LandingStart = ({ isLoggedIn }: LandingPageProps) => {
   return (
     <section className="flex flex-col items-center justify-between overflow-hidden lg:h-full lg:gap-[38px] lg:border-b lg:border-[#828282] lg:bg-white lg:pb-[15%] lg:pt-[10%] mo-only:relative mo-only:min-h-[100vh]">
       <div className="flex h-[70vh] w-full flex-grow items-center justify-center lg:relative lg:min-h-[70vh]">
-        <div className="absolute h-[0%]">
+        <div className="absolute h-[10%]">
           <CameraIcon />
         </div>
         <div className="absolute h-[30%]">
