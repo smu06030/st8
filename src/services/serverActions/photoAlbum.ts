@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '@/utils/supabase/server';
+
 //앨범전체데이터 가져오기
 export const getAlbumList = async (userId: string) => {
   const serverClient = createClient();
