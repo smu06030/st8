@@ -4,6 +4,7 @@ import Icon from '@/components/common/Icons/Icon';
 import LogoutModal from '@/components/common/Modal/LogoutModal';
 import useModal from '@/hooks/modal/useModal';
 import useUserMenuState from '@/hooks/useUserMenuState';
+import { PAGE_NAMES } from '@/constants/pageName';
 
 interface UserMenuType {
   initialNickname: string;
@@ -58,7 +59,10 @@ const UserMenu = ({ initialNickname }: UserMenuType) => {
 
   if (!isLoggedIn) {
     return (
-      <Link href="/login" className="text-sm font-normal text-gray-700 hover:font-semibold hover:text-gray-900">
+      <Link
+        href={PAGE_NAMES.LOGIN.link}
+        className="text-sm font-normal text-gray-700 hover:font-semibold hover:text-gray-900"
+      >
         로그인
       </Link>
     );
@@ -75,16 +79,16 @@ const UserMenu = ({ initialNickname }: UserMenuType) => {
 
       {isDropdownOpen && (
         <div ref={dropdownRef} className="absolute right-0 mt-12 w-48 rounded-2xl bg-white py-4 shadow-headerShadow">
-          <Link href="/stamp-all" className="block px-4 py-2 text-gray-700">
+          <Link href={PAGE_NAMES.STAMP.link} className="block px-4 py-2 text-gray-700">
             지금까지 모은 스탬프
           </Link>
-          <Link href="/stamp-map" className="block px-4 py-2 text-gray-700">
+          <Link href={PAGE_NAMES.MAP.link} className="block px-4 py-2 text-gray-700">
             나의 발자취
           </Link>
-          <Link href="/photo-album" className="block px-4 py-2 text-gray-700">
+          <Link href={PAGE_NAMES.ALBUM.link} className="block px-4 py-2 text-gray-700">
             나의 추억들
           </Link>
-          <Link href="/book-mark" className="block px-4 py-2 text-gray-700">
+          <Link href={PAGE_NAMES.BOOKMARK.link} className="block px-4 py-2 text-gray-700">
             내가 찜한 여행지
           </Link>
           <button onClick={openNicknameEditor} className="block w-full px-4 py-2 text-left text-gray-700">

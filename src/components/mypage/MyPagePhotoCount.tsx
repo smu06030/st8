@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import useUserId from '@/hooks/auth/useUserId';
 import { getPhotoCount } from '@/services/apis/mypage';
+import { PAGE_NAMES } from '@/constants/pageName';
 
 const PhotoCount = () => {
   const userId = useUserId();
@@ -30,7 +31,7 @@ const PhotoCount = () => {
   }
 
   return (
-    <Link href="/photo-album">
+    <Link href={PAGE_NAMES.ALBUM.link}>
       <div className="relative flex h-[156px] flex-col justify-center overflow-hidden rounded-2xl bg-[#081425]/70 text-white">
         <Image src="/images/mypage/mypage_img.png" alt="배경 이미지" fill style={{ objectFit: 'cover' }} priority />
         <div className="absolute inset-0 bg-black opacity-50"></div>

@@ -6,6 +6,7 @@ import { QUERY_KEY } from '@/hooks/queries/query.keys';
 import Link from 'next/link';
 import useUserId from '@/hooks/auth/useUserId';
 import { getStampCount } from '@/services/apis/mypage';
+import { PAGE_NAMES } from '@/constants/pageName';
 
 const StampCount = () => {
   const userId = useUserId();
@@ -30,7 +31,7 @@ const StampCount = () => {
   }
 
   return (
-    <Link href="/stamp-all">
+    <Link href={PAGE_NAMES.STAMP.link}>
       <div className="mb-4 flex h-[120px] cursor-pointer items-center justify-between rounded-2xl bg-gray-800 p-6">
         <span className="text-white">
           지금까지 모은 <br />

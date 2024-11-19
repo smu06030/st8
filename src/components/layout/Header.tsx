@@ -7,6 +7,7 @@ import useHeaderActive from '@/hooks/layout/useHeaderActive';
 import ClientHeaderMenu from './ClientHeaderMenu';
 import { useHistory } from '@/providers/HistoryProvider';
 import { useRouter } from 'next/navigation';
+import { PAGE_NAMES } from '@/constants/pageName';
 
 const Header = () => {
   const { pageTitle } = useHeaderActive();
@@ -63,32 +64,32 @@ const Header = () => {
 
           <nav className="flex flex-1 justify-center space-x-8 text-sm font-normal text-gray-700">
             <Link
-              href="/"
+              href={PAGE_NAMES.LANDING.link}
               className={`${getLinkStyle('/')} rounded-md px-4 py-2 transition duration-300 hover:bg-gray-200`}
             >
               서비스 소개
             </Link>
 
             <Link
-              href="/stamp-map"
+              href={PAGE_NAMES.MAP.link}
               className={`${getLinkStyle('/stamp-map')} rounded-md px-4 py-2 transition duration-300 hover:bg-gray-200`}
             >
               지도
             </Link>
             <Link
-              href="/tourism"
+              href={PAGE_NAMES.TOURISM.link}
               className={`${getLinkStyle('/tourism')} rounded-md px-4 py-2 transition duration-300 hover:bg-gray-200`}
             >
               추천여행지
             </Link>
             <Link
-              href="/photo-album"
+              href={PAGE_NAMES.ALBUM.link}
               className={`${getLinkStyle('/photo-album')} rounded-md px-4 py-2 transition duration-300 hover:bg-gray-200`}
             >
               앨범
             </Link>
             <Link
-              href="/stamp-all"
+              href={PAGE_NAMES.STAMP.link}
               className={`${getLinkStyle('/stamp-all')} rounded-md px-4 py-2 transition duration-300 hover:bg-gray-200`}
             >
               스탬프
