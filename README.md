@@ -6,7 +6,7 @@
 
 #### 📅 프로젝트 기간 : 2024.10.21 ~ 2024.11.21
 
-#### 💻 배포 링크 : [MOA 바로가기](https://st8-dev.vercel.app/)
+#### 💻 배포 링크 : [MOA 바로가기](https://stamp-moa.vercel.app/)
 
 #### 🏠 팀 노션 : [팀 노션 바로가기](https://www.notion.so/teamsparta/8-bf17275ec94f4ac988eb0362363e3df6)
 
@@ -106,6 +106,7 @@
 ## 📚 주요 기능
 
 ### 🗺️ 스탬프 서비스
+<img width="1920" alt="스탬프" src="https://github.com/user-attachments/assets/f9a58b45-726d-483e-9f12-97f4ac664bcf">
 
 #### **스탬프 지도 페이지**
 - 지역별 카테고리를 슬라이드하여 특정 지역을 선택할 수 있습니다.
@@ -128,6 +129,8 @@
 ---
 
 ### 🚎 지역별 관광지 소개
+![관광지](https://github.com/user-attachments/assets/fd455687-a600-46f8-be97-7226950f46fe)
+
 
 #### **관광지 목록 페이지**
 - 전국의 관광지 정보를 키워드별, 지역별로 확인할 수 있습니다.
@@ -140,6 +143,8 @@
 ---
 
 ### 🌉 포토앨범 기록
+![포토앨범](https://github.com/user-attachments/assets/5c937285-7f4d-48cb-a450-af23b90f7236)
+
 
 #### **포토앨범 페이지**
 - 사용자가 특정 지역의 사진을 업로드해 여행의 추억을 앨범으로 모을 수 있습니다.
@@ -148,6 +153,8 @@
 ---
 
 ### 👣 마이페이지
+![마이페이지](https://github.com/user-attachments/assets/d6465b5f-f447-4747-95a0-872088722bbb)
+
 
 #### **마이페이지 기능**
 - 사용자 닉네임을 변경할 수 있으며, 찜한 여행지, 모은 스탬프 현황, 업로드한 사진 갯수를 한눈에 확인할 수 있습니다.
@@ -156,6 +163,8 @@
 ---
 
 ### 😀 로그인/회원가입
+![로그인](https://github.com/user-attachments/assets/c0cd3639-1daf-4f47-b18c-97065fdb7d90)
+
 
 - 구글, 카카오 계정으로 **소셜 로그인**이 가능합니다.
 - 이메일과 비밀번호 유효성 검사를 통해 가입 여부를 체크합니다.
@@ -182,7 +191,7 @@
 
 - [x] **`landing` 페이지**
 - [x] **`loading` 페이지**
-- [x] **`home` 페이지**
+- [x] **`home` 페이지** 
   - [x] 지도로 보는 나의 여행기록
     - [x] 지역별 핀
   - [x] 스탬프
@@ -228,21 +237,9 @@
 
 ---
 
-## 모아 미리보기
-
-<img width="180" alt="스크린샷 2024-11-07 오전 9 30 01" src="https://github.com/user-attachments/assets/90b8ec8c-24d3-4240-9354-937682725a14">
-<img width="180" alt="스크린샷 2024-11-07 오전 9 28 05" src="https://github.com/user-attachments/assets/0a327fbd-3f1a-4fcb-98a1-1afda8eb0559">
-<img width="180" alt="스크린샷 2024-11-07 오전 9 28 49" src="https://github.com/user-attachments/assets/0b6f0c2a-3542-4532-b445-b01e9e8a4477">
-<img width="180" alt="스크린샷 2024-11-07 오전 9 28 58" src="https://github.com/user-attachments/assets/ba6d6c2a-006c-4814-873b-bb1b7bed0ab0">
-<img width="180" alt="스크린샷 2024-11-07 오전 9 29 16" src="https://github.com/user-attachments/assets/c359b6aa-eb7c-46ed-b53f-a9805eac929c">
-<img width="180" alt="스크린샷 2024-11-07 오전 9 29 23" src="https://github.com/user-attachments/assets/027b4b5a-d61b-458d-aff7-e5f3bf51f13b">
-<img width="180" alt="스크린샷 2024-11-07 오전 9 29 34" src="https://github.com/user-attachments/assets/bf770b57-8a11-47ff-bdad-45dff341e47e">
-<img width="180" alt="스크린샷 2024-11-07 오전 9 29 43" src="https://github.com/user-attachments/assets/51007137-283c-47c8-954a-c3f656025b8f">
----
-
 ## 🔥 트러블슈팅
-
-### 1. Icon
+<details>
+<summary style="cursor: pointer; font-size: 16px;">1. Icon</summary>
 
 기존에는 아이콘을 각각 만들어서 **`중복되는 코드`** 들이 너무 많은 문제가 있었습니다.<br />
 
@@ -305,8 +302,9 @@ const Icon = ({ name, size = 28, color = 'black', bgColor, rx }: IconProprType) 
 
 export default Icon;
 ```
-
-### 2. Modal
+</details>
+<details>
+<summary style="cursor: pointer; font-size: 16px;">2. Modal</summary>
 
 모달창을 구현하다 보니 다양한 컴포넌트에서 **`동일한 모달 로직을 반복적으로 사용하는 문제`** 가 있었습니다.
 
@@ -351,11 +349,4 @@ const useModal = () => {
 
 export default useModal;
 ```
-
-### 3. 배포
-
-미리 배포를 하고 개발을 시작하여서, 배포 오류를 바로바로 찾아 수정 작업을 한것이 너무 좋았습니다.
-
-## 추후 개발 방향
-
-3주동안 프로젝트를 진행하면서 기능을 넣는것에 집중하느라 , 폴더와 파일들이 많아지는데도 리팩토링이 아직 부족해서 최종 발표까지는 진도를 빼는것만이 아닌 개개인의 코드리뷰와 피드백을 반영하며, 리팩토링을 중점으로 차근차근 진행하고,  UT를 반영하여 개선사항위주로 추가 진행을 하면서 필요에따라 기능추가를 할 예정입니다
+</details>
