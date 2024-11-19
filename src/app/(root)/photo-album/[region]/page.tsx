@@ -9,7 +9,7 @@ import useModal from '@/hooks/modal/useModal';
 import useUserId from '@/hooks/auth/useUserId';
 import useImgModal from '@/hooks/album/useImgModal';
 import AlbumImgEdit from '@/components/photoalbum/AlbumEditImg';
-import AlbumImgModal from '@/components/photoalbum/AlbumImgModal';
+import AlbumImgModal from '@/components/common/Modal/AlbumImgModal';
 import useAlbumDelete from '@/hooks/album/useAlbumDelete';
 
 const RegionDetail = () => {

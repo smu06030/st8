@@ -1,12 +1,15 @@
 import { ReactPortal } from 'react';
-
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Router } from 'next/router';
 
 interface AliasCheckModalPropsType {
   Modal: ({ children }: { children: React.ReactNode }) => ReactPortal | null;
 }
 
 const AliasCheckModal = ({ Modal }: AliasCheckModalPropsType) => {
+  const router = useRouter();
+
   return (
     <Modal>
       <div
@@ -19,11 +22,16 @@ const AliasCheckModal = ({ Modal }: AliasCheckModalPropsType) => {
           <br />
           현재 주소로 등록됩니다.
         </span>
-        <Link href={'/stamp-all'}>
+        <button
+          onClick={() => {
+            router.push('/stamp-all');
+            router.refresh();
+          }}
+        >
           <p className="w-full rounded-[12px] bg-secondary-500 py-[21px] text-center font-semiBold text-[#004157] hover:bg-[#BDEFFF]">
             알겠어요!
           </p>
-        </Link>
+        </button>
       </div>
     </Modal>
   );

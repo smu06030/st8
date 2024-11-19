@@ -1,15 +1,18 @@
 import { Metadata } from 'next';
-
+import { getUser } from '@/services/serverActions/user';
+import { QUERY_KEY } from '@/hooks/queries/query.keys';
 import StampTrackingLinkButton from '@/components/common/Buttons/StampTrackingLinkButton';
 import StampList from '@/components/stamp/StampList';
 import Image from 'next/image';
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
+import { getStampList } from '@/services/serverActions/stamp';
 
 export const metadata: Metadata = {
   title: '스탬프',
   description: '스탬프 페이지 입니다.'
 };
 
-const StampAll = () => {
+const StampAll = async () => {
   return (
     <div className="relative overflow-hidden pt-[88px] lg:mt-0 mo-only:px-[24px] mo-only:pb-[34px]">
       <div className="pc-inner-width lg:pb-[192px] lg:pt-[165px]">

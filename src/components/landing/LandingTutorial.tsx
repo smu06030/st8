@@ -12,14 +12,14 @@ const LandingTutorial = () => {
 
   return (
     <div className="tutorial-container animate-tutoriaslide z-1 top-0 h-full w-full bg-backgroundGradient">
-      <div className="h-[25%] w-full px-[24px] pt-[10vh]">
+      <div className="w-full px-[24px] pt-[10%]">
         <h2 className="tutorialTitle">
           모아가 알려주는
           <br />
           스탬프 생활
         </h2>
       </div>
-      <div className="w-full flex-1">
+      <div className="h-full w-full">
         <ul
           className="slides"
           style={{ transform: `translateX(-${(position * 100) / 5}%)`, transition: 'transform 0.5s' }}

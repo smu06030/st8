@@ -181,6 +181,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 5vh;
 }
 
 .tutorial-container .slides {
@@ -198,6 +199,7 @@
   flex-direction: column;
   align-items: center;
   color: black;
+  gap: 3vh;
 }
 .tutorialTitle {
   @apply font-semiBold text-[32px] leading-[41px] text-[#008EBD];

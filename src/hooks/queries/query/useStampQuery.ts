@@ -9,7 +9,8 @@ export const useGetStampListQuery = (userId: string): UseQueryResult<Stamp[]> =>
   return useQuery({
     queryKey: QUERY_KEY.STAMP_LIST(userId),
     queryFn: () => getStampList(userId),
-    enabled: !!userId // userId가 있을 때만 쿼리 실행
+    enabled: !!userId, // userId가 있을 때만 쿼리 실행
+    staleTime: 60 * 1000
   });
 };
 

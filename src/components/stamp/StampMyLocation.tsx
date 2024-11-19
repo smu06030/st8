@@ -11,9 +11,11 @@ import useModal from '@/hooks/modal/useModal';
 import useUserId from '@/hooks/auth/useUserId';
 import StampActive from './StampActive';
 import GetUserAddress from '@/components/stamp/StampGetUserAddress';
-import AliasCheckModal from '@/components/common/Modal/AliasCheckModal';
+import AliasCheckModal from '@/components/common/Modal/StampAliasCheckModal';
+import { useRouter } from 'next/navigation';
 
 const MyLocation = () => {
+  const router = useRouter();
   const userId = useUserId();
   const [visit, setVisit] = useState<boolean>(false); //방문상태
   const [parentFocused, setParentFocused] = useState(false); //포커스상태
@@ -64,7 +66,7 @@ const MyLocation = () => {
   const saveAlias = stampList?.[0]?.aliasLocation;
 
   return (
-    <div className="flex flex-col px-[24px] pt-[36px]" style={{ height: 'calc(100vh - 64px)' }}>
+    <div className="flex flex-col px-[24px] pt-[92px]" style={{ height: 'calc(100vh - 64px)' }}>
       {address ? (
         <>
           <StampActive
@@ -111,13 +113,17 @@ const MyLocation = () => {
               스탬프 확인하러 가기
             </button>
           ) : (
-            <Link href={'/stamp-all'}>
-              <button
-                className={`w-full rounded-[12px] bg-secondary-500 py-[21px] font-semiBold text-[20px] text-[#004157] hover:bg-[#BDEFFF] ${visit && 'animate-fadeUpBtn'}`}
-              >
-                스탬프 확인하러 가기
-              </button>
-            </Link>
+            // <Link href={'/stamp-all'}>
+            <button
+              onClick={() => {
+                router.push('/stamp-all');
+                router.refresh();
+              }}
+              className={`w-full rounded-[12px] bg-secondary-500 py-[21px] font-semiBold text-[20px] text-[#004157] hover:bg-[#BDEFFF] ${visit && 'animate-fadeUpBtn'}`}
+            >
+              스탬프 확인하러 가기
+            </button>
+            // </Link>
           )}
           {isOpen && <AliasCheckModal Modal={Modal} />}
         </div>

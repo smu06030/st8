@@ -15,7 +15,7 @@ export const getStampList = async (userId: string): Promise<Stamp[] | Response> 
       error: error
     });
   }
-
+  console.log('data', data);
   return data;
 };
 

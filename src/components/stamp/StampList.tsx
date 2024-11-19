@@ -9,7 +9,6 @@ import Image from 'next/image';
 import Loading from '@/app/(root)/(stamp)/loading';
 import StampItem from '@/components/stamp/StampItem';
 import useUserId from '@/hooks/auth/useUserId';
-// import usePromptLogin from '@/utils/promptLogin';
 
 const StampList = () => {
   const userId = useUserId();
