@@ -2,22 +2,26 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import StampCount from './StampCount';
-import PhotoCount from './PhotoCount';
-import RecentPhoto from './RecentPhoto';
-import LogoutButton from '../auth/LogoutButton';
-import NicknameEditor from './NicknameEditor';
+import { useState } from 'react';
+import StampCount from '@/components/mypage/MyPageStampCount';
+import PhotoCount from '@/components/mypage/MyPagePhotoCount';
+import RecentPhoto from '@/components/mypage/MyPageRecentPhoto';
+import LogoutButton from '@/components/auth/LogoutButton';
+
+import useModal from '@/hooks/modal/useModal';
+import NicknameEditorModal from '@/components/common/Modal/NicknameEditorModal';
+import NicknameEditor from '@/components/mypage/MyPageNicknameEditor';
+import { PAGE_NAMES } from '@/constants/pageName';
 
 const MyPageLayout = () => {
-  // useEffect(() => {
-  //   throw new Error('에러');
-  // }, []);
+  const { Modal, openModal, closeModal } = useModal();
+  const [nickname, setNickname] = useState<string | null>(null);
 
   return (
     <div className="items-left mx-auto flex h-full max-w-[600px] flex-col bg-white px-6 pb-24">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-4">
-          <NicknameEditor />
+          <NicknameEditor nickname={nickname} setNickname={setNickname} openModal={openModal} />
         </div>
         <LogoutButton />
       </div>
@@ -27,7 +31,7 @@ const MyPageLayout = () => {
         <StampCount />
         <div className="grid grid-cols-2 gap-4">
           <div className="relative flex h-[156px] flex-col justify-center rounded-2xl bg-primary-400 p-6 text-black">
-            <Link href="/stamp-map" className="flex h-full w-full flex-col">
+            <Link href={PAGE_NAMES.MAP.link} className="flex h-full w-full flex-col">
               <p className="font-semiBold text-[12px]">지도로 보는 나의 여정</p>
               <p className="mt-1 font-regular text-xs">
                 내 여정을
@@ -47,7 +51,10 @@ const MyPageLayout = () => {
               priority
             />
             <div className="absolute inset-0 bg-[#081425]/70"></div>
-            <Link href="/book-mark" className="relative flex h-full w-full flex-col items-end justify-end p-6">
+            <Link
+              href={PAGE_NAMES.BOOKMARK.link}
+              className="relative flex h-full w-full flex-col items-end justify-end p-6"
+            >
               <p className="mb-4 text-right font-bold text-[20px] leading-tight text-white">
                 내가 찜한 <br />
                 여행지
@@ -57,6 +64,7 @@ const MyPageLayout = () => {
           <PhotoCount />
         </div>
       </div>
+      <NicknameEditorModal Modal={Modal} closeModal={closeModal} nickname={nickname} setNickname={setNickname} />
     </div>
   );
 };

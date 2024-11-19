@@ -8,6 +8,8 @@ import Icon from '@/components/common/Icons/Icon';
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField/InputField';
 import browserClient from '@/utils/supabase/client';
+import SmailCheckIcon from '@/components/common/Icons/Auth/SmailCheckIcon';
+import SmailXIcon from '@/components/common/Icons/Auth/SmailXIcon';
 
 interface FormValues {
   password: string;
@@ -71,16 +73,24 @@ const UpdatePasswordForm = () => {
               {showPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
             </button>
           }
-          register={register('password', {})}
-          error={errors.password}
+          register={register('password')}
         />
 
-        {/* 유효성 검사 표시 */}
-        <div className="flex w-full items-center justify-end space-x-2 space-y-6 text-xs text-red-700">
-          <p className={hasNumber ? 'text-secondary-700' : ''}></p>
-          <p className={hasNumber ? 'text-secondary-700' : ''}>숫자 포함 {hasNumber ? '✔' : '✖'}</p>
-          <p className={hasLetter ? 'text-secondary-700' : ''}>영문 포함 {hasLetter ? '✔' : '✖'}</p>
-          <p className={hasMinLength ? 'text-secondary-700' : ''}>8자리 이상 {hasMinLength ? '✔' : '✖'}</p>
+        <div className="!mt-8 flex w-full justify-end gap-2 text-xs">
+          <div className="flex items-center space-x-1">
+            <span className={hasNumber ? 'text-secondary-700' : 'text-red-700'}>숫자 포함</span>
+            {hasNumber ? <SmailCheckIcon /> : <SmailXIcon />}
+          </div>
+
+          <div className="flex items-center space-x-1">
+            <span className={hasLetter ? 'text-secondary-700' : 'text-red-700'}>영문 포함</span>
+            {hasLetter ? <SmailCheckIcon /> : <SmailXIcon />}
+          </div>
+
+          <div className="flex items-center space-x-1">
+            <span className={hasMinLength ? 'text-secondary-700' : 'text-red-700'}>8자리 이상 16자리 이하</span>
+            {hasMinLength ? <SmailCheckIcon /> : <SmailXIcon />}
+          </div>
         </div>
 
         <InputField
@@ -89,7 +99,7 @@ const UpdatePasswordForm = () => {
           placeholder="비밀번호를 다시 입력해주세요."
           type={showConfirmPassword ? 'text' : 'password'}
           status={errors.confirmPassword ? 'error' : 'default'}
-          register={register('confirmPassword', {})}
+          register={register('confirmPassword')}
           error={errors.confirmPassword}
           rightIcon={
             <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
@@ -98,13 +108,20 @@ const UpdatePasswordForm = () => {
           }
         />
 
-        <div className="flex w-full items-center justify-end space-y-6 text-xs">
-          <div></div>
-          {isPasswordMatching ? (
-            <p className="text-secondary-700">비밀번호가 동일합니다. ✔</p>
-          ) : (
-            <p className="text-red-700">비밀번호가 동일하지 않습니다. ✖</p>
-          )}
+        <div className="!mt-8 flex w-full items-center justify-end space-y-6 text-xs">
+          <div className="flex items-center">
+            {isPasswordMatching ? (
+              <>
+                <p className="mr-1 text-secondary-700">비밀번호가 동일합니다.</p>
+                <SmailCheckIcon />
+              </>
+            ) : (
+              <>
+                <p className="mr-1 text-red-700">비밀번호가 동일하지 않습니다.</p>
+                <SmailXIcon />
+              </>
+            )}
+          </div>
         </div>
 
         <div className="mt-[420px] lg:mt-[380px]">
