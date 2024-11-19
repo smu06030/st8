@@ -64,7 +64,7 @@ const RegionDetail = () => {
           <li
             onClick={() => {
               if (!edit) {
-                onClickImgModal(item.photoImg, item.id, index);
+                onClickImgModal(item.photoImg || '', item.id, index);
                 openModal();
               } else {
                 deleteId.includes(item.id);

@@ -1,10 +1,10 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { usePostAliasMutation } from '@/hooks/queries/mutation/useStampMutaion';
 import { useGetStampLocationQuery } from '@/hooks/queries/query/useStampQuery';
 
-import Link from 'next/link';
 import Icon from '@/components/common/Icons/Icon';
 import Loading from '@/app/(root)/(stamp)/loading';
 import useModal from '@/hooks/modal/useModal';
@@ -12,7 +12,6 @@ import useUserId from '@/hooks/auth/useUserId';
 import StampActive from './StampActive';
 import GetUserAddress from '@/components/stamp/StampGetUserAddress';
 import AliasCheckModal from '@/components/common/Modal/StampAliasCheckModal';
-import { useRouter } from 'next/navigation';
 
 const MyLocation = () => {
   const router = useRouter();
