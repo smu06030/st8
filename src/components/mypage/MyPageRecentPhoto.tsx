@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useGetAlbumListQuery } from '@/hooks/queries/query/useAlbumQuery';
-
 import Image from 'next/image';
 import Link from 'next/link';
 import useUserId from '@/hooks/auth/useUserId';
@@ -14,10 +13,9 @@ const RecentPhoto = () => {
 
   useEffect(() => {
     if (albumListData) {
-      const sortedPhotos = [...albumListData]
-        .sort
-        // (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
-        ();
+      const sortedPhotos = [...albumListData].sort(
+        (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
       setRecentPhotos(sortedPhotos.slice(0, 3));
     }
   }, [albumListData]);
@@ -31,8 +29,8 @@ const RecentPhoto = () => {
     throw new Error(errorMessage);
   }
 
-  //사진이 3개이하면 안보여줌
-  if (recentPhotos.length < 3) return null;
+  // 사진이 3개 이하이면 null 반환
+  if (!recentPhotos || recentPhotos.length < 3) return null;
 
   return (
     <div className="my-4">

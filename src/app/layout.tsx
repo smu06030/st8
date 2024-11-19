@@ -13,6 +13,7 @@ import KakaoMapLoader from '@/components/stampMap/KakaoMapLoader';
 
 import './globals.css';
 import { HistoryProvider } from '@/providers/HistoryProvider';
+import Head from 'next/head';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
