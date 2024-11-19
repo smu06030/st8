@@ -19,7 +19,7 @@ const StampModal = ({ Modal }: StampModalPropsType) => {
   const formattedDate = `${date.getUTCFullYear()}년 ${date.getUTCMonth() + 1}월 ${date.getUTCDate()}일 ${date.getUTCHours() + 9}시`;
   // 동적 라우트 경로
   const regionLink = REGION_NAME_MAP_KO[stamp.region];
-
+  console.log('regionLink', stamp);
   return (
     <Modal>
       <div

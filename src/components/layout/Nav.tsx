@@ -80,7 +80,7 @@ const Nav = () => {
           <li key={navItem.page} className="cursor-pointer py-[8px] text-center">
             <Link
               href={navItem.link}
-              className={`flex flex-col items-center gap-[2px] ${activePage === navItem.link || activePage.includes(navItem.link) ? 'text-[#00688A]' : 'text-gray-300'}`}
+              className={`flex flex-col items-center gap-[2px] ${activePage === navItem.link || activePage.includes(navItem.link) || activePage.substring(0, 5) === navItem.link.substring(0, 5) ? 'text-[#00688A]' : 'text-gray-300'}`}
             >
               {navItem.icon}
               <span className="font-semiBold text-[12px]" onClick={() => handleClick(navItem.link)}>
