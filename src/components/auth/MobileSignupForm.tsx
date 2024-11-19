@@ -14,7 +14,7 @@ const MobileSignupForm = () => {
   const handleSignup = async () => {
     try {
       const response = await signUpWithEmail(formData.nickname, formData.email, formData.password);
-      window.location.href = '/';
+      window.location.href = '/home';
     } catch (error: any) {
       alert('회원가입 중 오류가 발생했습니다.');
     }
