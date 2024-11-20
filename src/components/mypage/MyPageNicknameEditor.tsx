@@ -1,12 +1,7 @@
 import { useEffect } from 'react';
+import { NicknameEditorProps } from '@/types/mypage/mypage.type';
 
 import browserClient from '@/utils/supabase/client';
-
-interface NicknameEditorProps {
-  nickname: string | null;
-  setNickname: (nickname: string) => void;
-  openModal: () => void;
-}
 
 const NicknameEditor = ({ nickname, setNickname, openModal }: NicknameEditorProps) => {
   useEffect(() => {

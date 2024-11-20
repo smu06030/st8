@@ -2,15 +2,12 @@
 
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import { FormValues } from '@/types/auth/auth.type';
 import React, { useMemo, useState } from 'react';
 
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField/InputField';
 import browserClient from '@/utils/supabase/client';
-
-interface FormValues {
-  email: string;
-}
 
 const ResetPasswordForm = () => {
   const [isRequesting, setIsRequesting] = useState(false);
@@ -22,7 +19,12 @@ const ResetPasswordForm = () => {
   const router = useRouter();
 
   const redirectUrl = useMemo(() => {
-    return process.env.NEXT_PUBLIC_REDIRECT_URL + '/update-password';
+    const baseUrl =
+      process.env.NODE_ENV === 'production'
+        ? process.env.NEXT_PUBLIC_REDIRECT_URL_BETA
+        : process.env.NEXT_PUBLIC_REDIRECT_URL_LOCAL;
+
+    return `${baseUrl}/update-password`;
   }, []);
 
   const onSubmit = async (profile: FormValues) => {
