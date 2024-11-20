@@ -1,5 +1,7 @@
 # 모아 Project
 
+![Moa](https://img.notionusercontent.com/s3/prod-files-secure%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2Fe9c2ad07-31a3-4d24-95db-0dd78b821022%2F%EC%8D%B8%EB%82%B4%EC%9D%BC_%EC%B5%9C%EC%A2%85.png/size/w=2000?exp=1732159575&sig=_mhLaNu9Z3cYEVVWqzNIG8_1-RutyC6q7ap3_W4wHtU)
+
 ## 프로젝트 소개
 
 사용자가 국내 여행을 기록하고 방문한 장소별로 스탬프를 찍어 추억을 남길 수 있는 디지털 플랫폼입니다.
@@ -40,29 +42,60 @@
 
 ## 📚 기술 스택
 
+### 프레임워크 및 라이브러리
+
 ![Next.js](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![Typescript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white)
+![React-hook-form](https://img.shields.io/badge/React_Hook_Form-EC5990?style=for-the-badge&logo=React-Hook-Form&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/tailwind_css-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![browser-image-compression](https://img.shields.io/badge/browser_image_compression-69D3A7?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![kakao map api](https://img.shields.io/badge/KAKAO_MAP_API-FFCD00?style=for-the-badge&logo=kakao&logoColor=white)
+![Tour api](https://img.shields.io/badge/TOUR_API-0b70b9?style=for-the-badge&logo=houzz&logoColor=white)
+
+### 상태 관리
+
 ![Zustand](https://img.shields.io/badge/zustand-000000?style=for-the-badge&logo=zustand&logoColor=white)
+![Tanstack Query](https://img.shields.io/badge/TANSTACK_QUERY-FF4154?style=for-the-badge&logo=react-query&logoColor=white)
+
+### 서버리스
+
 ![Supabase](https://img.shields.io/badge/supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white)
+
+### 패키지 매니저
+
+![pnpm](https://img.shields.io/badge/pnpm-F69220?style=for-the-badge&logo=pnpm&logoColor=white)
+
+### 협업 툴
+
+![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
+![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)
+![Notion](https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white)
+
+### 버전 관리
+
 ![Git](https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white)
+
+### 배포
+
 ![Vercel](https://img.shields.io/badge/vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
-![React Query](https://img.shields.io/badge/react_query-FF4154?style=for-the-badge&logo=react-query&logoColor=white)
-![CSS3](https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
 ---
 
 ## **기술적 의사결정**
 
-| 기술 스택             | 선택 이유                                                                                                                                                                                  |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Next.js** 🚀        | 서버 사이드 렌더링(SSR)과 정적 사이트 생성(SSG)을 지원하여 초기 로딩 속도와 SEO에 유리하며, 파일 기반 라우팅으로 별도의 설정 없이도 직관적인 페이지 관리를 제공하여 선택하였습니다.        |
-| **Supabase** 🛠️       | 백엔드 인프라를 직접 구축하지 않고도 API 생성, 인증, 파일 스토리지, 실시간 데이터 동기화 등의 기능을 제공하여 빠르게 애플리케이션을 개발할 수 있어 선택하였습니다.                         |
-| **Zustand** 🌐        | 전역 상태를 간편하게 관리하며, 보일러 플레이트가 단순하여 빠르게 환경 설정이 가능하고 컴포넌트 간 데이터 흐름을 최적화하여 효율적인 데이터 관리가 가능해 선택하였습니다.                   |
-| **TanStack Query** 🔄 | 자동 캐싱과 동기화를 통해 네트워크 요청을 줄이고 성능을 향상시키며, 로딩과 에러 상태 관리가 용이하고 자동으로 재시도 및 업데이트를 처리하여 편리하게 로직을 작성할 수 있어 선택하였습니다. |
-| **Vercel** ⚙️         | GitHub와 연동하여 코드 푸시 시 자동으로 빌드와 배포가 이루어져 CI/CD 프로세스를 간편하게 설정할 수 있어 선택하였습니다.                                                                    |
-| **Tailwind CSS** 🎨   | 유틸리티 우선 접근 방식으로 미리 정의된 클래스를 활용하여 일관된 스타일링이 가능하며, CSS 파일 없이도 빠르고 유연하게 디자인을 적용할 수 있어 개발 생산성이 높아 선택하였습니다.           |
+| 기술 스택                     | 선택 이유                                                                                                                                                                                  |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Next.js**                   | 서버 사이드 렌더링(SSR)과 정적 사이트 생성(SSG)을 지원하여 초기 로딩 속도와 SEO에 유리하며, 파일 기반 라우팅으로 별도의 설정 없이도 직관적인 페이지 관리를 제공하여 선택하였습니다.        |
+| **Typescript**                | 정적 타입 검사로 안정적인 개발환경과 타입을 미리 지정해 자동 완성, 타입 체크 등 개발 효율성을 높일 수 있어서 선택했습니다.                                                                 |
+| **React Hook Form**           | 비제어 컴포넌트 기반으로 폼 상태를 성능 최적화하고 입력 검증을 효율적으로 관리하고자 선택했습니다.                                                                                         |
+| **Kakao map api**             | 사용자들이 찍은 스탬프를 지도를 통해 시각적으로 보여주기 위해 선택했습니다.                                                                                                                |
+| **browser image compression** | 앨범 이미지 업로드 시 파일 크기를 줄여 업로드 성능을 개선하고 저장 공간을 효율적으로 사용하기 위해 선택했습니다.                                                                           |
+| **Supabase**                  | 백엔드 인프라를 직접 구축하지 않고도 API 생성, 인증, 파일 스토리지, 실시간 데이터 동기화 등의 기능을 제공하여 빠르게 애플리케이션을 개발할 수 있어 선택하였습니다.                         |
+| **Zustand**                   | 전역 상태를 간편하게 관리하며, 보일러 플레이트가 단순하여 빠르게 환경 설정이 가능하고 컴포넌트 간 데이터 흐름을 최적화하여 효율적인 데이터 관리가 가능해 선택하였습니다.                   |
+| **TanStack Query**            | 자동 캐싱과 동기화를 통해 네트워크 요청을 줄이고 성능을 향상시키며, 로딩과 에러 상태 관리가 용이하고 자동으로 재시도 및 업데이트를 처리하여 편리하게 로직을 작성할 수 있어 선택하였습니다. |
+| **Vercel**                    | GitHub와 연동하여 코드 푸시 시 자동으로 빌드와 배포가 이루어져 CI/CD 프로세스를 간편하게 설정할 수 있어 선택하였습니다.                                                                    |
+| **Tailwind CSS**              | 유틸리티 우선 접근 방식으로 미리 정의된 클래스를 활용하여 일관된 스타일링이 가능하며, CSS 파일 없이도 빠르고 유연하게 디자인을 적용할 수 있어 개발 생산성이 높아 선택하였습니다.           |
 
 ---
 

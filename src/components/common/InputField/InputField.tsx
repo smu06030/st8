@@ -3,7 +3,7 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 import { ReactNode, useEffect, useState, forwardRef, ChangeEvent } from 'react';
 
 import Icon from '@/components/common/Icons/Icon';
-import SmailXIcon from '../Icons/Auth/SmailXIcon';
+import SmailXIcon from '@/components/common/Icons/Auth/SmailXIcon';
 
 interface InputFieldProps {
   placeholder: string;

@@ -3,10 +3,10 @@
 import { signUpWithEmail } from '@/app/api/auth/authService';
 import { useSignupFormState } from '@/hooks/auth/useSignupFormState';
 
-import EmailStep from '@/components/auth/signup/StepEmailForm';
-import GoMainStep from '@/components/auth/signup/StepMainForm';
-import NicknameStep from '@/components/auth/signup/StepNicknameForm';
-import PasswordStep from '@/components/auth/signup/StepPasswordForm';
+import EmailStep from '@/components/auth/signup/mobile/StepEmailForm';
+import GoMainStep from '@/components/auth/signup/mobile/StepMainForm';
+import NicknameStep from '@/components/auth/signup/mobile/StepNicknameForm';
+import PasswordStep from '@/components/auth/signup/mobile/StepPasswordForm';
 
 const MobileSignupForm = () => {
   const { step, formData, handleNext } = useSignupFormState();

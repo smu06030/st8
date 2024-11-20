@@ -3,13 +3,15 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { signUpWithEmail, checkEmailExists } from '@/app/api/auth/authService';
+import { passwordValidationRules, validatePassword } from '@/utils/auth/passwordValidation';
 
-import Icon from '../common/Icons/Icon';
+import Icon from '@/components/common/Icons/Icon';
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField/InputField';
-import GoMainStep from '@/components/auth/signup/StepMainForm';
-import SmailXIcon from '../common/Icons/Auth/SmailXIcon';
-import SmailCheckIcon from '../common/Icons/Auth/SmailCheckIcon';
+import GoMainStep from '@/components/auth/signup/mobile/StepMainForm';
+import SmailXIcon from '@/components/common/Icons/Auth/SmailXIcon';
+import SmailCheckIcon from '@/components/common/Icons/Auth/SmailCheckIcon';
+import PasswordMatchStatus from '@/components/common/auth/PasswordMatchStatus';
 
 interface SignupFormInputs {
   nickname: string;
@@ -31,12 +33,10 @@ const DesktopSignupForm = () => {
 
   const passwordValue = watch('password') || '';
   const confirmPasswordValue = watch('confirmPassword') || '';
-  const hasMinLength = passwordValue.length >= 8;
-  const hasNumber = /\d/.test(passwordValue);
-  const hasLetter = /[A-Za-z]/.test(passwordValue);
-  const isPasswordMatching = passwordValue === confirmPasswordValue;
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const passwordValidations = validatePassword(passwordValue, confirmPasswordValue);
+  const validationRules = passwordValidationRules(passwordValidations);
 
   const handleSignup = async (data: SignupFormInputs) => {
     try {
@@ -48,7 +48,7 @@ const DesktopSignupForm = () => {
   };
 
   const onSubmit = (data: SignupFormInputs) => {
-    if (isValid && isPasswordMatching) {
+    if (isValid && passwordValidations.isMatching) {
       setStep(1);
     }
   };
@@ -102,73 +102,49 @@ const DesktopSignupForm = () => {
             placeholder="비밀번호를 입력해주세요."
             type={showPassword ? 'text' : 'password'}
             status={errors.password ? 'error' : 'default'}
-            register={register('password', { required: '비밀번호를 입력해주세요.' })}
+            register={register('password', {
+              required: '비밀번호를 입력해주세요.'
+            })}
             rightIcon={
               <button type="button" onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
+                <Icon name={showPassword ? 'Eye2Icon' : 'EyeIcon'} color="#A1A1A1" />
               </button>
             }
           />
 
-          <div className="mt-4 flex w-full justify-end gap-2 text-xs">
-            <div className="!mt-[-30px] flex items-center space-x-1">
-              <span className={hasNumber ? 'text-secondary-700' : 'text-red-700'}>숫자 포함</span>
-              {hasNumber ? <SmailCheckIcon /> : <SmailXIcon />}
-            </div>
-
-            <div className="!mt-[-30px] flex items-center space-x-1">
-              <span className={hasLetter ? 'text-secondary-700' : 'text-red-700'}>영문 포함</span>
-              {hasLetter ? <SmailCheckIcon /> : <SmailXIcon />}
-            </div>
-
-            <div className="!mt-[-30px] flex items-center space-x-1">
-              <span className={hasMinLength ? 'text-secondary-700' : 'text-red-700'}>8자리 이상 16자리 이하</span>
-              {hasMinLength ? <SmailCheckIcon /> : <SmailXIcon />}
-            </div>
+          <div className="!mb-[-22px] !mt-8 flex w-full justify-end gap-2 text-xs">
+            {validationRules.map(({ label, isValid }, index) => (
+              <div key={index} className="flex items-center space-x-1">
+                <span className={isValid ? 'text-secondary-700' : 'text-red-700'}>{label}</span>
+                {isValid ? <SmailCheckIcon /> : <SmailXIcon />}
+              </div>
+            ))}
           </div>
 
-          <div className="!mt-[16px] w-full">
-            <InputField
-              iconName="LockIcon"
-              text="비밀번호 확인"
-              placeholder="비밀번호를 다시 입력해주세요."
-              type={showConfirmPassword ? 'text' : 'password'}
-              status={errors.confirmPassword ? 'error' : 'default'}
-              register={register('confirmPassword', { required: '비밀번호 확인을 입력해주세요.' })}
-              error={errors.confirmPassword}
-              rightIcon={
-                <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-                  {showConfirmPassword ? (
-                    <Icon name="Eye2Icon" color="#A1A1A1" />
-                  ) : (
-                    <Icon name="EyeIcon" color="#A1A1A1" />
-                  )}
-                </button>
-              }
-            />
-          </div>
+          <InputField
+            iconName="LockIcon"
+            text="비밀번호 확인"
+            placeholder="비밀번호를 다시 입력해주세요."
+            type={showConfirmPassword ? 'text' : 'password'}
+            status={errors.confirmPassword ? 'error' : 'default'}
+            register={register('confirmPassword')}
+            error={errors.confirmPassword}
+            rightIcon={
+              <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                <Icon name={showConfirmPassword ? 'Eye2Icon' : 'EyeIcon'} color="#A1A1A1" />
+              </button>
+            }
+          />
 
-          <div className="flex w-full items-center justify-end text-xs">
-            <div className="!mt-[-30px] flex items-center">
-              {isPasswordMatching ? (
-                <>
-                  <p className="mr-1 text-secondary-700">비밀번호가 동일합니다.</p>
-                  <SmailCheckIcon />
-                </>
-              ) : (
-                <>
-                  <p className="mr-1 text-red-700">비밀번호가 동일하지 않습니다.</p>
-                  <SmailXIcon />
-                </>
-              )}
-            </div>
+          <div className="!mt-8 flex w-full items-center justify-end space-y-6 text-xs">
+            <PasswordMatchStatus isMatching={passwordValidations.isMatching} />
           </div>
 
           <div>
             <Button
               text="다음으로"
-              variant={isValid && isPasswordMatching ? 'blue' : 'gray'}
-              disabled={!isValid || !isPasswordMatching}
+              variant={isValid && passwordValidations.isMatching ? 'blue' : 'gray'}
+              disabled={!isValid || !passwordValidations.isMatching}
               type="submit"
             />
           </div>

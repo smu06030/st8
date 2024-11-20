@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
-import browserClient from '@/utils/supabase/client';
+
 import useUserId from '@/hooks/auth/useUserId';
+import browserClient from '@/utils/supabase/client';
 
 const useUserMenuState = (initialNickname: string) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
