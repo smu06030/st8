@@ -127,7 +127,7 @@ const AlbumList = () => {
                         alt=""
                         width={200}
                         height={200}
-                        priority
+                        loading={index < 4 ? 'eager' : 'lazy'}
                         className="h-full w-full object-cover"
                       />
                     </>
