@@ -1,17 +1,17 @@
 'use client';
 
+import { useState } from 'react';
+import { PAGE_NAMES } from '@/constants/pageName';
+
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import useModal from '@/hooks/modal/useModal';
 import StampCount from '@/components/mypage/MyPageStampCount';
 import PhotoCount from '@/components/mypage/MyPagePhotoCount';
 import RecentPhoto from '@/components/mypage/MyPageRecentPhoto';
 import LogoutButton from '@/components/auth/LogoutButton';
-
-import useModal from '@/hooks/modal/useModal';
-import NicknameEditorModal from '@/components/common/Modal/NicknameEditorModal';
 import NicknameEditor from '@/components/mypage/MyPageNicknameEditor';
-import { PAGE_NAMES } from '@/constants/pageName';
+import NicknameEditorModal from '@/components/common/Modal/NicknameEditorModal';
 
 const MyPageLayout = () => {
   const { Modal, openModal, closeModal } = useModal();

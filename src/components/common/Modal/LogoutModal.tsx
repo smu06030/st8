@@ -1,7 +1,8 @@
 'use client';
 
-import Button from '../Buttons/Button';
 import { logout } from '@/utils/supabase/auth';
+
+import Button from '../Buttons/Button';
 
 interface LogoutModalProps {
   closeModal: () => void;
