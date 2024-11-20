@@ -22,11 +22,7 @@ const ResetPasswordForm = () => {
   const router = useRouter();
 
   const redirectUrl = useMemo(() => {
-    if (process.env.NODE_ENV === 'development') {
-      return process.env.NEXT_PUBLIC_REDIRECT_URL_LOCAL;
-    } else if (process.env.NODE_ENV === 'production') {
-      return process.env.NEXT_PUBLIC_REDIRECT_URL_BETA;
-    }
+    return process.env.NEXT_PUBLIC_REDIRECT_URL + '/update-password';
   }, []);
 
   const onSubmit = async (profile: FormValues) => {
@@ -34,12 +30,19 @@ const ResetPasswordForm = () => {
     setIsRequesting(true);
 
     try {
-      await browserClient.auth.resetPasswordForEmail(profile.email, {
-        redirectTo: redirectUrl + '/updatePassword'
+      const { error } = await browserClient.auth.resetPasswordForEmail(profile.email, {
+        redirectTo: redirectUrl
       });
+
+      if (error) {
+        console.error('비밀번호 재설정 이메일 전송 중 오류:', error);
+        alert('비밀번호 재설정 요청에 실패했습니다.');
+        return;
+      }
+
       router.push('/reset-success');
     } catch (error) {
-      console.error('비밀번호 재설정 이메일 전송 중 오류:', error);
+      console.error('오류:', error);
     } finally {
       setIsRequesting(false);
     }

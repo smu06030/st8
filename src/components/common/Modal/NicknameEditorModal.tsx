@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 
+import Button from '@/components/common/Buttons/Button';
+import InputField from '@/components/common/InputField/InputField';
 import browserClient from '@/utils/supabase/client';
-import Button from '../Buttons/Button';
-import InputField from '../InputField/InputField';
 
 interface NicknameEditorModalProps {
   Modal: ({ children }: { children: React.ReactNode }) => React.ReactPortal | null;

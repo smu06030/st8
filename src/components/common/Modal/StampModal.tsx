@@ -2,7 +2,7 @@ import { ReactPortal } from 'react';
 import { useMapStore } from '@/providers/mapStoreProvider';
 import { REGION_NAME_MAP_KO } from '@/utils/region/RegionNames';
 
-import Icon from '../Icons/Icon';
+import Icon from '@/components/common/Icons/Icon';
 import Link from 'next/link';
 import Image from 'next/image';
 

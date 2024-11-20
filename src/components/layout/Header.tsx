@@ -5,9 +5,9 @@ import { usePathname } from 'next/navigation';
 
 import Icon from '@/components/common/Icons/Icon';
 import Link from 'next/link';
-import MoaLogo from '../common/Icons/MoaLogo';
+import MoaLogo from '@/components/common/Icons/MoaLogo';
 import useHeaderActive from '@/hooks/layout/useHeaderActive';
-import ClientHeaderMenu from './ClientHeaderMenu';
+import ClientHeaderMenu from '@/components/layout/ClientHeaderMenu';
 
 const Header = () => {
   const { pageTitle } = useHeaderActive();

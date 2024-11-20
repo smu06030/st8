@@ -10,7 +10,7 @@ import Icon from '@/components/common/Icons/Icon';
 import Link from 'next/link';
 import Button from '@/components/common/Buttons/Button';
 import LinkButton from '@/components/common/Buttons/LinkButton';
-import InputField from '../common/InputField/InputField';
+import InputField from '@/components/common/InputField/InputField';
 import browserClient from '@/utils/supabase/client';
 import SocialLoginButton from '@/components/common/Buttons/SocialLoginButton';
 
