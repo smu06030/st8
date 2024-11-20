@@ -2,6 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { SignupFormInputs } from '@/types/auth/auth.type';
 import { signUpWithEmail, checkEmailExists } from '@/app/api/auth/authService';
 import { passwordValidationRules, validatePassword } from '@/utils/auth/passwordValidation';
 
@@ -12,13 +13,6 @@ import GoMainStep from '@/components/auth/signup/mobile/StepMainForm';
 import SmailXIcon from '@/components/common/Icons/Auth/SmailXIcon';
 import SmailCheckIcon from '@/components/common/Icons/Auth/SmailCheckIcon';
 import PasswordMatchStatus from '@/components/common/auth/PasswordMatchStatus';
-
-interface SignupFormInputs {
-  nickname: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
 
 const DesktopSignupForm = () => {
   const [step, setStep] = useState(0);
