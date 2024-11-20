@@ -51,17 +51,18 @@ const MyPageRecentPhoto = ({ limit = 3, containerStyle = '' }: RecentPhotoProps)
           <Icon name="ArrowIcon" size={14} color="#00b4ef" />
         </div>
       </Link>
-
-      <div className="-mx-6 mt-2 flex space-x-4 overflow-x-auto px-4 lg:mx-[180px] lg:mb-[271px] lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:px-0">
-        {recentPhotos.map((photo) => (
-          <Link
-            href={`/photo-album`}
-            key={photo.id}
-            className="relative h-[220px] w-[327px] flex-shrink-0 overflow-hidden rounded-lg lg:h-[250px] lg:w-full"
-          >
-            <Image src={photo.photoImg} alt="최근 여행지 이미지" fill style={{ objectFit: 'cover' }} priority />
-          </Link>
-        ))}
+      <div className="pc-inner-width">
+        <div className="-mx-6 mt-2 flex space-x-4 overflow-x-auto px-4 lg:mx-1 lg:mb-[271px] lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:px-0">
+          {recentPhotos.map((photo) => (
+            <Link
+              href={`/photo-album`}
+              key={photo.id}
+              className="relative h-[220px] w-[327px] flex-shrink-0 overflow-hidden rounded-lg lg:h-[250px] lg:w-full"
+            >
+              <Image src={photo.photoImg} alt="최근 여행지 이미지" fill style={{ objectFit: 'cover' }} priority />
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
