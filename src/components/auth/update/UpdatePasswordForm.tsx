@@ -80,7 +80,7 @@ const UpdatePasswordForm = () => {
           }
           register={register('password')}
         />
-        <div className="mt-4 flex w-full justify-end gap-2 text-xs">
+        <div className="!mb-4 !mt-8 flex w-full justify-end gap-2 text-xs">
           {validationRules.map(({ label, isValid }, index) => (
             <div key={index} className="flex items-center space-x-1">
               <span className={isValid ? 'text-secondary-700' : 'text-red-700'}>{label}</span>
@@ -104,7 +104,7 @@ const UpdatePasswordForm = () => {
           }
         />
 
-        <div className="!mt-8 flex w-full items-center justify-end space-y-6 text-xs">
+        <div className="!mb-20 !mt-8 flex w-full items-center justify-end space-y-6 text-xs">
           <PasswordMatchStatus isMatching={passwordValidations.isMatching} />
         </div>
 
