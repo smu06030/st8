@@ -149,7 +149,7 @@ const LandingPage = () => {
             <div className="w-[50%]"></div>
           </div>
 
-          <div className="flex">
+          <div className="relative flex shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)]">
             <div className="flex w-[50%] flex-col items-center justify-center">
               <h2 className={`mb-[14px] font-bold text-[36px] text-[#00688A]`}>국내 여행 스탬프 서비스 모아</h2>
               <span className="leading-[24px] text-[#4F4F4F]">
