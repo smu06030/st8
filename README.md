@@ -172,85 +172,22 @@
 
 ---
 
-## 기술적 의사결정
-
-- Next.js <br/>
-- pnpm<br/>
-- tailwind<br/>
-- supabase<br/>
-- zustand<br/>
-- tanstack <br/>
-- API
-  - 카카오지도 Api
-  - Geolocation Api
-  - 한국 관광공사 Api
-
----
-
-## MVP
-
-- [x] **`landing` 페이지**
-- [x] **`loading` 페이지**
-- [x] **`home` 페이지** 
-  - [x] 지도로 보는 나의 여행기록
-    - [x] 지역별 핀
-  - [x] 스탬프
-    - [x] 스탬프 찍기
-    - [x] 스탬프 보러가기
-  - [x] 모아가 추천하는 여행지
-- [x] **`stamp` 페이지**
-  - [x] 모아온 스탬프 보기
-    - [x] 스탬프 상세
-    - [x] 스탬프 히스토리
-- [x] **`album` 페이지**
-
-  - [x] 나의 추억들
-    - [x] 전체보기, 지역별 보기
-    - [x] 전체보기로 이미지업로드시 지역선택모달창 
-    - [x] 지역별로 이미지업로드
-    - [x] 지역별 이미지 상세보기
-    - [x] 사진 슬라이드, 편집기능
-
-- [x] **`login` 페이지**
-- [x] 이메일 로그인
-- [x] 소셜 로그인
-
-- [x] **`singup` 페이지**
-- [x] 닉네임 페이지
-- [x] 이메일 페이지
-- [x] 비밀번호 페이지
-  - [x] 유효성 검사
-- [x] 가입완료 페이지
-
-- [x] **`tourism` 페이지**
-- [x] 국내 추천 여행지
-  - [x] 추천여행지 상세
-- [x] **`mypage` 페이지**
-  - [x] 내 정보 수정(닉네임)
-  - [x] 내가 찜한 여행지
-  - [x] 나의 추억들
-  - [x] 나의 발자취
-  - [x] 로그아웃
-- [x] 공통
-  - [x] tailwind
-  - [x] supabase
-
----
-
-## 🔥 트러블슈팅
+## 🛠 트러블슈팅
 <details>
-<summary style="cursor: pointer; font-size: 16px;">1. Icon</summary>
+<summary style="cursor: pointer; font-size: 16px;"><h2>1. Icon</h2></summary>
 
-기존에는 아이콘을 각각 만들어서 **`중복되는 코드`** 들이 너무 많은 문제가 있었습니다.<br />
+### **🔥 이슈**
+
+기존에는 아이콘을 각각 만들어서 **`중복되는 코드`** 들이 너무 많은 문제가 있었습니다.
 
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FWYmIO%2FbtsKvek48H4%2FvykkNRU3pKsXL2LB6s6oG0%2Fimg.png">
 
 ### 기존 코드
 
-```ts
+```tsx
 const AlbumIcon = () => {
   return (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="<http://www.w3.org/2000/svg>">
       <path
           fillRule="evenodd"
           clipRule="evenodd"
@@ -262,11 +199,11 @@ const AlbumIcon = () => {
 };
 ```
 
-### 리팩토링 코드
+### **✅ 해결**
 
-path 크기를 **동적으로 렌더링**하고 **배경색과 아이콘 반경을 조정**할 수 있게 수정
+path 크기를 **동적으로 렌더링**하고 **배경색과 아이콘 반경을 조정**할 수 있게 수정하였습니다.
 
-```ts
+```tsx
 import { ICONS } from '@/constants/icons';
 
 interface IconProprType {
@@ -289,7 +226,7 @@ const Icon = ({ name, size = 28, color = 'black', bgColor, rx }: IconProprType) 
       height={size}
       viewBox={`0 0 ${size} ${size}`}
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+      xmlns="<http://www.w3.org/2000/svg>"
       className="flex items-center justify-center"
     >
       {bgColor && <rect width={size} height={size} rx={rx} fill={bgColor} />}
@@ -301,18 +238,23 @@ const Icon = ({ name, size = 28, color = 'black', bgColor, rx }: IconProprType) 
 };
 
 export default Icon;
+
 ```
 </details>
 <details>
-<summary style="cursor: pointer; font-size: 16px;">2. Modal</summary>
+<summary style="cursor: pointer; font-size: 16px;"><h2>2. Modal</h2></summary>
 
-모달창을 구현하다 보니 다양한 컴포넌트에서 **`동일한 모달 로직을 반복적으로 사용하는 문제`** 가 있었습니다.
+### **🔥 이슈**
 
-### useModal 커스텀 훅 분리
+**Modal 반복 사용**
 
-커스텀 훅을 이용한 모달 상태 관리와 포탈 렌더링을 분리해 사용해서 **재사용성**과 **가독성**을 높일 수 있었습니다.
+모달창을 구현하다 보니 다양한 컴포넌트에서 **`동일한 모달 로직을 반복적으로 사용하는 문제`** 가 있었습니다.
 
-```ts
+### **✅ 해결**
+
+useModal 커스텀 훅 분리를 이용한 모달 상태 관리와 포탈 렌더링을 분리해 사용해서 **재사용성**과 **가독성**을 높일 수 있었습니다.
+
+```tsx
 import { useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -348,5 +290,109 @@ const useModal = () => {
 };
 
 export default useModal;
+
 ```
 </details>
+
+
+## 🔥 성능 최적화
+<details>
+<summary style="cursor: pointer; font-size: 16px;"><h2>1. 메인 FCP, LCP 단축</h2></summary>
+  
+### 🔥 **이슈**
+
+lighthouse 측정 결과를 통해 메인 지도 이미지 LCP가 지연돼 **초기 렌더링이 느리다는 문제**를 발견했습니다.
+
+### 🔎 **해결 과정**
+
+Next.js의 `<Image />` 는 최적화된 이미지 렌더링 기능을 제공하지만 원본 이미지 파일이 큰 경우 로딩 시간이 길어질 수 있는 문제가 있었습니다.
+
+### ✅ **해결 방법**
+
+메인 지도 이미지를 압축해 기존 대비 `-65%` **이미지 용량을 감소** 시켰습니다.
+
+![img1 daumcdn](https://github.com/user-attachments/assets/16f18b15-d180-4517-a3cc-f1d0da6e184d)
+
+이미지 용량을 줄이면서 `FCP`, `LCP` 지표가 모두 개선이 되면서 **초기 로딩 시간도 단축**시켜 **사용자 경험을 향상**할 수 있었습니다.
+
+![img1 daumcdn](https://github.com/user-attachments/assets/ead3d641-6099-43b0-8ae6-a50d59c4b854)
+</details>
+
+<details>
+<summary style="cursor: pointer; font-size: 16px;"><h2>2. 초기 렌더링 시간 단축</h2></summary>
+  
+### 🔥 **이슈**
+
+스탬프 데이터를 가져올 때 클라이언트에서 가져오기 때문에 속도가 느린 문제가 있었습니다.
+
+### 🔎 **해결 과정**
+
+초기 렌더링 속도를 개선하기 위해 클라이언트가 아닌 서버에서 데이터를 미리 패칭해 클라이언트로 보내는 방식을 적용해봤습니다.
+
+**서버에서 데이터를 미리 패치**
+
+```tsx
+const user = await getUser();
+
+if (user) {
+  await queryClient.prefetchQuery({
+    queryKey: QUERY_KEY.STAMP_LIST(user.id),
+    queryFn: () => getStampList(user.id)
+  });
+}
+```
+
+**데이터 직렬화**
+
+```tsx
+<HydrationBoundary state={dehydrate(queryClient)}>
+```
+
+`dehydrate`를 사용해 queryClient상태를 **JSON 형식으로 변환**해 클라이언트에서 `HydrationBoundary`를 사용해 데이터를 복원했습니다.
+
+### ✅ **해결 방법**
+
+기존에는 클라이언트 컴포넌트에서 `Tanstack Query` 를 사용해 데이터를 패칭했습니다.
+
+```tsx
+const MainComponent = () => {
+  const userId = useUserId();
+  const { data: tourismList, isPending isError } = useGetTourismListQuery(userId);
+  
+  ...
+}
+```
+
+리팩토링 후에는 `HydrationBoundary`와 `dehydrate`를 활용해 스탬프 페이지를 최적화 했습니다.
+
+```tsx
+// layout.tsx
+
+export default async function StampLayout({ children }: { children: React.ReactNode }) {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 1000
+      }
+    }
+  });
+
+  const user = await getUser();
+
+  if (user) {
+    await queryClient.prefetchQuery({
+      queryKey: QUERY_KEY.STAMP_LIST(user.id),
+      queryFn: () => getStampList(user.id)
+    });
+  }
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <MapProvider>{children}</MapProvider>
+    </HydrationBoundary>
+  );
+}
+```
+</details>
+
+
