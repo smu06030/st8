@@ -4,6 +4,7 @@ import MainFooter from '@/components/mainPage/MainFooter';
 import MainMapSection from '@/components/mainPage/MainMapSection';
 import MainStampSection from '@/components/mainPage/MainStampSection';
 import MainRecommendSection from '@/components/mainPage/MainRecommendSection';
+import RecentPhoto from '@/components/mypage/MyPageRecentPhoto';
 
 export const metadata: Metadata = {
   title: '홈',
@@ -16,6 +17,7 @@ const MainHomePage = () => {
       <MainMapSection />
       <MainStampSection />
       <MainRecommendSection />
+      <RecentPhoto limit={6} containerStyle="hidden lg:block" />
       <MainFooter />
     </main>
   );

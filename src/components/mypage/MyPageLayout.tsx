@@ -25,7 +25,7 @@ const MyPageLayout = () => {
         </div>
         <LogoutButton />
       </div>
-      <RecentPhoto />
+      <RecentPhoto limit={3} containerStyle="lg:hidden" />
       <div>
         <h6 className="mb-[18px] mt-[20px] font-bold text-[20px] text-gray-900">내 정보</h6>
         <StampCount />
