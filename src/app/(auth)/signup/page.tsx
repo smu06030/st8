@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import SignupForm from '@/components/auth/SignupForm';
+import SignupForm from '@/components/auth/signup/SignupForm';
 
 export const metadata: Metadata = {
   title: '회원가입',

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useGetStampListQuery } from '@/hooks/queries/query/useStampQuery';
 import { stampSiDoFormatter } from '@/utils/region/siDoFormatter';
 
-import useUserId from '../auth/useUserId';
+import useUserId from '@/hooks/auth/useUserId';
 
 const useStamp = () => {
   const userId = useUserId();

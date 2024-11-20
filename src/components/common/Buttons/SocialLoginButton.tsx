@@ -1,32 +1,27 @@
-import { MouseEventHandler } from 'react';
-
 import Image from 'next/image';
 
 interface SocialLoginButtonProps {
-  provider: 'google' | 'kakao' | 'github';
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onLogin: (provider: 'google' | 'kakao') => void;
 }
 
-const SocialLoginButton = ({ provider, onClick }: SocialLoginButtonProps) => {
-  const imageUrl =
-    provider === 'google'
-      ? '/images/auth/google-icon.png'
-      : provider === 'kakao'
-        ? '/images/auth/kakao-icon.png'
-        : '/images/auth/apple-icon2.png';
-  const altText = provider === 'google' ? 'Google Login' : provider === 'kakao' ? 'Kakao Login' : 'github Login';
-
-  const buttonClassName =
-    provider === 'google'
-      ? 'shadow-md h-[50px] w-[50px] rounded-full bg-white p-3'
-      : provider === 'kakao'
-        ? 'shadow-md h-[50px] w-[50px] rounded-full bg-[#FEE500] p-3'
-        : 'shadow-md h-[50px] w-[50px] rounded-full bg-white p-3';
+const SocialLoginButton = ({ onLogin }: SocialLoginButtonProps) => {
+  const providers = [
+    { provider: 'google', imageUrl: '/images/auth/google-icon.png', alt: 'Google Login', bgColor: 'bg-white' },
+    { provider: 'kakao', imageUrl: '/images/auth/kakao-icon.png', alt: 'Kakao Login', bgColor: 'bg-[#FEE500]' }
+  ];
 
   return (
-    <button onClick={onClick} className={buttonClassName}>
-      <Image src={imageUrl} alt={altText} width={50} height={50} className="rounded-full" />
-    </button>
+    <div className="mt-6 flex justify-center space-x-4">
+      {providers.map(({ provider, imageUrl, alt, bgColor }) => (
+        <button
+          key={provider}
+          onClick={(e) => onLogin(provider as 'google' | 'kakao')}
+          className={`shadow-md h-[50px] w-[50px] rounded-full ${bgColor} p-3`}
+        >
+          <Image src={imageUrl} alt={alt} width={50} height={50} className="rounded-full" />
+        </button>
+      ))}
+    </div>
   );
 };
 

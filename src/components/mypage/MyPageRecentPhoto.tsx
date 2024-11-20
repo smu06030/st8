@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useGetAlbumListQuery } from '@/hooks/queries/query/useAlbumQuery';
-import Image from 'next/image';
+
 import Link from 'next/link';
+import Image from 'next/image';
 import useUserId from '@/hooks/auth/useUserId';
 
 const RecentPhoto = () => {

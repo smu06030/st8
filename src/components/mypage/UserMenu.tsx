@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
+import { PAGE_NAMES } from '@/constants/pageName';
+
 import Link from 'next/link';
 import Icon from '@/components/common/Icons/Icon';
-import LogoutModal from '@/components/common/Modal/LogoutModal';
 import useModal from '@/hooks/modal/useModal';
-import useUserMenuState from '@/hooks/useUserMenuState';
-import { PAGE_NAMES } from '@/constants/pageName';
+import LogoutModal from '@/components/common/Modal/LogoutModal';
+import useUserMenuState from '@/hooks/mypage/useUserMenuState';
 
 interface UserMenuType {
   initialNickname: string;
