@@ -2,11 +2,11 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY } from '@/hooks/queries/query.keys';
+import { PAGE_NAMES } from '@/constants/pageName';
+import { getStampCount } from '@/services/apis/mypage';
 
 import Link from 'next/link';
 import useUserId from '@/hooks/auth/useUserId';
-import { getStampCount } from '@/services/apis/mypage';
-import { PAGE_NAMES } from '@/constants/pageName';
 
 const StampCount = () => {
   const userId = useUserId();

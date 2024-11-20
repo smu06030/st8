@@ -1,4 +1,4 @@
-import CameraIcon from '../Icons/Loading/CameraIcon';
+import CameraIcon from '@/components/common/Icons/Loading/CameraIcon';
 
 const LoadingBounce = () => (
   <div

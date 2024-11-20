@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+
 import browserClient from '@/utils/supabase/client';
 
 interface NicknameEditorProps {

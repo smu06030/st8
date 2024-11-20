@@ -1,7 +1,7 @@
 'use client';
 
 import useModal from '@/hooks/modal/useModal';
-import LogoutModal from '../common/Modal/LogoutModal';
+import LogoutModal from '@/components/common/Modal/LogoutModal';
 
 const LogoutButton = () => {
   const { openModal, Modal, closeModal } = useModal();

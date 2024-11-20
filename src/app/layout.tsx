@@ -3,17 +3,15 @@
 import { useState } from 'react';
 import { PAGE_NAMES } from '@/constants/pageName';
 import { usePathname } from 'next/navigation';
+import { HistoryProvider } from '@/providers/HistoryProvider';
 
+import './globals.css';
 import Nav from '@/components/layout/Nav';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import localFont from 'next/font/local';
 import RQProviders from '@/providers/RQRovider';
 import KakaoMapLoader from '@/components/stampMap/KakaoMapLoader';
-
-import './globals.css';
-import { HistoryProvider } from '@/providers/HistoryProvider';
-import Head from 'next/head';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',

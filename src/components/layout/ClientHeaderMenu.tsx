@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import UserMenu from '../mypage/UserMenu';
+import UserMenu from '@/components/mypage/UserMenu';
 import browserClient from '@/utils/supabase/client';
 
 const ClientHeaderMenu = () => {
