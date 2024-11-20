@@ -26,7 +26,7 @@ const LandingTutorial = () => {
         >
           <li className="slide flex w-[100%] flex-col">
             <div className="px-[24px]">
-              <Image src={`/images/landing/mo-landing-01.png`} alt={''} width={500} height={500} />
+              <Image src={`/images/landing/mo-landing-01.png`} alt={'step1'} width={500} height={500} loading="eager" />
             </div>
             <button className="button" onClick={handleClick}>
               다음으로
@@ -34,7 +34,7 @@ const LandingTutorial = () => {
           </li>
           <li className="slide flex w-[100%] flex-col">
             <div className="px-[24px]">
-              <Image src={`/images/landing/mo-landing-02.png`} alt={''} width={500} height={500} />
+              <Image src={`/images/landing/mo-landing-02.png`} alt={'step2'} width={500} height={500} loading="eager" />
             </div>
             <button className="button" onClick={handleClick}>
               다음으로
@@ -42,7 +42,7 @@ const LandingTutorial = () => {
           </li>
           <li className="slide flex w-[100%] flex-col">
             <div className="px-[24px]">
-              <Image src={`/images/landing/mo-landing-03.png`} alt={''} width={500} height={500} />
+              <Image src={`/images/landing/mo-landing-03.png`} alt={'step3'} width={500} height={500} loading="eager" />
             </div>
             <button className="button" onClick={handleClick}>
               다음으로
@@ -50,7 +50,7 @@ const LandingTutorial = () => {
           </li>
           <li className="slide flex w-[100%] flex-col">
             <div className="px-[24px]">
-              <Image src={`/images/landing/mo-landing-04.png`} alt={''} width={500} height={500} className="" />
+              <Image src={`/images/landing/mo-landing-04.png`} alt={'step4'} width={500} height={500} loading="eager" />
             </div>
             <button className="button" onClick={handleClick}>
               다음으로
@@ -58,11 +58,11 @@ const LandingTutorial = () => {
           </li>
           <li className="slide flex w-[100%] flex-col">
             <div className="px-[24px]">
-              <Image src={`/images/landing/mo-landing-05.png`} alt={''} width={500} height={500} className="" />
+              <Image src={`/images/landing/mo-landing-05.png`} alt={'step5'} width={500} height={500} loading="eager" />
             </div>
-            <button className="button">
-              <Link href="/signup">여행떠나기</Link>
-            </button>
+            <Link href="/signup" className="button">
+              <button>여행떠나기</button>
+            </Link>
           </li>
         </ul>
       </div>

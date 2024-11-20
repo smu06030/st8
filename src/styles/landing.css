@@ -205,5 +205,5 @@
   @apply font-semiBold text-[32px] leading-[41px] text-[#008EBD];
 }
 .button {
-  @apply h-[64px] w-[calc(100%-48px)] rounded-xl bg-secondary-500 p-2.5 font-semiBold text-base text-secondary-900 transition-colors duration-300 ease-in-out;
+  @apply flex h-[64px] w-[calc(100%-48px)] items-center justify-center rounded-xl bg-secondary-500 p-2.5 font-semiBold text-base text-secondary-900 transition-colors duration-300 ease-in-out;
 }
