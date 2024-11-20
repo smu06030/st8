@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Icon from '@/components/common/Icons/Icon';
 import useModal from '@/hooks/modal/useModal';
 import LogoutModal from '@/components/common/Modal/LogoutModal';
-import useUserMenuState from '@/hooks/useUserMenuState';
+import useUserMenuState from '@/hooks/mypage/useUserMenuState';
 
 interface UserMenuType {
   initialNickname: string;

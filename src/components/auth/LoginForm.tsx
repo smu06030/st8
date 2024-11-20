@@ -1,17 +1,17 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { handleLogin } from '@/utils/auth/loginValidation';
 import { useSocialLogin } from '@/hooks/auth/useSocialLogin';
-import { useEffect, useState, MouseEvent } from 'react';
-import { checkEmailExists, loginWithEmailAndPassword } from '@/app/api/auth/authService';
+import { useAuthListener } from '@/hooks/auth/useAuthListener';
 
 import Icon from '@/components/common/Icons/Icon';
 import Link from 'next/link';
 import Button from '@/components/common/Buttons/Button';
 import LinkButton from '@/components/common/Buttons/LinkButton';
 import InputField from '@/components/common/InputField/InputField';
-import browserClient from '@/utils/supabase/client';
 import SocialLoginButton from '@/components/common/Buttons/SocialLoginButton';
 
 interface LoginFormInputs {
@@ -30,52 +30,23 @@ const LoginForm = () => {
   const router = useRouter();
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  useEffect(() => {
-    const {
-      data: { subscription }
-    } = browserClient.auth.onAuthStateChange(async (event) => {
-      if (event === 'SIGNED_IN') {
-        const {
-          data: { user }
-        } = await browserClient.auth.getUser();
-
-        if (user) {
-          window.location.href = '/home';
-        }
-      }
-    });
-
-    return () => {
-      subscription?.unsubscribe();
-    };
-  }, [router]);
+  // Supabase Auth 상태 변경 리스너
+  useAuthListener();
 
   const onHandleLogin = async (data: LoginFormInputs) => {
-    const emailExists = await checkEmailExists(data.email);
-    if (!emailExists) {
-      setError('email', {
-        type: 'manual',
-        message: '등록되지 않은 이메일입니다.'
-      });
-      return;
-    }
-
-    const result = await loginWithEmailAndPassword(data.email, data.password);
-    if (result.success) {
-      window.location.href = '/home';
-    } else {
-      if (result.type === 'password') {
-        setError('password', {
-          type: 'manual',
-          message: '비밀번호가 틀렸습니다.'
-        });
-      }
+    const success = await handleLogin(data.email, data.password, setError);
+    if (success) {
+      router.push('/home');
     }
   };
 
-  const handleSocialLogin = (type: 'kakao' | 'google' | 'github', e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    loginWithProvider(type);
+  const handleSocialLogin = async (provider: 'google' | 'kakao') => {
+    try {
+      await loginWithProvider(provider);
+      router.push('/home');
+    } catch (error) {
+      console.error(`${provider} 로그인 중 오류 발생:`, error);
+    }
   };
 
   return (
@@ -121,11 +92,8 @@ const LoginForm = () => {
         />
 
         <div className="flex w-full max-w-sm justify-between px-3 pt-8">
-          <div>
-            {/* <input type="checkbox" className="mr-1" />
-            <span className="text-sm font-normal text-[#4e4e4e]">자동 로그인</span> */}
-          </div>
-          <Link href="/reset-password" className="text-right text-sm font-normal text-[#4e4e4e]">
+          <div></div>
+          <Link href="/reset-password" className="text-right text-sm font-normal text-gray-600">
             아이디/비밀번호 찾기
           </Link>
         </div>
@@ -133,9 +101,7 @@ const LoginForm = () => {
           <Button text="로그인" variant={isValid ? 'blue' : 'gray'} disabled={!isValid} type="submit" />
         </div>
         <div className="mt-6 flex justify-center space-x-4">
-          {/* <SocialLoginButton provider="github" onClick={(e) => handleSocialLogin('github', e)} /> */}
-          <SocialLoginButton provider="google" onClick={(e) => handleSocialLogin('google', e)} />
-          <SocialLoginButton provider="kakao" onClick={(e) => handleSocialLogin('kakao', e)} />
+          <SocialLoginButton onLogin={handleSocialLogin} />
         </div>
 
         <div className="text-center lg:!mt-14">

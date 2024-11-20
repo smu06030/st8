@@ -3,13 +3,15 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { signUpWithEmail, checkEmailExists } from '@/app/api/auth/authService';
+import { passwordValidationRules, validatePassword } from '@/utils/auth/passwordValidation';
 
 import Icon from '@/components/common/Icons/Icon';
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField/InputField';
-import GoMainStep from '@/components/auth/signup/StepMainForm';
+import GoMainStep from '@/components/auth/signup/mobile/StepMainForm';
 import SmailXIcon from '@/components/common/Icons/Auth/SmailXIcon';
 import SmailCheckIcon from '@/components/common/Icons/Auth/SmailCheckIcon';
+import PasswordMatchStatus from '@/components/common/auth/PasswordMatchStatus';
 
 interface SignupFormInputs {
   nickname: string;
@@ -33,23 +35,8 @@ const DesktopSignupForm = () => {
   const confirmPasswordValue = watch('confirmPassword') || '';
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const passwordValidations = {
-    hasMinLength: passwordValue.length >= 8,
-    hasMaxLength: passwordValue.length <= 16,
-    hasNumber: /\d/.test(passwordValue),
-    hasLetter: /[A-Za-z]/.test(passwordValue),
-    isMatching: passwordValue === confirmPasswordValue
-  };
-
-  const validationRules = [
-    { label: '숫자 포함', isValid: passwordValidations.hasNumber },
-    { label: '영문 포함', isValid: passwordValidations.hasLetter },
-    {
-      label: '8자리 이상 16자리 이하',
-      isValid: passwordValidations.hasMinLength && passwordValidations.hasMaxLength
-    }
-  ];
+  const passwordValidations = validatePassword(passwordValue, confirmPasswordValue);
+  const validationRules = passwordValidationRules(passwordValidations);
 
   const handleSignup = async (data: SignupFormInputs) => {
     try {
@@ -125,7 +112,7 @@ const DesktopSignupForm = () => {
             }
           />
 
-          <div className="mt-4 flex w-full justify-end gap-2 text-xs">
+          <div className="!mb-[-22px] !mt-8 flex w-full justify-end gap-2 text-xs">
             {validationRules.map(({ label, isValid }, index) => (
               <div key={index} className="flex items-center space-x-1">
                 <span className={isValid ? 'text-secondary-700' : 'text-red-700'}>{label}</span>
@@ -140,10 +127,7 @@ const DesktopSignupForm = () => {
             placeholder="비밀번호를 다시 입력해주세요."
             type={showConfirmPassword ? 'text' : 'password'}
             status={errors.confirmPassword ? 'error' : 'default'}
-            register={register('confirmPassword', {
-              // required: '비밀번호 확인을 입력해주세요.',
-              // validate: (value) => (value === passwordValue ? true : '비밀번호가 동일하지 않습니다.')
-            })}
+            register={register('confirmPassword')}
             error={errors.confirmPassword}
             rightIcon={
               <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
@@ -152,20 +136,8 @@ const DesktopSignupForm = () => {
             }
           />
 
-          <div className="flex w-full items-center justify-end text-xs">
-            <div className="!mt-[-30px] flex items-center">
-              {passwordValidations.isMatching ? (
-                <>
-                  <p className="mr-1 text-secondary-700">비밀번호가 동일합니다.</p>
-                  <SmailCheckIcon />
-                </>
-              ) : (
-                <>
-                  <p className="mr-1 text-red-700">비밀번호가 동일하지 않습니다.</p>
-                  <SmailXIcon />
-                </>
-              )}
-            </div>
+          <div className="!mt-8 flex w-full items-center justify-end space-y-6 text-xs">
+            <PasswordMatchStatus isMatching={passwordValidations.isMatching} />
           </div>
 
           <div>
