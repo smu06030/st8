@@ -2,11 +2,7 @@
 
 import { logout } from '@/utils/supabase/auth';
 
-<<<<<<< HEAD
 import Button from '@/components/common/Buttons/Button';
-=======
-import Button from '../Buttons/Button';
->>>>>>> 547e7b1b61139bd03559ea57dc9ee083cb0aedd0
 
 interface LogoutModalProps {
   closeModal: () => void;
