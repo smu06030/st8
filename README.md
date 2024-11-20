@@ -444,3 +444,112 @@ export default async function StampLayout({ children }: { children: React.ReactN
 ```
 
 </details>
+
+<details>
+<summary style="cursor: pointer; font-size: 16px;">3. 앨범 이미지 압축 및 파일변환</summary>
+
+### 🔥 **이슈**
+
+앨범에서 처음 사용자가 이미지를 올릴 때 용량제한을 두지 않아 이미지 용량이 크고 양이 많아질수록 페이지 로드되는 속도가 현저히 낮아지는 문제가 있었습니다.
+
+### 🔎 문제점
+
+- 압축 또는 이미지 최적화 없이 전달받은 이미지 그대로 업로드
+- 반복적이고 불필요한 상태 업데이트
+
+**이전 코드**
+
+```tsx
+// 이미지 파일받기
+const OnChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
+  if (onClickUserCheck(e)) return;
+
+  // 1. 압축 또는 이미지 최적화 없이 전달받은 이미지 그대로 업로드
+  const files = e.target.files;
+  setCurrentRegion(e.target.id.split('-')[1]);
+  if (!files) return;
+
+  Array.from(files).forEach((file) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+
+    fileReader.onload = (e) => {
+      // 2. 반복적이고 불필요한 상태 업데이트
+      if (typeof e.target?.result === 'string' && e.target.result) {
+        if (activeTab === 'allTab') {
+          setImgSrc((prev) => [...prev, e.target!.result as string]);
+          // setIsRigionModal(true);
+          openModal();
+        } else if (activeTab === 'rigionTab') {
+          setImgSrc((prev) => [...prev, e.target!.result as string]);
+          setRegionCate(item);
+        }
+      }
+    };
+  });
+};
+```
+
+### ✅ **해결 방법**
+
+- 파일 읽기와 압축을 병렬로 처리하여 전체시간을 단축했습니다.
+  - `Promise.all` 사용해 파일 압축 & 읽기
+    - 병렬로 처리하면 하나 끝날때까지 안기다리고 여러개를 동시에 처리가 가능해 시간단축이 가능하고, 코드의 가독성을 향상시켰습니다.
+- `browser-image-compression` \*\*\*\*이미지압축 라이브러리를 통해 압축하여 이미지용량을 제한하였습니다.
+- 효율적인 이미지 압축과 고화질을 유지하고자 **AVIF형식으로 변환하였습니다.**
+  - **AVIF형식**은 JPEG, PNG, 또는 WebP와 비교했을때 매우 높은 압축률로 파일크기를 줄일 수 있고, 높은 화질을 제공하여 앨범의 주 컨텐츠인 이미지의 깨짐을 최소화할 수 있습니다.
+
+```tsx
+const imgSrcArray: string[] = await Promise.all(
+  //Promise.all 병렬로 처리
+  Array.from(files).map(async (file) => {
+    // 파일 압축
+    const compressedImage = await imageCompression(file, {
+      maxSizeMB: 1, // 1MB
+      maxWidthOrHeight: 1024, // 이미지의 최대 가로 또는 세로 길이를 1024로 제한
+      useWebWorker: true // 압축 작업이 메인 스레드에 영향을 미치지 않도록 설정
+    });
+
+    // 압축파일 AVIF 형식으로 변환 (convertImageToAvif() : AVIF 변환함수)
+    const avifImage = await convertImageToAvif(compressedImage);
+
+    // 압축된 AVIF 파일읽기
+    return new Promise<string>((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(avifImage);
+      reader.onload = () => {
+        if (typeof reader.result === 'string') {
+          resolve(reader.result);
+        }
+      };
+    });
+  })
+);
+```
+
+- 상태 업데이트를 최소화하여 불필요한 랜더링을 방지하였습니다
+
+```tsx
+// 상태 업데이트를 한 번에 처리
+setImgSrc((prev) => [...prev, ...imgSrcArray]);
+
+if (activeTab === 'allTab') {
+  openModal();
+} else if (activeTab === 'rigionTab') {
+  setRegionCate(item);
+}
+```
+
+### **As-is )**
+
+![before-1](https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/f70df21c-e8f9-4469-916d-f62af009047e/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-11-19_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_4.58.29.png?table=block&id=a1714639-9035-4820-ab0c-6016b5b82dc5&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1732176000000&signature=B6_-M374c8Ezj_5tdLWN3uppN_jMV5Gqagz1SS6IDUg&downloadName=%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2024-11-19+%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE+4.58.29.png)
+
+![before-2](https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/0da62818-0b06-44fa-9fd1-e57c4753b9fc/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-11-19_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_9.50.29.png?table=block&id=7c060713-8d16-49cd-855c-cd27583f89c6&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1732176000000&signature=Jayl4Lg7KdmfSxYirNIOhFmhTDfXsUzGG9LBcd_ovy4&downloadName=%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2024-11-19+%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE+9.50.29.png)
+
+### **TO-BE )**
+
+![after-1](https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/3723f584-f293-4169-9261-70494de2636b/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-11-20_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_11.50.13.png?table=block&id=e3a7b9f9-1d91-485d-bd52-2825d4b9c557&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1732176000000&signature=90nLlYP-EyeTkc30qHhwwQV_MvU9N9PLGLOG68tD1kg&downloadName=%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2024-11-20+%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB+11.50.13.png)
+
+![after-2](https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/ae1c448a-13af-4982-8c94-a4d8f84cdd72/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-11-19_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_9.51.19.png?table=block&id=0aef5efe-4a5d-47bf-b4f5-ccb9de8d299d&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1732176000000&signature=ybwQ-D_5ga_rFccIOIUwTKwzNN5tBWwcRdeuP_xMO1E&downloadName=%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2024-11-19+%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE+9.51.19.png)
+
+</details>
