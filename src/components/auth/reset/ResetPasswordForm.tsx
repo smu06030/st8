@@ -22,7 +22,12 @@ const ResetPasswordForm = () => {
   const router = useRouter();
 
   const redirectUrl = useMemo(() => {
-    return process.env.NEXT_PUBLIC_REDIRECT_URL + '/update-password';
+    const baseUrl =
+      process.env.NODE_ENV === 'production'
+        ? process.env.NEXT_PUBLIC_REDIRECT_URL_BETA
+        : process.env.NEXT_PUBLIC_REDIRECT_URL_LOCAL;
+
+    return `${baseUrl}/update-password`;
   }, []);
 
   const onSubmit = async (profile: FormValues) => {

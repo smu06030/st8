@@ -53,7 +53,7 @@ const UpdatePasswordForm = () => {
         })
       ]);
 
-      router.push('/login');
+      router.push('/update-success');
     } catch (error) {
       console.error('비밀번호를 업데이트하는데 실패했습니다:', error);
     }
