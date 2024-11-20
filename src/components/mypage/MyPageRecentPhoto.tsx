@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useGetAlbumListQuery } from '@/hooks/queries/query/useAlbumQuery';
-
 import Image from 'next/image';
 import Link from 'next/link';
 import useUserId from '@/hooks/auth/useUserId';
@@ -14,19 +13,24 @@ const RecentPhoto = () => {
 
   useEffect(() => {
     if (albumListData) {
-      const sortedPhotos = [...albumListData]
-        .sort
-        // (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
-        ();
+      const sortedPhotos = [...albumListData].sort(
+        (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
       setRecentPhotos(sortedPhotos.slice(0, 3));
     }
   }, [albumListData]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <p>데이터를 가져오는 데 문제가 발생했습니다.</p>;
+  if (isLoading) {
+    return <div className="flex min-h-screen items-center justify-center">로딩 중...</div>;
+  }
 
-  //사진이 3개이하면 안보여줌
-  if (recentPhotos.length < 3) return null;
+  if (isError) {
+    const errorMessage = '데이터를 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.';
+    throw new Error(errorMessage);
+  }
+
+  // 사진이 3개 이하이면 null 반환
+  if (!recentPhotos || recentPhotos.length < 3) return null;
 
   return (
     <div className="my-4">

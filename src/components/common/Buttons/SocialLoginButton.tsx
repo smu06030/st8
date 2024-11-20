@@ -3,7 +3,7 @@ import { MouseEventHandler } from 'react';
 import Image from 'next/image';
 
 interface SocialLoginButtonProps {
-  provider: 'google' | 'kakao' | 'apple';
+  provider: 'google' | 'kakao' | 'github';
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -14,7 +14,7 @@ const SocialLoginButton = ({ provider, onClick }: SocialLoginButtonProps) => {
       : provider === 'kakao'
         ? '/images/auth/kakao-icon.png'
         : '/images/auth/apple-icon2.png';
-  const altText = provider === 'google' ? 'Google Login' : provider === 'kakao' ? 'Kakao Login' : 'Apple Login';
+  const altText = provider === 'google' ? 'Google Login' : provider === 'kakao' ? 'Kakao Login' : 'github Login';
 
   const buttonClassName =
     provider === 'google'
