@@ -1,7 +1,8 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { getPhotoCount } from '@/services/apis/photoCount';
+import { PAGE_NAMES } from '@/constants/pageName';
+import { getPhotoCount } from '@/services/apis/mypage';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -25,15 +26,12 @@ const PhotoCount = () => {
   }
 
   if (isError) {
-    return (
-      <div className="flex min-h-screen items-center justify-center text-red-700">
-        데이터를 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.
-      </div>
-    );
+    const errorMessage = '데이터를 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.';
+    throw new Error(errorMessage);
   }
 
   return (
-    <Link href="/photo-album">
+    <Link href={PAGE_NAMES.ALBUM.link}>
       <div className="relative flex h-[156px] flex-col justify-center overflow-hidden rounded-2xl bg-[#081425]/70 text-white">
         <Image src="/images/mypage/mypage_img.png" alt="배경 이미지" fill style={{ objectFit: 'cover' }} priority />
         <div className="absolute inset-0 bg-black opacity-50"></div>

@@ -3,15 +3,16 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { PasswordFormValues } from '@/types/auth/auth.type';
+import { passwordValidationRules, validatePassword } from '@/utils/auth/passwordValidation';
 
 import Icon from '@/components/common/Icons/Icon';
 import Button from '@/components/common/Buttons/Button';
+import SmailXIcon from '@/components/common/Icons/Auth/SmailXIcon';
 import InputField from '@/components/common/InputField/InputField';
 import browserClient from '@/utils/supabase/client';
-
-interface FormValues {
-  password: string;
-}
+import SmailCheckIcon from '@/components/common/Icons/Auth/SmailCheckIcon';
+import PasswordMatchStatus from '@/components/common/auth/PasswordMatchStatus';
 
 const UpdatePasswordForm = () => {
   const {
@@ -27,38 +28,41 @@ const UpdatePasswordForm = () => {
 
   const passwordValue = watch('password') || '';
   const confirmPasswordValue = watch('confirmPassword') || '';
-  const hasMinLength = passwordValue.length >= 8;
-  const hasNumber = /\d/.test(passwordValue);
-  const hasLetter = /[A-Za-z]/.test(passwordValue);
-  const isPasswordMatching = passwordValue === confirmPasswordValue;
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const passwordValidations = validatePassword(passwordValue, confirmPasswordValue);
+  const validationRules = passwordValidationRules(passwordValidations);
 
-  const onSubmit = async (profile: FormValues) => {
+  const isPasswordValid =
+    passwordValidations.hasMinLength &&
+    passwordValidations.hasMaxLength &&
+    passwordValidations.hasNumber &&
+    passwordValidations.hasLetter &&
+    passwordValidations.isMatching;
+
+  const onSubmit = async (formData: PasswordFormValues) => {
     try {
       await Promise.all([
-        browserClient.auth.updateUser({ password: profile.password }),
+        browserClient.auth.updateUser({ password: formData.password }),
         fetch('/api/logout', {
           method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json'
-          }
+          headers: { 'Content-Type': 'application/json' }
         })
       ]);
 
-      router.push('/login');
+      router.push('/update-success');
     } catch (error) {
-      console.log(error);
+      console.error('비밀번호를 업데이트하는데 실패했습니다:', error);
     }
   };
 
   return (
     <div className="mt-7 flex min-h-screen flex-col items-center justify-between">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center space-y-2">
-        <span className="mb-6 w-full text-left font-bold text-[32px] text-secondary-700">
+        <h1 className="mb-6 w-full text-left font-bold text-[32px] text-secondary-700">
           새로운 비밀번호를 <br />
           입력해주세요.
-        </span>
+        </h1>
 
         <InputField
           iconName="LockIcon"
@@ -68,19 +72,18 @@ const UpdatePasswordForm = () => {
           status={errors.password ? 'error' : 'default'}
           rightIcon={
             <button type="button" onClick={() => setShowPassword(!showPassword)}>
-              {showPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
+              <Icon name={showPassword ? 'Eye2Icon' : 'EyeIcon'} color="#A1A1A1" />
             </button>
           }
-          register={register('password', {})}
-          error={errors.password}
+          register={register('password')}
         />
-
-        {/* 유효성 검사 표시 */}
-        <div className="flex w-full items-center justify-end space-x-2 space-y-6 text-xs text-red-700">
-          <p className={hasNumber ? 'text-secondary-700' : ''}></p>
-          <p className={hasNumber ? 'text-secondary-700' : ''}>숫자 포함 {hasNumber ? '✔' : '✖'}</p>
-          <p className={hasLetter ? 'text-secondary-700' : ''}>영문 포함 {hasLetter ? '✔' : '✖'}</p>
-          <p className={hasMinLength ? 'text-secondary-700' : ''}>8자리 이상 {hasMinLength ? '✔' : '✖'}</p>
+        <div className="!mb-4 !mt-8 flex w-full justify-end gap-2 text-xs">
+          {validationRules.map(({ label, isValid }, index) => (
+            <div key={index} className="flex items-center space-x-1">
+              <span className={isValid ? 'text-secondary-700' : 'text-red-700'}>{label}</span>
+              {isValid ? <SmailCheckIcon /> : <SmailXIcon />}
+            </div>
+          ))}
         </div>
 
         <InputField
@@ -89,29 +92,24 @@ const UpdatePasswordForm = () => {
           placeholder="비밀번호를 다시 입력해주세요."
           type={showConfirmPassword ? 'text' : 'password'}
           status={errors.confirmPassword ? 'error' : 'default'}
-          register={register('confirmPassword', {})}
+          register={register('confirmPassword')}
           error={errors.confirmPassword}
           rightIcon={
             <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-              {showConfirmPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
+              <Icon name={showConfirmPassword ? 'Eye2Icon' : 'EyeIcon'} color="#A1A1A1" />
             </button>
           }
         />
 
-        <div className="flex w-full items-center justify-end space-y-6 text-xs">
-          <div></div>
-          {isPasswordMatching ? (
-            <p className="text-secondary-700">비밀번호가 동일합니다. ✔</p>
-          ) : (
-            <p className="text-red-700">비밀번호가 동일하지 않습니다. ✖</p>
-          )}
+        <div className="!mb-20 !mt-8 flex w-full items-center justify-end space-y-6 text-xs">
+          <PasswordMatchStatus isMatching={passwordValidations.isMatching} />
         </div>
 
         <div className="mt-[420px] lg:mt-[380px]">
           <Button
             text="비밀번호 변경"
-            variant={hasMinLength && hasNumber && hasLetter && isPasswordMatching ? 'blue' : 'gray'}
-            disabled={!hasMinLength || !hasNumber || !hasLetter || !isPasswordMatching}
+            variant={isPasswordValid ? 'blue' : 'gray'}
+            disabled={!isPasswordValid}
             type="submit"
           />
         </div>

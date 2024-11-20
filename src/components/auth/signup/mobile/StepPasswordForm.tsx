@@ -1,15 +1,14 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { PasswordStepProps } from '@/types/auth/auth.type';
+import { passwordValidationRules, validatePassword } from '@/utils/auth/passwordValidation';
 
 import Icon from '@/components/common/Icons/Icon';
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField/InputField';
 import SmailXIcon from '@/components/common/Icons/Auth/SmailXIcon';
 import SmailCheckIcon from '@/components/common/Icons/Auth/SmailCheckIcon';
-
-interface PasswordStepProps {
-  onNext: (password: string) => void;
-}
+import PasswordMatchStatus from '@/components/common/auth/PasswordMatchStatus';
 
 const PasswordStep = ({ onNext }: PasswordStepProps) => {
   const {
@@ -23,12 +22,17 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
 
   const passwordValue = watch('password') || '';
   const confirmPasswordValue = watch('confirmPassword') || '';
-  const hasMinLength = passwordValue.length >= 8;
-  const hasNumber = /\d/.test(passwordValue);
-  const hasLetter = /[A-Za-z]/.test(passwordValue);
-  const isPasswordMatching = passwordValue === confirmPasswordValue;
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const passwordValidations = validatePassword(passwordValue, confirmPasswordValue);
+  const validationRules = passwordValidationRules(passwordValidations);
+
+  const isPasswordValid =
+    passwordValidations.hasMinLength &&
+    passwordValidations.hasMaxLength &&
+    passwordValidations.hasNumber &&
+    passwordValidations.hasLetter &&
+    passwordValidations.isMatching;
 
   const onSubmit = (data: { password: string }) => {
     onNext(data.password);
@@ -40,6 +44,7 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
         모아에게 비밀번호를 <br />
         알려주세요.
       </span>
+
       <InputField
         iconName="LockIcon"
         text="비밀번호"
@@ -51,24 +56,18 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
             {showPassword ? <Icon name="Eye2Icon" color="#A1A1A1" /> : <Icon name="EyeIcon" color="#A1A1A1" />}
           </button>
         }
-        register={register('password')}
+        register={register('password', {
+          required: '비밀번호를 입력해주세요.'
+        })}
       />
 
-      <div className="!mt-8 flex w-full justify-end gap-2 text-xs">
-        <div className="flex items-center space-x-1">
-          <span className={hasNumber ? 'text-secondary-700' : 'text-red-700'}>숫자 포함</span>
-          {hasNumber ? <SmailCheckIcon /> : <SmailXIcon />}
-        </div>
-
-        <div className="flex items-center space-x-1">
-          <span className={hasLetter ? 'text-secondary-700' : 'text-red-700'}>영문 포함</span>
-          {hasLetter ? <SmailCheckIcon /> : <SmailXIcon />}
-        </div>
-
-        <div className="flex items-center space-x-1">
-          <span className={hasMinLength ? 'text-secondary-700' : 'text-red-700'}>8자리 이상 16자리 이하</span>
-          {hasMinLength ? <SmailCheckIcon /> : <SmailXIcon />}
-        </div>
+      <div className="!mb-4 !mt-8 flex w-full justify-end gap-2 text-xs">
+        {validationRules.map(({ label, isValid }, index) => (
+          <div key={index} className="flex items-center space-x-1">
+            <span className={isValid ? 'text-secondary-700' : 'text-red-700'}>{label}</span>
+            {isValid ? <SmailCheckIcon /> : <SmailXIcon />}
+          </div>
+        ))}
       </div>
 
       <InputField
@@ -87,28 +86,11 @@ const PasswordStep = ({ onNext }: PasswordStepProps) => {
       />
 
       <div className="!mt-8 flex w-full items-center justify-end space-y-6 text-xs">
-        <div className="flex items-center">
-          {isPasswordMatching ? (
-            <>
-              <p className="mr-1 text-secondary-700">비밀번호가 동일합니다.</p>
-              <SmailCheckIcon />
-            </>
-          ) : (
-            <>
-              <p className="mr-1 text-red-700">비밀번호가 동일하지 않습니다.</p>
-              <SmailXIcon />
-            </>
-          )}
-        </div>
+        <PasswordMatchStatus isMatching={passwordValidations.isMatching} />
       </div>
 
       <div className="!mt-[242px] lg:!mt-[205px]">
-        <Button
-          text="다음으로"
-          variant={hasMinLength && hasNumber && hasLetter && isPasswordMatching ? 'blue' : 'gray'}
-          disabled={!hasMinLength || !hasNumber || !hasLetter || !isPasswordMatching}
-          type="submit"
-        />
+        <Button text="다음으로" variant={isPasswordValid ? 'blue' : 'gray'} disabled={!isPasswordValid} type="submit" />
       </div>
     </form>
   );

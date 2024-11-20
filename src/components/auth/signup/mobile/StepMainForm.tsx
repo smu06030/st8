@@ -1,9 +1,7 @@
+import { StepMainFormProps } from '@/types/auth/auth.type';
+
 import Button from '@/components/common/Buttons/Button';
 import SignupCompleteIcon from '@/components/common/Icons/Auth/SignupCompleteIcon';
-
-interface StepMainFormProps {
-  onNext: () => void;
-}
 
 const StepMainForm = ({ onNext }: StepMainFormProps) => {
   return (

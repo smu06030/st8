@@ -14,12 +14,20 @@ import useImgModal from '@/hooks/album/useImgModal';
 import AlbumAddBtn from '@/components/photoalbum/AlbumAddBtn';
 import LoadingSpin from '@/components/common/Loading/LoadingSpin';
 import AlbumEditImg from '@/components/photoalbum/AlbumEditImg';
-import AlbumImgModal from '@/components/photoalbum/AlbumImgModal';
+import AlbumImgModal from '@/components/common/Modal/AlbumImgModal';
 import useAlbumDelete from '@/hooks/album/useAlbumDelete';
+
+interface album {
+  created_at: string;
+  id: number;
+  photoImg: string | null;
+  region: string | null;
+  user_id: string | null;
+}
 
 const AlbumList = () => {
   const userId = useUserId();
-  const { data: albumListData, isLoading, isError } = useGetAlbumListQuery(userId);
+  const { data: albumListData, isLoading, isPending, isError } = useGetAlbumListQuery(userId);
   const { closeModal, openModal, Modal, isOpen } = useModal();
   const { mutate: postAlbumMutate } = usePostAlbumMutation();
 
@@ -58,7 +66,7 @@ const AlbumList = () => {
     setActiveTab(tab);
   };
 
-  if (isLoading)
+  if (isLoading || isPending)
     return (
       <div>
         <Loading />
@@ -102,7 +110,7 @@ const AlbumList = () => {
                 <li
                   onClick={() => {
                     if (!edit) {
-                      onClickImgModal(item.photoImg, item.id, index);
+                      onClickImgModal(item.photoImg || '', item.id, index);
                       openModal();
                     } else {
                       deleteId.includes(item.id);
@@ -119,7 +127,7 @@ const AlbumList = () => {
                         alt=""
                         width={200}
                         height={200}
-                        priority
+                        loading={index < 4 ? 'eager' : 'lazy'}
                         className="h-full w-full object-cover"
                       />
                     </>
@@ -145,7 +153,7 @@ const AlbumList = () => {
                     setImgSrc={setImgSrc}
                     postAlbumMutate={postAlbumMutate}
                     activeTab={activeTab}
-                    item={item}
+                    item={item || ''}
                   />
 
                   <Link href={`/photo-album/${item}`} className={`${item === '미설정 지역' && 'row-start-1'}`}>

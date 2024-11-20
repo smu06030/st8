@@ -9,7 +9,7 @@ import useModal from '@/hooks/modal/useModal';
 import useUserId from '@/hooks/auth/useUserId';
 import useImgModal from '@/hooks/album/useImgModal';
 import AlbumImgEdit from '@/components/photoalbum/AlbumEditImg';
-import AlbumImgModal from '@/components/photoalbum/AlbumImgModal';
+import AlbumImgModal from '@/components/common/Modal/AlbumImgModal';
 import useAlbumDelete from '@/hooks/album/useAlbumDelete';
 
 const RegionDetail = () => {
@@ -34,7 +34,7 @@ const RegionDetail = () => {
   if (isError) return <div>데이터를 가져오지 못하였습니다.</div>;
 
   return (
-    <div className="pc-inner-width mt-[64px] lg:pb-[535px]">
+    <div className="pc-inner-width mt-[64px] lg:pb-[535px] lg:pt-[54px]">
       <h2 className="mt-[38px] border-b border-[#9C9C9C] py-[14px] font-semiBold text-[24px] text-[#004157] mo-only:mx-[24px]">
         {regionTitle}
       </h2>
@@ -64,7 +64,7 @@ const RegionDetail = () => {
           <li
             onClick={() => {
               if (!edit) {
-                onClickImgModal(item.photoImg, item.id, index);
+                onClickImgModal(item.photoImg || '', item.id, index);
                 openModal();
               } else {
                 deleteId.includes(item.id);
