@@ -27,7 +27,7 @@ interface album {
 
 const AlbumList = () => {
   const userId = useUserId();
-  const { data: albumListData, isLoading, isError } = useGetAlbumListQuery(userId);
+  const { data: albumListData, isLoading, isPending, isError } = useGetAlbumListQuery(userId);
   const { closeModal, openModal, Modal, isOpen } = useModal();
   const { mutate: postAlbumMutate } = usePostAlbumMutation();
 
@@ -66,7 +66,7 @@ const AlbumList = () => {
     setActiveTab(tab);
   };
 
-  if (isLoading)
+  if (isLoading || isPending)
     return (
       <div>
         <Loading />
