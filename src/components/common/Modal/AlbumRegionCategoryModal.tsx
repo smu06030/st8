@@ -42,7 +42,7 @@ const RegionCategoryModal = ({ Modal, onHandleUpload, setRegionCate, regionCate 
     <Modal>
       <div
         onClick={(e) => e.stopPropagation()}
-        className="modal-box flex h-[65vh] w-[90%] flex-col rounded-[24px] px-[32px] py-[36px] lg:h-[497px] lg:w-[327px] lg:pb-[53px]"
+        className="modal-box flex h-[65vh] min-h-[600px] w-[90%] flex-col rounded-[24px] px-[32px] py-[36px] lg:h-[497px] lg:w-[327px] lg:pb-[53px]"
       >
         <h2 className="font-semiBold text-[20px] leading-[26px]">
           이 사진에 어떤 장소의
