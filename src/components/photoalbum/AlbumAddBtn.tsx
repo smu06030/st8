@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { convertImageToAvif } from '@/components/photoalbum/convertImageToAvif';
 import { useState, Dispatch, ChangeEvent, useEffect } from 'react';
 
 import useModal from '@/hooks/modal/useModal';
@@ -66,10 +67,13 @@ const AlbumAddBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: Ad
           useWebWorker: true // 압축 작업이 메인 스레드에 영향을 미치지 않도록 설정
         });
 
-        // 압축된 파일 읽기
+        // 압축파일 AVIF 형식으로 변환
+        const avifImage = await convertImageToAvif(compressedImage);
+
+        // AVIF 압축된파일 읽기
         return new Promise<string>((resolve) => {
           const reader = new FileReader();
-          reader.readAsDataURL(compressedImage);
+          reader.readAsDataURL(avifImage);
           reader.onload = () => {
             if (typeof reader.result === 'string') {
               resolve(reader.result);

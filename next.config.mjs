@@ -8,7 +8,8 @@ const nextConfig = {
         hostname: 'tong.visitkorea.or.kr',
         pathname: '/cms/resource/**'
       }
-    ]
+    ],
+    formats: ['image/avif', 'image/webp']
   },
 
   webpack: (config) => {
