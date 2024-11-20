@@ -60,7 +60,7 @@ const MainStampSection = async () => {
               .map((stamp) => (
                 <div
                   key={stamp.region}
-                  className="flex flex-col items-center justify-center rounded-[24px] bg-[#fff] p-[20px] lg:p-[25px]"
+                  className="flex flex-col items-center justify-center rounded-[24px] bg-[#fff] p-[20px] opacity-50 lg:p-[25px]"
                 >
                   <Image src={stamp.img} alt={stamp.region} width={300} height={300} />
                 </div>
