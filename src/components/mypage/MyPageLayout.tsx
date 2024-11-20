@@ -8,9 +8,9 @@ import Image from 'next/image';
 import useModal from '@/hooks/modal/useModal';
 import StampCount from '@/components/mypage/MyPageStampCount';
 import PhotoCount from '@/components/mypage/MyPagePhotoCount';
-import RecentPhoto from '@/components/mypage/MyPageRecentPhoto';
 import LogoutButton from '@/components/auth/LogoutButton';
 import NicknameEditor from '@/components/mypage/MyPageNicknameEditor';
+import MyPageRecentPhoto from '@/components/mypage/MyPageRecentPhoto';
 import NicknameEditorModal from '@/components/common/Modal/NicknameEditorModal';
 
 const MyPageLayout = () => {
@@ -25,7 +25,7 @@ const MyPageLayout = () => {
         </div>
         <LogoutButton />
       </div>
-      <RecentPhoto limit={3} containerStyle="lg:hidden" />
+      <MyPageRecentPhoto limit={3} containerStyle="lg:hidden" />
       <div>
         <h6 className="mb-[18px] mt-[20px] font-bold text-[20px] text-gray-900">내 정보</h6>
         <StampCount />

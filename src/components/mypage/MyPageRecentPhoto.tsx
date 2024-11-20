@@ -4,16 +4,16 @@ import { useEffect, useState } from 'react';
 import { useGetAlbumListQuery } from '@/hooks/queries/query/useAlbumQuery';
 
 import Link from 'next/link';
+import Icon from '@/components/common/Icons/Icon';
 import Image from 'next/image';
 import useUserId from '@/hooks/auth/useUserId';
-import Icon from '../common/Icons/Icon';
 
 interface RecentPhotoProps {
   limit?: number; // 최대 표시할 사진 수
   containerStyle?: string; // 컨테이너 스타일
 }
 
-const RecentPhoto = ({ limit = 3, containerStyle = '' }: RecentPhotoProps) => {
+const MyPageRecentPhoto = ({ limit = 3, containerStyle = '' }: RecentPhotoProps) => {
   const userId = useUserId();
   const { data: albumListData, isLoading, isError } = useGetAlbumListQuery(userId);
   const [recentPhotos, setRecentPhotos] = useState<any[]>([]);
@@ -71,4 +71,4 @@ const RecentPhoto = ({ limit = 3, containerStyle = '' }: RecentPhotoProps) => {
   );
 };
 
-export default RecentPhoto;
+export default MyPageRecentPhoto;
