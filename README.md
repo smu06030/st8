@@ -74,18 +74,21 @@
     <td align="center"><b>Frontend</b></td>
     <td align="center"><b>Frontend</b></td>
     <td align="center"><b>Frontend</b></td>
+    <td align="center"><b>Designer</b></td>
   </tr>
   <tr>
-      <td align="center"><img src="https://avatars.githubusercontent.com/songhyein0123" width="100px" /></td>   
-    <td align="center"><img src="https://avatars.githubusercontent.com/lim-bora" width="100px" /></td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/smu06030" width="100px" /></td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/kyulipark" width="100px" /></td>
+      <td align="center"><img src="public/images/footer/team04-min.png" width="100px" /></td>   
+    <td align="center"><img src="public/images/footer/team02-min.png" width="100px" /></td>
+    <td align="center"><img src="public/images/footer/team01-min.png" width="100px" /></td>
+    <td align="center"><img src="public/images/footer/team03-min.png" width="100px" /></td>
+    <td align="center"><img src="public/images/footer/team05-min.png" width="100px" /></td>
   </tr>
   <tr>
       <td align="center"><b><a href="https://github.com/kyulipark">팀장 : 송혜인</a></b></td>
     <td align="center"><b><a href="https://github.com/lim-bora">팀원 : 임보라</a></b></td> 
     <td align="center"><b><a href="https://github.com/smu06030">팀원 : 유인철</a></b></td> 
     <td align="center"><b><a href="https://github.com/kyulipark">팀원 : 박규리</a></b></td>
+    <td align="center"><b><a href="https://six-gemini-258.notion.site/f119c1aef2284269b6cc15a65a8d60bb">팀원 : 김재범</a></b></td>
   </tr>
 </table>
 
