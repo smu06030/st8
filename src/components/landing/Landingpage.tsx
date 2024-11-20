@@ -149,7 +149,7 @@ const LandingPage = () => {
             <div className="w-[50%]"></div>
           </div>
 
-          <div className="flex">
+          <div className="relative flex shadow-[0px_1px_12px_0px_rgba(0,0,0,0.15)]">
             <div className="flex w-[50%] flex-col items-center justify-center">
               <h2 className={`mb-[14px] font-bold text-[36px] text-[#00688A]`}>국내 여행 스탬프 서비스 모아</h2>
               <span className="leading-[24px] text-[#4F4F4F]">
@@ -233,7 +233,7 @@ const LandingPage = () => {
                   layout="responsive"
                   width={100}
                   height={100}
-                  className="stamp-section-phone"
+                  className="stamp-section-phone rounded-[36px] shadow-[0px_2px_16px_2px_rgba(0,0,0,0.15)]"
                 />
                 <div className="relative z-10 h-full w-full">
                   {StampImgUrl.map((item, index) => (
@@ -301,7 +301,7 @@ const LandingPage = () => {
                     layout="responsive"
                     width={100}
                     height={100}
-                    className="tour-section-phone"
+                    className="tour-section-phone relative rounded-[36px] shadow-[-14px_23px_71px_0px_rgba(0,0,0,0.15)]"
                   />
                   <span className="mb-9 flex items-end whitespace-pre-line text-right text-2xl font-semibold leading-[41px] text-[#1d1d1d]">
                     모아가 고른 국내
