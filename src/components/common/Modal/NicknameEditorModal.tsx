@@ -1,7 +1,10 @@
 import { useForm } from 'react-hook-form';
 
+<<<<<<< HEAD
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField/InputField';
+=======
+>>>>>>> 547e7b1b61139bd03559ea57dc9ee083cb0aedd0
 import browserClient from '@/utils/supabase/client';
 
 interface NicknameEditorModalProps {

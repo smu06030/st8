@@ -3,11 +3,11 @@ import Link from 'next/link';
 
 const Footer = () => {
   const techTeam = [
-    { name: '유인철', job: 'Frontend Developer', img: '/images/footer/team01.png' },
-    { name: '임보라', job: 'Frontend Developer', img: '/images/footer/team02.png' },
-    { name: '박규리', job: 'Frontend Developer', img: '/images/footer/team03.png' },
-    { name: '송혜인', job: 'Frontend Developer', img: '/images/footer/team04.png' },
-    { name: '김재범', job: 'Product Designer', img: '/images/footer/team05.png' }
+    { name: '유인철', job: 'Frontend Developer', img: '/images/footer/team01-min.png' },
+    { name: '임보라', job: 'Frontend Developer', img: '/images/footer/team02-min.png' },
+    { name: '박규리', job: 'Frontend Developer', img: '/images/footer/team03-min.png' },
+    { name: '송혜인', job: 'Frontend Developer', img: '/images/footer/team04-min.png' },
+    { name: '김재범', job: 'Product Designer', img: '/images/footer/team05-min.png' }
   ];
   const footerText = [
     { title: '이용약관', link: 'https://forest-act-835.notion.site/1422d534ecca800b93d1dafa00037e7f?pvs=4' },

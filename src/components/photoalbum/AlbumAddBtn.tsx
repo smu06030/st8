@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, Dispatch, ChangeEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useState, Dispatch, ChangeEvent, useEffect } from 'react';
 
 import useModal from '@/hooks/modal/useModal';
 import useUserId from '@/hooks/auth/useUserId';
-
 import Icon from '@/components/common/Icons/Icon';
+import imageCompression from 'browser-image-compression';
 import RegionCategoryModal from '@/components/common/Modal/AlbumRegionCategoryModal';
 
 interface AddAlbumParamsType {
@@ -50,35 +50,49 @@ const AlbumAddBtn = ({ imgSrc, setImgSrc, postAlbumMutate, activeTab, item }: Ad
   };
 
   // 파일 업로드 시 액션
-  const OnChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
+  const OnChangePhoto = async (e: ChangeEvent<HTMLInputElement>) => {
     if (onClickUserCheck(e)) return;
 
     const files = e.target.files;
     setCurrentRegion(e.target.id.split('-')[1]);
     if (!files) return;
 
-    Array.from(files).forEach((file) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
+    const imgSrcArray: string[] = await Promise.all(
+      Array.from(files).map(async (file) => {
+        // 파일 압축
+        const compressedImage = await imageCompression(file, {
+          maxSizeMB: 1, // 1MB
+          maxWidthOrHeight: 1024, // 이미지의 최대 가로 또는 세로 길이를 1024로 제한
+          useWebWorker: true // 압축 작업이 메인 스레드에 영향을 미치지 않도록 설정
+        });
 
-      fileReader.onload = (e) => {
-        if (typeof e.target?.result === 'string' && e.target.result) {
-          if (activeTab === 'allTab') {
-            setImgSrc((prev) => [...prev, e.target!.result as string]);
-            // setIsRigionModal(true);
-            openModal();
-          } else if (activeTab === 'rigionTab') {
-            setImgSrc((prev) => [...prev, e.target!.result as string]);
-            setRegionCate(item);
-          }
-        }
-      };
-    });
+        // 압축된 파일 읽기
+        return new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(compressedImage);
+          reader.onload = () => {
+            if (typeof reader.result === 'string') {
+              resolve(reader.result);
+            }
+          };
+        });
+      })
+    );
+
+    // 상태 업데이트를 한 번에 처리
+    setImgSrc((prev) => [...prev, ...imgSrcArray]);
+
+    if (activeTab === 'allTab') {
+      openModal();
+    } else if (activeTab === 'rigionTab') {
+      setRegionCate(item);
+    }
   };
 
   // 파일 업로드 함수
   const onHandleUpload = (imgArr: string | string[]) => {
     const imgs = Array.isArray(imgArr) ? imgArr : imgSrc;
+
     if (imgs.length > 0) {
       imgs.forEach((src) => {
         console.log('regionCate', regionCate);

@@ -1,6 +1,5 @@
 'use client';
 
-import { useRef } from 'react';
 import { Map, Polygon } from 'react-kakao-maps-sdk';
 import { MAP_COLOR, MAP_COLOR_INDEX } from '@/constants/mapColor';
 
@@ -8,8 +7,8 @@ import useModal from '@/hooks/modal/useModal';
 import StampModal from '../common/Modal/StampModal';
 import useKakaoMap from '@/hooks/map/useKakaoMap';
 import KakaoMapMarker from './KakaoMapMarker';
-import KakaoMapMaxLevel from './KakaoMapMaxLevel';
 import KakaoMapSwiper from '@/components/stampMap/swiper/KakaoMapSwiper';
+import KakaoMapMaxLevel from './KakaoMapMaxLevel';
 import ReSetttingMapBounds from '@/components/stampMap/ReSetttingMapBounds';
 
 const KakaoMap = () => {
