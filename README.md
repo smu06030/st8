@@ -218,6 +218,22 @@
 - 아이디/비밀번호 찾기 기능을 제공하며, **자동 로그인**으로 편리한 사용 경험을 제공합니다.
 
 ---
+## 😀 UT
+목적 : 여행 기록 플랫폼으로, 다양한 기능이 실제로 얼마나 유용한지와 사용자 경험이 얼마나 매끄러운지를 검증하기 위함.<br>
+방법 : 네이버 폼 사용한 설문조사<br>
+기간 : 2024.11.15. ~ 2024.11.18.<br>
+참여자 수 : 17명<br>
+
+### UT결과
+<img width="566" alt="스크린샷 2024-11-20 오후 10 05 53" src="https://github.com/user-attachments/assets/e9e52fa9-963f-49a7-bfb7-ced3379d8601">
+<img width="572" alt="스크린샷 2024-11-20 오후 10 06 16" src="https://github.com/user-attachments/assets/d60b564b-c219-4049-b679-8c9141e6a8d0">
+
+
+
+### 🔧 모아 사이트 베포 업데이트
+![image](https://github.com/user-attachments/assets/e032908b-625c-4220-b1f2-3be1e2f3c561)
+
+---
 
 ## 🛠 트러블슈팅
 
