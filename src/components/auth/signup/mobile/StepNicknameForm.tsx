@@ -1,15 +1,8 @@
 import { useForm } from 'react-hook-form';
+import { NicknameFormInputs, NicknameStepProps } from '@/types/auth/auth.type';
 
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField/InputField';
-
-interface NicknameStepProps {
-  onNext: (nickname: string) => void;
-}
-
-interface NicknameFormInputs {
-  nickname: string;
-}
 
 const NicknameStep = ({ onNext }: NicknameStepProps) => {
   const {

@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { PasswordStepProps } from '@/types/auth/auth.type';
 import { passwordValidationRules, validatePassword } from '@/utils/auth/passwordValidation';
 
 import Icon from '@/components/common/Icons/Icon';
@@ -8,10 +9,6 @@ import InputField from '@/components/common/InputField/InputField';
 import SmailXIcon from '@/components/common/Icons/Auth/SmailXIcon';
 import SmailCheckIcon from '@/components/common/Icons/Auth/SmailCheckIcon';
 import PasswordMatchStatus from '@/components/common/auth/PasswordMatchStatus';
-
-interface PasswordStepProps {
-  onNext: (password: string) => void;
-}
 
 const PasswordStep = ({ onNext }: PasswordStepProps) => {
   const {

@@ -1,19 +1,12 @@
 import { useEffect } from 'react';
 import { PAGE_NAMES } from '@/constants/pageName';
+import { UserMenuType } from '@/types/mypage/mypage.type';
 
 import Link from 'next/link';
 import Icon from '@/components/common/Icons/Icon';
 import useModal from '@/hooks/modal/useModal';
 import LogoutModal from '@/components/common/Modal/LogoutModal';
 import useUserMenuState from '@/hooks/mypage/useUserMenuState';
-
-interface UserMenuType {
-  initialNickname: string;
-  isLoggedIn: boolean;
-  nickname: string;
-  tempNickname: string;
-  checkUserStatus: string;
-}
 
 const UserMenu = ({ initialNickname }: UserMenuType) => {
   const {

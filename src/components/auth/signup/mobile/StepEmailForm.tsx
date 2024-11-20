@@ -1,16 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { checkEmailExists } from '@/app/api/auth/authService';
+import { EmailStepProps, FormValues } from '@/types/auth/auth.type';
 
 import Button from '@/components/common/Buttons/Button';
 import InputField from '@/components/common/InputField/InputField';
-
-interface EmailStepProps {
-  onNext: (email: string) => void;
-}
-
-interface FormValues {
-  email: string;
-}
 
 const EmailStep = ({ onNext }: EmailStepProps) => {
   const {

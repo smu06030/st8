@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { handleLogin } from '@/utils/auth/loginValidation';
 import { useSocialLogin } from '@/hooks/auth/useSocialLogin';
+import { LoginFormInputs } from '@/types/auth/auth.type';
 import { useAuthListener } from '@/hooks/auth/useAuthListener';
 
 import Icon from '@/components/common/Icons/Icon';
@@ -13,11 +14,6 @@ import Button from '@/components/common/Buttons/Button';
 import LinkButton from '@/components/common/Buttons/LinkButton';
 import InputField from '@/components/common/InputField/InputField';
 import SocialLoginButton from '@/components/common/Buttons/SocialLoginButton';
-
-interface LoginFormInputs {
-  email: string;
-  password: string;
-}
 
 const LoginForm = () => {
   const { loginWithProvider } = useSocialLogin();

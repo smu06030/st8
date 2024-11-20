@@ -3,6 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { PasswordFormValues } from '@/types/auth/auth.type';
 import { passwordValidationRules, validatePassword } from '@/utils/auth/passwordValidation';
 
 import Icon from '@/components/common/Icons/Icon';
@@ -12,10 +13,6 @@ import InputField from '@/components/common/InputField/InputField';
 import browserClient from '@/utils/supabase/client';
 import SmailCheckIcon from '@/components/common/Icons/Auth/SmailCheckIcon';
 import PasswordMatchStatus from '@/components/common/auth/PasswordMatchStatus';
-
-interface FormValues {
-  password: string;
-}
 
 const UpdatePasswordForm = () => {
   const {
@@ -43,7 +40,7 @@ const UpdatePasswordForm = () => {
     passwordValidations.hasLetter &&
     passwordValidations.isMatching;
 
-  const onSubmit = async (formData: FormValues) => {
+  const onSubmit = async (formData: PasswordFormValues) => {
     try {
       await Promise.all([
         browserClient.auth.updateUser({ password: formData.password }),
