@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 
+import useUserId from '@/hooks/auth/useUserId';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const LandingTutorial = () => {
   const [position, setPosition] = useState(0);
+  const userId = useUserId();
 
   const handleClick = () => {
     setPosition(position + 1); // 다음 페이지로 이동
@@ -51,9 +53,15 @@ const LandingTutorial = () => {
           </li>
         </ul>
         {position === 4 ? (
-          <Link href="/signup" className="button">
-            여행떠나기
-          </Link>
+          !userId ? (
+            <Link href="/signup" className="button">
+              여행떠나기
+            </Link>
+          ) : (
+            <Link href="/home" className="button">
+              여행떠나기
+            </Link>
+          )
         ) : (
           <button className="button" onClick={handleClick}>
             다음으로
