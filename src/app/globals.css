@@ -6,7 +6,6 @@
 @import '@/styles/album.css';
 @import '@/styles/tourism.css';
 @import '@/styles/landing.css';
-/* @import '@/styles/mainRecommend.css'; */
 
 :root {
   --background: #ffffff;
@@ -103,7 +102,4 @@ body {
     /* pc innerSection 공통클래스 */
     @apply mx-auto w-full max-w-[1080px];
   }
-}
-
-.mainTourism-swiper {
 }

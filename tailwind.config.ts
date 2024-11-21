@@ -78,6 +78,7 @@ const config: Config = {
     animation: {
       scaleStamp: 'scaleUp 1s ease-in-out infinite',
       successStamp: 'stampActive .8s ease-in-out',
+      fadeUp: 'fadeUp .3s ease-in-out forwards',
       fadeUpText: 'fadeUp .8s ease-in-out',
       fadeUpBtn: 'fadeUp 1.2s ease-in-out',
       dropdownList: 'slideDropdown .5s ease-in-out',

@@ -24,9 +24,9 @@ const Footer = () => {
         <div className="flex flex-col items-end gap-[124px]">
           <ul className="grid grid-cols-5 gap-[12px]">
             {techTeam.map((info) => (
-              <li key={info.name} className="isInfo relative cursor-pointer overflow-hidden rounded-[24px] bg-[#eee]">
+              <li key={info.name} className="group relative cursor-pointer overflow-hidden rounded-[24px] bg-[#eee]">
                 <Image src={info.img} alt={info.name} width={300} height={300} />
-                <div className="absolute bottom-0 left-0 hidden h-[40%] w-full flex-col gap-[4px] bg-[#1D1D1D] p-[10px] px-[18px] py-[24px] text-[#fff] opacity-[.8]">
+                <div className="group-hover:animate-fadeUp absolute bottom-0 left-0 hidden h-[40%] w-full flex-col gap-[4px] bg-[#1D1D1D] p-[10px] px-[18px] py-[24px] text-[#fff] !opacity-80 group-hover:flex">
                   <p className="pb-[4px] text-[14px]">{info.job}</p>
                   <p className="font-semiBold">{info.name}</p>
                 </div>
