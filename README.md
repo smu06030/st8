@@ -51,6 +51,7 @@
 ![browser-image-compression](https://img.shields.io/badge/browser_image_compression-69D3A7?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![kakao map api](https://img.shields.io/badge/KAKAO_MAP_API-FFCD00?style=for-the-badge&logo=kakao&logoColor=white)
 ![Tour api](https://img.shields.io/badge/TOUR_API-0b70b9?style=for-the-badge&logo=houzz&logoColor=white)
+![pwa](https://img.shields.io/badge/Pwa-000000?style=for-the-badge&logo=pwa&logoColor=white)
 
 ### 상태 관리
 
@@ -218,19 +219,21 @@
 - 아이디/비밀번호 찾기 기능을 제공하며, **자동 로그인**으로 편리한 사용 경험을 제공합니다.
 
 ---
+
 ## 😀 UT
+
 목적 : 여행 기록 플랫폼으로, 다양한 기능이 실제로 얼마나 유용한지와 사용자 경험이 얼마나 매끄러운지를 검증하기 위함.<br>
 방법 : 네이버 폼 사용한 설문조사<br>
 기간 : 2024.11.15. ~ 2024.11.18.<br>
 참여자 수 : 17명<br>
 
 ### UT결과
+
 <img width="566" alt="스크린샷 2024-11-20 오후 10 05 53" src="https://github.com/user-attachments/assets/e9e52fa9-963f-49a7-bfb7-ced3379d8601">
 <img width="572" alt="스크린샷 2024-11-20 오후 10 06 16" src="https://github.com/user-attachments/assets/d60b564b-c219-4049-b679-8c9141e6a8d0">
 
-
-
 ### 🔧 모아 사이트 베포 업데이트
+
 ![image](https://github.com/user-attachments/assets/e032908b-625c-4220-b1f2-3be1e2f3c561)
 
 ---
@@ -355,6 +358,103 @@ const useModal = () => {
 
 export default useModal;
 ```
+
+</details>
+<details>
+<summary style="cursor: pointer; font-size: 16px;">3. 메인 이동 시 스와이퍼가 사라지는 이슈</summary>
+
+### **🔥 이슈**
+
+메인 -> 지도 -> 메인 화면으로 이동했을 때 메인 화면에 있는 `Swiper` 컴포넌트가 사라지는 이슈가 있었습니다.
+
+![main-img](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fn8UkZ%2FbtsKJwMiF6Q%2FmBZYwJSGuzeAcSnD8hbmn0%2Fimg.png)
+
+### **🔎 해결 과정**
+
+스와이퍼가 정상적으로 렌더링 되지 않아 이유에 대해 분석해봤습니다.
+
+**기존 스타일**
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.swiperWrapper {
+  @apply fixed bottom-16 left-2/4 z-[99] flex h-[140px] w-[100vw] -translate-x-1/2 transform flex-col items-center justify-end bg-scrollButtonGradient leading-[27px] lg:bottom-0;
+}
+
+.swiper {
+  @apply bottom-0 mb-7 flex w-full items-end justify-end bg-transparent lg:w-[600px];
+}
+
+.swiper-slide {
+  @apply flex items-end justify-center text-center text-sm leading-[27px] text-gray-300 lg:w-[120px];
+}
+
+.swiper-slide-active {
+  @apply cursor-pointer font-semiBold text-lg text-secondary-900;
+}
+```
+
+```css
+.swiper-button-next,
+.swiper-button-prev {
+  width: 28px !important;
+  height: 28px !important;
+  --swiper-navigation-top-offset: 110%;
+  --swiper-navigation-sides-offset: 42%;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.swiper-wrapper {
+  @apply flex items-center;
+}
+
+.swiper-slide {
+  @apply /*flex*/ w-full shrink-0 items-center justify-center;
+}
+
+.swiper-slide-active {
+  @apply lg:z-10 lg:h-[368px] lg:w-[100%];
+}
+```
+
+**기존 CSS파일로 스타일을 생성해서 스타일이 충돌하는 문제**가 있었습니다.
+
+그래서 **메인 화면과 지도 화면이 서로 스타일을 공유**하게 되면서 스와이퍼의 레이아웃이 꼬이고 이로 인해 화면을 이동했을 때 스와이퍼가 제대로 표시되지 않거나, 아예 사라지는 문제가 발생했습니다.
+
+### ✅ **해결 방법**
+
+이 문제를 해결하기 위한 가장 간단한 방법은 `고유 클래스를 추가해 스타일을 구분`하는 것이었습니다.
+
+```css
+/* mainSwiper.css */
+✅ .mainTourism-swiper 추가 .mainTourism-swiper .swiper-wrapper {
+  @apply flex items-center;
+}
+
+.mainTourism-swiper .swiper-slide {
+  @apply /*flex*/ w-full shrink-0 items-center justify-center;
+}
+
+.mainTourism-swiper .swiper-slide-active {
+  @apply lg:z-10 lg:h-[368px] lg:w-[100%];
+}
+
+/* mapSwiper.css */
+✅ .map-region-swiper 추가 .map-region-swiper.swiper {
+  @apply bottom-0 mb-7 flex w-full items-end justify-end bg-transparent lg:w-[600px];
+}
+
+.map-region-swiper .swiper-slide {
+  @apply flex items-end justify-center text-center text-sm leading-[27px] text-gray-300 lg:w-[120px];
+}
+```
+
+✨ **이후 스와이퍼가 정상 작동하는 것을 확인했습니다!** ✨
+
+![main-img-2](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCIvNB%2FbtsKIFwofN3%2FGGKPxIAOaQzym1F05osZ3K%2Fimg.png)
 
 </details>
 
@@ -558,13 +658,13 @@ if (activeTab === 'allTab') {
 
 ### **As-is )**
 
-![before-1](https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/f70df21c-e8f9-4469-916d-f62af009047e/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-11-19_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_4.58.29.png?table=block&id=a1714639-9035-4820-ab0c-6016b5b82dc5&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1732176000000&signature=B6_-M374c8Ezj_5tdLWN3uppN_jMV5Gqagz1SS6IDUg&downloadName=%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2024-11-19+%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE+4.58.29.png)
+![before-1](https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/5b71fadf-1a62-4018-918f-b8663b71ac67/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-11-20_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_10.43.30.png?table=block&id=56e96284-74b2-4989-b74e-da3d6e780656&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1732248000000&signature=jns4l27G7G4PV9m6C_MqqbkZfsKlF91pVwWO0fdcsEs&downloadName=%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2024-11-20+%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB+10.43.30.png)
 
 ![before-2](https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/0da62818-0b06-44fa-9fd1-e57c4753b9fc/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-11-19_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_9.50.29.png?table=block&id=7c060713-8d16-49cd-855c-cd27583f89c6&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1732176000000&signature=Jayl4Lg7KdmfSxYirNIOhFmhTDfXsUzGG9LBcd_ovy4&downloadName=%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2024-11-19+%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE+9.50.29.png)
 
 ### **TO-BE )**
 
-![after-1](https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/3723f584-f293-4169-9261-70494de2636b/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-11-20_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_11.50.13.png?table=block&id=e3a7b9f9-1d91-485d-bd52-2825d4b9c557&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1732176000000&signature=90nLlYP-EyeTkc30qHhwwQV_MvU9N9PLGLOG68tD1kg&downloadName=%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2024-11-20+%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB+11.50.13.png)
+![after-1](https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/15d741a4-1733-4501-bf77-6d3510a081be/image.png?table=block&id=74ef8870-298a-4e51-8157-ddbd89270f84&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1732248000000&signature=TQdf5bu2r2vZpeJ7UMyV7UwBP6NfzcCrVLd0aQfkJ4g&downloadName=image.png)
 
 ![after-2](https://file.notion.so/f/f/83c75a39-3aba-4ba4-a792-7aefe4b07895/ae1c448a-13af-4982-8c94-a4d8f84cdd72/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-11-19_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_9.51.19.png?table=block&id=0aef5efe-4a5d-47bf-b4f5-ccb9de8d299d&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&expirationTimestamp=1732176000000&signature=ybwQ-D_5ga_rFccIOIUwTKwzNN5tBWwcRdeuP_xMO1E&downloadName=%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA+2024-11-19+%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE+9.51.19.png)
 
